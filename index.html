@@ -7,119 +7,87 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;min-height:100vh}
-
-/* HEADER */
 .header{background:linear-gradient(135deg,#1a1f2e,#0d1117);padding:15px 20px;border-bottom:2px solid #00c853;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .header h1{font-size:22px;color:#00c853;display:flex;align-items:center;gap:8px}
 .header .guncelleme{font-size:11px;color:#666;text-align:right}
-
-/* STATS BAR */
 .stats-bar{background:#161b22;padding:12px 20px;display:flex;gap:12px;flex-wrap:wrap;border-bottom:1px solid #21262d;overflow-x:auto}
 .stat-item{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:8px 14px;display:flex;flex-direction:column;align-items:center;min-width:80px}
-.stat-item .stat-value{font-size:18px;font-weight:700;color:#00c853}
-.stat-item .stat-label{font-size:10px;color:#888;margin-top:2px}
+.stat-item .sv{font-size:18px;font-weight:700;color:#00c853}
+.stat-item .sl{font-size:10px;color:#888;margin-top:2px}
 
 /* FILTERS */
-.filters{background:#161b22;padding:12px 20px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #21262d;align-items:center}
-.filters input,.filters select{background:#0d1117;color:#e6e6e6;border:1px solid #30363d;padding:8px 12px;border-radius:6px;font-size:13px;outline:none}
+.filters{background:#161b22;padding:12px 20px;border-bottom:1px solid #21262d}
+.filter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.filter-row:last-child{margin-bottom:0}
+.filters input,.filters select{background:#0d1117;color:#e6e6e6;border:1px solid #30363d;padding:7px 10px;border-radius:6px;font-size:12px;outline:none}
 .filters input:focus,.filters select:focus{border-color:#00c853}
-.filters input{min-width:200px;flex:1;max-width:300px}
-.filters select{min-width:140px}
-.filter-label{font-size:11px;color:#888}
-.btn-reset{background:#21262d;color:#e6e6e6;border:1px solid #30363d;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:12px}
+.filters input[type=text]{min-width:180px;flex:1;max-width:280px}
+.filters input[type=number]{width:75px}
+.flabel{font-size:11px;color:#888;white-space:nowrap}
+.fbold{font-size:11px;color:#00c853;font-weight:700;white-space:nowrap}
+.btn-reset{background:#21262d;color:#e6e6e6;border:1px solid #30363d;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12px}
 .btn-reset:hover{background:#30363d}
+.btn-ara{background:#00c853;color:#0d1117;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700}
+.btn-ara:hover{background:#00e676}
+.oran-filtre-kutu{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:8px 12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 
-/* MATCH CONTAINER */
+/* MATCH */
 .container{padding:10px 15px;max-width:1400px;margin:0 auto}
-
-/* LIG HEADER */
-.lig-header{background:#161b22;border:1px solid #21262d;border-radius:8px 8px 0 0;padding:10px 15px;margin-top:12px;font-size:13px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;align-items:center}
-.lig-header .lig-count{background:#00c853;color:#0d1117;padding:2px 8px;border-radius:10px;font-size:11px}
-
-/* MATCH CARD */
-.mac{background:#161b22;border:1px solid #21262d;margin-bottom:2px;transition:all .2s}
+.gun-header{background:#161b22;border:1px solid #21262d;border-radius:8px 8px 0 0;padding:10px 15px;margin-top:12px;font-size:13px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;align-items:center}
+.gun-header .gc{background:#00c853;color:#0d1117;padding:2px 8px;border-radius:10px;font-size:11px}
+.mac{background:#161b22;border:1px solid #21262d;margin-bottom:1px;transition:all .2s}
 .mac:last-child{border-radius:0 0 8px 8px;margin-bottom:0}
 .mac:hover{border-color:#30363d}
-
-.mac-row{display:grid;grid-template-columns:70px 1fr auto auto 40px;align-items:center;padding:10px 15px;cursor:pointer;gap:10px}
+.mac-row{display:grid;grid-template-columns:65px 1fr auto 30px;align-items:center;padding:10px 12px;cursor:pointer;gap:8px}
 .mac-saat{display:flex;flex-direction:column;align-items:center}
-.mac-saat .saat{color:#00c853;font-weight:700;font-size:15px}
-.mac-saat .tarih{color:#555;font-size:10px}
+.mac-saat .saat{color:#00c853;font-weight:700;font-size:14px}
+.mac-saat .tarih-k{color:#555;font-size:9px}
 .mac-saat .kod{color:#444;font-size:9px}
-
-.mac-takimlar{display:flex;flex-direction:column;gap:2px}
-.mac-takimlar .takim{font-size:13px;font-weight:500}
-.mac-takimlar .takim.ev{color:#e6e6e6}
-.mac-takimlar .takim.dep{color:#aaa}
-
-.mac-oranlar{display:flex;gap:4px;flex-wrap:wrap}
-.oran-kutu{display:flex;flex-direction:column;align-items:center;background:#0d1117;border:1px solid #21262d;border-radius:4px;padding:4px 6px;min-width:44px;transition:all .2s}
-.oran-kutu:hover{border-color:#00c853}
-.oran-kutu .o-label{font-size:8px;color:#666;text-transform:uppercase}
-.oran-kutu .o-value{font-size:13px;font-weight:700;color:#f0b90b}
-.oran-kutu .o-pct{font-size:8px;color:#00c853}
-
-.mac-ekstra{display:flex;gap:3px;flex-wrap:wrap}
-.oran-mini{background:#0d1117;border:1px solid #1a1f2e;border-radius:3px;padding:2px 5px;font-size:10px;text-align:center}
-.oran-mini .om-label{color:#555;font-size:8px;display:block}
-.oran-mini .om-value{color:#ccc;font-weight:600}
-
-.mac-arrow{text-align:center;color:#444;font-size:16px;transition:transform .3s}
+.mac-takimlar{display:flex;flex-direction:column;gap:1px}
+.mac-takimlar .ev{font-size:13px;font-weight:600;color:#e6e6e6}
+.mac-takimlar .dep{font-size:12px;color:#999}
+.mac-oranlar{display:flex;gap:3px;flex-wrap:wrap}
+.ok{display:flex;flex-direction:column;align-items:center;background:#0d1117;border:1px solid #21262d;border-radius:4px;padding:3px 5px;min-width:40px;transition:all .2s}
+.ok:hover{border-color:#00c853}
+.ok .ol{font-size:7px;color:#666;text-transform:uppercase}
+.ok .ov{font-size:12px;font-weight:700;color:#f0b90b}
+.ok .op{font-size:7px;color:#00c853}
+.pct-bar{display:flex;height:3px;border-radius:2px;overflow:hidden;width:100%;grid-column:1/-1;margin-top:2px}
+.p1{background:#00c853}.px{background:#f0b90b}.p2{background:#e74c3c}
+.mac-arrow{text-align:center;color:#444;font-size:14px;transition:transform .3s}
 .mac-arrow.open{transform:rotate(180deg);color:#00c853}
 
-/* DETAY PANEL */
-.detay-panel{display:none;background:#0d1117;border-top:1px solid #21262d;padding:15px}
-.detay-panel.acik{display:block}
+/* DETAY */
+.detay{display:none;background:#0d1117;border-top:1px solid #21262d;padding:12px}
+.detay.acik{display:block}
+.dtabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap}
+.dtab{background:#161b22;border:1px solid #21262d;color:#888;padding:4px 10px;border-radius:5px;cursor:pointer;font-size:10px;transition:all .2s}
+.dtab:hover,.dtab.a{background:#00c853;color:#0d1117;border-color:#00c853;font-weight:700}
+.dcon{display:none}.dcon.a{display:block}
+.dgrup{margin-bottom:8px}
+.dgbaslik{color:#00c853;font-size:11px;font-weight:700;padding:4px 0;border-bottom:1px solid #21262d;margin-bottom:4px}
+.dsatirlar{display:flex;flex-wrap:wrap;gap:3px}
+.doran{display:flex;flex-direction:column;align-items:center;background:#161b22;border:1px solid #21262d;border-radius:4px;padding:4px 6px;min-width:58px;transition:all .2s}
+.doran:hover{border-color:#00c853;background:#1a2233}
+.doran .dl{font-size:8px;color:#888;text-align:center}
+.doran .dv{font-size:12px;font-weight:700;color:#f0b90b}
+.doran .dp{font-size:7px;color:#00c853}
 
-.detay-tabs{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
-.detay-tab{background:#161b22;border:1px solid #21262d;color:#888;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:11px;transition:all .2s}
-.detay-tab:hover,.detay-tab.aktif{background:#00c853;color:#0d1117;border-color:#00c853;font-weight:700}
-
-.detay-icerik{display:none}
-.detay-icerik.aktif{display:block}
-
-.detay-grup{margin-bottom:10px}
-.detay-grup-baslik{color:#00c853;font-size:12px;font-weight:700;padding:5px 0;border-bottom:1px solid #21262d;margin-bottom:5px}
-.detay-satirlar{display:flex;flex-wrap:wrap;gap:4px}
-
-.detay-oran{display:flex;flex-direction:column;align-items:center;background:#161b22;border:1px solid #21262d;border-radius:5px;padding:5px 8px;min-width:65px;transition:all .2s}
-.detay-oran:hover{border-color:#00c853;background:#1a2233}
-.detay-oran .do-label{font-size:9px;color:#888;text-align:center}
-.detay-oran .do-value{font-size:13px;font-weight:700;color:#f0b90b}
-.detay-oran .do-pct{font-size:8px;color:#00c853}
-
-/* YÜZDE BAR */
-.pct-bar{display:flex;height:4px;border-radius:2px;overflow:hidden;margin-top:4px;width:100%}
-.pct-bar .pct-1{background:#00c853}
-.pct-bar .pct-x{background:#f0b90b}
-.pct-bar .pct-2{background:#e74c3c}
-
-/* LOADING */
 .loading{text-align:center;padding:80px 20px}
-.loading .spinner{width:40px;height:40px;border:4px solid #21262d;border-top:4px solid #00c853;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px}
+.spinner{width:40px;height:40px;border:4px solid #21262d;border-top:4px solid #00c853;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading p{color:#888;font-size:14px}
-
-.hata{text-align:center;padding:60px 20px;color:#e74c3c}
-.bos{text-align:center;padding:40px;color:#666;font-size:14px}
-
-/* FOOTER */
+.loading p{color:#888}
+.bos{text-align:center;padding:40px;color:#666}
+.hata{text-align:center;padding:60px;color:#e74c3c}
 .footer{background:#161b22;border-top:1px solid #21262d;padding:12px 20px;text-align:center;font-size:11px;color:#444;margin-top:20px}
+.highlight{background:#1a3a1a !important;border-color:#00c853 !important}
 
-/* RESPONSIVE */
 @media(max-width:768px){
-.mac-row{grid-template-columns:55px 1fr auto 30px;gap:8px}
-.mac-ekstra{display:none}
-.header h1{font-size:17px}
-.filters{flex-direction:column}
-.filters input{max-width:100%;width:100%}
-.stat-item{padding:6px 10px}
-.stat-item .stat-value{font-size:15px}
-}
-@media(max-width:480px){
-.mac-oranlar{gap:2px}
-.oran-kutu{min-width:38px;padding:3px 4px}
-.oran-kutu .o-value{font-size:11px}
+.mac-row{grid-template-columns:50px 1fr auto 25px;gap:6px}
+.header h1{font-size:16px}
+.filter-row{flex-direction:column;align-items:stretch}
+.filters input[type=text]{max-width:100%;width:100%}
+.oran-filtre-kutu{flex-direction:column;align-items:stretch}
 }
 </style>
 </head>
@@ -133,16 +101,54 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <div class="stats-bar" id="statsBar"></div>
 
 <div class="filters">
+<div class="filter-row">
 <input type="text" id="aramaInput" placeholder="🔍 Takım veya lig ara..." oninput="filtrele()">
 <select id="tarihSelect" onchange="filtrele()"><option value="">📅 Tüm Tarihler</option></select>
 <select id="ligSelect" onchange="filtrele()"><option value="">🏆 Tüm Ligler</option></select>
 <select id="siralama" onchange="filtrele()">
-<option value="tarih">Tarihe Göre</option>
-<option value="oran1">MS 1 (Düşük→Yüksek)</option>
-<option value="oran2">MS 2 (Düşük→Yüksek)</option>
-<option value="ust">Üst 2.5 (Düşük→Yüksek)</option>
+<option value="tarih">📊 Tarihe Göre</option>
+<option value="ms1a">MS 1 ↑</option>
+<option value="ms1d">MS 1 ↓</option>
+<option value="ms2a">MS 2 ↑</option>
+<option value="ms2d">MS 2 ↓</option>
+<option value="usta">Üst 2.5 ↑</option>
+<option value="ustd">Üst 2.5 ↓</option>
+<option value="alta">Alt 2.5 ↑</option>
 </select>
 <button class="btn-reset" onclick="resetFiltre()">↺ Sıfırla</button>
+</div>
+
+<div class="filter-row">
+<span class="fbold">📊 Oran Filtresi:</span>
+<div class="oran-filtre-kutu">
+<span class="flabel">Oran Türü:</span>
+<select id="oranTuru" onchange="filtrele()">
+<option value="">Seçin...</option>
+<option value="Maç Sonucu_1">MS 1 (Ev)</option>
+<option value="Maç Sonucu_0">MS X (Beraberlik)</option>
+<option value="Maç Sonucu_2">MS 2 (Deplasman)</option>
+<option value="Alt/Üst 2.5_Alt">Alt 2.5</option>
+<option value="Alt/Üst 2.5_Üst">Üst 2.5</option>
+<option value="Karşılıklı Gol_Var">KG Var</option>
+<option value="Karşılıklı Gol_Yok">KG Yok</option>
+<option value="İY Sonuç_1">İY 1</option>
+<option value="İY Sonuç_0">İY X</option>
+<option value="İY Sonuç_2">İY 2</option>
+<option value="Handikap_1">Handikap 1</option>
+<option value="Handikap_0">Handikap X</option>
+<option value="Handikap_2">Handikap 2</option>
+</select>
+<span class="flabel">Min:</span>
+<input type="number" id="oranMin" step="0.01" placeholder="1.00" oninput="filtrele()">
+<span class="flabel">Max:</span>
+<input type="number" id="oranMax" step="0.01" placeholder="10.00" oninput="filtrele()">
+<span class="flabel">%Min:</span>
+<input type="number" id="pctMin" step="1" placeholder="0" oninput="filtrele()">
+<span class="flabel">%Max:</span>
+<input type="number" id="pctMax" step="1" placeholder="100" oninput="filtrele()">
+<button class="btn-ara" onclick="filtrele()">🔍 Filtrele</button>
+</div>
+</div>
 </div>
 
 <div class="container" id="container">
@@ -154,228 +160,185 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <script>
 const JSON_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
 let tumMaclar=[];
-let jsonData={};
 
 async function yukle(){
 try{
 const r=await fetch(JSON_URL+"?t="+Date.now());
 const d=await r.json();
-jsonData=d;
 tumMaclar=d.matches||[];
-document.getElementById("guncelleme").innerHTML="Son güncelleme: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>Kaynak: iddaa.com";
-tarihleriDoldur();
-ligleriDoldur();
-filtrele();
-}catch(e){
-document.getElementById("container").innerHTML='<div class="hata">❌ Veri yüklenemedi: '+e.message+'</div>';
-}
-}
+document.getElementById("guncelleme").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>Kaynak: iddaa.com";
+tarihleriDoldur();ligleriDoldur();filtrele();
+}catch(e){document.getElementById("container").innerHTML='<div class="hata">❌ '+e.message+'</div>'}}
 
 function tarihleriDoldur(){
 const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();
 const s=document.getElementById("tarihSelect");
-t.forEach(tarih=>{
-const o=document.createElement("option");
-o.value=tarih;
-const d=new Date(tarih);
-o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});
-s.appendChild(o);
-});
-}
+t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;
+const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
 
 function ligleriDoldur(){
-const ligler=[...new Set(tumMaclar.map(m=>m.lig||"Diğer").filter(l=>l&&l.trim()))].sort();
+const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();
 const s=document.getElementById("ligSelect");
-ligler.forEach(l=>{
-const o=document.createElement("option");
-o.value=l;
-o.textContent=l;
-s.appendChild(o);
-});
-}
+l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}
 
-function oranToPct(o){
-if(!o||o<=0)return 0;
-return Math.round((1/o)*10000)/100;
-}
+function pct(o){return o&&o>0?Math.round(1/o*10000)/100:0}
 
 function filtrele(){
 const arama=document.getElementById("aramaInput").value.toLowerCase();
 const tarih=document.getElementById("tarihSelect").value;
 const lig=document.getElementById("ligSelect").value;
 const sira=document.getElementById("siralama").value;
+const oranTuru=document.getElementById("oranTuru").value;
+const oranMin=parseFloat(document.getElementById("oranMin").value)||0;
+const oranMax=parseFloat(document.getElementById("oranMax").value)||999;
+const pctMin=parseFloat(document.getElementById("pctMin").value)||0;
+const pctMax=parseFloat(document.getElementById("pctMax").value)||100;
 
 let sonuc=tumMaclar.filter(m=>{
 if(arama&&!m.ev_sahibi.toLowerCase().includes(arama)&&!m.deplasman.toLowerCase().includes(arama)&&!(m.lig||"").toLowerCase().includes(arama))return false;
 if(tarih&&m.tarih!==tarih)return false;
-if(lig&&(m.lig||"Diğer")!==lig)return false;
+if(lig&&(m.lig||"")!==lig)return false;
+
+if(oranTuru){
+const val=m.oranlar[oranTuru];
+if(!val)return false;
+if(val<oranMin||val>oranMax)return false;
+const p=pct(val);
+if(p<pctMin||p>pctMax)return false;
+}
 return true;
 });
 
-if(sira==="oran1")sonuc.sort((a,b)=>(a.oranlar["Maç Sonucu_1"]||99)-(b.oranlar["Maç Sonucu_1"]||99));
-else if(sira==="oran2")sonuc.sort((a,b)=>(a.oranlar["Maç Sonucu_2"]||99)-(b.oranlar["Maç Sonucu_2"]||99));
-else if(sira==="ust")sonuc.sort((a,b)=>(a.oranlar["Alt/Üst 2.5_Üst"]||99)-(b.oranlar["Alt/Üst 2.5_Üst"]||99));
+const g=v=>v||99;
+if(sira==="ms1a")sonuc.sort((a,b)=>g(a.oranlar["Maç Sonucu_1"])-g(b.oranlar["Maç Sonucu_1"]));
+else if(sira==="ms1d")sonuc.sort((a,b)=>g(b.oranlar["Maç Sonucu_1"])-g(a.oranlar["Maç Sonucu_1"]));
+else if(sira==="ms2a")sonuc.sort((a,b)=>g(a.oranlar["Maç Sonucu_2"])-g(b.oranlar["Maç Sonucu_2"]));
+else if(sira==="ms2d")sonuc.sort((a,b)=>g(b.oranlar["Maç Sonucu_2"])-g(a.oranlar["Maç Sonucu_2"]));
+else if(sira==="usta")sonuc.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Üst"])-g(b.oranlar["Alt/Üst 2.5_Üst"]));
+else if(sira==="ustd")sonuc.sort((a,b)=>g(b.oranlar["Alt/Üst 2.5_Üst"])-g(a.oranlar["Alt/Üst 2.5_Üst"]));
+else if(sira==="alta")sonuc.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Alt"])-g(b.oranlar["Alt/Üst 2.5_Alt"]));
 else sonuc.sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
 
-statsGoster(sonuc);
-maclariGoster(sonuc);
-}
+statsGoster(sonuc,oranTuru);render(sonuc,oranTuru)}
 
 function resetFiltre(){
 document.getElementById("aramaInput").value="";
 document.getElementById("tarihSelect").value="";
 document.getElementById("ligSelect").value="";
 document.getElementById("siralama").value="tarih";
-filtrele();
-}
+document.getElementById("oranTuru").value="";
+document.getElementById("oranMin").value="";
+document.getElementById("oranMax").value="";
+document.getElementById("pctMin").value="";
+document.getElementById("pctMax").value="";
+filtrele()}
 
-function statsGoster(maclar){
-const topOran=maclar.reduce((t,m)=>t+Object.keys(m.oranlar).length,0);
-const gunler=new Set(maclar.map(m=>m.tarih)).size;
-const ligler=new Set(maclar.map(m=>m.lig||"Diğer")).size;
-const ortOran=maclar.length?Math.round(topOran/maclar.length):0;
+function statsGoster(maclar,oranTuru){
+const to=maclar.reduce((t,m)=>t+Object.keys(m.oranlar).length,0);
+const gun=new Set(maclar.map(m=>m.tarih)).size;
+const lig=new Set(maclar.map(m=>m.lig||"").filter(x=>x)).size;
+const ort=maclar.length?Math.round(to/maclar.length):0;
+
+let extra="";
+if(oranTuru&&maclar.length>0){
+const vals=maclar.map(m=>m.oranlar[oranTuru]).filter(v=>v);
+if(vals.length>0){
+const min=Math.min(...vals).toFixed(2);
+const max=Math.max(...vals).toFixed(2);
+const avg=(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2);
+extra='<div class="stat-item"><div class="sv">'+min+'</div><div class="sl">Min Oran</div></div>'+
+'<div class="stat-item"><div class="sv">'+max+'</div><div class="sl">Max Oran</div></div>'+
+'<div class="stat-item"><div class="sv">'+avg+'</div><div class="sl">Ort Oran</div></div>';
+}}
 
 document.getElementById("statsBar").innerHTML=
-'<div class="stat-item"><div class="stat-value">'+maclar.length+'</div><div class="stat-label">Maç</div></div>'+
-'<div class="stat-item"><div class="stat-value">'+topOran.toLocaleString()+'</div><div class="stat-label">Toplam Oran</div></div>'+
-'<div class="stat-item"><div class="stat-value">'+ortOran+'</div><div class="stat-label">Ort. Oran/Maç</div></div>'+
-'<div class="stat-item"><div class="stat-value">'+gunler+'</div><div class="stat-label">Gün</div></div>'+
-'<div class="stat-item"><div class="stat-value">'+ligler+'</div><div class="stat-label">Lig</div></div>';
-}
+'<div class="stat-item"><div class="sv">'+maclar.length+'</div><div class="sl">Maç</div></div>'+
+'<div class="stat-item"><div class="sv">'+to.toLocaleString()+'</div><div class="sl">Toplam Oran</div></div>'+
+'<div class="stat-item"><div class="sv">'+ort+'</div><div class="sl">Ort/Maç</div></div>'+
+'<div class="stat-item"><div class="sv">'+gun+'</div><div class="sl">Gün</div></div>'+
+'<div class="stat-item"><div class="sv">'+lig+'</div><div class="sl">Lig</div></div>'+extra}
 
-function maclariGoster(maclar){
-if(maclar.length===0){
-document.getElementById("container").innerHTML='<div class="bos">🔍 Sonuç bulunamadı</div>';
-document.getElementById("footer").textContent="";
-return;
-}
+function render(maclar,oranTuru){
+if(!maclar.length){document.getElementById("container").innerHTML='<div class="bos">🔍 Sonuç bulunamadı</div>';document.getElementById("footer").textContent="";return}
 
-// Tarihe göre grupla
 const gruplar={};
-maclar.forEach(m=>{
-const key=m.tarih;
-if(!gruplar[key])gruplar[key]=[];
-gruplar[key].push(m);
-});
+maclar.forEach(m=>{const k=m.tarih;if(!gruplar[k])gruplar[k]=[];gruplar[k].push(m)});
 
-let html="";
+let h="";
 Object.keys(gruplar).sort().forEach(tarih=>{
-const gunMaclari=gruplar[tarih];
+const gm=gruplar[tarih];
 const d=new Date(tarih);
-const tarihStr=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"});
+const ts=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"});
+h+='<div class="gun-header">📅 '+ts+'<span class="gc">'+gm.length+' maç</span></div>';
 
-html+='<div class="lig-header">📅 '+tarihStr+'<span class="lig-count">'+gunMaclari.length+' maç</span></div>';
-
-gunMaclari.forEach((m,idx)=>{
+gm.forEach((m,idx)=>{
 const o=m.oranlar;
 const id="d_"+tarih.replace(/-/g,"")+"_"+idx;
-const ms1=o["Maç Sonucu_1"];
-const ms0=o["Maç Sonucu_0"];
-const ms2=o["Maç Sonucu_2"];
-const p1=oranToPct(ms1);
-const px=oranToPct(ms0);
-const p2=oranToPct(ms2);
-const au_alt=o["Alt/Üst 2.5_Alt"];
-const au_ust=o["Alt/Üst 2.5_Üst"];
-const kg_var=o["Karşılıklı Gol_Var"];
-const kg_yok=o["Karşılıklı Gol_Yok"];
+const ms1=o["Maç Sonucu_1"]||0;
+const ms0=o["Maç Sonucu_0"]||0;
+const ms2=o["Maç Sonucu_2"]||0;
+const p1=pct(ms1),px_v=pct(ms0),p2=pct(ms2);
+const au_a=o["Alt/Üst 2.5_Alt"];
+const au_u=o["Alt/Üst 2.5_Üst"];
+const kg_v=o["Karşılıklı Gol_Var"];
+const kg_y=o["Karşılıklı Gol_Yok"];
+const iy1=o["İY Sonuç_1"];
+const iy0=o["İY Sonuç_0"];
+const iy2=o["İY Sonuç_2"];
 
-html+='<div class="mac">';
-html+='<div class="mac-row" onclick="detayToggle(\''+id+'\')">';
+const hl=oranTuru&&o[oranTuru]?" highlight":"";
 
-// Saat
-html+='<div class="mac-saat"><span class="saat">'+m.saat+'</span><span class="tarih">'+m.tarih.substring(5)+'</span><span class="kod">#'+(m.mac_kodu||"")+'</span></div>';
+h+='<div class="mac'+hl+'">';
+h+='<div class="mac-row" onclick="dtoggle(\''+id+'\')">';
+h+='<div class="mac-saat"><span class="saat">'+m.saat+'</span><span class="tarih-k">'+m.tarih.substring(5)+'</span><span class="kod">#'+(m.mac_kodu||"")+'</span></div>';
+h+='<div class="mac-takimlar"><span class="ev">'+m.ev_sahibi+'</span><span class="dep">'+m.deplasman+'</span></div>';
+h+='<div class="mac-oranlar">';
+if(ms1){h+=ok("1",ms1,p1)+ok("X",ms0,px_v)+ok("2",ms2,p2)}
+if(au_a){h+=ok("Alt",au_a,pct(au_a))+ok("Üst",au_u,pct(au_u))}
+if(kg_v){h+=ok("KG V",kg_v,"")+ok("KG Y",kg_y,"")}
+if(iy1){h+=ok("İY1",iy1,"")+ok("İYX",iy0,"")+ok("İY2",iy2,"")}
+h+='</div>';
+h+='<div class="mac-arrow" id="aw_'+id+'">▼</div>';
+h+='</div>';
 
-// Takımlar
-html+='<div class="mac-takimlar"><span class="takim ev">'+m.ev_sahibi+'</span><span class="takim dep">'+m.deplasman+'</span></div>';
+if(ms1){h+='<div class="pct-bar"><div class="p1" style="width:'+p1+'%"></div><div class="px" style="width:'+px_v+'%"></div><div class="p2" style="width:'+p2+'%"></div></div>'}
 
-// Ana oranlar
-html+='<div class="mac-oranlar">';
-if(ms1){
-html+='<div class="oran-kutu"><span class="o-label">1</span><span class="o-value">'+ms1+'</span><span class="o-pct">%'+p1+'</span></div>';
-html+='<div class="oran-kutu"><span class="o-label">X</span><span class="o-value">'+ms0+'</span><span class="o-pct">%'+px+'</span></div>';
-html+='<div class="oran-kutu"><span class="o-label">2</span><span class="o-value">'+ms2+'</span><span class="o-pct">%'+p2+'</span></div>';
-}
-if(au_alt){
-html+='<div class="oran-kutu"><span class="o-label">Alt</span><span class="o-value">'+au_alt+'</span><span class="o-pct">%'+oranToPct(au_alt)+'</span></div>';
-html+='<div class="oran-kutu"><span class="o-label">Üst</span><span class="o-value">'+au_ust+'</span><span class="o-pct">%'+oranToPct(au_ust)+'</span></div>';
-}
-if(kg_var){
-html+='<div class="oran-kutu"><span class="o-label">KG V</span><span class="o-value">'+kg_var+'</span></div>';
-html+='<div class="oran-kutu"><span class="o-label">KG Y</span><span class="o-value">'+kg_yok+'</span></div>';
-}
-html+='</div>';
+// DETAY
+h+='<div class="detay" id="'+id+'">';
+const gr={};
+Object.keys(o).forEach(k=>{
+if(k==="Handikap")return;
+const ps=k.split("_");
+let g=ps.length>1?ps[0]:"Genel";
+const l=ps.length>1?ps.slice(1).join(" "):ps[0];
+if(!gr[g])gr[g]=[];
+gr[g].push({l:l,v:o[k],p:pct(o[k])})});
 
-// Yüzde barı
-if(ms1){
-html+='<div class="pct-bar"><div class="pct-1" style="width:'+p1+'%"></div><div class="pct-x" style="width:'+px+'%"></div><div class="pct-2" style="width:'+p2+'%"></div></div>';
-}
+const gn=Object.keys(gr);
+h+='<div class="dtabs">';
+gn.forEach((g,i)=>{h+='<div class="dtab'+(i===0?" a":"")+'" onclick="tc(\''+id+'\','+i+')">'+g+' ('+gr[g].length+')</div>'});
+h+='</div>';
 
-// Arrow
-html+='<div class="mac-arrow" id="arrow_'+id+'">▼</div>';
+gn.forEach((g,i)=>{
+h+='<div class="dcon'+(i===0?" a":"")+'" id="'+id+'_t'+i+'">';
+h+='<div class="dgrup"><div class="dgbaslik">'+g+'</div><div class="dsatirlar">';
+gr[g].forEach(item=>{
+h+='<div class="doran"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';
+if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';
+h+='</div>'});
+h+='</div></div></div>'});
 
-html+='</div>';
+h+='</div></div>'})});
 
-// DETAY PANEL
-html+='<div class="detay-panel" id="'+id+'">';
+document.getElementById("container").innerHTML=h;
+document.getElementById("footer").textContent=maclar.length+" maç | Kaynak: iddaa.com | "+new Date().toLocaleDateString("tr-TR")}
 
-// Grupları oluştur
-const grouped={};
-Object.keys(o).forEach(key=>{
-if(key==="Handikap")return;
-const parts=key.split("_");
-let group=parts.length>1?parts[0]:"Genel";
-const label=parts.length>1?parts.slice(1).join(" "):parts[0];
-if(!grouped[group])grouped[group]=[];
-grouped[group].push({label:label,value:o[key],pct:oranToPct(o[key])});
-});
-
-// Tabs
-const grupAdlari=Object.keys(grouped);
-html+='<div class="detay-tabs">';
-grupAdlari.forEach((g,gi)=>{
-html+='<div class="detay-tab'+(gi===0?" aktif":"")+'" onclick="tabDegistir(\''+id+'\','+gi+')">'+g+' ('+grouped[g].length+')</div>';
-});
-html+='</div>';
-
-// İçerikler
-grupAdlari.forEach((g,gi)=>{
-html+='<div class="detay-icerik'+(gi===0?" aktif":"")+'" id="'+id+'_tab'+gi+'">';
-html+='<div class="detay-grup">';
-html+='<div class="detay-grup-baslik">'+g+'</div>';
-html+='<div class="detay-satirlar">';
-grouped[g].forEach(item=>{
-html+='<div class="detay-oran">';
-html+='<span class="do-label">'+item.label+'</span>';
-html+='<span class="do-value">'+item.value+'</span>';
-if(item.pct>0&&item.pct<100)html+='<span class="do-pct">%'+item.pct+'</span>';
-html+='</div>';
-});
-html+='</div></div></div>';
-});
-
-html+='</div></div>';
-});
-});
-
-document.getElementById("container").innerHTML=html;
-document.getElementById("footer").textContent="Toplam "+maclar.length+" maç gösteriliyor | Kaynak: iddaa.com | "+new Date().toLocaleDateString("tr-TR");
-}
-
-function detayToggle(id){
-const panel=document.getElementById(id);
-const arrow=document.getElementById("arrow_"+id);
-panel.classList.toggle("acik");
-arrow.classList.toggle("open");
-}
-
-function tabDegistir(id,tabIdx){
-const panel=document.getElementById(id);
-const tabs=panel.parentElement.querySelectorAll(".detay-tab");
-const iceriks=panel.querySelectorAll(".detay-icerik");
-tabs.forEach((t,i)=>{t.classList.toggle("aktif",i===tabIdx)});
-iceriks.forEach((c,i)=>{c.classList.toggle("aktif",i===tabIdx)});
-}
+function ok(l,v,p){return'<div class="ok"><span class="ol">'+l+'</span><span class="ov">'+v+'</span>'+(p?'<span class="op">%'+p+'</span>':'')+'</div>'}
+function dtoggle(id){document.getElementById(id).classList.toggle("acik");document.getElementById("aw_"+id).classList.toggle("open")}
+function tc(id,ti){
+const p=document.getElementById(id);
+p.querySelectorAll(".dtab").forEach((t,i)=>t.classList.toggle("a",i===ti));
+p.querySelectorAll(".dcon").forEach((c,i)=>c.classList.toggle("a",i===ti))}
 
 yukle();
 </script>

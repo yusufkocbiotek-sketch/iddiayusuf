@@ -3,50 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İddaa Oranları</title>
+<title>İddaa Oranları - Güncel Bülten</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#0f1923;color:#fff;min-height:100vh}
-.header{background:#1a2634;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #2ecc71}
-.header h1{font-size:20px;color:#2ecc71}
-.header .info{font-size:12px;color:#888}
-.filters{background:#1a2634;padding:10px 20px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #233}
-.filters input,.filters select{background:#0f1923;color:#fff;border:1px solid #334;padding:8px 12px;border-radius:5px;font-size:13px}
-.filters input{width:200px}
-.stats{display:flex;gap:15px;padding:10px 20px;background:#1a2634;border-bottom:1px solid #233;flex-wrap:wrap}
-.stat{background:#0f1923;padding:8px 15px;border-radius:5px;font-size:13px}
-.stat b{color:#2ecc71}
-.container{padding:10px}
-.mac{background:#1a2634;border-radius:8px;margin-bottom:8px;overflow:hidden}
-.mac-header{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;cursor:pointer;transition:background .2s}
-.mac-header:hover{background:#233}
-.mac-teams{display:flex;align-items:center;gap:10px;flex:1}
-.mac-teams .vs{color:#555;font-size:12px}
-.mac-teams .team{font-size:14px;font-weight:500}
-.mac-meta{display:flex;gap:15px;align-items:center}
-.mac-meta .saat{color:#2ecc71;font-weight:700;font-size:14px}
-.mac-meta .tarih{color:#888;font-size:11px}
-.mac-meta .kod{color:#555;font-size:11px}
-.oranlar{display:flex;gap:5px;flex-wrap:wrap}
-.oran{background:#0f1923;padding:4px 8px;border-radius:4px;font-size:12px;text-align:center;min-width:45px}
-.oran .label{color:#888;font-size:9px;display:block}
-.oran .value{color:#f39c12;font-weight:700;font-size:13px}
-.detay{display:none;padding:10px 15px;border-top:1px solid #233;background:#162029}
-.detay.acik{display:block}
-.detay-grid{display:flex;flex-wrap:wrap;gap:5px}
-.detay-group{background:#1a2634;border-radius:5px;padding:8px;margin-bottom:5px;width:100%}
-.detay-group-title{color:#2ecc71;font-size:12px;font-weight:700;margin-bottom:5px;border-bottom:1px solid #233;padding-bottom:3px}
-.detay-oran{display:inline-flex;flex-direction:column;align-items:center;background:#0f1923;padding:4px 8px;border-radius:4px;margin:2px;min-width:60px}
-.detay-oran .dlabel{color:#aaa;font-size:9px}
-.detay-oran .dvalue{color:#f39c12;font-weight:700;font-size:12px}
-.arrow{color:#555;font-size:18px;transition:transform .2s}
-.arrow.acik{transform:rotate(180deg)}
-.loading{text-align:center;padding:50px;font-size:18px;color:#888}
-.hata{text-align:center;padding:50px;color:#e74c3c}
-@media(max-width:600px){
-.mac-header{flex-direction:column;align-items:flex-start;gap:8px}
-.oranlar{width:100%}
-.filters input{width:100%}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;min-height:100vh}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#1a1f2e,#0d1117);padding:15px 20px;border-bottom:2px solid #00c853;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.header h1{font-size:22px;color:#00c853;display:flex;align-items:center;gap:8px}
+.header .guncelleme{font-size:11px;color:#666;text-align:right}
+
+/* STATS BAR */
+.stats-bar{background:#161b22;padding:12px 20px;display:flex;gap:12px;flex-wrap:wrap;border-bottom:1px solid #21262d;overflow-x:auto}
+.stat-item{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:8px 14px;display:flex;flex-direction:column;align-items:center;min-width:80px}
+.stat-item .stat-value{font-size:18px;font-weight:700;color:#00c853}
+.stat-item .stat-label{font-size:10px;color:#888;margin-top:2px}
+
+/* FILTERS */
+.filters{background:#161b22;padding:12px 20px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #21262d;align-items:center}
+.filters input,.filters select{background:#0d1117;color:#e6e6e6;border:1px solid #30363d;padding:8px 12px;border-radius:6px;font-size:13px;outline:none}
+.filters input:focus,.filters select:focus{border-color:#00c853}
+.filters input{min-width:200px;flex:1;max-width:300px}
+.filters select{min-width:140px}
+.filter-label{font-size:11px;color:#888}
+.btn-reset{background:#21262d;color:#e6e6e6;border:1px solid #30363d;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:12px}
+.btn-reset:hover{background:#30363d}
+
+/* MATCH CONTAINER */
+.container{padding:10px 15px;max-width:1400px;margin:0 auto}
+
+/* LIG HEADER */
+.lig-header{background:#161b22;border:1px solid #21262d;border-radius:8px 8px 0 0;padding:10px 15px;margin-top:12px;font-size:13px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;align-items:center}
+.lig-header .lig-count{background:#00c853;color:#0d1117;padding:2px 8px;border-radius:10px;font-size:11px}
+
+/* MATCH CARD */
+.mac{background:#161b22;border:1px solid #21262d;margin-bottom:2px;transition:all .2s}
+.mac:last-child{border-radius:0 0 8px 8px;margin-bottom:0}
+.mac:hover{border-color:#30363d}
+
+.mac-row{display:grid;grid-template-columns:70px 1fr auto auto 40px;align-items:center;padding:10px 15px;cursor:pointer;gap:10px}
+.mac-saat{display:flex;flex-direction:column;align-items:center}
+.mac-saat .saat{color:#00c853;font-weight:700;font-size:15px}
+.mac-saat .tarih{color:#555;font-size:10px}
+.mac-saat .kod{color:#444;font-size:9px}
+
+.mac-takimlar{display:flex;flex-direction:column;gap:2px}
+.mac-takimlar .takim{font-size:13px;font-weight:500}
+.mac-takimlar .takim.ev{color:#e6e6e6}
+.mac-takimlar .takim.dep{color:#aaa}
+
+.mac-oranlar{display:flex;gap:4px;flex-wrap:wrap}
+.oran-kutu{display:flex;flex-direction:column;align-items:center;background:#0d1117;border:1px solid #21262d;border-radius:4px;padding:4px 6px;min-width:44px;transition:all .2s}
+.oran-kutu:hover{border-color:#00c853}
+.oran-kutu .o-label{font-size:8px;color:#666;text-transform:uppercase}
+.oran-kutu .o-value{font-size:13px;font-weight:700;color:#f0b90b}
+.oran-kutu .o-pct{font-size:8px;color:#00c853}
+
+.mac-ekstra{display:flex;gap:3px;flex-wrap:wrap}
+.oran-mini{background:#0d1117;border:1px solid #1a1f2e;border-radius:3px;padding:2px 5px;font-size:10px;text-align:center}
+.oran-mini .om-label{color:#555;font-size:8px;display:block}
+.oran-mini .om-value{color:#ccc;font-weight:600}
+
+.mac-arrow{text-align:center;color:#444;font-size:16px;transition:transform .3s}
+.mac-arrow.open{transform:rotate(180deg);color:#00c853}
+
+/* DETAY PANEL */
+.detay-panel{display:none;background:#0d1117;border-top:1px solid #21262d;padding:15px}
+.detay-panel.acik{display:block}
+
+.detay-tabs{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
+.detay-tab{background:#161b22;border:1px solid #21262d;color:#888;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:11px;transition:all .2s}
+.detay-tab:hover,.detay-tab.aktif{background:#00c853;color:#0d1117;border-color:#00c853;font-weight:700}
+
+.detay-icerik{display:none}
+.detay-icerik.aktif{display:block}
+
+.detay-grup{margin-bottom:10px}
+.detay-grup-baslik{color:#00c853;font-size:12px;font-weight:700;padding:5px 0;border-bottom:1px solid #21262d;margin-bottom:5px}
+.detay-satirlar{display:flex;flex-wrap:wrap;gap:4px}
+
+.detay-oran{display:flex;flex-direction:column;align-items:center;background:#161b22;border:1px solid #21262d;border-radius:5px;padding:5px 8px;min-width:65px;transition:all .2s}
+.detay-oran:hover{border-color:#00c853;background:#1a2233}
+.detay-oran .do-label{font-size:9px;color:#888;text-align:center}
+.detay-oran .do-value{font-size:13px;font-weight:700;color:#f0b90b}
+.detay-oran .do-pct{font-size:8px;color:#00c853}
+
+/* YÜZDE BAR */
+.pct-bar{display:flex;height:4px;border-radius:2px;overflow:hidden;margin-top:4px;width:100%}
+.pct-bar .pct-1{background:#00c853}
+.pct-bar .pct-x{background:#f0b90b}
+.pct-bar .pct-2{background:#e74c3c}
+
+/* LOADING */
+.loading{text-align:center;padding:80px 20px}
+.loading .spinner{width:40px;height:40px;border:4px solid #21262d;border-top:4px solid #00c853;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:#888;font-size:14px}
+
+.hata{text-align:center;padding:60px 20px;color:#e74c3c}
+.bos{text-align:center;padding:40px;color:#666;font-size:14px}
+
+/* FOOTER */
+.footer{background:#161b22;border-top:1px solid #21262d;padding:12px 20px;text-align:center;font-size:11px;color:#444;margin-top:20px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.mac-row{grid-template-columns:55px 1fr auto 30px;gap:8px}
+.mac-ekstra{display:none}
+.header h1{font-size:17px}
+.filters{flex-direction:column}
+.filters input{max-width:100%;width:100%}
+.stat-item{padding:6px 10px}
+.stat-item .stat-value{font-size:15px}
+}
+@media(max-width:480px){
+.mac-oranlar{gap:2px}
+.oran-kutu{min-width:38px;padding:3px 4px}
+.oran-kutu .o-value{font-size:11px}
 }
 </style>
 </head>
@@ -54,168 +127,257 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0f1923;color:#fff;min-h
 
 <div class="header">
 <h1>⚽ İddaa Oranları</h1>
-<div class="info" id="guncelleme"></div>
+<div class="guncelleme" id="guncelleme">Yükleniyor...</div>
 </div>
+
+<div class="stats-bar" id="statsBar"></div>
 
 <div class="filters">
-<input type="text" id="arama" placeholder="🔍 Takım ara..." oninput="filtrele()">
-<select id="tarihFiltre" onchange="filtrele()">
-<option value="">Tüm Tarihler</option>
+<input type="text" id="aramaInput" placeholder="🔍 Takım veya lig ara..." oninput="filtrele()">
+<select id="tarihSelect" onchange="filtrele()"><option value="">📅 Tüm Tarihler</option></select>
+<select id="ligSelect" onchange="filtrele()"><option value="">🏆 Tüm Ligler</option></select>
+<select id="siralama" onchange="filtrele()">
+<option value="tarih">Tarihe Göre</option>
+<option value="oran1">MS 1 (Düşük→Yüksek)</option>
+<option value="oran2">MS 2 (Düşük→Yüksek)</option>
+<option value="ust">Üst 2.5 (Düşük→Yüksek)</option>
 </select>
+<button class="btn-reset" onclick="resetFiltre()">↺ Sıfırla</button>
 </div>
 
-<div class="stats" id="stats"></div>
-
-<div class="container" id="maclar">
-<div class="loading">⏳ Maçlar yükleniyor...</div>
+<div class="container" id="container">
+<div class="loading"><div class="spinner"></div><p>Maçlar yükleniyor...</p></div>
 </div>
+
+<div class="footer" id="footer"></div>
 
 <script>
-const JSON_URL = "https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
+const JSON_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
+let tumMaclar=[];
+let jsonData={};
 
-let tumMaclar = [];
-
-async function verileriYukle() {
-  try {
-    const res = await fetch(JSON_URL + "?t=" + Date.now());
-    const data = await res.json();
-    tumMaclar = data.matches || [];
-
-    document.getElementById("guncelleme").textContent =
-      "Son güncelleme: " + new Date(data.updated).toLocaleString("tr-TR");
-
-    tarihleriDoldur();
-    filtrele();
-  } catch (e) {
-    document.getElementById("maclar").innerHTML =
-      '<div class="hata">❌ Veriler yüklenemedi!<br>' + e.message + '</div>';
-  }
+async function yukle(){
+try{
+const r=await fetch(JSON_URL+"?t="+Date.now());
+const d=await r.json();
+jsonData=d;
+tumMaclar=d.matches||[];
+document.getElementById("guncelleme").innerHTML="Son güncelleme: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>Kaynak: iddaa.com";
+tarihleriDoldur();
+ligleriDoldur();
+filtrele();
+}catch(e){
+document.getElementById("container").innerHTML='<div class="hata">❌ Veri yüklenemedi: '+e.message+'</div>';
+}
 }
 
-function tarihleriDoldur() {
-  const tarihler = [...new Set(tumMaclar.map(m => m.tarih))].sort();
-  const select = document.getElementById("tarihFiltre");
-  tarihler.forEach(t => {
-    const opt = document.createElement("option");
-    opt.value = t;
-    const d = new Date(t);
-    opt.textContent = d.toLocaleDateString("tr-TR", {day:"numeric",month:"long",weekday:"long"});
-    select.appendChild(opt);
-  });
+function tarihleriDoldur(){
+const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();
+const s=document.getElementById("tarihSelect");
+t.forEach(tarih=>{
+const o=document.createElement("option");
+o.value=tarih;
+const d=new Date(tarih);
+o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});
+s.appendChild(o);
+});
 }
 
-function filtrele() {
-  const arama = document.getElementById("arama").value.toLowerCase();
-  const tarih = document.getElementById("tarihFiltre").value;
-
-  let sonuc = tumMaclar;
-
-  if (arama) {
-    sonuc = sonuc.filter(m =>
-      m.ev_sahibi.toLowerCase().includes(arama) ||
-      m.deplasman.toLowerCase().includes(arama)
-    );
-  }
-
-  if (tarih) {
-    sonuc = sonuc.filter(m => m.tarih === tarih);
-  }
-
-  istatistikleriGoster(sonuc);
-  maclariGoster(sonuc);
+function ligleriDoldur(){
+const ligler=[...new Set(tumMaclar.map(m=>m.lig||"Diğer").filter(l=>l&&l.trim()))].sort();
+const s=document.getElementById("ligSelect");
+ligler.forEach(l=>{
+const o=document.createElement("option");
+o.value=l;
+o.textContent=l;
+s.appendChild(o);
+});
 }
 
-function istatistikleriGoster(maclar) {
-  const toplamOran = maclar.reduce((t, m) => t + Object.keys(m.oranlar).length, 0);
-  document.getElementById("stats").innerHTML =
-    '<div class="stat">⚽ <b>' + maclar.length + '</b> maç</div>' +
-    '<div class="stat">📊 <b>' + toplamOran + '</b> oran</div>' +
-    '<div class="stat">📅 <b>' + new Set(maclar.map(m=>m.tarih)).size + '</b> gün</div>';
+function oranToPct(o){
+if(!o||o<=0)return 0;
+return Math.round((1/o)*10000)/100;
 }
 
-function maclariGoster(maclar) {
-  if (maclar.length === 0) {
-    document.getElementById("maclar").innerHTML =
-      '<div class="loading">Maç bulunamadı</div>';
-    return;
-  }
+function filtrele(){
+const arama=document.getElementById("aramaInput").value.toLowerCase();
+const tarih=document.getElementById("tarihSelect").value;
+const lig=document.getElementById("ligSelect").value;
+const sira=document.getElementById("siralama").value;
 
-  let html = "";
+let sonuc=tumMaclar.filter(m=>{
+if(arama&&!m.ev_sahibi.toLowerCase().includes(arama)&&!m.deplasman.toLowerCase().includes(arama)&&!(m.lig||"").toLowerCase().includes(arama))return false;
+if(tarih&&m.tarih!==tarih)return false;
+if(lig&&(m.lig||"Diğer")!==lig)return false;
+return true;
+});
 
-  maclar.forEach((m, idx) => {
-    const o = m.oranlar;
-    const detayId = "detay-" + idx;
+if(sira==="oran1")sonuc.sort((a,b)=>(a.oranlar["Maç Sonucu_1"]||99)-(b.oranlar["Maç Sonucu_1"]||99));
+else if(sira==="oran2")sonuc.sort((a,b)=>(a.oranlar["Maç Sonucu_2"]||99)-(b.oranlar["Maç Sonucu_2"]||99));
+else if(sira==="ust")sonuc.sort((a,b)=>(a.oranlar["Alt/Üst 2.5_Üst"]||99)-(b.oranlar["Alt/Üst 2.5_Üst"]||99));
+else sonuc.sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
 
-    html += '<div class="mac">';
-    html += '<div class="mac-header" onclick="detayAcKapa(\'' + detayId + '\', this)">';
-
-    html += '<div class="mac-teams">';
-    html += '<span class="team">' + m.ev_sahibi + '</span>';
-    html += '<span class="vs">vs</span>';
-    html += '<span class="team">' + m.deplasman + '</span>';
-    html += '</div>';
-
-    html += '<div class="oranlar">';
-    if (o["Maç Sonucu_1"]) {
-      html += '<div class="oran"><span class="label">1</span><span class="value">' + o["Maç Sonucu_1"] + '</span></div>';
-      html += '<div class="oran"><span class="label">X</span><span class="value">' + o["Maç Sonucu_0"] + '</span></div>';
-      html += '<div class="oran"><span class="label">2</span><span class="value">' + o["Maç Sonucu_2"] + '</span></div>';
-    }
-    if (o["Alt/Üst 2.5_Alt"]) {
-      html += '<div class="oran"><span class="label">Alt</span><span class="value">' + o["Alt/Üst 2.5_Alt"] + '</span></div>';
-      html += '<div class="oran"><span class="label">Üst</span><span class="value">' + o["Alt/Üst 2.5_Üst"] + '</span></div>';
-    }
-    html += '</div>';
-
-    html += '<div class="mac-meta">';
-    html += '<span class="saat">' + m.saat + '</span>';
-    html += '<span class="tarih">' + m.tarih + '</span>';
-    html += '<span class="kod">#' + (m.mac_kodu||"") + '</span>';
-    html += '<span class="arrow" id="arrow-' + detayId + '">▼</span>';
-    html += '</div>';
-
-    html += '</div>';
-
-    // Detay oranları
-    html += '<div class="detay" id="' + detayId + '">';
-    const grouped = {};
-    Object.keys(o).forEach(key => {
-      if (key === "Handikap") return;
-      const parts = key.split("_");
-      const group = parts.length > 1 ? parts[0] : "Diğer";
-      const label = parts.length > 1 ? parts.slice(1).join("_") : parts[0];
-      if (!grouped[group]) grouped[group] = [];
-      grouped[group].push({label: label, value: o[key]});
-    });
-
-    Object.keys(grouped).forEach(group => {
-      html += '<div class="detay-group">';
-      html += '<div class="detay-group-title">' + group + '</div>';
-      html += '<div class="detay-grid">';
-      grouped[group].forEach(item => {
-        html += '<div class="detay-oran">';
-        html += '<span class="dlabel">' + item.label + '</span>';
-        html += '<span class="dvalue">' + item.value + '</span>';
-        html += '</div>';
-      });
-      html += '</div></div>';
-    });
-
-    html += '</div></div>';
-  });
-
-  document.getElementById("maclar").innerHTML = html;
+statsGoster(sonuc);
+maclariGoster(sonuc);
 }
 
-function detayAcKapa(id, header) {
-  const detay = document.getElementById(id);
-  const arrow = document.getElementById("arrow-" + id);
-  detay.classList.toggle("acik");
-  arrow.classList.toggle("acik");
+function resetFiltre(){
+document.getElementById("aramaInput").value="";
+document.getElementById("tarihSelect").value="";
+document.getElementById("ligSelect").value="";
+document.getElementById("siralama").value="tarih";
+filtrele();
 }
 
-verileriYukle();
+function statsGoster(maclar){
+const topOran=maclar.reduce((t,m)=>t+Object.keys(m.oranlar).length,0);
+const gunler=new Set(maclar.map(m=>m.tarih)).size;
+const ligler=new Set(maclar.map(m=>m.lig||"Diğer")).size;
+const ortOran=maclar.length?Math.round(topOran/maclar.length):0;
+
+document.getElementById("statsBar").innerHTML=
+'<div class="stat-item"><div class="stat-value">'+maclar.length+'</div><div class="stat-label">Maç</div></div>'+
+'<div class="stat-item"><div class="stat-value">'+topOran.toLocaleString()+'</div><div class="stat-label">Toplam Oran</div></div>'+
+'<div class="stat-item"><div class="stat-value">'+ortOran+'</div><div class="stat-label">Ort. Oran/Maç</div></div>'+
+'<div class="stat-item"><div class="stat-value">'+gunler+'</div><div class="stat-label">Gün</div></div>'+
+'<div class="stat-item"><div class="stat-value">'+ligler+'</div><div class="stat-label">Lig</div></div>';
+}
+
+function maclariGoster(maclar){
+if(maclar.length===0){
+document.getElementById("container").innerHTML='<div class="bos">🔍 Sonuç bulunamadı</div>';
+document.getElementById("footer").textContent="";
+return;
+}
+
+// Tarihe göre grupla
+const gruplar={};
+maclar.forEach(m=>{
+const key=m.tarih;
+if(!gruplar[key])gruplar[key]=[];
+gruplar[key].push(m);
+});
+
+let html="";
+Object.keys(gruplar).sort().forEach(tarih=>{
+const gunMaclari=gruplar[tarih];
+const d=new Date(tarih);
+const tarihStr=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"});
+
+html+='<div class="lig-header">📅 '+tarihStr+'<span class="lig-count">'+gunMaclari.length+' maç</span></div>';
+
+gunMaclari.forEach((m,idx)=>{
+const o=m.oranlar;
+const id="d_"+tarih.replace(/-/g,"")+"_"+idx;
+const ms1=o["Maç Sonucu_1"];
+const ms0=o["Maç Sonucu_0"];
+const ms2=o["Maç Sonucu_2"];
+const p1=oranToPct(ms1);
+const px=oranToPct(ms0);
+const p2=oranToPct(ms2);
+const au_alt=o["Alt/Üst 2.5_Alt"];
+const au_ust=o["Alt/Üst 2.5_Üst"];
+const kg_var=o["Karşılıklı Gol_Var"];
+const kg_yok=o["Karşılıklı Gol_Yok"];
+
+html+='<div class="mac">';
+html+='<div class="mac-row" onclick="detayToggle(\''+id+'\')">';
+
+// Saat
+html+='<div class="mac-saat"><span class="saat">'+m.saat+'</span><span class="tarih">'+m.tarih.substring(5)+'</span><span class="kod">#'+(m.mac_kodu||"")+'</span></div>';
+
+// Takımlar
+html+='<div class="mac-takimlar"><span class="takim ev">'+m.ev_sahibi+'</span><span class="takim dep">'+m.deplasman+'</span></div>';
+
+// Ana oranlar
+html+='<div class="mac-oranlar">';
+if(ms1){
+html+='<div class="oran-kutu"><span class="o-label">1</span><span class="o-value">'+ms1+'</span><span class="o-pct">%'+p1+'</span></div>';
+html+='<div class="oran-kutu"><span class="o-label">X</span><span class="o-value">'+ms0+'</span><span class="o-pct">%'+px+'</span></div>';
+html+='<div class="oran-kutu"><span class="o-label">2</span><span class="o-value">'+ms2+'</span><span class="o-pct">%'+p2+'</span></div>';
+}
+if(au_alt){
+html+='<div class="oran-kutu"><span class="o-label">Alt</span><span class="o-value">'+au_alt+'</span><span class="o-pct">%'+oranToPct(au_alt)+'</span></div>';
+html+='<div class="oran-kutu"><span class="o-label">Üst</span><span class="o-value">'+au_ust+'</span><span class="o-pct">%'+oranToPct(au_ust)+'</span></div>';
+}
+if(kg_var){
+html+='<div class="oran-kutu"><span class="o-label">KG V</span><span class="o-value">'+kg_var+'</span></div>';
+html+='<div class="oran-kutu"><span class="o-label">KG Y</span><span class="o-value">'+kg_yok+'</span></div>';
+}
+html+='</div>';
+
+// Yüzde barı
+if(ms1){
+html+='<div class="pct-bar"><div class="pct-1" style="width:'+p1+'%"></div><div class="pct-x" style="width:'+px+'%"></div><div class="pct-2" style="width:'+p2+'%"></div></div>';
+}
+
+// Arrow
+html+='<div class="mac-arrow" id="arrow_'+id+'">▼</div>';
+
+html+='</div>';
+
+// DETAY PANEL
+html+='<div class="detay-panel" id="'+id+'">';
+
+// Grupları oluştur
+const grouped={};
+Object.keys(o).forEach(key=>{
+if(key==="Handikap")return;
+const parts=key.split("_");
+let group=parts.length>1?parts[0]:"Genel";
+const label=parts.length>1?parts.slice(1).join(" "):parts[0];
+if(!grouped[group])grouped[group]=[];
+grouped[group].push({label:label,value:o[key],pct:oranToPct(o[key])});
+});
+
+// Tabs
+const grupAdlari=Object.keys(grouped);
+html+='<div class="detay-tabs">';
+grupAdlari.forEach((g,gi)=>{
+html+='<div class="detay-tab'+(gi===0?" aktif":"")+'" onclick="tabDegistir(\''+id+'\','+gi+')">'+g+' ('+grouped[g].length+')</div>';
+});
+html+='</div>';
+
+// İçerikler
+grupAdlari.forEach((g,gi)=>{
+html+='<div class="detay-icerik'+(gi===0?" aktif":"")+'" id="'+id+'_tab'+gi+'">';
+html+='<div class="detay-grup">';
+html+='<div class="detay-grup-baslik">'+g+'</div>';
+html+='<div class="detay-satirlar">';
+grouped[g].forEach(item=>{
+html+='<div class="detay-oran">';
+html+='<span class="do-label">'+item.label+'</span>';
+html+='<span class="do-value">'+item.value+'</span>';
+if(item.pct>0&&item.pct<100)html+='<span class="do-pct">%'+item.pct+'</span>';
+html+='</div>';
+});
+html+='</div></div></div>';
+});
+
+html+='</div></div>';
+});
+});
+
+document.getElementById("container").innerHTML=html;
+document.getElementById("footer").textContent="Toplam "+maclar.length+" maç gösteriliyor | Kaynak: iddaa.com | "+new Date().toLocaleDateString("tr-TR");
+}
+
+function detayToggle(id){
+const panel=document.getElementById(id);
+const arrow=document.getElementById("arrow_"+id);
+panel.classList.toggle("acik");
+arrow.classList.toggle("open");
+}
+
+function tabDegistir(id,tabIdx){
+const panel=document.getElementById(id);
+const tabs=panel.parentElement.querySelectorAll(".detay-tab");
+const iceriks=panel.querySelectorAll(".detay-icerik");
+tabs.forEach((t,i)=>{t.classList.toggle("aktif",i===tabIdx)});
+iceriks.forEach((c,i)=>{c.classList.toggle("aktif",i===tabIdx)});
+}
+
+yukle();
 </script>
-
 </body>
 </html>

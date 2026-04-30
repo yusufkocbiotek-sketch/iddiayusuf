@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İddaa Oranları</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#0f1923;color:#fff;min-height:100vh}
+.header{background:#1a2634;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #2ecc71}
+.header h1{font-size:20px;color:#2ecc71}
+.header .info{font-size:12px;color:#888}
+.filters{background:#1a2634;padding:10px 20px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #233}
+.filters input,.filters select{background:#0f1923;color:#fff;border:1px solid #334;padding:8px 12px;border-radius:5px;font-size:13px}
+.filters input{width:200px}
+.stats{display:flex;gap:15px;padding:10px 20px;background:#1a2634;border-bottom:1px solid #233;flex-wrap:wrap}
+.stat{background:#0f1923;padding:8px 15px;border-radius:5px;font-size:13px}
+.stat b{color:#2ecc71}
+.container{padding:10px}
+.mac{background:#1a2634;border-radius:8px;margin-bottom:8px;overflow:hidden}
+.mac-header{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;cursor:pointer;transition:background .2s}
+.mac-header:hover{background:#233}
+.mac-teams{display:flex;align-items:center;gap:10px;flex:1}
+.mac-teams .vs{color:#555;font-size:12px}
+.mac-teams .team{font-size:14px;font-weight:500}
+.mac-meta{display:flex;gap:15px;align-items:center}
+.mac-meta .saat{color:#2ecc71;font-weight:700;font-size:14px}
+.mac-meta .tarih{color:#888;font-size:11px}
+.mac-meta .kod{color:#555;font-size:11px}
+.oranlar{display:flex;gap:5px;flex-wrap:wrap}
+.oran{background:#0f1923;padding:4px 8px;border-radius:4px;font-size:12px;text-align:center;min-width:45px}
+.oran .label{color:#888;font-size:9px;display:block}
+.oran .value{color:#f39c12;font-weight:700;font-size:13px}
+.detay{display:none;padding:10px 15px;border-top:1px solid #233;background:#162029}
+.detay.acik{display:block}
+.detay-grid{display:flex;flex-wrap:wrap;gap:5px}
+.detay-group{background:#1a2634;border-radius:5px;padding:8px;margin-bottom:5px;width:100%}
+.detay-group-title{color:#2ecc71;font-size:12px;font-weight:700;margin-bottom:5px;border-bottom:1px solid #233;padding-bottom:3px}
+.detay-oran{display:inline-flex;flex-direction:column;align-items:center;background:#0f1923;padding:4px 8px;border-radius:4px;margin:2px;min-width:60px}
+.detay-oran .dlabel{color:#aaa;font-size:9px}
+.detay-oran .dvalue{color:#f39c12;font-weight:700;font-size:12px}
+.arrow{color:#555;font-size:18px;transition:transform .2s}
+.arrow.acik{transform:rotate(180deg)}
+.loading{text-align:center;padding:50px;font-size:18px;color:#888}
+.hata{text-align:center;padding:50px;color:#e74c3c}
+@media(max-width:600px){
+.mac-header{flex-direction:column;align-items:flex-start;gap:8px}
+.oranlar{width:100%}
+.filters input{width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>⚽ İddaa Oranları</h1>
+<div class="info" id="guncelleme"></div>
+</div>
+
+<div class="filters">
+<input type="text" id="arama" placeholder="🔍 Takım ara..." oninput="filtrele()">
+<select id="tarihFiltre" onchange="filtrele()">
+<option value="">Tüm Tarihler</option>
+</select>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<div class="container" id="maclar">
+<div class="loading">⏳ Maçlar yükleniyor...</div>
+</div>
+
+<script>
+const JSON_URL = "https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
+
+let tumMaclar = [];
+
+async function verileriYukle() {
+  try {
+    const res = await fetch(JSON_URL + "?t=" + Date.now());
+    const data = await res.json();
+    tumMaclar = data.matches || [];
+
+    document.getElementById("guncelleme").textContent =
+      "Son güncelleme: " + new Date(data.updated).toLocaleString("tr-TR");
+
+    tarihleriDoldur();
+    filtrele();
+  } catch (e) {
+    document.getElementById("maclar").innerHTML =
+      '<div class="hata">❌ Veriler yüklenemedi!<br>' + e.message + '</div>';
+  }
+}
+
+function tarihleriDoldur() {
+  const tarihler = [...new Set(tumMaclar.map(m => m.tarih))].sort();
+  const select = document.getElementById("tarihFiltre");
+  tarihler.forEach(t => {
+    const opt = document.createElement("option");
+    opt.value = t;
+    const d = new Date(t);
+    opt.textContent = d.toLocaleDateString("tr-TR", {day:"numeric",month:"long",weekday:"long"});
+    select.appendChild(opt);
+  });
+}
+
+function filtrele() {
+  const arama = document.getElementById("arama").value.toLowerCase();
+  const tarih = document.getElementById("tarihFiltre").value;
+
+  let sonuc = tumMaclar;
+
+  if (arama) {
+    sonuc = sonuc.filter(m =>
+      m.ev_sahibi.toLowerCase().includes(arama) ||
+      m.deplasman.toLowerCase().includes(arama)
+    );
+  }
+
+  if (tarih) {
+    sonuc = sonuc.filter(m => m.tarih === tarih);
+  }
+
+  istatistikleriGoster(sonuc);
+  maclariGoster(sonuc);
+}
+
+function istatistikleriGoster(maclar) {
+  const toplamOran = maclar.reduce((t, m) => t + Object.keys(m.oranlar).length, 0);
+  document.getElementById("stats").innerHTML =
+    '<div class="stat">⚽ <b>' + maclar.length + '</b> maç</div>' +
+    '<div class="stat">📊 <b>' + toplamOran + '</b> oran</div>' +
+    '<div class="stat">📅 <b>' + new Set(maclar.map(m=>m.tarih)).size + '</b> gün</div>';
+}
+
+function maclariGoster(maclar) {
+  if (maclar.length === 0) {
+    document.getElementById("maclar").innerHTML =
+      '<div class="loading">Maç bulunamadı</div>';
+    return;
+  }
+
+  let html = "";
+
+  maclar.forEach((m, idx) => {
+    const o = m.oranlar;
+    const detayId = "detay-" + idx;
+
+    html += '<div class="mac">';
+    html += '<div class="mac-header" onclick="detayAcKapa(\'' + detayId + '\', this)">';
+
+    html += '<div class="mac-teams">';
+    html += '<span class="team">' + m.ev_sahibi + '</span>';
+    html += '<span class="vs">vs</span>';
+    html += '<span class="team">' + m.deplasman + '</span>';
+    html += '</div>';
+
+    html += '<div class="oranlar">';
+    if (o["Maç Sonucu_1"]) {
+      html += '<div class="oran"><span class="label">1</span><span class="value">' + o["Maç Sonucu_1"] + '</span></div>';
+      html += '<div class="oran"><span class="label">X</span><span class="value">' + o["Maç Sonucu_0"] + '</span></div>';
+      html += '<div class="oran"><span class="label">2</span><span class="value">' + o["Maç Sonucu_2"] + '</span></div>';
+    }
+    if (o["Alt/Üst 2.5_Alt"]) {
+      html += '<div class="oran"><span class="label">Alt</span><span class="value">' + o["Alt/Üst 2.5_Alt"] + '</span></div>';
+      html += '<div class="oran"><span class="label">Üst</span><span class="value">' + o["Alt/Üst 2.5_Üst"] + '</span></div>';
+    }
+    html += '</div>';
+
+    html += '<div class="mac-meta">';
+    html += '<span class="saat">' + m.saat + '</span>';
+    html += '<span class="tarih">' + m.tarih + '</span>';
+    html += '<span class="kod">#' + (m.mac_kodu||"") + '</span>';
+    html += '<span class="arrow" id="arrow-' + detayId + '">▼</span>';
+    html += '</div>';
+
+    html += '</div>';
+
+    // Detay oranları
+    html += '<div class="detay" id="' + detayId + '">';
+    const grouped = {};
+    Object.keys(o).forEach(key => {
+      if (key === "Handikap") return;
+      const parts = key.split("_");
+      const group = parts.length > 1 ? parts[0] : "Diğer";
+      const label = parts.length > 1 ? parts.slice(1).join("_") : parts[0];
+      if (!grouped[group]) grouped[group] = [];
+      grouped[group].push({label: label, value: o[key]});
+    });
+
+    Object.keys(grouped).forEach(group => {
+      html += '<div class="detay-group">';
+      html += '<div class="detay-group-title">' + group + '</div>';
+      html += '<div class="detay-grid">';
+      grouped[group].forEach(item => {
+        html += '<div class="detay-oran">';
+        html += '<span class="dlabel">' + item.label + '</span>';
+        html += '<span class="dvalue">' + item.value + '</span>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    });
+
+    html += '</div></div>';
+  });
+
+  document.getElementById("maclar").innerHTML = html;
+}
+
+function detayAcKapa(id, header) {
+  const detay = document.getElementById(id);
+  const arrow = document.getElementById("arrow-" + id);
+  detay.classList.toggle("acik");
+  arrow.classList.toggle("acik");
+}
+
+verileriYukle();
+</script>
+
+</body>
+</html>

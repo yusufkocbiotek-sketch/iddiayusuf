@@ -225,3 +225,9 @@ iddaa.com'dan Selenium ile maç oranlarını çekip, GitHub Pages'da yayınlayan
     }
   ]
 }
+
+
+### skor_guncelle.py
+- SporDB'den biten maçların skorlarını çeker
+- mac.json'daki "baslamadi" maçları "bitti" olarak günceller
+- Detaylı oranlar + skorlar = Analiz çalışır

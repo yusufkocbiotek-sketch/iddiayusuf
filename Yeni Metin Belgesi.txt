@@ -1,0 +1,3 @@
+Sabah:   python scraper_full.py    → Maçlar + oranlar
+Akşam:   python skor_guncelle.py   → Skorları güncelle
+Sonra:   git add -A && git commit -m "guncellendi" && git push

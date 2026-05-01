@@ -200,7 +200,7 @@ const si=document.getElementById("siralama").value;
 let s=tumMaclar.filter(m=>{
 if(ar&&!m.ev_sahibi.toLowerCase().includes(ar)&&!m.deplasman.toLowerCase().includes(ar)&&!(m.lig||"").toLowerCase().includes(ar))return false;
 if(ta&&m.tarih!==ta)return false;if(li&&(m.lig||"")!==li)return false;if(du&&m.durum!==du)return false;
-for(const f of bultenFiltreler){const v=m.oranlar[f.tur];if(!v||v!==f.deger)return false}return true});
+for(const f of bultenFiltreler){const v=m.oranlar[f.tur];if(!v||Math.abs(v-f.deger)>0.009)return false}return true});
 const g=v=>v||99;
 if(si==="ms1a")s.sort((a,b)=>g(a.oranlar["Maç Sonucu_1"])-g(b.oranlar["Maç Sonucu_1"]));
 else if(si==="ms1d")s.sort((a,b)=>g(b.oranlar["Maç Sonucu_1"])-g(a.oranlar["Maç Sonucu_1"]));
@@ -262,7 +262,7 @@ gr[g].forEach(item=>{h+='<div class="dor"><span class="dl">'+item.l+'</span><spa
 h+='</div>'})});
 document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" maç | iddaa.com"}
 
-function dtoggle(id){document.getElementById(id).classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}
+function dtoggle(id){var el=document.getElementById(id);if(el)el.classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}
 function tc(id,ti){const p=document.getElementById(id);p.querySelectorAll(".dtab").forEach((t,i)=>t.classList.toggle("a",i===ti));p.querySelectorAll(".dcon").forEach((c,i)=>c.classList.toggle("a",i===ti))}
 
 // ANALİZ
@@ -273,7 +273,7 @@ function afGoster(){document.getElementById("analizFiltreListesi").innerHTML=ana
 
 function analizYap(){
 if(!analizFiltreler.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">⚠️ Filtre ekleyin</div>';return}
-const bm=tumMaclar.filter(m=>{if(m.durum!=="bitti")return false;for(const f of analizFiltreler){const v=m.oranlar[f.tur];if(!v||v!==f.deger)return false}return true});
+const bm=tumMaclar.filter(m=>{if(m.durum!=="bitti")return false;for(const f of analizFiltreler){const v=m.oranlar[f.tur];if(!v||Math.abs(v-f.deger)>0.009)return false}return true});
 if(!bm.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">❌ Eşleşen biten maç yok</div>';return}
 let ek=0,be=0,dk=0,u25=0,a25=0,kgv=0,kgy=0,iye=0,iyb=0,iyd=0,tg=0;
 bm.forEach(m=>{const se=m.skor_ev||0,sd=m.skor_dep||0,t=se+sd;tg+=t;if(se>sd)ek++;else if(se===sd)be++;else dk++;if(t>2.5)u25++;else a25++;if(se>0&&sd>0)kgv++;else kgy++;const ise=m.skor_1y_ev||0,isd=m.skor_1y_dep||0;if(ise>isd)iye++;else if(ise===isd)iyb++;else iyd++});

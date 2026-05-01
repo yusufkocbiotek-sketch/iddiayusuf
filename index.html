@@ -24,14 +24,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .filters input,.filters select{background:#0d1117;color:#e6e6e6;border:1px solid #30363d;padding:7px 10px;border-radius:6px;font-size:12px;outline:none}
 .filters input:focus,.filters select:focus{border-color:#00c853}
 .filters input[type=text]{min-width:180px;flex:1;max-width:280px}
-.filters input[type=number]{width:75px}
+.filters input[type=number]{width:80px}
 .fl{font-size:11px;color:#888;white-space:nowrap}
 .fb{font-size:11px;color:#00c853;font-weight:700;white-space:nowrap}
 .btn-r{background:#21262d;color:#e6e6e6;border:1px solid #30363d;padding:7px 14px;border-radius:6px;cursor:pointer;font-size:12px}
 .btn-r:hover{background:#30363d}
 .btn-a{background:#00c853;color:#0d1117;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700}
 .btn-a:hover{background:#00e676}
+.btn-sil{background:#e74c3c;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px}
+.btn-sil:hover{background:#c0392b}
 .ofk{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:8px 12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.filtre-tag{background:#1a3a1a;border:1px solid #00c853;border-radius:5px;padding:4px 8px;font-size:11px;display:inline-flex;align-items:center;gap:6px;margin:2px}
+.filtre-tag .ft-text{color:#00c853}
+.filtre-tag .ft-sil{color:#e74c3c;cursor:pointer;font-weight:700}
+.filtre-listesi{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .container{padding:10px 15px;max-width:1400px;margin:0 auto}
 .gun-h{background:#161b22;border:1px solid #21262d;border-radius:8px 8px 0 0;padding:10px 15px;margin-top:12px;font-size:13px;font-weight:700;color:#00c853;display:flex;justify-content:space-between}
 .gun-h .gc{background:#00c853;color:#0d1117;padding:2px 8px;border-radius:10px;font-size:11px}
@@ -48,14 +54,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .mt .dep{font-size:12px;color:#999}
 .ma{text-align:center;color:#444;font-size:14px;transition:transform .3s}
 .ma.open{transform:rotate(180deg);color:#00c853}
-.oran-satir{display:flex;gap:3px;flex-wrap:wrap;padding:0 12px 8px 12px}
+.oran-grup-baslik{font-size:9px;color:#00c853;padding:2px 12px;font-weight:700;margin-top:2px}
+.oran-satir{display:flex;gap:3px;flex-wrap:wrap;padding:0 12px 8px}
 .ok{display:flex;flex-direction:column;align-items:center;background:#0d1117;border:1px solid #21262d;border-radius:4px;padding:3px 5px;min-width:42px}
 .ok:hover{border-color:#00c853}
 .ok .ol{font-size:7px;color:#666}
 .ok .ov{font-size:12px;font-weight:700;color:#f0b90b}
 .ok .op{font-size:7px;color:#00c853}
 .ok.vurgu{border-color:#ff6f00;background:#1a1500}
-.oran-grup-baslik{font-size:9px;color:#00c853;padding:2px 12px;font-weight:700;margin-top:2px}
 .pb{display:flex;height:3px;border-radius:2px;overflow:hidden;margin:0 12px 4px}
 .p1{background:#00c853}.ppx{background:#f0b90b}.p2{background:#e74c3c}
 .detay{display:none;background:#0d1117;border-top:1px solid #21262d;padding:12px}
@@ -85,17 +91,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .amac{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:8px 12px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
 .amac .amt{flex:1}.amac .ams{font-weight:700;font-size:14px;min-width:50px;text-align:center}
 .ams.ek{color:#00c853}.ams.b{color:#f0b90b}.ams.dk{color:#e74c3c}
-.amac .amo{color:#f0b90b;min-width:50px;text-align:right}
+.amac .amo{color:#f0b90b;min-width:80px;text-align:right;font-size:11px}
 .amac .amd{color:#555;min-width:80px;text-align:right}
 .analiz-yok{text-align:center;padding:30px;color:#666}
-.air{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:15px}
+.air{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
 .air input,.air select{background:#0d1117;color:#e6e6e6;border:1px solid #30363d;padding:8px 12px;border-radius:6px;font-size:13px;outline:none}
 .air input[type=number]{width:80px}
 .loading{text-align:center;padding:80px}
 .spinner{width:40px;height:40px;border:4px solid #21262d;border-top:4px solid #00c853;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 15px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .bos{text-align:center;padding:40px;color:#666}
-.hata{text-align:center;padding:60px;color:#e74c3c}
 .footer{background:#161b22;border-top:1px solid #21262d;padding:12px 20px;text-align:center;font-size:11px;color:#444;margin-top:20px}
 @media(max-width:768px){.header h1{font-size:16px}.fr,.air{flex-direction:column;align-items:stretch}.filters input[type=text]{max-width:100%;width:100%}.ofk{flex-direction:column;align-items:stretch}.analiz-grid{grid-template-columns:1fr 1fr}}
 </style>
@@ -114,24 +119,27 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <input type="text" id="aramaInput" placeholder="🔍 Takım veya lig ara..." oninput="filtrele()">
 <select id="tarihSelect" onchange="filtrele()"><option value="">📅 Tüm Tarihler</option></select>
 <select id="ligSelect" onchange="filtrele()"><option value="">🏆 Tüm Ligler</option></select>
-<select id="durumSelect" onchange="filtrele()"><option value="">📌 Tüm Durumlar</option><option value="baslamadi">Başlamadı</option><option value="bitti">Bitti</option></select>
+<select id="durumSelect" onchange="filtrele()"><option value="">📌 Tümü</option><option value="baslamadi">Başlamadı</option><option value="bitti">Bitti</option></select>
 <select id="siralama" onchange="filtrele()"><option value="tarih">Tarihe Göre</option><option value="ms1a">MS 1 ↑</option><option value="ms1d">MS 1 ↓</option><option value="ms2a">MS 2 ↑</option><option value="ms2d">MS 2 ↓</option><option value="usta">Üst 2.5 ↑</option><option value="alta">Alt 2.5 ↑</option></select>
 <button class="btn-r" onclick="resetFiltre()">↺ Sıfırla</button>
 </div>
 <div class="fr">
 <span class="fb">📊 Oran Filtresi:</span>
 <div class="ofk">
-<select id="oranTuru" onchange="filtrele()"><option value="">Oran Türü...</option>
-<optgroup label="Maç Sonucu"><option value="Maç Sonucu_1">MS 1</option><option value="Maç Sonucu_0">MS X</option><option value="Maç Sonucu_2">MS 2</option></optgroup>
+<select id="oranTuru"><option value="">Oran Türü...</option>
+<optgroup label="MS"><option value="Maç Sonucu_1">MS 1</option><option value="Maç Sonucu_0">MS X</option><option value="Maç Sonucu_2">MS 2</option></optgroup>
 <optgroup label="Alt/Üst"><option value="Alt/Üst 2.5_Alt">Alt 2.5</option><option value="Alt/Üst 2.5_Üst">Üst 2.5</option><option value="İlk Yarı Alt/Üst 1.5_Alt">İY Alt 1.5</option><option value="İlk Yarı Alt/Üst 1.5_Üst">İY Üst 1.5</option></optgroup>
-<optgroup label="Karşılıklı Gol"><option value="Karşılıklı Gol_Var">KG Var</option><option value="Karşılıklı Gol_Yok">KG Yok</option><option value="İlk Yarı Karşılıklı Gol_Var">İY KG Var</option><option value="İkinci Yarı Karşılıklı Gol_Var">2Y KG Var</option></optgroup>
-<optgroup label="İlk Yarı"><option value="İlk Yarı Sonucu_1">İY 1</option><option value="İlk Yarı Sonucu_0">İY X</option><option value="İlk Yarı Sonucu_2">İY 2</option></optgroup>
-<optgroup label="Kombine"><option value="Her İki Yarıda da Üst 1.5_Evet">Her 2 Yarı Üst 1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">MS1 + KG Var</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">MS2 + KG Var</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">Her 2 Yarı KG Var</option></optgroup>
+<optgroup label="KG"><option value="Karşılıklı Gol_Var">KG Var</option><option value="Karşılıklı Gol_Yok">KG Yok</option><option value="İlk Yarı Karşılıklı Gol_Var">İY KG Var</option><option value="İkinci Yarı Karşılıklı Gol_Var">2Y KG Var</option></optgroup>
+<optgroup label="İY"><option value="İlk Yarı Sonucu_1">İY 1</option><option value="İlk Yarı Sonucu_0">İY X</option><option value="İlk Yarı Sonucu_2">İY 2</option></optgroup>
+<optgroup label="Kombine"><option value="Her İki Yarıda da Üst 1.5_Evet">2Yarı Üst1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">MS1+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">MS2+KGV</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2Yarı KG Var</option></optgroup>
 </select>
-<span class="fl">Min:</span><input type="number" id="oranMin" step="0.01" placeholder="1.00" oninput="filtrele()">
-<span class="fl">Max:</span><input type="number" id="oranMax" step="0.01" placeholder="10.00" oninput="filtrele()">
+<span class="fl">=</span>
+<input type="number" id="oranDeger" step="0.01" placeholder="Oran değeri">
+<button class="btn-a" onclick="filtreEkle()">+ Ekle</button>
+<button class="btn-r" onclick="filtreTemizle()">Temizle</button>
 </div>
 </div>
+<div class="filtre-listesi" id="filtreListesi"></div>
 </div>
 <div class="container" id="container"><div class="loading"><div class="spinner"></div><p>Yükleniyor...</p></div></div>
 </div>
@@ -139,21 +147,23 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <div class="tab-icerik" id="tab1">
 <div class="analiz-panel">
 <div class="analiz-baslik">📊 Oran Analizi — Biten Maç İstatistikleri</div>
+<p style="color:#888;font-size:12px;margin-bottom:10px">Birden fazla filtre ekleyebilirsiniz. Tüm filtreler aynı anda uygulanır (VE koşulu).</p>
 <div class="air">
 <select id="analizOranTuru">
-<optgroup label="Maç Sonucu"><option value="Maç Sonucu_1">MS 1 (Ev)</option><option value="Maç Sonucu_0">MS X</option><option value="Maç Sonucu_2">MS 2 (Dep)</option></optgroup>
+<optgroup label="MS"><option value="Maç Sonucu_1">MS 1</option><option value="Maç Sonucu_0">MS X</option><option value="Maç Sonucu_2">MS 2</option></optgroup>
 <optgroup label="Alt/Üst"><option value="Alt/Üst 2.5_Alt">Alt 2.5</option><option value="Alt/Üst 2.5_Üst">Üst 2.5</option><option value="İlk Yarı Alt/Üst 1.5_Alt">İY Alt 1.5</option><option value="İlk Yarı Alt/Üst 1.5_Üst">İY Üst 1.5</option></optgroup>
-<optgroup label="Karşılıklı Gol"><option value="Karşılıklı Gol_Var">KG Var</option><option value="Karşılıklı Gol_Yok">KG Yok</option><option value="İlk Yarı Karşılıklı Gol_Var">İY KG Var</option><option value="İkinci Yarı Karşılıklı Gol_Var">2Y KG Var</option></optgroup>
-<optgroup label="İlk Yarı"><option value="İlk Yarı Sonucu_1">İY 1</option><option value="İlk Yarı Sonucu_0">İY X</option><option value="İlk Yarı Sonucu_2">İY 2</option></optgroup>
-<optgroup label="Kombine"><option value="Her İki Yarıda da Üst 1.5_Evet">Her 2 Yarı Üst 1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">MS1 + KG Var</option><option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">MSX + KG Var</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">MS2 + KG Var</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">MS1 + KG Yok</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">MS2 + KG Yok</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">Her 2 Yarı KG Var</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">Her 2 Yarı KG Yok</option></optgroup>
+<optgroup label="KG"><option value="Karşılıklı Gol_Var">KG Var</option><option value="Karşılıklı Gol_Yok">KG Yok</option><option value="İlk Yarı Karşılıklı Gol_Var">İY KG</option><option value="İkinci Yarı Karşılıklı Gol_Var">2Y KG</option></optgroup>
+<optgroup label="İY"><option value="İlk Yarı Sonucu_1">İY 1</option><option value="İlk Yarı Sonucu_0">İY X</option><option value="İlk Yarı Sonucu_2">İY 2</option></optgroup>
+<optgroup label="Kombine"><option value="Her İki Yarıda da Üst 1.5_Evet">2Yarı Üst1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">MS1+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">MSX+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">MS2+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">MS1+KGY</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">MS2+KGY</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2Yarı KG E/E</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">2Yarı KG H/H</option></optgroup>
 </select>
-<span class="fl">Oran =</span>
-<input type="number" id="analizOran" step="0.01" placeholder="1.50">
-<span class="fl">±</span>
-<input type="number" id="analizTolerans" step="0.05" placeholder="0.10" value="0.10">
+<span class="fl">=</span>
+<input type="number" id="analizOranDeger" step="0.01" placeholder="Oran">
+<button class="btn-a" onclick="analizFiltreEkle()">+ Filtre Ekle</button>
 <button class="btn-a" onclick="analizYap()">🔍 Analiz Et</button>
+<button class="btn-r" onclick="analizFiltreTemizle()">Temizle</button>
 </div>
-<div id="analizSonuc"><div class="analiz-yok">👆 Oran türü seçin, değer girin ve Analiz Et'e tıklayın</div></div>
+<div class="filtre-listesi" id="analizFiltreListesi"></div>
+<div id="analizSonuc"><div class="analiz-yok">👆 Filtre ekleyin ve Analiz Et'e tıklayın</div></div>
 </div>
 </div>
 
@@ -162,6 +172,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <script>
 const JSON_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
 let tumMaclar=[];
+let bultenFiltreler=[];
+let analizFiltreler=[];
+
 async function yukle(){
 try{const r=await fetch(JSON_URL+"?t="+Date.now());const d=await r.json();tumMaclar=d.matches||[];
 document.getElementById("info").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>iddaa.com";
@@ -169,12 +182,39 @@ tarihleriDoldur();ligleriDoldur();filtrele()}catch(e){document.getElementById("c
 
 function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");
 t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
-
 function ligleriDoldur(){const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();const s=document.getElementById("ligSelect");
 l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}
-
 function pct(o){return o&&o>0?Math.round(1/o*10000)/100:0}
 function mainTab(i){document.querySelectorAll(".main-tab").forEach((t,j)=>t.classList.toggle("aktif",j===i));document.querySelectorAll(".tab-icerik").forEach((t,j)=>t.classList.toggle("aktif",j===i))}
+
+// BÜLTEN FİLTRE
+function filtreEkle(){
+const tur=document.getElementById("oranTuru").value;
+const deger=parseFloat(document.getElementById("oranDeger").value);
+if(!tur||!deger||isNaN(deger))return;
+bultenFiltreler.push({tur,deger});
+document.getElementById("oranDeger").value="";
+filtreListesiGoster();filtrele()}
+
+function filtreSil(idx){bultenFiltreler.splice(idx,1);filtreListesiGoster();filtrele()}
+
+function filtreTemizle(){bultenFiltreler=[];filtreListesiGoster();filtrele()}
+
+function filtreListesiGoster(){
+const el=document.getElementById("filtreListesi");
+if(!bultenFiltreler.length){el.innerHTML="";return}
+el.innerHTML=bultenFiltreler.map((f,i)=>
+'<div class="filtre-tag"><span class="ft-text">'+kisaAd(f.tur)+' = '+f.deger+'</span><span class="ft-sil" onclick="filtreSil('+i+')">✕</span></div>'
+).join("")}
+
+function kisaAd(tur){
+const map={"Maç Sonucu_1":"MS1","Maç Sonucu_0":"MSX","Maç Sonucu_2":"MS2","Alt/Üst 2.5_Alt":"Alt2.5","Alt/Üst 2.5_Üst":"Üst2.5",
+"Karşılıklı Gol_Var":"KGV","Karşılıklı Gol_Yok":"KGY","İlk Yarı Sonucu_1":"İY1","İlk Yarı Sonucu_0":"İYX","İlk Yarı Sonucu_2":"İY2",
+"İlk Yarı Alt/Üst 1.5_Alt":"İYAlt1.5","İlk Yarı Alt/Üst 1.5_Üst":"İYÜst1.5","İlk Yarı Karşılıklı Gol_Var":"İYKG",
+"İkinci Yarı Karşılıklı Gol_Var":"2YKG","Her İki Yarıda da Üst 1.5_Evet":"2YÜ1.5",
+"Maç Sonucu ve Karşılıklı Gol_1 ve Var":"1+KGV","Maç Sonucu ve Karşılıklı Gol_2 ve Var":"2+KGV",
+"İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet":"2YKG E/E"};
+return map[tur]||tur.split("_")[0].substring(0,15)}
 
 function filtrele(){
 const arama=document.getElementById("aramaInput").value.toLowerCase();
@@ -182,15 +222,12 @@ const tarih=document.getElementById("tarihSelect").value;
 const lig=document.getElementById("ligSelect").value;
 const durum=document.getElementById("durumSelect").value;
 const sira=document.getElementById("siralama").value;
-const oranTuru=document.getElementById("oranTuru").value;
-const oranMin=parseFloat(document.getElementById("oranMin").value)||0;
-const oranMax=parseFloat(document.getElementById("oranMax").value)||999;
 let sonuc=tumMaclar.filter(m=>{
 if(arama&&!m.ev_sahibi.toLowerCase().includes(arama)&&!m.deplasman.toLowerCase().includes(arama)&&!(m.lig||"").toLowerCase().includes(arama))return false;
 if(tarih&&m.tarih!==tarih)return false;
 if(lig&&(m.lig||"")!==lig)return false;
 if(durum&&m.durum!==durum)return false;
-if(oranTuru){const v=m.oranlar[oranTuru];if(!v||v<oranMin||v>oranMax)return false}
+for(const f of bultenFiltreler){const v=m.oranlar[f.tur];if(!v||v!==f.deger)return false}
 return true});
 const g=v=>v||99;
 if(sira==="ms1a")sonuc.sort((a,b)=>g(a.oranlar["Maç Sonucu_1"])-g(b.oranlar["Maç Sonucu_1"]));
@@ -202,9 +239,9 @@ else if(sira==="alta")sonuc.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Alt"])-g(b.ora
 else sonuc.sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
 statsGoster(sonuc);render(sonuc)}
 
-function resetFiltre(){["aramaInput","oranMin","oranMax"].forEach(id=>document.getElementById(id).value="");
-["tarihSelect","ligSelect","durumSelect","oranTuru"].forEach(id=>document.getElementById(id).value="");
-document.getElementById("siralama").value="tarih";filtrele()}
+function resetFiltre(){["aramaInput"].forEach(id=>document.getElementById(id).value="");
+["tarihSelect","ligSelect","durumSelect"].forEach(id=>document.getElementById(id).value="");
+document.getElementById("siralama").value="tarih";bultenFiltreler=[];filtreListesiGoster();filtrele()}
 
 function statsGoster(m){const to=m.reduce((t,x)=>t+Object.keys(x.oranlar).length,0);const bitti=m.filter(x=>x.durum==="bitti").length;
 document.getElementById("statsBar").innerHTML=
@@ -229,132 +266,103 @@ const ms1=o["Maç Sonucu_1"]||0,ms0=o["Maç Sonucu_0"]||0,ms2=o["Maç Sonucu_2"]
 const p1=pct(ms1),px=pct(ms0),p2=pct(ms2);
 const skorTxt=m.durum==="bitti"?'<span style="color:#f0b90b;font-weight:700;font-size:13px"> '+m.skor_ev+'-'+m.skor_dep+'</span>':"";
 const oranSayisi=Object.keys(o).length;
-
-h+='<div class="mac">';
-// Üst satır: saat + takım + arrow
-h+='<div class="mac-top" onclick="dtoggle(\''+id+'\')">';
+h+='<div class="mac"><div class="mac-top" onclick="dtoggle(\''+id+'\')">';
 h+='<div class="ms"><span class="s">'+m.saat+'</span><span class="t">'+m.tarih.substring(5)+'</span><span class="k">#'+(m.mac_kodu||"")+'</span></div>';
-h+='<div class="mt"><span class="ev">'+m.ev_sahibi+skorTxt+'</span><span class="dep">'+m.deplasman+' <span style="color:#444;font-size:10px">('+oranSayisi+' oran)</span></span></div>';
+h+='<div class="mt"><span class="ev">'+m.ev_sahibi+skorTxt+'</span><span class="dep">'+m.deplasman+' <span style="color:#444;font-size:10px">('+oranSayisi+')</span></span></div>';
 h+='<div class="ma" id="aw'+id+'">▼</div></div>';
-
-// Maç Sonucu satırı
-h+='<div class="oran-grup-baslik">Maç Sonucu</div>';
-h+='<div class="oran-satir">';
-if(ms1){h+=OKK("1",ms1,p1)+OKK("X",ms0,px)+OKK("2",ms2,p2)}
+// MS
+h+='<div class="oran-grup-baslik">Maç Sonucu</div><div class="oran-satir">';
+if(ms1)h+=OKK("1",ms1,p1)+OKK("X",ms0,px)+OKK("2",ms2,p2);
 h+='</div>';
-
-// Yüzde barı
-if(ms1){h+='<div class="pb"><div class="p1" style="width:'+p1+'%"></div><div class="ppx" style="width:'+px+'%"></div><div class="p2" style="width:'+p2+'%"></div></div>'}
-
-// Alt/Üst + KG satırı
-const au_a=o["Alt/Üst 2.5_Alt"],au_u=o["Alt/Üst 2.5_Üst"];
-const kg_v=o["Karşılıklı Gol_Var"],kg_y=o["Karşılıklı Gol_Yok"];
-if(au_a||kg_v){
-h+='<div class="oran-grup-baslik">Alt/Üst 2.5 & Karşılıklı Gol</div>';
-h+='<div class="oran-satir">';
+if(ms1)h+='<div class="pb"><div class="p1" style="width:'+p1+'%"></div><div class="ppx" style="width:'+px+'%"></div><div class="p2" style="width:'+p2+'%"></div></div>';
+// AU+KG
+const au_a=o["Alt/Üst 2.5_Alt"],au_u=o["Alt/Üst 2.5_Üst"],kg_v=o["Karşılıklı Gol_Var"],kg_y=o["Karşılıklı Gol_Yok"];
+if(au_a||kg_v){h+='<div class="oran-grup-baslik">Alt/Üst 2.5 & KG</div><div class="oran-satir">';
 if(au_a)h+=OKK("Alt",au_a,pct(au_a))+OKK("Üst",au_u,pct(au_u));
-if(kg_v)h+=OKK("KG Var",kg_v,pct(kg_v))+OKK("KG Yok",kg_y,pct(kg_y));
-h+='</div>'}
-
-// İlk Yarı Sonucu satırı
+if(kg_v)h+=OKK("KGV",kg_v,pct(kg_v))+OKK("KGY",kg_y,pct(kg_y));h+='</div>'}
+// İY
 const iy1=o["İlk Yarı Sonucu_1"],iy0=o["İlk Yarı Sonucu_0"],iy2=o["İlk Yarı Sonucu_2"];
-const iy_au_a=o["İlk Yarı Alt/Üst 1.5_Alt"],iy_au_u=o["İlk Yarı Alt/Üst 1.5_Üst"];
-const iy_kg=o["İlk Yarı Karşılıklı Gol_Var"];
-if(iy1||iy_au_a||iy_kg){
-h+='<div class="oran-grup-baslik">İlk Yarı</div>';
-h+='<div class="oran-satir">';
+const iy_au_a=o["İlk Yarı Alt/Üst 1.5_Alt"],iy_au_u=o["İlk Yarı Alt/Üst 1.5_Üst"],iy_kg=o["İlk Yarı Karşılıklı Gol_Var"];
+if(iy1||iy_au_a||iy_kg){h+='<div class="oran-grup-baslik">İlk Yarı</div><div class="oran-satir">';
 if(iy1)h+=OKK("İY1",iy1,pct(iy1))+OKK("İYX",iy0,pct(iy0))+OKK("İY2",iy2,pct(iy2));
-if(iy_au_a)h+=OKK("İY Alt1.5",iy_au_a,pct(iy_au_a))+OKK("İY Üst1.5",iy_au_u,pct(iy_au_u));
-if(iy_kg)h+=OKK("İY KG",iy_kg,pct(iy_kg),"vurgu");
-h+='</div>'}
-
-// Kombine oranlar satırı
-const hiy_u=o["Her İki Yarıda da Üst 1.5_Evet"];
-const ms_kg_1v=o["Maç Sonucu ve Karşılıklı Gol_1 ve Var"];
-const ms_kg_0v=o["Maç Sonucu ve Karşılıklı Gol_0 ve Var"];
-const ms_kg_2v=o["Maç Sonucu ve Karşılıklı Gol_2 ve Var"];
-const ms_kg_1y=o["Maç Sonucu ve Karşılıklı Gol_1 ve Yok"];
-const ms_kg_0y=o["Maç Sonucu ve Karşılıklı Gol_0 ve Yok"];
-const ms_kg_2y=o["Maç Sonucu ve Karşılıklı Gol_2 ve Yok"];
-const iy2y_ee=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet"];
-const iy2y_ey=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır"];
-const iy2y_ye=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet"];
-const iy2y_yy=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır"];
-
-if(hiy_u||ms_kg_1v||iy2y_ee){
-h+='<div class="oran-grup-baslik">Kombine Bahisler</div>';
-h+='<div class="oran-satir">';
-if(hiy_u)h+=OKK("2Yarı Ü1.5",hiy_u,pct(hiy_u),"vurgu");
-if(ms_kg_1v)h+=OKK("1+KGV",ms_kg_1v,pct(ms_kg_1v));
-if(ms_kg_0v)h+=OKK("X+KGV",ms_kg_0v,pct(ms_kg_0v));
-if(ms_kg_2v)h+=OKK("2+KGV",ms_kg_2v,pct(ms_kg_2v));
-if(ms_kg_1y)h+=OKK("1+KGY",ms_kg_1y,pct(ms_kg_1y));
-if(ms_kg_0y)h+=OKK("X+KGY",ms_kg_0y,pct(ms_kg_0y));
-if(ms_kg_2y)h+=OKK("2+KGY",ms_kg_2y,pct(ms_kg_2y));
-if(iy2y_ee)h+=OKK("2YKG E/E",iy2y_ee,pct(iy2y_ee),"vurgu");
-if(iy2y_ey)h+=OKK("2YKG E/H",iy2y_ey,pct(iy2y_ey));
-if(iy2y_ye)h+=OKK("2YKG H/E",iy2y_ye,pct(iy2y_ye));
-if(iy2y_yy)h+=OKK("2YKG H/H",iy2y_yy,pct(iy2y_yy));
-h+='</div>'}
-
-// DETAY PANEL
+if(iy_au_a)h+=OKK("İYA1.5",iy_au_a,pct(iy_au_a))+OKK("İYÜ1.5",iy_au_u,pct(iy_au_u));
+if(iy_kg)h+=OKK("İYKG",iy_kg,pct(iy_kg),"vurgu");h+='</div>'}
+// Kombine
+const hiy_u=o["Her İki Yarıda da Üst 1.5_Evet"],ms_kg_1v=o["Maç Sonucu ve Karşılıklı Gol_1 ve Var"],ms_kg_0v=o["Maç Sonucu ve Karşılıklı Gol_0 ve Var"],ms_kg_2v=o["Maç Sonucu ve Karşılıklı Gol_2 ve Var"],ms_kg_1y=o["Maç Sonucu ve Karşılıklı Gol_1 ve Yok"],ms_kg_0y=o["Maç Sonucu ve Karşılıklı Gol_0 ve Yok"],ms_kg_2y=o["Maç Sonucu ve Karşılıklı Gol_2 ve Yok"];
+const iy2y_ee=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet"],iy2y_ey=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır"],iy2y_ye=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet"],iy2y_yy=o["İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır"];
+if(hiy_u||ms_kg_1v||iy2y_ee){h+='<div class="oran-grup-baslik">Kombine</div><div class="oran-satir">';
+if(hiy_u)h+=OKK("2YÜ1.5",hiy_u,pct(hiy_u),"vurgu");
+if(ms_kg_1v)h+=OKK("1+KGV",ms_kg_1v,pct(ms_kg_1v));if(ms_kg_0v)h+=OKK("X+KGV",ms_kg_0v,pct(ms_kg_0v));if(ms_kg_2v)h+=OKK("2+KGV",ms_kg_2v,pct(ms_kg_2v));
+if(ms_kg_1y)h+=OKK("1+KGY",ms_kg_1y,pct(ms_kg_1y));if(ms_kg_0y)h+=OKK("X+KGY",ms_kg_0y,pct(ms_kg_0y));if(ms_kg_2y)h+=OKK("2+KGY",ms_kg_2y,pct(ms_kg_2y));
+if(iy2y_ee)h+=OKK("KG E/E",iy2y_ee,pct(iy2y_ee),"vurgu");if(iy2y_ey)h+=OKK("KG E/H",iy2y_ey,pct(iy2y_ey));if(iy2y_ye)h+=OKK("KG H/E",iy2y_ye,pct(iy2y_ye));if(iy2y_yy)h+=OKK("KG H/H",iy2y_yy,pct(iy2y_yy));h+='</div>'}
+// DETAY
 h+='<div class="detay" id="'+id+'">';
-const gr={};Object.keys(o).forEach(k=>{if(k==="Handikap")return;const ps=k.split("_");
-let g=ps.length>1?ps[0]:"Genel";const l=ps.length>1?ps.slice(1).join(" "):ps[0];
-if(!gr[g])gr[g]=[];gr[g].push({l,v:o[k],p:pct(o[k])})});
+const gr={};Object.keys(o).forEach(k=>{if(k==="Handikap")return;const ps=k.split("_");let g=ps.length>1?ps[0]:"Genel";const l=ps.length>1?ps.slice(1).join(" "):ps[0];if(!gr[g])gr[g]=[];gr[g].push({l,v:o[k],p:pct(o[k])})});
 const gn=Object.keys(gr);
 h+='<div class="dtabs">';gn.forEach((g,i)=>h+='<div class="dtab'+(i===0?" a":"")+'" onclick="tc(\''+id+'\','+i+')">'+g+' ('+gr[g].length+')</div>');h+='</div>';
 gn.forEach((g,i)=>{h+='<div class="dcon'+(i===0?" a":"")+'" id="'+id+'t'+i+'"><div class="dgb">'+g+'</div><div class="ds">';
-gr[g].forEach(item=>{h+='<div class="dor"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';
-if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';h+='</div>'});
-h+='</div></div>'});
+gr[g].forEach(item=>{h+='<div class="dor"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';h+='</div>'});h+='</div></div>'});
 h+='</div></div>'})});
-document.getElementById("container").innerHTML=h;
-document.getElementById("footer").textContent=maclar.length+" maç | iddaa.com"}
+document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" maç | iddaa.com"}
 
 function dtoggle(id){document.getElementById(id).classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}
 function tc(id,ti){const p=document.getElementById(id);p.querySelectorAll(".dtab").forEach((t,i)=>t.classList.toggle("a",i===ti));p.querySelectorAll(".dcon").forEach((c,i)=>c.classList.toggle("a",i===ti))}
 
-// ANALİZ
+// ANALİZ FİLTRE
+function analizFiltreEkle(){
+const tur=document.getElementById("analizOranTuru").value;
+const deger=parseFloat(document.getElementById("analizOranDeger").value);
+if(!tur||!deger||isNaN(deger))return;
+analizFiltreler.push({tur,deger});
+document.getElementById("analizOranDeger").value="";
+analizFiltreGoster()}
+
+function analizFiltreSil(idx){analizFiltreler.splice(idx,1);analizFiltreGoster()}
+function analizFiltreTemizle(){analizFiltreler=[];analizFiltreGoster();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">👆 Filtre ekleyin</div>'}
+
+function analizFiltreGoster(){
+const el=document.getElementById("analizFiltreListesi");
+if(!analizFiltreler.length){el.innerHTML="";return}
+el.innerHTML=analizFiltreler.map((f,i)=>
+'<div class="filtre-tag"><span class="ft-text">'+kisaAd(f.tur)+' = '+f.deger+'</span><span class="ft-sil" onclick="analizFiltreSil('+i+')">✕</span></div>'
+).join("")}
+
 function analizYap(){
-const oranTuru=document.getElementById("analizOranTuru").value;
-const oranDeger=parseFloat(document.getElementById("analizOran").value);
-const tolerans=parseFloat(document.getElementById("analizTolerans").value)||0.10;
-if(!oranDeger||isNaN(oranDeger)){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">⚠️ Oran değeri girin</div>';return}
-const bm=tumMaclar.filter(m=>{if(m.durum!=="bitti")return false;const v=m.oranlar[oranTuru];if(!v)return false;return Math.abs(v-oranDeger)<=tolerans});
-if(!bm.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">❌ Bu aralıkta biten maç yok. Toleransı artırın.</div>';return}
-let ek=0,b=0,dk=0,u25=0,a25=0,kgv=0,kgy=0,iye=0,iyb=0,iyd=0,tg=0;
+if(!analizFiltreler.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">⚠️ En az 1 filtre ekleyin</div>';return}
+const bm=tumMaclar.filter(m=>{
+if(m.durum!=="bitti")return false;
+for(const f of analizFiltreler){const v=m.oranlar[f.tur];if(!v||v!==f.deger)return false}
+return true});
+if(!bm.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">❌ Bu filtrelere uyan biten maç yok</div>';return}
+let ek=0,be=0,dk=0,u25=0,a25=0,kgv=0,kgy=0,iye=0,iyb=0,iyd=0,tg=0;
 bm.forEach(m=>{const se=m.skor_ev||0,sd=m.skor_dep||0,t=se+sd;tg+=t;
-if(se>sd)ek++;else if(se===sd)b++;else dk++;
-if(t>2.5)u25++;else a25++;
+if(se>sd)ek++;else if(se===sd)be++;else dk++;if(t>2.5)u25++;else a25++;
 if(se>0&&sd>0)kgv++;else kgy++;
-const iye_s=m.skor_1y_ev||0,iyd_s=m.skor_1y_dep||0;
-if(iye_s>iyd_s)iye++;else if(iye_s===iyd_s)iyb++;else iyd++});
-const n=bm.length;
-const P=v=>Math.round(v/n*100);
-let h='<div class="analiz-baslik">📊 '+oranTuru+' = '+oranDeger.toFixed(2)+' (±'+tolerans.toFixed(2)+') — '+n+' Maç</div>';
+const ise=m.skor_1y_ev||0,isd=m.skor_1y_dep||0;if(ise>isd)iye++;else if(ise===isd)iyb++;else iyd++});
+const n=bm.length,P=v=>Math.round(v/n*100);
+const filtreStr=analizFiltreler.map(f=>kisaAd(f.tur)+"="+f.deger).join(" & ");
+let h='<div class="analiz-baslik">📊 '+filtreStr+' — '+n+' Biten Maç</div>';
 h+='<div class="analiz-grid">';
 h+='<div class="ak"><div class="akb">Maç Sayısı</div><div class="akd">'+n+'</div></div>';
 h+='<div class="ak"><div class="akb">Ort. Gol</div><div class="akd">'+(tg/n).toFixed(1)+'</div></div>';
 h+='<div class="ak"><div class="akb">Üst 2.5</div><div class="akd" style="color:#00c853">%'+P(u25)+'</div><div class="aka">'+u25+'/'+n+'</div></div>';
 h+='<div class="ak"><div class="akb">KG Var</div><div class="akd" style="color:#f0b90b">%'+P(kgv)+'</div><div class="aka">'+kgv+'/'+n+'</div></div>';
+h+='<div class="ak"><div class="akb">Ev Kazandı</div><div class="akd" style="color:#00c853">%'+P(ek)+'</div><div class="aka">'+ek+'/'+n+'</div></div>';
+h+='<div class="ak"><div class="akb">Berabere</div><div class="akd" style="color:#f0b90b">%'+P(be)+'</div><div class="aka">'+be+'/'+n+'</div></div>';
 h+='</div>';
-h+=bar("Maç Sonucu","Ev %"+P(ek),P(ek),"X %"+P(b),P(b),"Dep %"+P(dk),P(dk));
+h+=bar("Maç Sonucu","Ev %"+P(ek),P(ek),"X %"+P(be),P(be),"Dep %"+P(dk),P(dk));
 h+=bar("Alt/Üst 2.5","Alt %"+P(a25),P(a25),"",0,"Üst %"+P(u25),P(u25));
 h+=bar("Karşılıklı Gol","Var %"+P(kgv),P(kgv),"",0,"Yok %"+P(kgy),P(kgy));
 h+=bar("İlk Yarı","Ev %"+P(iye),P(iye),"X %"+P(iyb),P(iyb),"Dep %"+P(iyd),P(iyd));
 h+='<div class="analiz-baslik" style="margin-top:15px">📋 Maç Detayları</div>';
 bm.forEach(m=>{const se=m.skor_ev||0,sd=m.skor_dep||0;
 let sc="b";if(se>sd)sc="ek";else if(sd>se)sc="dk";
-h+='<div class="amac"><div class="amt">'+m.ev_sahibi+' - '+m.deplasman+'</div><div class="ams '+sc+'">'+se+'-'+sd+'</div><div class="amo">'+m.oranlar[oranTuru]+'</div><div class="amd">'+m.tarih+'</div></div>'});
+const oranBilgi=analizFiltreler.map(f=>kisaAd(f.tur)+":"+m.oranlar[f.tur]).join(" | ");
+h+='<div class="amac"><div class="amt">'+m.ev_sahibi+' - '+m.deplasman+'</div><div class="ams '+sc+'">'+se+'-'+sd+'</div><div class="amo">'+oranBilgi+'</div><div class="amd">'+m.tarih+'</div></div>'});
 document.getElementById("analizSonuc").innerHTML=h}
 
-function bar(t,l1,w1,l2,w2,l3,w3){
-let h='<div class="abar"><div class="abar-b">'+t+'</div><div class="abar-ic">';
-if(w1>0)h+='<div class="ab-ev" style="width:'+w1+'%">'+l1+'</div>';
-if(w2>0)h+='<div class="ab-ber" style="width:'+w2+'%">'+l2+'</div>';
-if(w3>0)h+='<div class="ab-dep" style="width:'+w3+'%">'+l3+'</div>';
-return h+'</div></div>'}
+function bar(t,l1,w1,l2,w2,l3,w3){let h='<div class="abar"><div class="abar-b">'+t+'</div><div class="abar-ic">';
+if(w1>0)h+='<div class="ab-ev" style="width:'+w1+'%">'+l1+'</div>';if(w2>0)h+='<div class="ab-ber" style="width:'+w2+'%">'+l2+'</div>';if(w3>0)h+='<div class="ab-dep" style="width:'+w3+'%">'+l3+'</div>';return h+'</div></div>'}
 
 yukle();
 </script>

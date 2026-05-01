@@ -273,7 +273,7 @@ def iddaa_full_cek(driver):
         print(f"📅 [{gun_idx+1}/{len(tarihler)}] {gun['adi']} ({gun['url_tarih']})")
         print(f"{'='*60}")
         
-        gun_url = f"{base_url}?date={gun['url_tarih']}"
+        gun_url = base_url if gun['adi'] == "Bugün" else f"{base_url}?date={gun['url_tarih']}"
         
         # Sayfayı yükle
         mac_sayisi = sayfa_yukle(driver, gun_url)

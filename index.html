@@ -175,7 +175,7 @@ let tumMaclar=[],bultenFiltreler=[],analizFiltreler=[];
 
 async function yukle(){try{const r=await fetch(JSON_URL+"?t="+Date.now());const d=await r.json();tumMaclar=d.matches||[];
 document.getElementById("info").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>iddaa.com";
-tarihleriDoldur();ligleriDoldur();filtrele()}catch(e){document.getElementById("container").innerHTML='<div class="hata">❌ '+e.message+'</div>'}}
+tarihleriDoldur();ligleriDoldur();filtrele();gecmisYukle()}catch(e){document.getElementById("container").innerHTML='<div class="hata">❌ '+e.message+'</div>'}}
 
 function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");
 t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
@@ -271,9 +271,9 @@ function analizFiltreSil(i){analizFiltreler.splice(i,1);afGoster()}
 function analizFiltreTemizle(){analizFiltreler=[];afGoster();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">👆 Filtre ekle</div>'}
 function afGoster(){document.getElementById("analizFiltreListesi").innerHTML=analizFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="analizFiltreSil('+i+')">✕</span></div>').join("")}
 
-function analizYap(){
+async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());const d=await r.json();gecmisMaclar=d.matches
 if(!analizFiltreler.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">⚠️ Filtre ekleyin</div>';return}
-const bm=tumMaclar.filter(m=>{if(m.durum!=="bitti")return false;for(const f of analizFiltreler){const v=m.oranlar[f.tur];if(!v||Math.abs(v-f.deger)>0.009)return false}return true});
+const hepsi=[...tumMaclar,...gecmisMaclar];const bm=hepsi.filter(m=>{if(m.durum!=="bitti")return false;for(const f of analizFiltreler){const v=m.oranlar[f.tur];if(!v||Math.abs(v-f.deger)>0.009)return false}return true});
 if(!bm.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">❌ Eşleşen biten maç yok</div>';return}
 let ek=0,be=0,dk=0,u25=0,a25=0,kgv=0,kgy=0,iye=0,iyb=0,iyd=0,tg=0;
 bm.forEach(m=>{const se=m.skor_ev||0,sd=m.skor_dep||0,t=se+sd;tg+=t;if(se>sd)ek++;else if(se===sd)be++;else dk++;if(t>2.5)u25++;else a25++;if(se>0&&sd>0)kgv++;else kgy++;const ise=m.skor_1y_ev||0,isd=m.skor_1y_dep||0;if(ise>isd)iye++;else if(ise===isd)iyb++;else iyd++});

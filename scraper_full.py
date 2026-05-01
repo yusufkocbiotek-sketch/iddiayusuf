@@ -132,18 +132,19 @@ def tum_maclari_yukle(driver, url):
     print("   📜 Tüm maçlar yükleniyor...")
     onceki = 0
     
-    for tur in range(50):
+    degismedi = 0
+    for tur in range(200):
         # Devamını gör + Daha fazla göster butonlarına bas
         try:
             buttons = driver.find_elements(By.TAG_NAME, "button")
             for btn in buttons:
                 try:
                     txt = btn.text.strip()
-                    if "Devamını gör" in txt or "Daha fazla" in txt:
+                    if "Devamını gör" in txt or "Daha fazla" in txt or "devamını" in txt.lower():
                         driver.execute_script("arguments[0].scrollIntoView({block:'center'});", btn)
                         time.sleep(1)
                         driver.execute_script("arguments[0].click();", btn)
-                        time.sleep(4)
+                        time.sleep(5)
                 except:
                     continue
         except:
@@ -151,16 +152,20 @@ def tum_maclari_yukle(driver, url):
         
         # Scroll
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)
+        time.sleep(3)
         
         maclar = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
         sayi = len(maclar)
         
-        if tur % 5 == 0:
+        if tur % 10 == 0:
             print(f"   📜 Tur {tur}: {sayi} maç")
         
         if sayi == onceki:
-            break
+            degismedi += 1
+            if degismedi >= 5:
+                break
+        else:
+            degismedi = 0
         onceki = sayi
     
     driver.execute_script("window.scrollTo(0, 0);")

@@ -170,26 +170,25 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <div class="footer" id="footer"></div>
 
 <script>
+<script>
 const JSON_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
-let tumMaclar=[],bultenFiltreler=[],analizFiltreler=[];
+const GECMIS_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/gecmis_maclar.json";
+let tumMaclar=[],gecmisMaclar=[],bultenFiltreler=[],analizFiltreler=[];
 
-async function yukle(){try{const r=await fetch(JSON_URL+"?t="+Date.now());const d=await r.json();tumMaclar=d.matches||[];
-document.getElementById("info").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>iddaa.com";
-tarihleriDoldur();ligleriDoldur();filtrele();gecmisYukle()}catch(e){document.getElementById("container").innerHTML='<div class="hata">❌ '+e.message+'</div>'}}
+async function yukle(){try{const r=await fetch(JSON_URL+"?t="+Date.now());const d=await r.json();tumMaclar=d.matches||[];document.getElementById("info").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>iddaa.com";tarihleriDoldur();ligleriDoldur();filtrele();gecmisYukle()}catch(e){document.getElementById("container").innerHTML='<div class="hata">'+e.message+'</div>'}}
 
-function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");
-t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
-function ligleriDoldur(){const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();const s=document.getElementById("ligSelect");
-l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}
+async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());const d=await r.json();gecmisMaclar=d.matches||[];document.getElementById("info").innerHTML+="<br>Gecmis: "+gecmisMaclar.length+" mac"}catch(e){}}
+
+function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
+function ligleriDoldur(){const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();const s=document.getElementById("ligSelect");l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}
 function pct(o){return o&&o>0?Math.round(1/o*10000)/100:0}
 function mainTab(i){document.querySelectorAll(".main-tab").forEach((t,j)=>t.classList.toggle("aktif",j===i));document.querySelectorAll(".tab-icerik").forEach((t,j)=>t.classList.toggle("aktif",j===i))}
 function KA(t){const m={"Maç Sonucu_1":"MS1","Maç Sonucu_0":"MSX","Maç Sonucu_2":"MS2","Alt/Üst 2.5_Alt":"Alt","Alt/Üst 2.5_Üst":"Üst","Karşılıklı Gol_Var":"KGV","Karşılıklı Gol_Yok":"KGY","İlk Yarı Sonucu_1":"İY1","İlk Yarı Sonucu_0":"İYX","İlk Yarı Sonucu_2":"İY2","İlk Yarı Alt/Üst 1.5_Alt":"İYA","İlk Yarı Alt/Üst 1.5_Üst":"İYÜ","İlk Yarı Karşılıklı Gol_Var":"İYKG","İkinci Yarı Karşılıklı Gol_Var":"2YKG","Her İki Yarıda da Üst 1.5_Evet":"2YÜ","Maç Sonucu ve Karşılıklı Gol_1 ve Var":"1KG","Maç Sonucu ve Karşılıklı Gol_0 ve Var":"XKG","Maç Sonucu ve Karşılıklı Gol_2 ve Var":"2KG","Maç Sonucu ve Karşılıklı Gol_1 ve Yok":"1KY","Maç Sonucu ve Karşılıklı Gol_2 ve Yok":"2KY","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet":"EE","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır":"HH"};return m[t]||t.substring(0,8)}
 
-// BÜLTEN
 function filtreEkle(){const t=document.getElementById("oranTuru").value;const d=parseFloat(document.getElementById("oranDeger").value);if(!t||!d)return;bultenFiltreler.push({tur:t,deger:d});document.getElementById("oranDeger").value="";fListeGoster();filtrele()}
 function filtreSil(i){bultenFiltreler.splice(i,1);fListeGoster();filtrele()}
 function filtreTemizle(){bultenFiltreler=[];fListeGoster();filtrele()}
-function fListeGoster(){const e=document.getElementById("filtreListesi");e.innerHTML=bultenFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="filtreSil('+i+')">✕</span></div>').join("")}
+function fListeGoster(){document.getElementById("filtreListesi").innerHTML=bultenFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="filtreSil('+i+')">X</span></div>').join("")}
 
 function filtrele(){
 const ar=document.getElementById("aramaInput").value.toLowerCase();
@@ -211,96 +210,81 @@ else if(si==="alta")s.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Alt"])-g(b.oranlar["
 else s.sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
 statsGoster(s);render(s)}
 
-function resetFiltre(){document.getElementById("aramaInput").value="";
-["tarihSelect","ligSelect","durumSelect"].forEach(id=>document.getElementById(id).value="");
-document.getElementById("siralama").value="tarih";bultenFiltreler=[];fListeGoster();filtrele()}
+function resetFiltre(){document.getElementById("aramaInput").value="";["tarihSelect","ligSelect","durumSelect"].forEach(id=>document.getElementById(id).value="");document.getElementById("siralama").value="tarih";bultenFiltreler=[];fListeGoster();filtrele()}
 
 function statsGoster(m){const to=m.reduce((t,x)=>t+Object.keys(x.oranlar).length,0);const bi=m.filter(x=>x.durum==="bitti").length;
-document.getElementById("statsBar").innerHTML=
-'<div class="si"><div class="sv">'+m.length+'</div><div class="sl">Maç</div></div>'+
-'<div class="si"><div class="sv">'+to.toLocaleString()+'</div><div class="sl">Oran</div></div>'+
-'<div class="si"><div class="sv">'+bi+'</div><div class="sl">Biten</div></div>'+
-'<div class="si"><div class="sv">'+(m.length-bi)+'</div><div class="sl">Gelecek</div></div>'}
+document.getElementById("statsBar").innerHTML='<div class="si"><div class="sv">'+m.length+'</div><div class="sl">Mac</div></div><div class="si"><div class="sv">'+to.toLocaleString()+'</div><div class="sl">Oran</div></div><div class="si"><div class="sv">'+bi+'</div><div class="sl">Biten</div></div><div class="si"><div class="sv">'+(m.length-bi)+'</div><div class="sl">Gelecek</div></div>'}
 
 function OH(v){return v?'<div class="ov">'+v+'</div><div class="op">%'+pct(v)+'</div>':'<div class="ov" style="color:#333">-</div>'}
 
 function render(maclar){
-if(!maclar.length){document.getElementById("container").innerHTML='<div class="bos">🔍 Sonuç yok</div>';document.getElementById("footer").textContent="";return}
+if(!maclar.length){document.getElementById("container").innerHTML='<div class="bos">Sonuc yok</div>';return}
 const grp={};maclar.forEach(m=>{if(!grp[m.tarih])grp[m.tarih]=[];grp[m.tarih].push(m)});
 let h="";
 Object.keys(grp).sort().forEach(tarih=>{
 const gm=grp[tarih];const d=new Date(tarih);
-h+='<div class="gun-baslik">📅 '+d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"})+'<span class="gc">'+gm.length+'</span></div>';
-// Header
-h+='<div class="tablo-header"><div>Saat</div><div style="text-align:left">Maç</div><div>MS1</div><div>MSX</div><div>MS2</div><div>Alt</div><div>Üst</div><div>KGV</div><div>KGY</div><div>İY1</div><div>İYX</div><div>İY2</div><div>İYA</div><div>İYÜ</div><div>▼</div></div>';
-
+h+='<div class="gun-h">'+d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"})+'<span class="gc">'+gm.length+'</span></div>';
+h+='<div class="tablo-header"><div>Saat</div><div style="text-align:left">Mac</div><div>MS1</div><div>MSX</div><div>MS2</div><div>Alt</div><div>Ust</div><div>KGV</div><div>KGY</div><div>IY1</div><div>IYX</div><div>IY2</div><div>IYA</div><div>IYU</div><div>V</div></div>';
 gm.forEach((m,idx)=>{
 const o=m.oranlar;const id="d"+tarih.replace(/-/g,"")+idx;
-const skorTxt=m.durum==="bitti"?' <span class="skor">'+m.skor_ev+'-'+m.skor_dep+'</span>':"";
-
+const skorTxt=m.durum==="bitti"?' <span style="color:#f0b90b;font-weight:700">'+m.skor_ev+'-'+m.skor_dep+'</span>':"";
 h+='<div class="mac-satir">';
 h+='<div class="ms-saat"><span class="s">'+m.saat+'</span><span class="t">#'+(m.mac_kodu||"")+'</span></div>';
 h+='<div class="ms-takim"><span class="ev">'+m.ev_sahibi+skorTxt+'</span><span class="dep">'+m.deplasman+'</span></div>';
-
-// 13 oran kolonu
-const keys=["Maç Sonucu_1","Maç Sonucu_0","Maç Sonucu_2","Alt/Üst 2.5_Alt","Alt/Üst 2.5_Üst","Karşılıklı Gol_Var","Karşılıklı Gol_Yok","İlk Yarı Sonucu_1","İlk Yarı Sonucu_0","İlk Yarı Sonucu_2","İlk Yarı Alt/Üst 1.5_Alt","İlk Yarı Alt/Üst 1.5_Üst"];
+const keys=["Maç Sonucu_1","Maç Sonucu_0","Maç Sonucu_2","Alt/Üst 2.5_Alt","Alt/Üst 2.5_Üst","Karşılıklı Gol_Var","Karşılıklı Gol_Yok","İlk Yarı Sonucu_1","İlk Yarı Sonucu_0","İlk Yarı Sonucu_2","İlk Yarı Alt/Üst 1.5_Alt","İlk Yarı Alt/Üst 1.5_Üst","İlk Yarı Karşılıklı Gol_Var"];
 keys.forEach(k=>{h+='<div class="oran-hucre">'+OH(o[k])+'</div>'});
-
-// IYKG özel
-h+='<div class="oran-hucre">'+OH(o["İlk Yarı Karşılıklı Gol_Var"])+'</div>';
-
-h+='<div class="ma-btn" id="aw'+id+'" onclick="dtoggle(\''+id+'\')">▼</div>';
+h+='<div class="ma-btn" id="aw'+id+'" onclick="dtoggle(\''+id+'\')">V</div>';
 h+='</div>';
-
-// DETAY ROW
 h+='<div class="detay-row" id="'+id+'">';
-const gr={};Object.keys(o).forEach(k=>{if(k==="Handikap")return;const ps=k.split("_");let g=ps.length>1?ps[0]:"Genel";const l=ps.length>1?ps.slice(1).join(" "):ps[0];if(!gr[g])gr[g]=[];gr[g].push({l,v:o[k],p:pct(o[k])})});
+const gr={};Object.keys(o).forEach(k=>{if(k==="Handikap")return;const ps=k.split("_");let g=ps.length>1?ps[0]:"Genel";const l=ps.length>1?ps.slice(1).join(" "):ps[0];if(!gr[g])gr[g]=[];gr[g].push({l:l,v:o[k],p:pct(o[k])})});
 const gn=Object.keys(gr);
 h+='<div class="dtabs">';gn.forEach((g,i)=>h+='<div class="dtab'+(i===0?" a":"")+'" onclick="tc(\''+id+'\','+i+')">'+g+' ('+gr[g].length+')</div>');h+='</div>';
 gn.forEach((g,i)=>{h+='<div class="dcon'+(i===0?" a":"")+'" id="'+id+'t'+i+'"><div class="dgb">'+g+'</div><div class="ds">';
 gr[g].forEach(item=>{h+='<div class="dor"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';h+='</div>'});h+='</div></div>'});
 h+='</div>'})});
-document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" maç | iddaa.com"}
+document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" mac | iddaa.com"}
 
-function dtoggle(id){var el=document.getElementById(id);if(el)el.classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}
+function dtoggle(id){document.getElementById(id).classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}
 function tc(id,ti){const p=document.getElementById(id);p.querySelectorAll(".dtab").forEach((t,i)=>t.classList.toggle("a",i===ti));p.querySelectorAll(".dcon").forEach((c,i)=>c.classList.toggle("a",i===ti))}
 
-// ANALİZ
 function analizFiltreEkle(){const t=document.getElementById("analizOranTuru").value;const d=parseFloat(document.getElementById("analizOranDeger").value);if(!t||!d)return;analizFiltreler.push({tur:t,deger:d});document.getElementById("analizOranDeger").value="";afGoster()}
 function analizFiltreSil(i){analizFiltreler.splice(i,1);afGoster()}
-function analizFiltreTemizle(){analizFiltreler=[];afGoster();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">👆 Filtre ekle</div>'}
-function afGoster(){document.getElementById("analizFiltreListesi").innerHTML=analizFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="analizFiltreSil('+i+')">✕</span></div>').join("")}
+function analizFiltreTemizle(){analizFiltreler=[];afGoster();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Filtre ekle</div>'}
+function afGoster(){document.getElementById("analizFiltreListesi").innerHTML=analizFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="analizFiltreSil('+i+')">X</span></div>').join("")}
 
-async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());const d=await r.json();gecmisMaclar=d.matches
-if(!analizFiltreler.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">⚠️ Filtre ekleyin</div>';return}
-const hepsi=[...tumMaclar,...gecmisMaclar];const bm=hepsi.filter(m=>{if(m.durum!=="bitti")return false;for(const f of analizFiltreler){const v=m.oranlar[f.tur];if(!v||Math.abs(v-f.deger)>0.009)return false}return true});
-if(!bm.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">❌ Eşleşen biten maç yok</div>';return}
+function analizYap(){
+if(!analizFiltreler.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Filtre ekleyin</div>';return}
+const hepsi=tumMaclar.concat(gecmisMaclar);
+const bm=hepsi.filter(m=>{if(m.durum!=="bitti")return false;for(const f of analizFiltreler){const v=m.oranlar[f.tur];if(!v||Math.abs(v-f.deger)>0.009)return false}return true});
+if(!bm.length){document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Eslesenmaç yok ('+hepsi.length+' mac tarandı)</div>';return}
 let ek=0,be=0,dk=0,u25=0,a25=0,kgv=0,kgy=0,iye=0,iyb=0,iyd=0,tg=0;
 bm.forEach(m=>{const se=m.skor_ev||0,sd=m.skor_dep||0,t=se+sd;tg+=t;if(se>sd)ek++;else if(se===sd)be++;else dk++;if(t>2.5)u25++;else a25++;if(se>0&&sd>0)kgv++;else kgy++;const ise=m.skor_1y_ev||0,isd=m.skor_1y_dep||0;if(ise>isd)iye++;else if(ise===isd)iyb++;else iyd++});
 const n=bm.length,P=v=>Math.round(v/n*100);
 const fs=analizFiltreler.map(f=>KA(f.tur)+"="+f.deger).join(" & ");
-let h='<div class="analiz-baslik">📊 '+fs+' — '+n+' Maç</div>';
+let h='<div class="analiz-baslik">'+fs+' — '+n+' Mac ('+hepsi.length+' tarandı)</div>';
 h+='<div class="analiz-grid">';
-h+='<div class="ak"><div class="akb">Maç</div><div class="akd">'+n+'</div></div>';
+h+='<div class="ak"><div class="akb">Mac</div><div class="akd">'+n+'</div></div>';
 h+='<div class="ak"><div class="akb">Ort Gol</div><div class="akd">'+(tg/n).toFixed(1)+'</div></div>';
-h+='<div class="ak"><div class="akb">Üst2.5</div><div class="akd" style="color:#00c853">%'+P(u25)+'</div><div class="aka">'+u25+'/'+n+'</div></div>';
+h+='<div class="ak"><div class="akb">Ust2.5</div><div class="akd" style="color:#00c853">%'+P(u25)+'</div><div class="aka">'+u25+'/'+n+'</div></div>';
 h+='<div class="ak"><div class="akb">KG Var</div><div class="akd" style="color:#f0b90b">%'+P(kgv)+'</div><div class="aka">'+kgv+'/'+n+'</div></div>';
 h+='<div class="ak"><div class="akb">Ev Kazandı</div><div class="akd" style="color:#00c853">%'+P(ek)+'</div><div class="aka">'+ek+'/'+n+'</div></div>';
 h+='<div class="ak"><div class="akb">Berabere</div><div class="akd" style="color:#f0b90b">%'+P(be)+'</div><div class="aka">'+be+'/'+n+'</div></div>';
 h+='</div>';
-h+=bar("Maç Sonucu","Ev%"+P(ek),P(ek),"X%"+P(be),P(be),"Dep%"+P(dk),P(dk));
-h+=bar("Alt/Üst","Alt%"+P(a25),P(a25),"",0,"Üst%"+P(u25),P(u25));
+h+=bar("Mac Sonucu","Ev%"+P(ek),P(ek),"X%"+P(be),P(be),"Dep%"+P(dk),P(dk));
+h+=bar("Alt/Ust","Alt%"+P(a25),P(a25),"",0,"Ust%"+P(u25),P(u25));
 h+=bar("KG","Var%"+P(kgv),P(kgv),"",0,"Yok%"+P(kgy),P(kgy));
-h+=bar("İY","Ev%"+P(iye),P(iye),"X%"+P(iyb),P(iyb),"Dep%"+P(iyd),P(iyd));
-h+='<div class="analiz-baslik" style="margin-top:12px">📋 Maçlar</div>';
-bm.forEach(m=>{const se=m.skor_ev||0,sd=m.skor_dep||0;let sc="b";if(se>sd)sc="ek";else if(sd>se)sc="dk";
+h+=bar("IY","Ev%"+P(iye),P(iye),"X%"+P(iyb),P(iyb),"Dep%"+P(iyd),P(iyd));
+h+='<div class="analiz-baslik" style="margin-top:12px">Maclar (ilk 50)</div>';
+bm.slice(0,50).forEach(m=>{const se=m.skor_ev||0,sd=m.skor_dep||0;let sc="b";if(se>sd)sc="ek";else if(sd>se)sc="dk";
 const oi=analizFiltreler.map(f=>KA(f.tur)+":"+m.oranlar[f.tur]).join(" | ");
 h+='<div class="amac"><div class="amt">'+m.ev_sahibi+' - '+m.deplasman+'</div><div class="ams '+sc+'">'+se+'-'+sd+'</div><div class="amo">'+oi+'</div><div class="amd">'+m.tarih+'</div></div>'});
+if(bm.length>50)h+='<div class="analiz-yok">... ve '+(bm.length-50)+' mac daha</div>';
 document.getElementById("analizSonuc").innerHTML=h}
 
 function bar(t,l1,w1,l2,w2,l3,w3){let h='<div class="abar"><div class="abar-b">'+t+'</div><div class="abar-ic">';if(w1>0)h+='<div class="ab-ev" style="width:'+w1+'%">'+l1+'</div>';if(w2>0)h+='<div class="ab-ber" style="width:'+w2+'%">'+l2+'</div>';if(w3>0)h+='<div class="ab-dep" style="width:'+w3+'%">'+l3+'</div>';return h+'</div></div>'}
 
 yukle();
+
 </script>
 </body>
 </html>

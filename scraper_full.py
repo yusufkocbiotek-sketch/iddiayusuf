@@ -218,9 +218,21 @@ def iddaa_cek(driver):
     for idx, mac in enumerate(mac_listesi):
         print(f"   [{idx+1}/{len(mac_listesi)}] {mac['ev']} vs {mac['dep']}")
         
-        # Sayfayı yeniden yükle
+        # Sayfayı yeniden yükle (504 koruması)
+        time.sleep(10)
         driver.get(url)
-        time.sleep(8)
+        time.sleep(12)
+        
+        # 504 kontrolü
+        try:
+            body_text = driver.find_element(By.TAG_NAME, "body").text
+            if "504" in body_text or "Gateway" in body_text or "didn't respond" in body_text:
+                print(f"      ⏳ 504 hatası! 3 dakika bekleniyor...")
+                time.sleep(180)
+                driver.get(url)
+                time.sleep(15)
+        except:
+            pass
         
         # Devamını gör / Daha fazla göster butonlarına bas
         for _ in range(20):

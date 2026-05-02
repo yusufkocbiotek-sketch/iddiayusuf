@@ -44,7 +44,7 @@ def temizle_takim_adi(ad):
         " cf", "cf ",
         " cd", "cd ",
         " afc", "afc ",
-        " utd", " utd ",
+        " utd",
         " united",
         " city",
         " town",
@@ -67,7 +67,57 @@ def temizle_takim_adi(ad):
 
     ad = re.sub(r"[^a-z0-9]", "", ad)
 
+    manuel = {
+        "indmendoza": "independienterivadavia",
+        "independientemendoza": "independienterivadavia",
+        "deplagua": "deportivolaguaira",
+        "deportivolagua": "deportivolaguaira",
+        "catigre": "atleticotigre",
+        "tigre": "atleticotigre",
+        "penaroluru": "penarol",
+        "capenarol": "penarol",
+        "americadecali": "americadecali",
+        "velezsarsfield": "velezsarsfield",
+        "gimnasiaytirodesalta": "gimnasiaytirodesalta",
+        "ofkbaniklehotapodvtacnikom": "baniklehotapodvtacnikom",
+        "baniklehotapodvtacnikom": "baniklehotapodvtacnikom",
+        "shanghaishenhua": "shanghaishenhua",
+        "chengdurongcheng": "chengdurongcheng",
+        "vanersborgsfk": "vanersborgs",
+        "vanersborgsif": "vanersborgs",
+        "kuchingfa": "kuching",
+        "terengganu": "terengganu",
+        "fcsudtirol": "sudtirol",
+        "sudtirol": "sudtirol",
+        "sscbari": "bari",
+        "bari": "bari",
+        "lask": "lasklinz",
+        "paideflora": "paidelinnamee",
+        "tartujktam": "tammekatartu",
+        "throtturv": "throttur",
+        "haukarhafnarfjordur": "haukar",
+        "acpisa": "pisa",
+        "pisa": "pisa",
+        "lecce": "lecce",
+        "girona": "girona",
+        "mallorca": "mallorca",
+        "leeds": "leeds",
+        "leedsunited": "leeds",
+        "burnley": "burnley",
+        "gaziantepfk": "gaziantep",
+        "gaziantep": "gaziantep",
+        "besiktas": "besiktas",
+        "rizes": "rizespor",
+        "rizespor": "rizespor",
+        "caykurrizespor": "rizespor",
+        "konyaspor": "konyaspor"
+    }
+
+    if ad in manuel:
+        ad = manuel[ad]
+
     return ad
+
 
 def benzerlik(a, b):
     a = temizle_takim_adi(a)

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-02T16:34:50.666359",
+  "updated": "2026-05-02T16:48:19.819581",
   "matches": [
     {
       "index": 1,
@@ -2689,11 +2689,11 @@
       "lig": "",
       "tarih": "2026-05-01",
       "cekme_zamani": "2026-04-30T23:26:40.239574",
-      "durum": "baslamadi",
-      "skor_ev": 0,
-      "skor_dep": 0,
-      "skor_1y_ev": 0,
-      "skor_1y_dep": 0,
+      "durum": "bitti",
+      "skor_ev": 4,
+      "skor_dep": 1,
+      "skor_1y_ev": 3,
+      "skor_1y_dep": 1,
       "kaynak": "iddaa.com",
       "oranlar": {
         "Maç Sonucu_1": 1.25,
@@ -3348,7 +3348,9 @@
         "Oyuncu Şut Çeker_Rommell Ibarra 2+": 5.35,
         "Oyuncu Şut Çeker_Carlos Rivero 2+": 6.28,
         "Oyuncu Şut Çeker_Diego Osio 2+": 6.28
-      }
+      },
+      "skor_kaynak": "gecmis_maclar.json",
+      "skor_eslesme_orani": 1.0
     },
     {
       "index": 119,
@@ -4368,10 +4370,10 @@
       "lig": "",
       "tarih": "2026-05-01",
       "cekme_zamani": "2026-04-30T23:28:59.590921",
-      "durum": "baslamadi",
-      "skor_ev": 0,
+      "durum": "bitti",
+      "skor_ev": 2,
       "skor_dep": 0,
-      "skor_1y_ev": 0,
+      "skor_1y_ev": 2,
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
@@ -4631,7 +4633,9 @@
         "İlk Yarı/Maç Sonucu Skorları_0-3 4+": 89.0,
         "İlk Yarı/Maç Sonucu Skorları_4+ 4+": 40.0,
         "Yarın 01:00_İlk Yarı Sonucu:0": 2.22
-      }
+      },
+      "skor_kaynak": "gecmis_maclar.json",
+      "skor_eslesme_orani": 1.0
     },
     {
       "index": 123,

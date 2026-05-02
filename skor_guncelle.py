@@ -6,7 +6,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 
 MAC_JSON = "public/data/mac.json"
@@ -33,145 +32,113 @@ def mac_json_kaydet(data):
     data["updated"] = datetime.datetime.now().isoformat()
     with open(MAC_JSON, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+    print(f"   💾 mac.json güncellendi!")
 
 def takim_eslesir_mi(ad1, ad2):
-    ad1 = ad1.lower().strip()
-    ad2 = ad2.lower().strip()
-    if ad1 == ad2:
-        return True
-    if ad1 in ad2 or ad2 in ad1:
-        return True
-    if len(ad1) >= 5 and len(ad2) >= 5 and ad1[:5] == ad2[:5]:
-        return True
-    return False
+    # İddaa.com'un kendi sitesinden çektiğimiz için %100 aynı olacak.
+    # Yine de boşlukları ve küçük/büyük harfleri koruyalım.
+    return ad1.lower().strip() == ad2.lower().strip()
 
-def spordb_skorlari_cek(driver):
-    url = "https://www.spordb.com/iddaa-programi/"
+def iddaa_biten_skorlari_cek(driver):
+    # İddaa.com'da maç sonuçları "canli-skor" sayfasının "bitenler" sekmesindedir.
+    url = "https://www.iddaa.com/canli-skor/futbol"
     print(f"📡 {url} açılıyor...")
     driver.get(url)
-    time.sleep(12)
     
-    # Son 3 günü bul ve sırayla aç
+    print("   ⏳ Sayfanın yüklenmesi bekleniyor (15 saniye)...")
+    time.sleep(15)
+
+    skorlar = []
+
     try:
-        sel = driver.find_element(By.ID, "iddaa_dateselector")
-        opts = sel.find_elements(By.TAG_NAME, "option")
-        
-        # Bugün ve geçmiş 2 gün = toplam 3 gün
-        bugun = datetime.date.today()
-        hedef_tarihler = []
-        
-        for i in range(3):
-            tarih = bugun - datetime.timedelta(days=i)
-            gunAyYil = tarih.strftime("%d.%m.%Y")
-            hedef_tarihler.append(gunAyYil)
-        
-        print(f"   📅 Kontrollücek günler: {', '.join(hedef_tarihler)}")
-        
-        # Her günü aç
-        skorlar = []
-        for gun in hedef_tarihler:
-            print(f"\n   📅 {gun} açılıyor...")
-            
-            # O günü seç
-                                  # Selenium ile tarih seç ve elementleri yeniden bul
-            opts = driver.find_elements(By.TAG_NAME, "option")
-            bulundu = False
-            for opt in opts:
-                if opt.text.strip() == gun:
-                    opt.click()
-                    print(f"      ✅ {gun} seçildi")
-                    time.sleep(10)
-                    bulundu = True
-                    break
-            
-            if not bulundu:
-                print(f"      ⚠️ {gun} bulunamadı")
-                continue
-            
-            # Elementleri yeniden bul (sayfa yenilendi)
-            opts = driver.find_elements(By.TAG_NAME, "option")
-            opts = driver.find_elements(By.TAG_NAME, "option")
-            
-            # Skorları çek
-            try:
-                table = driver.find_element(By.TAG_NAME, "table")
-                rows = table.find_elements(By.TAG_NAME, "tr")
+        # "Bitenler" sekmesini bul ve tıkla
+        sekme_tiklandi = False
+        buttons = driver.find_elements(By.CSS_SELECTOR, "a, button, span, div")
+        for btn in buttons:
+            txt = btn.text.strip().lower()
+            if txt == "bitenler" or "bitti" in txt or "bitmiş maçlar" in txt:
+                print(f"   🖱️ '{btn.text.strip()}' sekmesi bulundu, tıklanıyor...")
+                driver.execute_script("arguments[0].scrollIntoView({block:'center'});", btn)
+                time.sleep(1)
+                driver.execute_script("arguments[0].click();", btn)
+                sekme_tiklandi = True
+                time.sleep(8)
+                break
                 
-                aktif_tarih = tarih.isoformat()
-                
-                for row in rows:
-                    cells = row.find_elements(By.CSS_SELECTOR, "td")
-                    
-                    if len(cells) == 1:
-                        txt = cells[0].text.strip()
-                        if len(txt) >= 10 and txt[2] == "." and txt[5] == ".":
-                            try:
-                                p = txt[:10].split(".")
-                                aktif_tarih = f"{p[2]}-{p[1]}-{p[0]}"
-                            except:
-                                pass
-                        continue
-                    
-                    if len(cells) < 10:
-                        continue
-                    
-                    try:
-                        hucre = [c.text.strip() for c in cells]
-                        saat = hucre[0]
-                        if not saat or ":" not in saat:
-                            continue
-                        
-                        ev = hucre[4] if len(hucre) > 4 else ""
-                        skor_text = hucre[5] if len(hucre) > 5 else ""
-                        dep = hucre[6] if len(hucre) > 6 else ""
-                        iy_text = hucre[7] if len(hucre) > 7 else ""
-                        
-                        if not ev or not dep or not skor_text:
-                            continue
-                        
-                        if "-" in skor_text and skor_text != "-":
-                            try:
-                                parcalar = skor_text.strip().split("-")
-                                skor_ev = int(parcalar[0].strip())
-                                skor_dep = int(parcalar[1].strip())
-                                
-                                iy_ev = 0
-                                iy_dep = 0
-                                if iy_text and "-" in iy_text and iy_text != "-":
-                                    iy_parcalar = iy_text.strip().split("-")
-                                    iy_ev = int(iy_parcalar[0].strip())
-                                    iy_dep = int(iy_parcalar[1].strip())
-                                
-                                skorlar.append({
-                                    "ev": ev,
-                                    "dep": dep,
-                                    "tarih": aktif_tarih,
-                                    "saat": saat,
-                                    "skor_ev": skor_ev,
-                                    "skor_dep": skor_dep,
-                                    "skor_1y_ev": iy_ev,
-                                    "skor_1y_dep": iy_dep
-                                })
-                            except:
-                                continue
-                    except:
-                        continue
-            
-            except Exception as e:
-                print(f"      ⚠️ {gun} için hata: {e}")
-                continue
-        
-        print(f"\n   ✅ Sonuç: {len(skorlar)} maç çekildi")
-        return skorlar
-    
+        if not sekme_tiklandi:
+            print("   ⚠️ 'Bitenler' sekmesi bulunamadı. Genel skorlara bakılacak.")
     except Exception as e:
-        print(f"   ❌ Hata: {e}")
-        return []
+        print(f"   ⚠️ Sekme tıklama hatası: {e}")
+
+    # Sayfadaki maçları yüklemek için scroll yapalım
+    print("   📜 Tüm sonuçlar yükleniyor (Aşağı kaydırılıyor)...")
+    son_yukseklik = driver.execute_script("return document.body.scrollHeight")
+    for s in range(10):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(3)
+        yeni = driver.execute_script("return document.body.scrollHeight")
+        if yeni == son_yukseklik:
+            break
+        son_yukseklik = yeni
+    
+    driver.execute_script("window.scrollTo(0, 0);")
+    time.sleep(2)
+
+    # İddaa.com canlı skor yapısı parse ediliyor
+    print("   🔍 Sayfa içeriği analiz ediliyor...")
+    try:
+        body = driver.find_element(By.TAG_NAME, "body")
+        lines = [line.strip() for line in body.text.split("\n") if line.strip() != ""]
+        
+        # İddaa.com'da genelde: "Ev Sahibi", "2 - 1", "Deplasman" veya benzeri sıralamalar olur.
+        # İddaa.com skor formatı: MS skoru genellikle '-' işaretli ve arada boşlukludur (Örn: 2 - 1)
+        for i, line in enumerate(lines):
+            # Eğer satır skor formatına benziyorsa (Örn: "2 - 1" veya "0 - 0")
+            if "-" in line and len(line) <= 9 and any(c.isdigit() for c in line):
+                try:
+                    # Skoru parçala
+                    s_ev, s_dep = map(int, line.replace(" ", "").split("-"))
+                    
+                    # Takım isimlerini yakala (İddaa.com'un HTML dizilimine göre takımlar ya skordan önce/sonra ya da alt alta olur)
+                    # En mantıklı yaklaşım: Eğer etrafında saat veya lig ismi olmayan bir "metin" varsa o takımdır.
+                    ev = lines[i-1] if i-1 >= 0 else ""
+                    dep = lines[i+1] if i+1 < len(lines) else ""
+                    
+                    # İlk Yarı skoru genelde "(İY X-X)" veya alt satırda "X-X" şeklindedir
+                    iy_ev, iy_dep = 0, 0
+                    iy_line = lines[i+2] if i+2 < len(lines) else ""
+                    if "-" in iy_line and any(c.isdigit() for c in iy_line):
+                        try:
+                            # Örn: (1-0) veya İY: 1-0
+                            iy_temiz = ''.join(c for c in iy_line if c.isdigit() or c == '-')
+                            iy_e, iy_d = map(int, iy_temiz.split("-"))
+                            iy_ev, iy_dep = iy_e, iy_d
+                        except:
+                            pass
+                    
+                    if ev and dep and not ev.isdigit() and not dep.isdigit():
+                        skorlar.append({
+                            "ev": ev,
+                            "dep": dep,
+                            "skor_ev": s_ev,
+                            "skor_dep": s_dep,
+                            "skor_1y_ev": iy_ev,
+                            "skor_1y_dep": iy_dep
+                        })
+                except Exception:
+                    pass
+    except Exception as e:
+        print(f"   ⚠️ Parse hatası: {e}")
+
+    print(f"   ✅ iddaa.com'dan {len(skorlar)} biten maç skoru okundu.")
+    return skorlar
 
 def skorlari_guncelle(data, skorlar):
     guncellenen = 0
     bulunamayan = 0
-    
+    eksik_gecmis_maclar = []
+    bugun_iso = datetime.date.today().isoformat()
+
     for mac in data["matches"]:
         if mac["durum"] != "baslamadi":
             continue
@@ -186,15 +153,21 @@ def skorlari_guncelle(data, skorlar):
                 mac["skor_1y_dep"] = skor["skor_1y_dep"]
                 guncellenen += 1
                 bulundu = True
-                print(f"   ✅ {mac['ev_sahibi']} {skor['skor_ev']}-{skor['skor_dep']} {mac['deplasman']}")
+                print(f"   ✅ EŞLEŞTİ: (İddaa Bülten: {mac['ev_sahibi']} vs {mac['deplasman']}) <==> (İddaa Sonuç: {skor['ev']} {skor['skor_ev']}-{skor['skor_dep']} {skor['dep']})")
                 break
         
         if not bulundu:
             bulunamayan += 1
-    
-    return guncellenen, bulunamayan
+            if mac["tarih"] < bugun_iso:
+                eksik_gecmis_maclar.append(f"{mac['ev_sahibi']} vs {mac['deplasman']} ({mac['tarih']} {mac['saat']})")
+
+    return guncellenen, bulunamayan, eksik_gecmis_maclar
 
 def main():
+    print("============================================================")
+    print("⚽ Skor Güncelleyici (KAYNAK: IDDAA.COM CANLI SKOR)...")
+    print("============================================================")
+    
     print("📖 mac.json okunuyor...")
     data = mac_json_oku()
     maclar = data.get("matches", [])
@@ -207,60 +180,37 @@ def main():
     print(f"   ✅ Biten: {len(bitmis)} maç")
     
     if not baslamadi:
-        print("\n✅ Güncellenecek maç yok! Tümü zaten biten.")
+        print("\n✅ Güncellenecek 'başlamadı' durumunda maç yok!")
         return
-    
-    tarihler = set(m["tarih"] for m in baslamadi)
-    print(f"\n📅 Kontrol edilecek tarihler: {', '.join(sorted(tarihler))}")
-    
+
     driver = None
     try:
         driver = tarayici_baslat()
+        skorlar = iddaa_biten_skorlari_cek(driver)
         
-        print("\n🔍 SporDB'den skorlar çekiliyor...")
-        skorlar = spordb_skorlari_cek(driver)
-        
-        biten_skorlar = [s for s in skorlar if s["skor_ev"] is not None]
-        print(f"   📊 SporDB'de {len(biten_skorlar)} biten maç bulundu")
-        
-        print(f"\n📝 Skorlar güncelleniyor...")
-        guncellenen, bulunamayan = skorlari_guncelle(data, biten_skorlar)
+        print("\n📝 İddaa.com Sonuçları ile Bülten verileriniz eşleştiriliyor...")
+        guncellenen, bulunamayan, eksik_liste = skorlari_guncelle(data, skorlar)
         
         print(f"\n{'='*60}")
         print(f"📊 SONUÇ")
-        print(f"   ✅ Güncellenen: {guncellenen} maç")
-        print(f"   ❌ Bulunamayan: {bulunamayan} maç")
+        print(f"   ✅ Eşleşip Güncellenen: {guncellenen} maç")
+        print(f"   ❌ Oynanmamış veya Eşleşemeyen: {bulunamayan} maç")
         print(f"{'='*60}")
         
+        if eksik_liste:
+            print("\n⚠️ Dün veya öncesine ait olup skoru bulunamayan takımlar (Maç iptal/ertelenmiş olabilir):")
+            for e in eksik_liste[:15]:
+                print(f"   - {e}")
+
         if guncellenen > 0:
             mac_json_kaydet(data)
-            print(f"\n💾 mac.json güncellendi!")
+            print(f"\n📌 Lütfen GitHub'a yükleyin: git add -A && git commit -m 'Skorlar guncellendi' && git push")
             
-            yeni_bitmis = [m for m in data["matches"] if m["durum"] == "bitti"]
-            yeni_baslamadi = [m for m in data["matches"] if m["durum"] == "baslamadi"]
-            print(f"   ✅ Biten: {len(yeni_bitmis)} maç")
-            print(f"   ⏳ Başlamadı: {len(yeni_baslamadi)} maç")
-            
-            print(f"\n📌 GitHub'a yükleyin:")
-            print(f"   git add -A")
-            print(f'   git commit -m "Skorlar guncellendi"')
-            print(f"   git push")
-        else:
-            print("\n⚠️ Güncellenecek skor bulunamadı.")
-            print("   Muhtemelen maçlar henüz bitmemiş veya takım adları eşleşmiyor.")
-        
     except Exception as e:
         print(f"❌ Hata: {e}")
-        import traceback
-        traceback.print_exc()
     finally:
         if driver:
-            input("\n⏸️ Enter'a basın Chrome kapansın...")
             driver.quit()
 
 if __name__ == "__main__":
-    print("⚽ Skor Güncelleyici")
-    print(f"📅 {datetime.datetime.now().strftime('%d/%m/%Y %H:%M')}")
-    print(f"🌐 Kaynak: spordb.com")
-    print("=" * 60)
     main()

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-02T09:55:56.741067",
+  "updated": "2026-05-02T16:34:50.666359",
   "matches": [
     {
       "index": 1,
@@ -2419,9 +2419,9 @@
       "lig": "Premyer Liqa",
       "tarih": "2026-04-30",
       "cekme_zamani": "2026-04-30T04:45:09.476226",
-      "durum": "baslamadi",
-      "skor_ev": 0,
-      "skor_dep": 0,
+      "durum": "bitti",
+      "skor_ev": 2,
+      "skor_dep": 1,
       "skor_1y_ev": 0,
       "skor_1y_dep": 0,
       "oranlar": {
@@ -2465,10 +2465,10 @@
       "lig": "Eliteserien",
       "tarih": "2026-04-30",
       "cekme_zamani": "2026-04-30T04:46:03.629202",
-      "durum": "baslamadi",
-      "skor_ev": 0,
+      "durum": "bitti",
+      "skor_ev": 5,
       "skor_dep": 0,
-      "skor_1y_ev": 0,
+      "skor_1y_ev": 2,
       "skor_1y_dep": 0,
       "oranlar": {
         "Maç Sonucu_1": 1.11,
@@ -3705,10 +3705,10 @@
       "lig": "",
       "tarih": "2026-05-01",
       "cekme_zamani": "2026-04-30T23:28:24.595316",
-      "durum": "baslamadi",
-      "skor_ev": 0,
+      "durum": "bitti",
+      "skor_ev": 2,
       "skor_dep": 0,
-      "skor_1y_ev": 0,
+      "skor_1y_ev": 2,
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
@@ -4355,7 +4355,9 @@
         "Oyuncu Şut Çeker_Matias Gonzalez 2+": 6.28,
         "Oyuncu Şut Çeker_Franco Escobar 2+": 6.28,
         "Yarın 01:00_İlk Yarı Sonucu:0": 2.22
-      }
+      },
+      "skor_kaynak": "gecmis_maclar.json",
+      "skor_eslesme_orani": 0.868
     },
     {
       "index": 122,
@@ -8687,10 +8689,10 @@
       "lig": "",
       "tarih": "2026-05-01",
       "cekme_zamani": "2026-05-01T16:06:03.219894",
-      "durum": "baslamadi",
-      "skor_ev": 0,
-      "skor_dep": 0,
-      "skor_1y_ev": 0,
+      "durum": "bitti",
+      "skor_ev": 2,
+      "skor_dep": 1,
+      "skor_1y_ev": 1,
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {

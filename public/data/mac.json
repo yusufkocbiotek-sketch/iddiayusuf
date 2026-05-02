@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-01T17:12:55.194422",
+  "updated": "2026-05-02T08:44:20.932832",
   "matches": [
     {
       "index": 1,
@@ -9985,10 +9985,10 @@
       "lig": "",
       "tarih": "2026-05-02",
       "cekme_zamani": "2026-05-01T12:41:40.134686",
-      "durum": "baslamadi",
-      "skor_ev": 0,
+      "durum": "bitti",
+      "skor_ev": 5,
       "skor_dep": 0,
-      "skor_1y_ev": 0,
+      "skor_1y_ev": 2,
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
@@ -10049,10 +10049,10 @@
       "lig": "",
       "tarih": "2026-05-02",
       "cekme_zamani": "2026-05-01T12:42:22.710544",
-      "durum": "baslamadi",
-      "skor_ev": 0,
-      "skor_dep": 0,
-      "skor_1y_ev": 0,
+      "durum": "bitti",
+      "skor_ev": 3,
+      "skor_dep": 2,
+      "skor_1y_ev": 1,
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
@@ -10081,8 +10081,8 @@
       "lig": "",
       "tarih": "2026-05-02",
       "cekme_zamani": "2026-05-01T12:42:43.731250",
-      "durum": "baslamadi",
-      "skor_ev": 0,
+      "durum": "bitti",
+      "skor_ev": 1,
       "skor_dep": 0,
       "skor_1y_ev": 0,
       "skor_1y_dep": 0,

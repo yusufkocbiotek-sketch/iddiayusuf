@@ -8365,10 +8365,10 @@
       "tarih": "2026-05-01",
       "cekme_zamani": "2026-05-01T16:10:28.084162",
       "durum": "bitti",
-      "skor_ev": 0,
-      "skor_dep": 0,
-      "skor_1y_ev": 0,
-      "skor_1y_dep": 0,
+      "skor_ev": 3,
+      "skor_dep": 2,
+      "skor_1y_ev": 1,
+      "skor_1y_dep": 1,
       "kaynak": "iddaa.com",
       "oranlar": {
         "Maç Sonucu_1": 1.59,
@@ -8682,7 +8682,9 @@
         "Korner Handikap 0:0.5_2": 1.72,
         "İlk Yarı Korner Handikap 0:0.5_1": 1.71,
         "İlk Yarı Korner Handikap 0:0.5_2": 1.55
-      }
+      },
+      "skor_duzeltme": "manuel",
+      "skor_duzeltme_zamani": "2026-05-02T17:16:19.989255"
     },
     {
       "index": 145,

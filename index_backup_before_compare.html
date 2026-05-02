@@ -910,55 +910,6 @@ function analizMacTablosuHtml(maclar){
 }
 
 
-
-/* KARSILASTIRMALI ANALIZ YARDIMCI FONKSIYONLARI - OTOMATIK EKLENDI */
-function tekliAnalizSonuc(hepsi, filtre){
-  const uygun = hepsi.filter(m=>{
-    if(m.durum !== "bitti") return false;
-    const v = m.oranlar ? m.oranlar[filtre.tur] : null;
-    if(!v || Math.abs(v - filtre.deger) > 0.009) return false;
-    return true;
-  });
-
-  return uygun;
-}
-
-function ikiFiltreKarsilastirma(hepsi, f1, f2){
-  const biten = hepsi.filter(m=>m.durum === "bitti");
-
-  let sadece1 = 0;
-  let sadece2 = 0;
-  let ikisi = 0;
-  let hicbiri = 0;
-
-  biten.forEach(m=>{
-    const v1 = m.oranlar ? m.oranlar[f1.tur] : null;
-    const v2 = m.oranlar ? m.oranlar[f2.tur] : null;
-
-    const a = !!(v1 && Math.abs(v1 - f1.deger) <= 0.009);
-    const b = !!(v2 && Math.abs(v2 - f2.deger) <= 0.009);
-
-    if(a && b) ikisi++;
-    else if(a && !b) sadece1++;
-    else if(!a && b) sadece2++;
-    else hicbiri++;
-  });
-
-  return {
-    toplam: biten.length,
-    sadece1,
-    sadece2,
-    ikisi,
-    hicbiri
-  };
-}
-
-function yuzdeHesapla(sayi, toplam){
-  if(!toplam) return 0;
-  return Math.round((sayi / toplam) * 100);
-}
-
-
 function analizYap(){
   if(!analizFiltreler.length){
     document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Filtre ekleyin</div>';
@@ -1016,7 +967,6 @@ function analizYap(){
   let h='';
   h+='<div class="analiz-baslik">'+fs+' — '+n+' Maç ('+hepsi.length+' tarandı)</div>';
 
-  // Ana kartlar
   h+='<div class="analiz-grid">';
   h+='<div class="ak"><div class="akb">Maç</div><div class="akd">'+n+'</div></div>';
   h+='<div class="ak"><div class="akb">Ort Gol</div><div class="akd">'+(tg/n).toFixed(1)+'</div></div>';
@@ -1025,26 +975,6 @@ function analizYap(){
   h+='<div class="ak"><div class="akb">Ev Kazandı</div><div class="akd" style="color:#00c853">%'+P(ek)+'</div><div class="aka">'+ek+'/'+n+'</div></div>';
   h+='<div class="ak"><div class="akb">Berabere</div><div class="akd" style="color:#f0b90b">%'+P(be)+'</div><div class="aka">'+be+'/'+n+'</div></div>';
   h+='</div>';
-
-  // Eğer tam 2 filtre varsa karşılaştırmalı kartlar ekle
-  if(analizFiltreler.length === 2){
-    const f1 = analizFiltreler[0];
-    const f2 = analizFiltreler[1];
-
-    const tek1 = tekliAnalizSonuc(hepsi, f1);
-    const tek2 = tekliAnalizSonuc(hepsi, f2);
-    const k = ikiFiltreKarsilastirma(hepsi, f1, f2);
-
-    h+='<div class="analiz-baslik" style="margin-top:10px">⚡ Karşılaştırmalı Kombine Analizi</div>';
-    h+='<div class="analiz-grid">';
-    h+='<div class="ak"><div class="akb">'+KA(f1.tur)+' = '+f1.deger+'</div><div class="akd">%'+yuzdeHesapla(tek1.length, k.toplam)+'</div><div class="aka">'+tek1.length+'/'+k.toplam+'</div></div>';
-    h+='<div class="ak"><div class="akb">'+KA(f2.tur)+' = '+f2.deger+'</div><div class="akd">%'+yuzdeHesapla(tek2.length, k.toplam)+'</div><div class="aka">'+tek2.length+'/'+k.toplam+'</div></div>';
-    h+='<div class="ak"><div class="akb">İkisi Birlikte</div><div class="akd" style="color:#00c853">%'+yuzdeHesapla(k.ikisi, k.toplam)+'</div><div class="aka">'+k.ikisi+'/'+k.toplam+'</div></div>';
-    h+='<div class="ak"><div class="akb">Sadece 1. Oran</div><div class="akd" style="color:#f0b90b">%'+yuzdeHesapla(k.sadece1, k.toplam)+'</div><div class="aka">'+k.sadece1+'/'+k.toplam+'</div></div>';
-    h+='<div class="ak"><div class="akb">Sadece 2. Oran</div><div class="akd" style="color:#f0b90b">%'+yuzdeHesapla(k.sadece2, k.toplam)+'</div><div class="aka">'+k.sadece2+'/'+k.toplam+'</div></div>';
-    h+='<div class="ak"><div class="akb">İkisi de Gelmedi</div><div class="akd" style="color:#e74c3c">%'+yuzdeHesapla(k.hicbiri, k.toplam)+'</div><div class="aka">'+k.hicbiri+'/'+k.toplam+'</div></div>';
-    h+='</div>';
-  }
 
   h+=bar("Maç Sonucu","Ev%"+P(ek),P(ek),"X%"+P(be),P(be),"Dep%"+P(dk),P(dk));
   h+=bar("Alt/Üst","Alt%"+P(a25),P(a25),"",0,"Üst%"+P(u25),P(u25));
@@ -1056,7 +986,6 @@ function analizYap(){
 
   document.getElementById("analizSonuc").innerHTML=h;
 }
-
 
 
 function bar(t,l1,w1,l2,w2,l3,w3){let h='<div class="abar"><div class="abar-b">'+t+'</div><div class="abar-ic">';if(w1>0)h+='<div class="ab-ev" style="width:'+w1+'%">'+l1+'</div>';if(w2>0)h+='<div class="ab-ber" style="width:'+w2+'%">'+l2+'</div>';if(w3>0)h+='<div class="ab-dep" style="width:'+w3+'%">'+l3+'</div>';return h+'</div></div>'}

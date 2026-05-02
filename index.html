@@ -54,6 +54,25 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .oran-hucre .ov{font-size:11px;font-weight:700;color:#f0b90b}
 .oran-hucre .op{font-size:7px;color:#00c853;display:block}
 .oran-hucre:hover{background:#0d1117}
+.oran-hucre.dogru,
+.ok.dogru,
+.dor.dogru{
+  background:#063b22!important;
+  border-color:#00c853!important;
+  box-shadow:0 0 0 1px rgba(0,200,83,.35);
+}
+
+.oran-hucre.dogru .ov,
+.ok.dogru .ov,
+.dor.dogru .dv{
+  color:#00ff88!important;
+}
+
+.oran-hucre.dogru .op,
+.ok.dogru .op,
+.dor.dogru .dp{
+  color:#b6ffd6!important;
+}
 .ma-btn{text-align:center;cursor:pointer;color:#444;font-size:12px;padding:4px}
 .ma-btn:hover{color:#00c853}
 .ma-btn.open{color:#00c853;transform:rotate(180deg)}
@@ -181,6 +200,178 @@ async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now()
 function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
 function ligleriDoldur(){const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();const s=document.getElementById("ligSelect");l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}
 function pct(o){return o&&o>0?Math.round(1/o*10000)/100:0}
+function macBittiMi(m){
+  return m && m.durum === "bitti";
+}
+
+function dogruOran(m, key){
+  if(!macBittiMi(m)) return false;
+  if(!key) return false;
+
+  const se = Number(m.skor_ev || 0);
+  const sd = Number(m.skor_dep || 0);
+  const iySe = Number(m.skor_1y_ev || 0);
+  const iySd = Number(m.skor_1y_dep || 0);
+
+  const toplamGol = se + sd;
+  const iyGol = iySe + iySd;
+
+  const ikinciSe = se - iySe;
+  const ikinciSd = sd - iySd;
+
+  const kgVar = se > 0 && sd > 0;
+  const iyKgVar = iySe > 0 && iySd > 0;
+  const ikinciKgVar = ikinciSe > 0 && ikinciSd > 0;
+
+  const ms =
+    se > sd ? "1" :
+    se === sd ? "0" :
+    "2";
+
+  const iy =
+    iySe > iySd ? "1" :
+    iySe === iySd ? "0" :
+    "2";
+
+  const ikinci =
+    ikinciSe > ikinciSd ? "1" :
+    ikinciSe === ikinciSd ? "0" :
+    "2";
+
+  // Maç sonucu
+  if(key === "Maç Sonucu_1") return ms === "1";
+  if(key === "Maç Sonucu_0") return ms === "0";
+  if(key === "Maç Sonucu_2") return ms === "2";
+
+  // İlk yarı sonucu
+  if(key === "İlk Yarı Sonucu_1") return iy === "1";
+  if(key === "İlk Yarı Sonucu_0") return iy === "0";
+  if(key === "İlk Yarı Sonucu_2") return iy === "2";
+
+  // İkinci yarı sonucu
+  if(key === "İkinci Yarı Sonucu_1") return ikinci === "1";
+  if(key === "İkinci Yarı Sonucu_0") return ikinci === "0";
+  if(key === "İkinci Yarı Sonucu_2") return ikinci === "2";
+
+  // Maç alt/üst
+  if(key.includes("Alt/Üst 2.5_Alt")) return toplamGol < 2.5;
+  if(key.includes("Alt/Üst 2.5_Üst")) return toplamGol > 2.5;
+  if(key.includes("Alt/Üst 1.5_Alt")) return toplamGol < 1.5;
+  if(key.includes("Alt/Üst 1.5_Üst")) return toplamGol > 1.5;
+  if(key.includes("Alt/Üst 3.5_Alt")) return toplamGol < 3.5;
+  if(key.includes("Alt/Üst 3.5_Üst")) return toplamGol > 3.5;
+
+  // İlk yarı alt/üst
+  if(key.includes("İlk Yarı Alt/Üst 0.5_Alt")) return iyGol < 0.5;
+  if(key.includes("İlk Yarı Alt/Üst 0.5_Üst")) return iyGol > 0.5;
+  if(key.includes("İlk Yarı Alt/Üst 1.5_Alt")) return iyGol < 1.5;
+  if(key.includes("İlk Yarı Alt/Üst 1.5_Üst")) return iyGol > 1.5;
+  if(key.includes("İlk Yarı Alt/Üst 2.5_Alt")) return iyGol < 2.5;
+  if(key.includes("İlk Yarı Alt/Üst 2.5_Üst")) return iyGol > 2.5;
+
+  // KG
+  if(key === "Karşılıklı Gol_Var") return kgVar;
+  if(key === "Karşılıklı Gol_Yok") return !kgVar;
+
+  if(key === "İlk Yarı Karşılıklı Gol_Var") return iyKgVar;
+  if(key === "İlk Yarı Karşılıklı Gol_Yok") return !iyKgVar;
+
+  if(key === "İkinci Yarı Karşılıklı Gol_Var") return ikinciKgVar;
+  if(key === "İkinci Yarı Karşılıklı Gol_Yok") return !ikinciKgVar;
+
+  // Maç sonucu + KG
+  if(key.startsWith("Maç Sonucu ve Karşılıklı Gol_")){
+    const secim = key.split("_")[1]; // "1 ve Var"
+    if(!secim) return false;
+
+    const parca = secim.split(" ve ");
+    const msSecim = parca[0];
+    const kgSecim = parca[1];
+
+    const msDogru = msSecim === ms;
+    const kgDogru = kgSecim === "Var" ? kgVar : !kgVar;
+
+    return msDogru && kgDogru;
+  }
+
+  // İlk yarı / maç sonucu
+  if(key.startsWith("İlk Yarı / Maç Sonucu_")){
+    const secim = key.split("_")[1]; // 1/1, 0/2 vb.
+    return secim === (iy + "/" + ms);
+  }
+
+  // İlk yarı sonucu + İY KG
+  if(key.startsWith("İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_")){
+    const secim = key.split("_")[1]; // 1 ve Var
+    if(!secim) return false;
+
+    const parca = secim.split(" ve ");
+    const iySecim = parca[0];
+    const kgSecim = parca[1];
+
+    const iyDogru = iySecim === iy;
+    const kgDogru = kgSecim === "Var" ? iyKgVar : !iyKgVar;
+
+    return iyDogru && kgDogru;
+  }
+
+  // İlk yarı sonucu + İY Alt/Üst 1.5
+  if(key.startsWith("İlk Yarı Sonucu ve Altı/Üstü 1.5_")){
+    const secim = key.split("_")[1]; // 1 ve Üst
+    if(!secim) return false;
+
+    const parca = secim.split(" ve ");
+    const iySecim = parca[0];
+    const auSecim = parca[1];
+
+    const iyDogru = iySecim === iy;
+    const auDogru = auSecim === "Üst" ? iyGol > 1.5 : iyGol < 1.5;
+
+    return iyDogru && auDogru;
+  }
+
+  // Her iki yarıda da üst 1.5
+  if(key === "Her İki Yarıda da Üst 1.5_Evet"){
+    return iyGol > 1.5 && (ikinciSe + ikinciSd) > 1.5;
+  }
+
+  if(key === "Her İki Yarıda da Üst 1.5_Hayır"){
+    return !(iyGol > 1.5 && (ikinciSe + ikinciSd) > 1.5);
+  }
+
+  // Her iki yarıda da alt 1.5
+  if(key === "Her İki Yarıda da Alt 1.5_Evet"){
+    return iyGol < 1.5 && (ikinciSe + ikinciSd) < 1.5;
+  }
+
+  if(key === "Her İki Yarıda da Alt 1.5_Hayır"){
+    return !(iyGol < 1.5 && (ikinciSe + ikinciSd) < 1.5);
+  }
+
+  // İlk yarı ve ikinci yarıda KG olur
+  if(key.startsWith("İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_")){
+    const secim = key.split("_")[1]; // Evet / Hayır
+    if(!secim) return false;
+
+    const parca = secim.split(" / ");
+    const ilk = parca[0];
+    const ikinciYari = parca[1];
+
+    const ilkDogru = ilk === "Evet" ? iyKgVar : !iyKgVar;
+    const ikinciDogru = ikinciYari === "Evet" ? ikinciKgVar : !ikinciKgVar;
+
+    return ilkDogru && ikinciDogru;
+  }
+
+  // Tek / Çift
+  if(key === "Tek/Çift_Tek") return toplamGol % 2 === 1;
+  if(key === "Tek/Çift_Çift") return toplamGol % 2 === 0;
+
+  if(key === "İlk Yarı Tek/Çift_Tek") return iyGol % 2 === 1;
+  if(key === "İlk Yarı Tek/Çift_Çift") return iyGol % 2 === 0;
+
+  return false;
+}
 function mainTab(i){document.querySelectorAll(".main-tab").forEach((t,j)=>t.classList.toggle("aktif",j===i));document.querySelectorAll(".tab-icerik").forEach((t,j)=>t.classList.toggle("aktif",j===i))}
 function KA(t){const m={"Maç Sonucu_1":"MS1","Maç Sonucu_0":"MSX","Maç Sonucu_2":"MS2","Alt/Üst 2.5_Alt":"Alt","Alt/Üst 2.5_Üst":"Üst","Karşılıklı Gol_Var":"KGV","Karşılıklı Gol_Yok":"KGY","İlk Yarı Sonucu_1":"İY1","İlk Yarı Sonucu_0":"İYX","İlk Yarı Sonucu_2":"İY2","İlk Yarı Alt/Üst 1.5_Alt":"İYA","İlk Yarı Alt/Üst 1.5_Üst":"İYÜ","İlk Yarı Karşılıklı Gol_Var":"İYKG","İkinci Yarı Karşılıklı Gol_Var":"2YKG","Her İki Yarıda da Üst 1.5_Evet":"2YÜ","Maç Sonucu ve Karşılıklı Gol_1 ve Var":"1KG","Maç Sonucu ve Karşılıklı Gol_0 ve Var":"XKG","Maç Sonucu ve Karşılıklı Gol_2 ve Var":"2KG","Maç Sonucu ve Karşılıklı Gol_1 ve Yok":"1KY","Maç Sonucu ve Karşılıklı Gol_2 ve Yok":"2KY","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet":"EE","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır":"HH"};return m[t]||t.substring(0,8)}
 
@@ -214,8 +405,12 @@ function resetFiltre(){document.getElementById("aramaInput").value="";["tarihSel
 function statsGoster(m){const to=m.reduce((t,x)=>t+Object.keys(x.oranlar).length,0);const bi=m.filter(x=>x.durum==="bitti").length;
 document.getElementById("statsBar").innerHTML='<div class="si"><div class="sv">'+m.length+'</div><div class="sl">Mac</div></div><div class="si"><div class="sv">'+to.toLocaleString()+'</div><div class="sl">Oran</div></div><div class="si"><div class="sv">'+bi+'</div><div class="sl">Biten</div></div><div class="si"><div class="sv">'+(m.length-bi)+'</div><div class="sl">Gelecek</div></div>'}
 
-function OH(v){return v?'<div class="ov">'+v+'</div><div class="op">%'+pct(v)+'</div>':'<div class="ov" style="color:#333">-</div>'}
-
+function OH(v, m, key){
+  const cls = dogruOran(m, key) ? " dogru" : "";
+  return v
+    ? '<div class="oran-hucre'+cls+'"><div class="ov">'+v+'</div><div class="op">%'+pct(v)+'</div></div>'
+    : '<div class="oran-hucre"><div class="ov" style="color:#333">-</div></div>';
+}
 function render(maclar){
 if(!maclar.length){document.getElementById("container").innerHTML='<div class="bos">Sonuc yok</div>';return}
 const grp={};maclar.forEach(m=>{if(!grp[m.tarih])grp[m.tarih]=[];grp[m.tarih].push(m)});
@@ -235,12 +430,11 @@ keys.forEach(k=>{h+='<div class="oran-hucre">'+OH(o[k])+'</div>'});
 h+='<div class="ma-btn" id="aw'+id+'" onclick="dtoggle(\''+id+'\')">V</div>';
 h+='</div>';
 h+='<div class="detay-row" id="'+id+'">';
-const gr={};Object.keys(o).forEach(k=>{if(k==="Handikap")return;const ps=k.split("_");let g=ps.length>1?ps[0]:"Genel";const l=ps.length>1?ps.slice(1).join(" "):ps[0];if(!gr[g])gr[g]=[];gr[g].push({l:l,v:o[k],p:pct(o[k])})});
+const gr={};Object.keys(o).forEach(k=>{if(k==="Handikap")return;const ps=k.split("_");let g=ps.length>1?ps[0]:"Genel";const l=ps.length>1?ps.slice(1).join(" "):ps[0];if(!gr[g])gr[g]=[];gr[g].push({l:l,v:o[k],p:pct(o[k]),k:k})});
 const gn=Object.keys(gr);
 h+='<div class="dtabs">';gn.forEach((g,i)=>h+='<div class="dtab'+(i===0?" a":"")+'" onclick="tc(\''+id+'\','+i+')">'+g+' ('+gr[g].length+')</div>');h+='</div>';
 gn.forEach((g,i)=>{h+='<div class="dcon'+(i===0?" a":"")+'" id="'+id+'t'+i+'"><div class="dgb">'+g+'</div><div class="ds">';
-gr[g].forEach(item=>{h+='<div class="dor"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';h+='</div>'});h+='</div></div>'});
-h+='</div>'})});
+gr[g].forEach(item=>{const dcls=dogruOran(m,item.k)?" dogru":"";h+='<div class="dor'+dcls+'"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';h+='</div>'});h+='</div></div>'}); h+='</div>'})});
 document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" mac | iddaa.com"}
 
 function dtoggle(id){document.getElementById(id).classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}

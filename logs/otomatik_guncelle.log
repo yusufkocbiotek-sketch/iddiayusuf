@@ -137,3 +137,12 @@ Traceback (most recent call last):
 UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
  
 [4/4] GitHub'a yukleniyor... 
+warning: in the working copy of 'logs/otomatik_guncelle.log', LF will be replaced by CRLF the next time Git touches it
+[main dc0c5cc] Otomatik guncelleme Cmt 02.05.2026 17:34:37,29
+ 1 file changed, 49 insertions(+)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   5304e20..dc0c5cc  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Cmt 02.05.2026 17:34:39,42 
+========================================== 

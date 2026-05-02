@@ -38,7 +38,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .tablo{width:100%;margin-top:10px}
 .gun-baslik{background:#161b22;border:1px solid #21262d;padding:8px 12px;font-size:12px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;border-radius:6px 6px 0 0;margin-top:10px}
 .gun-baslik .gc{background:#00c853;color:#0d1117;padding:1px 8px;border-radius:10px;font-size:10px}
-.tablo-header{display:grid;grid-template-columns:50px 1fr repeat(13,46px) 24px;background:#1a1f2e;border:1px solid #21262d;padding:4px 0;font-size:8px;color:#888;text-align:center;font-weight:600}
+.tablo-header{display:grid;grid-template-columns:50px 1fr 42px 42px repeat(13,46px) 24px;background:#1a1f2e;border:1px solid #21262d;padding:4px 0;font-size:8px;color:#888;text-align:center;font-weight:600}
 .tablo-header div{padding:2px}
 .mac-satir{display:grid;grid-template-columns:50px 1fr repeat(13,46px) 24px;background:#161b22;border:1px solid #21262d;border-top:none;padding:0;align-items:center;font-size:11px;transition:background .2s}
 .mac-satir:hover{background:#1a2233}
@@ -99,12 +99,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .footer{background:#161b22;border-top:1px solid #21262d;padding:10px 15px;text-align:center;font-size:10px;color:#444;margin-top:15px}
 
 @media(max-width:900px){
-.tablo-header,.mac-satir{grid-template-columns:45px 1fr repeat(7,42px) 22px}
+.tablo-header,.mac-satir{grid-template-columns:45px 1fr 38px 38px repeat(7,42px) 22px}
 .tablo-header div:nth-child(n+11),.mac-satir .oran-hucre:nth-child(n+11){display:none}
 .tablo-header div:nth-child(n+11){display:none}
 }
 @media(max-width:600px){
-.tablo-header,.mac-satir{grid-template-columns:40px 1fr repeat(5,38px) 20px}
+.tablo-header,.mac-satir{grid-template-columns:40px 1fr 34px 34px repeat(5,38px) 20px}
 .tablo-header div:nth-child(n+9),.mac-satir .oran-hucre:nth-child(n+9){display:none}
 .tablo-header div:nth-child(n+9){display:none}
 .header h1{font-size:16px}.fr,.air{flex-direction:column;align-items:stretch}
@@ -223,13 +223,19 @@ let h="";
 Object.keys(grp).sort().forEach(tarih=>{
 const gm=grp[tarih];const d=new Date(tarih);
 h+='<div class="gun-h">'+d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"})+'<span class="gc">'+gm.length+'</span></div>';
-h+='<div class="tablo-header"><div>Saat</div><div style="text-align:left">Mac</div><div>MS1</div><div>MSX</div><div>MS2</div><div>Alt</div><div>Ust</div><div>KGV</div><div>KGY</div><div>IY1</div><div>IYX</div><div>IY2</div><div>IYA</div><div>IYU</div><div>V</div></div>';
+h+='<div class="tablo-header"><div>Saat</div><div style="text-align:left">Mac</div><div>İY</div><div>MS</div><div>MS1</div><div>MSX</div><div>MS2</div><div>Alt</div><div>Ust</div><div>KGV</div><div>KGY</div><div>IY1</div><div>IYX</div><div>IY2</div><div>IYA</div><div>IYU</div><div>V</div></div>';iv>Alt</div><div>Ust</div><div>KGV</div><div>KGY</div><div>IY1</div><div>IYX</div><div>IY2</div><div>IYA</div><div>IYU</div><div>V</div></div>';
 gm.forEach((m,idx)=>{
 const o=m.oranlar;const id="d"+tarih.replace(/-/g,"")+idx;
 const skorTxt=m.durum==="bitti"?' <span style="color:#f0b90b;font-weight:700">'+m.skor_ev+'-'+m.skor_dep+'</span>':"";
 h+='<div class="mac-satir">';
 h+='<div class="ms-saat"><span class="s">'+m.saat+'</span><span class="t">#'+(m.mac_kodu||"")+'</span></div>';
-h+='<div class="ms-takim"><span class="ev">'+m.ev_sahibi+skorTxt+'</span><span class="dep">'+m.deplasman+'</span></div>';
+h+='<div class="ms-takim"><span class="ev">'+m.ev_sahibi+'</span><span class="dep">'+m.deplasman+'</span></div>';
+
+const iySkor = m.durum==="bitti" ? (m.skor_1y_ev+"-"+m.skor_1y_dep) : "-";
+const msSkor = m.durum==="bitti" ? (m.skor_ev+"-"+m.skor_dep) : "-";
+
+h+='<div class="oran-hucre"><div class="ov" style="color:#aaa">'+iySkor+'</div></div>';
+h+='<div class="oran-hucre"><div class="ov" style="color:#f0b90b">'+msSkor+'</div></div>';
 const keys=["Maç Sonucu_1","Maç Sonucu_0","Maç Sonucu_2","Alt/Üst 2.5_Alt","Alt/Üst 2.5_Üst","Karşılıklı Gol_Var","Karşılıklı Gol_Yok","İlk Yarı Sonucu_1","İlk Yarı Sonucu_0","İlk Yarı Sonucu_2","İlk Yarı Alt/Üst 1.5_Alt","İlk Yarı Alt/Üst 1.5_Üst","İlk Yarı Karşılıklı Gol_Var"];
 keys.forEach(k=>{h+='<div class="oran-hucre">'+OH(o[k])+'</div>'});
 h+='<div class="ma-btn" id="aw'+id+'" onclick="dtoggle(\''+id+'\')">V</div>';

@@ -1,38 +1,32 @@
 @echo off
 chcp 65001 >nul
-
-echo ==========================================
-echo IDDAA OTOMATIK GUNCELLEME BASLADI
-echo Tarih Saat: %date% %time%
-echo ==========================================
-echo.
+set PYTHONUTF8=1
 
 cd /d C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main
 
-echo Klasor:
-cd
-echo.
+set LOG=logs\otomatik_guncelle.log
+if not exist logs mkdir logs
 
-echo [1/3] Oranlar cekiliyor...
-python scraper_full.py
-echo.
-echo scraper_full.py bitti.
-echo.
+echo. >> %LOG%
+echo ========================================== >> %LOG%
+echo IDDAA OTOMATIK GUNCELLEME BASLADI >> %LOG%
+echo Tarih Saat: %date% %time% >> %LOG%
+echo ========================================== >> %LOG%
 
-echo [2/3] Skorlar eslestiriliyor...
-python skor_json_eslestir.py
-echo.
-echo skor_json_eslestir.py bitti.
-echo.
+echo [1/3] Oranlar cekiliyor... >> %LOG%
+python -X utf8 scraper_full.py >> %LOG% 2>&1
 
-echo [3/3] GitHub'a yukleniyor...
-git add -A
-git commit -m "Otomatik hizli guncelleme %date% %time%"
-git push
+echo. >> %LOG%
+echo [2/3] Skorlar eslestiriliyor... >> %LOG%
+python -X utf8 skor_json_eslestir.py >> %LOG% 2>&1
 
-echo.
-echo ==========================================
-echo TAMAMLANDI
-echo Tarih Saat: %date% %time%
-echo ==========================================
-pause
+echo. >> %LOG%
+echo [3/3] GitHub'a yukleniyor... >> %LOG%
+git add -A >> %LOG% 2>&1
+git commit -m "Otomatik guncelleme %date% %time%" >> %LOG% 2>&1
+git push >> %LOG% 2>&1
+
+echo. >> %LOG%
+echo TAMAMLANDI >> %LOG%
+echo Tarih Saat: %date% %time% >> %LOG%
+echo ========================================== >> %LOG%

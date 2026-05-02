@@ -404,7 +404,6 @@ def mac_cek():
         print(f"❌ Hata: {e}")
     finally:
         if driver:
-            input("\n⏸️ Enter'a basın Chrome kapansın...")
             driver.quit()
 
 if __name__ == "__main__":

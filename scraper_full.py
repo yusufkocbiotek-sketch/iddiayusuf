@@ -128,15 +128,51 @@ def detay_parse(driver):
 
 def tum_maclari_yukle(driver, url):
     driver.get(url)
-    print("   ⏳ Maçlar yükleniyor (max 30sn)...")
-    for _ in range(30):
+    time.sleep(10)
+    
+    print("   📜 Tüm maçlar yükleniyor...")
+    onceki = 0
+    degismedi = 0
+    
+    for tur in range(100):
+        try:
+            buttons = driver.find_elements(By.TAG_NAME, "button")
+            for btn in buttons:
+                try:
+                    txt = btn.text.strip()
+                    if "Devamını gör" in txt or "Daha fazla" in txt or "daha" in txt.lower():
+                        driver.execute_script("arguments[0].scrollIntoView({block:'center'});", btn)
+                        time.sleep(1)
+                        driver.execute_script("arguments[0].click();", btn)
+                        time.sleep(5)
+                except:
+                    continue
+        except:
+            pass
+        
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(3)
+        
         maclar = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
-        if len(maclar) > 0:
-            print(f"   ✅ {len(maclar)} maç bulundu")
-            return len(maclar)
-        time.sleep(1)
-    print("   ⚠️ Maç bulunamadı (timeout)")
-    return 0
+        sayi = len(maclar)
+        
+        if tur % 10 == 0:
+            print(f"   📜 Tur {tur}: {sayi} maç")
+        
+        if sayi == onceki:
+            degismedi += 1
+            if degismedi >= 5:
+                break
+        else:
+            degismedi = 0
+        onceki = sayi
+    
+    driver.execute_script("window.scrollTo(0, 0);")
+    time.sleep(2)
+    
+    maclar = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
+    print(f"   ✅ Toplam {len(maclar)} maç yüklendi!")
+    return len(maclar)
 
 def iddaa_cek(driver):
     bugun = datetime.date.today()

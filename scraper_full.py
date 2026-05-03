@@ -15,7 +15,6 @@ def tarayici_baslat():
     options = Options()
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
     service = Service(ChromeDriverManager().install())
@@ -24,7 +23,6 @@ def tarayici_baslat():
     return driver
 
 def mac_json_kaydet(yeni_maclar):
-    # Önce eski veriyi oku
     data = {"version": 2, "updated": "", "matches": []}
     if os.path.exists(CIKTI_DOSYA):
         try:
@@ -33,7 +31,6 @@ def mac_json_kaydet(yeni_maclar):
         except:
             pass
     
-    # Yeni maçları ekle/güncelle
     guncel_dict = {f"{m['tarih']}_{m['ev_sahibi']}_{m['deplasman']}": m for m in data.get("matches", [])}
     for ym in yeni_maclar:
         guncel_dict[f"{ym['tarih']}_{ym['ev_sahibi']}_{ym['deplasman']}"] = ym
@@ -186,74 +183,82 @@ def iddaa_cek(driver):
     for idx, mac in enumerate(mac_listesi):
         print(f"   [{idx+1}/{len(mac_listesi)}] {mac['ev']} vs {mac['dep']}")
         
-        driver.get(url)
-        time.sleep(8)
-        
-        body = driver.find_element(By.TAG_NAME, "body")
-        lines = [l.strip() for l in body.text.split("\n") if l.strip()]
-        
         temel_oranlar = {}
+        detay_oranlar = {}
         mac_saat = ""
         mac_kodu = ""
         
-        for li in range(len(lines) - 15):
-            if lines[li + 2] == mac['ev'] and lines[li + 4] == mac['dep'] and lines[li + 3] == "-":
-                mac_saat = lines[li + 1] if saat_mi(lines[li + 1]) else ""
-                oran_start = li + 5
-                if lines[oran_start] == "Kral Oran":
-                    oran_start = li + 7
-                if nokta_var_mi(lines[oran_start]):
-                    try:
-                        temel_oranlar = {
-                            "Maç Sonucu_1": float(lines[oran_start]),
-                            "Maç Sonucu_0": float(lines[oran_start + 1]),
-                            "Maç Sonucu_2": float(lines[oran_start + 2]),
-                            "İY Sonuç_1": float(lines[oran_start + 3]),
-                            "İY Sonuç_0": float(lines[oran_start + 4]),
-                            "İY Sonuç_2": float(lines[oran_start + 5]),
-                            "Handikap": lines[oran_start + 6],
-                            "Handikap_1": float(lines[oran_start + 7]),
-                            "Handikap_0": float(lines[oran_start + 8]),
-                            "Handikap_2": float(lines[oran_start + 9]),
-                            "Alt/Üst 2.5_Alt": float(lines[oran_start + 10]),
-                            "Alt/Üst 2.5_Üst": float(lines[oran_start + 11]),
-                            "Karşılıklı Gol_Var": float(lines[oran_start + 12]),
-                            "Karşılıklı Gol_Yok": float(lines[oran_start + 13]),
-                        }
-                        mac_kodu = lines[oran_start + 14]
-                    except:
-                        pass
-                break
-        
-        detay_oranlar = {}
-        print("      🔄 Detay paneli açılıyor...")
-        try:
-            takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
-            for ta in takim_els:
-                ta_text = ta.text.strip()
-                if mac['ev'] in ta_text and mac['dep'] in ta_text:
-                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ta)
-                    time.sleep(2)
-                    driver.execute_script("arguments[0].click();", ta)
-                    time.sleep(6)
-                    
-                    bulundu = tumu_bekle(driver, 25)
-                    
-                    if bulundu:
-                        driver.execute_script("window.scrollTo(0, 800);")
+        for deneme in range(3):
+            try:
+                driver.get(url)
+                time.sleep(10)
+                
+                body = driver.find_element(By.TAG_NAME, "body")
+                lines = [l.strip() for l in body.text.split("\n") if l.strip()]
+                
+                for li in range(len(lines) - 15):
+                    if lines[li + 2] == mac['ev'] and lines[li + 4] == mac['dep'] and lines[li + 3] == "-":
+                        mac_saat = lines[li + 1] if saat_mi(lines[li + 1]) else ""
+                        oran_start = li + 5
+                        if lines[oran_start] == "Kral Oran":
+                            oran_start = li + 7
+                        if nokta_var_mi(lines[oran_start]):
+                            try:
+                                temel_oranlar = {
+                                    "Maç Sonucu_1": float(lines[oran_start]),
+                                    "Maç Sonucu_0": float(lines[oran_start + 1]),
+                                    "Maç Sonucu_2": float(lines[oran_start + 2]),
+                                    "İY Sonuç_1": float(lines[oran_start + 3]),
+                                    "İY Sonuç_0": float(lines[oran_start + 4]),
+                                    "İY Sonuç_2": float(lines[oran_start + 5]),
+                                    "Handikap": lines[oran_start + 6],
+                                    "Handikap_1": float(lines[oran_start + 7]),
+                                    "Handikap_0": float(lines[oran_start + 8]),
+                                    "Handikap_2": float(lines[oran_start + 9]),
+                                    "Alt/Üst 2.5_Alt": float(lines[oran_start + 10]),
+                                    "Alt/Üst 2.5_Üst": float(lines[oran_start + 11]),
+                                    "Karşılıklı Gol_Var": float(lines[oran_start + 12]),
+                                    "Karşılıklı Gol_Yok": float(lines[oran_start + 13]),
+                                }
+                                mac_kodu = lines[oran_start + 14]
+                            except:
+                                pass
+                        break
+                
+                takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
+                for ta in takim_els:
+                    ta_text = ta.text.strip()
+                    if mac['ev'] in ta_text and mac['dep'] in ta_text:
+                        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ta)
                         time.sleep(2)
-                        driver.execute_script("window.scrollTo(0, 1600);")
-                        time.sleep(2)
-                        driver.execute_script("window.scrollTo(0, 0);")
-                        time.sleep(2)
+                        driver.execute_script("arguments[0].click();", ta)
+                        time.sleep(6)
                         
-                        detay_oranlar = detay_parse(driver)
-                        print(f"      ✅ {len(detay_oranlar)} detay oran çekildi")
-                    else:
-                        print("      ⚠️ Detay paneli açılmadı")
+                        if tumu_bekle(driver, 25):
+                            driver.execute_script("window.scrollTo(0, 800);")
+                            time.sleep(2)
+                            driver.execute_script("window.scrollTo(0, 1600);")
+                            time.sleep(2)
+                            driver.execute_script("window.scrollTo(0, 0);")
+                            time.sleep(2)
+                            detay_oranlar = detay_parse(driver)
+                        break
+                
+                if len(detay_oranlar) > 0:
+                    print(f"      ✅ {len(detay_oranlar)} detay oran çekildi")
                     break
-        except Exception as e:
-            print(f"      ⚠️ Detay çekme hatası: {str(e)[:60]}")
+                
+                if deneme < 2:
+                    print(f"      ⏳ Deneme {deneme+1} başarısız, 30sn sonra tekrar...")
+                    time.sleep(30)
+                else:
+                    print("      ❌ 3 deneme de başarısız oldu")
+                    
+            except Exception as e:
+                print(f"      ⚠️ Hata: {str(e)[:60]}")
+                if deneme < 2:
+                    print(f"      ⏳ Hata sonrası 30sn bekleniyor...")
+                    time.sleep(30)
         
         if len(detay_oranlar) > 0:
             basarili += 1

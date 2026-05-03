@@ -23,7 +23,8 @@ def tarayici_baslat():
     print("✅ Chrome başlatıldı!")
     return driver
 
-def veri_kaydet(maclar):
+def mac_json_kaydet(yeni_maclar):
+    # Önce eski veriyi oku
     data = {"version": 2, "updated": "", "matches": []}
     if os.path.exists(CIKTI_DOSYA):
         try:
@@ -31,18 +32,22 @@ def veri_kaydet(maclar):
                 data = json.load(f)
         except:
             pass
-    data["updated"] = datetime.datetime.now().isoformat()
+    
+    # Yeni maçları ekle/güncelle
     guncel_dict = {f"{m['tarih']}_{m['ev_sahibi']}_{m['deplasman']}": m for m in data.get("matches", [])}
-    for ym in maclar:
+    for ym in yeni_maclar:
         guncel_dict[f"{ym['tarih']}_{ym['ev_sahibi']}_{ym['deplasman']}"] = ym
+    
     yeni_liste = sorted(guncel_dict.values(), key=lambda x: (x["tarih"], x["saat"]))
     for i, m in enumerate(yeni_liste, 1):
         m["index"] = i
+    
     data["matches"] = yeni_liste
-    os.makedirs(os.path.dirname(CIKTI_DOSYA), exist_ok=True)
+    data["updated"] = datetime.datetime.now().isoformat()
+    
     with open(CIKTI_DOSYA, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"   💾 {len(yeni_liste)} maç kaydedildi")
+    print(f"   💾 Toplam {len(yeni_liste)} maç kaydedildi")
 
 def saat_mi(text):
     if len(text) == 5 and text[2] == ":":
@@ -62,6 +67,17 @@ def nokta_var_mi(text):
         return 1.01 <= val <= 99.99
     except:
         return False
+
+def tumu_bekle(driver, max_sure=20):
+    for _ in range(max_sure):
+        try:
+            body = driver.find_element(By.TAG_NAME, "body")
+            if "Tümü" in body.text:
+                return True
+        except:
+            pass
+        time.sleep(1)
+    return False
 
 def detay_parse(driver):
     oranlar = {}
@@ -113,73 +129,22 @@ def detay_parse(driver):
         i += 1
     return oranlar
 
-def tumu_bekle(driver, max_sure=20):
-    for _ in range(max_sure):
-        try:
-            body = driver.find_element(By.TAG_NAME, "body")
-            if "Tümü" in body.text:
-                return True
-        except:
-            pass
-        time.sleep(1)
-    return False
-
 def tum_maclari_yukle(driver, url):
-    """Sayfayı aç, butonlara tıkla, TÜM maçları yükle"""
     driver.get(url)
-    time.sleep(10)
-    
-    print("   📜 Tüm maçlar yükleniyor...")
-    onceki = 0
-    
-    degismedi = 0
-    for tur in range(200):
-        # Devamını gör + Daha fazla göster butonlarına bas
-        try:
-            buttons = driver.find_elements(By.TAG_NAME, "button")
-            for btn in buttons:
-                try:
-                    txt = btn.text.strip()
-                    if "Devamını gör" in txt or "Daha fazla" in txt or "devamını" in txt.lower():
-                        driver.execute_script("arguments[0].scrollIntoView({block:'center'});", btn)
-                        time.sleep(1)
-                        driver.execute_script("arguments[0].click();", btn)
-                        time.sleep(5)
-                except:
-                    continue
-        except:
-            pass
-        
-        # Scroll
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(3)
-        
+    print("   ⏳ Maçlar yükleniyor (max 30sn)...")
+    for _ in range(30):
         maclar = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
-        sayi = len(maclar)
-        
-        if tur % 10 == 0:
-            print(f"   📜 Tur {tur}: {sayi} maç")
-        
-        if sayi == onceki:
-            degismedi += 1
-            if degismedi >= 5:
-                break
-        else:
-            degismedi = 0
-        onceki = sayi
-    
-    driver.execute_script("window.scrollTo(0, 0);")
-    time.sleep(2)
-    
-    maclar = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
-    print(f"   ✅ Toplam {len(maclar)} maç yüklendi!")
-    return len(maclar)
+        if len(maclar) > 0:
+            print(f"   ✅ {len(maclar)} maç bulundu")
+            return len(maclar)
+        time.sleep(1)
+    print("   ⚠️ Maç bulunamadı (timeout)")
+    return 0
 
 def iddaa_cek(driver):
     bugun = datetime.date.today()
     url = f"https://www.iddaa.com/program/futbol?date={bugun.strftime('%d.%m.%Y')}"
     
-    # 1. Sayfayı aç ve TÜM maçları yükle
     print(f"📡 {url}")
     toplam = tum_maclari_yukle(driver, url)
     
@@ -187,7 +152,6 @@ def iddaa_cek(driver):
         print("   ❌ Maç bulunamadı!")
         return []
     
-    # 2. Tüm maç isimlerini topla
     print(f"\n🔍 Maç isimleri toplanıyor...")
     takim_adlari = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
     
@@ -214,7 +178,6 @@ def iddaa_cek(driver):
     for i, m in enumerate(mac_listesi):
         print(f"      {i+1}. {m['ev']} vs {m['dep']}")
     
-    # 3. Her maç için: sayfa yükle → maça tıkla → oranları çek
     print(f"\n🔽 Maçlar tek tek açılıyor...\n")
     maclar = []
     basarili = 0
@@ -223,50 +186,9 @@ def iddaa_cek(driver):
     for idx, mac in enumerate(mac_listesi):
         print(f"   [{idx+1}/{len(mac_listesi)}] {mac['ev']} vs {mac['dep']}")
         
-        # Sayfayı yeniden yükle (504 koruması)
-        time.sleep(10)
         driver.get(url)
-        time.sleep(12)
+        time.sleep(8)
         
-        # 504 kontrolü
-        try:
-            body_text = driver.find_element(By.TAG_NAME, "body").text
-            if "504" in body_text or "Gateway" in body_text or "didn't respond" in body_text:
-                print(f"      ⏳ 504 hatası! 3 dakika bekleniyor...")
-                time.sleep(180)
-                driver.get(url)
-                time.sleep(15)
-        except:
-            pass
-        
-        # Devamını gör / Daha fazla göster butonlarına bas
-        for _ in range(20):
-            try:
-                buttons = driver.find_elements(By.TAG_NAME, "button")
-                tiklandi = False
-                for btn in buttons:
-                    try:
-                        txt = btn.text.strip()
-                        if "Devamını gör" in txt or "Daha fazla" in txt:
-                            driver.execute_script("arguments[0].click();", btn)
-                            tiklandi = True
-                            time.sleep(3)
-                            break
-                    except:
-                        continue
-                if not tiklandi:
-                    break
-            except:
-                break
-        
-        # Scroll yaparak tüm maçları yükle
-        for _ in range(5):
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
-        driver.execute_script("window.scrollTo(0, 0);")
-        time.sleep(2)
-        
-        # Temel oranları body text'ten oku
         body = driver.find_element(By.TAG_NAME, "body")
         lines = [l.strip() for l in body.text.split("\n") if l.strip()]
         
@@ -274,7 +196,6 @@ def iddaa_cek(driver):
         mac_saat = ""
         mac_kodu = ""
         
-        # Maçı bul
         for li in range(len(lines) - 15):
             if lines[li + 2] == mac['ev'] and lines[li + 4] == mac['dep'] and lines[li + 3] == "-":
                 mac_saat = lines[li + 1] if saat_mi(lines[li + 1]) else ""
@@ -304,45 +225,41 @@ def iddaa_cek(driver):
                         pass
                 break
         
-        # Maça tıkla
         detay_oranlar = {}
+        print("      🔄 Detay paneli açılıyor...")
         try:
             takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
             for ta in takim_els:
                 ta_text = ta.text.strip()
                 if mac['ev'] in ta_text and mac['dep'] in ta_text:
                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ta)
-                    time.sleep(1)
+                    time.sleep(2)
                     driver.execute_script("arguments[0].click();", ta)
+                    time.sleep(6)
                     
-                    # Tümü görünene kadar bekle
-                    bulundu = tumu_bekle(driver, 20)
+                    bulundu = tumu_bekle(driver, 25)
                     
                     if bulundu:
-                        # Scroll ile tüm oranları yükle
-                        driver.execute_script("window.scrollTo(0, 500);")
+                        driver.execute_script("window.scrollTo(0, 800);")
                         time.sleep(2)
-                        driver.execute_script("window.scrollTo(0, 1000);")
-                        time.sleep(2)
-                        driver.execute_script("window.scrollTo(0, 1500);")
-                        time.sleep(2)
-                        driver.execute_script("window.scrollTo(0, 2000);")
+                        driver.execute_script("window.scrollTo(0, 1600);")
                         time.sleep(2)
                         driver.execute_script("window.scrollTo(0, 0);")
                         time.sleep(2)
                         
                         detay_oranlar = detay_parse(driver)
-                        basarili += 1
-                        print(f"      ✅ {len(detay_oranlar)} detay oran")
+                        print(f"      ✅ {len(detay_oranlar)} detay oran çekildi")
                     else:
-                        basarisiz += 1
-                        print(f"      ❌ Detay yüklenemedi")
+                        print("      ⚠️ Detay paneli açılmadı")
                     break
         except Exception as e:
-            basarisiz += 1
-            print(f"      ❌ Hata: {str(e)[:40]}")
+            print(f"      ⚠️ Detay çekme hatası: {str(e)[:60]}")
         
-        # Birleştir
+        if len(detay_oranlar) > 0:
+            basarili += 1
+        else:
+            basarisiz += 1
+        
         tum_oranlar = {**temel_oranlar, **detay_oranlar}
         
         maclar.append({
@@ -365,9 +282,8 @@ def iddaa_cek(driver):
         
         print(f"      📊 Toplam {len(tum_oranlar)} oran")
         
-        # Her 10 maçta kaydet
         if (idx + 1) % 10 == 0:
-            veri_kaydet(maclar)
+            mac_json_kaydet(maclar)
             print(f"   💾 {len(maclar)} maç kaydedildi (✅{basarili} ❌{basarisiz})")
     
     return maclar
@@ -394,7 +310,7 @@ def mac_cek():
         print(f"{'='*60}")
 
         if maclar:
-            veri_kaydet(maclar)
+            mac_json_kaydet(maclar)
             print("\n🎉 İşlem tamamlandı!")
             print(f"\n📌 GitHub'a yükleyin:")
             print(f"   git add -A")

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-03T18:18:30.900682",
+  "updated": "2026-05-03T18:40:30.564569",
   "matches": [
     {
       "index": 1,
@@ -12284,6 +12284,108 @@
     },
     {
       "index": 208,
+      "mac_kodu": "",
+      "ev_sahibi": "AGF Aarhus",
+      "deplasman": "Sonderjyske",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-03",
+      "cekme_zamani": "2026-05-03T18:32:36.005487",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 209,
+      "mac_kodu": "",
+      "ev_sahibi": "AL Faisaly",
+      "deplasman": "Ramtha SC",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-03",
+      "cekme_zamani": "2026-05-03T18:34:11.250141",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 210,
+      "mac_kodu": "",
+      "ev_sahibi": "AL Salt",
+      "deplasman": "Al Wehdat",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-03",
+      "cekme_zamani": "2026-05-03T18:35:46.112993",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 211,
+      "mac_kodu": "",
+      "ev_sahibi": "CR Khemis Zemamra",
+      "deplasman": "Wydad",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-03",
+      "cekme_zamani": "2026-05-03T18:37:20.887063",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 212,
+      "mac_kodu": "",
+      "ev_sahibi": "Sporting Cristal",
+      "deplasman": "Cusco FC",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-03",
+      "cekme_zamani": "2026-05-03T18:38:55.644485",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 213,
+      "mac_kodu": "",
+      "ev_sahibi": "CA Atlanta",
+      "deplasman": "T. Suarez",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-03",
+      "cekme_zamani": "2026-05-03T18:40:30.545980",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 214,
       "mac_kodu": "96",
       "ev_sahibi": "Loudoun United",
       "deplasman": "Oakland Roots SC",
@@ -12315,7 +12417,7 @@
       }
     },
     {
-      "index": 209,
+      "index": 215,
       "mac_kodu": "91",
       "ev_sahibi": "Cuiaba",
       "deplasman": "Criciuma",
@@ -12347,7 +12449,7 @@
       }
     },
     {
-      "index": 210,
+      "index": 216,
       "mac_kodu": "37",
       "ev_sahibi": "LDU Quito",
       "deplasman": "Guayaquil Ct",
@@ -12379,7 +12481,7 @@
       }
     },
     {
-      "index": 211,
+      "index": 217,
       "mac_kodu": "360",
       "ev_sahibi": "Vitoria BA",
       "deplasman": "Coritiba",
@@ -12411,7 +12513,7 @@
       }
     },
     {
-      "index": 212,
+      "index": 218,
       "mac_kodu": "40",
       "ev_sahibi": "FK Panevezys",
       "deplasman": "Zalgiris Vilnius",
@@ -12476,7 +12578,7 @@
       }
     },
     {
-      "index": 213,
+      "index": 219,
       "mac_kodu": "",
       "ev_sahibi": "FK Atyrau",
       "deplasman": "Altay Vko",
@@ -12533,7 +12635,7 @@
       }
     },
     {
-      "index": 214,
+      "index": 220,
       "mac_kodu": "",
       "ev_sahibi": "Hamburg II",
       "deplasman": "FC Phonix Lubeck",
@@ -12591,7 +12693,7 @@
       }
     },
     {
-      "index": 215,
+      "index": 221,
       "mac_kodu": "",
       "ev_sahibi": "Eintracht Norderstedt",
       "deplasman": "Blau-Weiss Lohne",
@@ -12649,7 +12751,7 @@
       }
     },
     {
-      "index": 216,
+      "index": 222,
       "mac_kodu": "",
       "ev_sahibi": "Dewa United",
       "deplasman": "Semen Padang",
@@ -12703,7 +12805,7 @@
       }
     },
     {
-      "index": 217,
+      "index": 223,
       "mac_kodu": "92",
       "ev_sahibi": "Ruch Chorzow",
       "deplasman": "Odra Opole",
@@ -12818,7 +12920,7 @@
       }
     },
     {
-      "index": 218,
+      "index": 224,
       "mac_kodu": "274",
       "ev_sahibi": "Austria Wien",
       "deplasman": "Hartberg",
@@ -13108,7 +13210,7 @@
       }
     },
     {
-      "index": 219,
+      "index": 225,
       "mac_kodu": "277",
       "ev_sahibi": "Lillestrom",
       "deplasman": "Sarpsborg 08",
@@ -13404,7 +13506,7 @@
       }
     },
     {
-      "index": 220,
+      "index": 226,
       "mac_kodu": "40",
       "ev_sahibi": "Club Olimpia",
       "deplasman": "Sportivo Ameliano",
@@ -13468,7 +13570,7 @@
       }
     },
     {
-      "index": 221,
+      "index": 227,
       "mac_kodu": "40",
       "ev_sahibi": "CD Recoleta",
       "deplasman": "Cerro Porteno",
@@ -13533,7 +13635,7 @@
       }
     },
     {
-      "index": 222,
+      "index": 228,
       "mac_kodu": "96",
       "ev_sahibi": "Hutnik Krakow",
       "deplasman": "Warta Poznan",
@@ -13654,7 +13756,7 @@
       }
     },
     {
-      "index": 223,
+      "index": 229,
       "mac_kodu": "",
       "ev_sahibi": "Metalist 1925",
       "deplasman": "Polissya Zhytomyr",
@@ -13710,7 +13812,7 @@
       }
     },
     {
-      "index": 224,
+      "index": 230,
       "mac_kodu": "",
       "ev_sahibi": "CA Progreso",
       "deplasman": "Cerro Largo FC",
@@ -13740,7 +13842,7 @@
       }
     },
     {
-      "index": 225,
+      "index": 231,
       "mac_kodu": "43",
       "ev_sahibi": "Zhenis Nur Sultan",
       "deplasman": "Tobol K",
@@ -13804,7 +13906,7 @@
       }
     },
     {
-      "index": 226,
+      "index": 232,
       "mac_kodu": "126",
       "ev_sahibi": "Ekenas Idrottsforening",
       "deplasman": "FC KTP",
@@ -13951,7 +14053,7 @@
       }
     },
     {
-      "index": 227,
+      "index": 233,
       "mac_kodu": "99",
       "ev_sahibi": "Viktoria Plzen",
       "deplasman": "Hradec Kralove",
@@ -14066,7 +14168,7 @@
       }
     },
     {
-      "index": 228,
+      "index": 234,
       "mac_kodu": "769",
       "ev_sahibi": "Saint Pauli",
       "deplasman": "Mainz",
@@ -14612,7 +14714,7 @@
       }
     },
     {
-      "index": 229,
+      "index": 235,
       "mac_kodu": "",
       "ev_sahibi": "Bundesliga 32. Hafta",
       "deplasman": "Pazar Maçları (3 Maç)",
@@ -14658,7 +14760,7 @@
       }
     },
     {
-      "index": 230,
+      "index": 236,
       "mac_kodu": "",
       "ev_sahibi": "Ibri",
       "deplasman": "SUR SC",
@@ -14695,7 +14797,7 @@
       }
     },
     {
-      "index": 231,
+      "index": 237,
       "mac_kodu": "40",
       "ev_sahibi": "FK Kaspyi Aktau",
       "deplasman": "FC Astana",
@@ -14760,7 +14862,7 @@
       }
     },
     {
-      "index": 232,
+      "index": 238,
       "mac_kodu": "237",
       "ev_sahibi": "Akron Tolyatti",
       "deplasman": "Krasnodar",
@@ -15014,7 +15116,7 @@
       }
     },
     {
-      "index": 233,
+      "index": 239,
       "mac_kodu": "94",
       "ev_sahibi": "Bate Borisov",
       "deplasman": "FC Dinamo Brest",
@@ -15133,7 +15235,7 @@
       }
     },
     {
-      "index": 234,
+      "index": 240,
       "mac_kodu": "238",
       "ev_sahibi": "Rochdale",
       "deplasman": "Scunthorpe",
@@ -15387,7 +15489,7 @@
       }
     },
     {
-      "index": 235,
+      "index": 241,
       "mac_kodu": "38",
       "ev_sahibi": "Feyenoord (K)",
       "deplasman": "FC Utrecht (K)",
@@ -15448,7 +15550,7 @@
       }
     },
     {
-      "index": 236,
+      "index": 242,
       "mac_kodu": "",
       "ev_sahibi": "Twente (K)",
       "deplasman": "PEC Zwolle (K)",
@@ -15502,7 +15604,7 @@
       }
     },
     {
-      "index": 237,
+      "index": 243,
       "mac_kodu": "667",
       "ev_sahibi": "Sparta Rotterdam",
       "deplasman": "Go Ahead Eagles",
@@ -16004,7 +16106,7 @@
       }
     },
     {
-      "index": 238,
+      "index": 244,
       "mac_kodu": "734",
       "ev_sahibi": "AZ Alkmaar",
       "deplasman": "Twente",
@@ -16758,7 +16860,7 @@
       }
     },
     {
-      "index": 239,
+      "index": 245,
       "mac_kodu": "40",
       "ev_sahibi": "FC Ordabasy",
       "deplasman": "Aktobe Lento",
@@ -16822,7 +16924,7 @@
       }
     },
     {
-      "index": 240,
+      "index": 246,
       "mac_kodu": "95",
       "ev_sahibi": "C Glogow",
       "deplasman": "GKS Tychy",
@@ -16942,7 +17044,7 @@
       }
     },
     {
-      "index": 241,
+      "index": 247,
       "mac_kodu": "",
       "ev_sahibi": "Schalke 04 II",
       "deplasman": "Borussia Dortmund II",
@@ -17000,7 +17102,7 @@
       }
     },
     {
-      "index": 242,
+      "index": 248,
       "mac_kodu": "278",
       "ev_sahibi": "Salzburg",
       "deplasman": "Sturm Graz",
@@ -17295,7 +17397,7 @@
       }
     },
     {
-      "index": 243,
+      "index": 249,
       "mac_kodu": "277",
       "ev_sahibi": "Sandefjord",
       "deplasman": "Aalesunds",
@@ -17591,7 +17693,7 @@
       }
     },
     {
-      "index": 244,
+      "index": 250,
       "mac_kodu": "275",
       "ev_sahibi": "IK Start",
       "deplasman": "Tromso IL",
@@ -17882,7 +17984,7 @@
       }
     },
     {
-      "index": 245,
+      "index": 251,
       "mac_kodu": "275",
       "ev_sahibi": "Kristiansund",
       "deplasman": "Hamkam",
@@ -18174,7 +18276,7 @@
       }
     },
     {
-      "index": 246,
+      "index": 252,
       "mac_kodu": "",
       "ev_sahibi": "Simba SC",
       "deplasman": "Young Africans SC",
@@ -18230,7 +18332,7 @@
       }
     },
     {
-      "index": 247,
+      "index": 253,
       "mac_kodu": "38",
       "ev_sahibi": "Chayka Pesch",
       "deplasman": "Torpedo Moskova",
@@ -18293,7 +18395,7 @@
       }
     },
     {
-      "index": 248,
+      "index": 254,
       "mac_kodu": "38",
       "ev_sahibi": "Fakel",
       "deplasman": "Y Krasnoyars",
@@ -18356,7 +18458,7 @@
       }
     },
     {
-      "index": 249,
+      "index": 255,
       "mac_kodu": "50",
       "ev_sahibi": "Mezokovesd Z",
       "deplasman": "A Csakvar",
@@ -18388,7 +18490,7 @@
       }
     },
     {
-      "index": 250,
+      "index": 256,
       "mac_kodu": "94",
       "ev_sahibi": "Petrolul Ploiesti",
       "deplasman": "Uta Arad",
@@ -18507,7 +18609,7 @@
       }
     },
     {
-      "index": 251,
+      "index": 257,
       "mac_kodu": "657",
       "ev_sahibi": "Paris",
       "deplasman": "Brest",
@@ -19182,7 +19284,7 @@
       }
     },
     {
-      "index": 252,
+      "index": 258,
       "mac_kodu": "666",
       "ev_sahibi": "AJ Auxerre",
       "deplasman": "Angers",
@@ -19864,7 +19966,7 @@
       }
     },
     {
-      "index": 253,
+      "index": 259,
       "mac_kodu": "658",
       "ev_sahibi": "Strasbourg",
       "deplasman": "Toulouse",
@@ -20346,7 +20448,7 @@
       }
     },
     {
-      "index": 254,
+      "index": 260,
       "mac_kodu": "93",
       "ev_sahibi": "NK Radomlje",
       "deplasman": "NK Maribor",
@@ -20464,7 +20566,7 @@
       }
     },
     {
-      "index": 255,
+      "index": 261,
       "mac_kodu": "94",
       "ev_sahibi": "Cittadella",
       "deplasman": "FC Arzignano Valchiampo",
@@ -20583,7 +20685,7 @@
       }
     },
     {
-      "index": 256,
+      "index": 262,
       "mac_kodu": "270",
       "ev_sahibi": "Pogon Szczecin",
       "deplasman": "Wisla Plock",
@@ -20870,7 +20972,7 @@
       }
     },
     {
-      "index": 257,
+      "index": 263,
       "mac_kodu": "40",
       "ev_sahibi": "SC Braga B",
       "deplasman": "AD Fafe",
@@ -20935,7 +21037,7 @@
       }
     },
     {
-      "index": 258,
+      "index": 264,
       "mac_kodu": "40",
       "ev_sahibi": "Uniao SC Paredes",
       "deplasman": "AD Marco 09",
@@ -20999,7 +21101,7 @@
       }
     },
     {
-      "index": 259,
+      "index": 265,
       "mac_kodu": "783",
       "ev_sahibi": "Monchengladbach",
       "deplasman": "B. Dortmund",
@@ -21801,14 +21903,14 @@
       }
     },
     {
-      "index": 260,
+      "index": 266,
       "mac_kodu": "91",
       "ev_sahibi": "I. Eivissa",
       "deplasman": "A.Sanluqueno",
       "saat": "18:45",
       "lig": "",
       "tarih": "2026-05-03",
-      "cekme_zamani": "2026-05-03T18:18:05.967428",
+      "cekme_zamani": "2026-05-03T18:30:34.723831",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -21816,114 +21918,114 @@
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
-        "Maç Sonucu_1": 1.25,
-        "Maç Sonucu_0": 4.24,
-        "Maç Sonucu_2": 6.24,
-        "İY Sonuç_1": 1.69,
-        "İY Sonuç_0": 2.28,
-        "İY Sonuç_2": 6.21,
+        "Maç Sonucu_1": 1.22,
+        "Maç Sonucu_0": 4.35,
+        "Maç Sonucu_2": 6.71,
+        "İY Sonuç_1": 1.64,
+        "İY Sonuç_0": 2.3,
+        "İY Sonuç_2": 6.57,
         "Handikap": "0:1",
-        "Handikap_1": 1.85,
+        "Handikap_1": 1.8,
         "Handikap_0": 3.22,
-        "Handikap_2": 2.49,
+        "Handikap_2": 2.6,
         "Alt/Üst 2.5_Alt": 1.86,
         "Alt/Üst 2.5_Üst": 1.52,
-        "Karşılıklı Gol_Var": 1.75,
-        "Karşılıklı Gol_Yok": 1.61,
-        "Handikaplı Maç Sonucu 0:1_1": 1.85,
+        "Karşılıklı Gol_Var": 1.79,
+        "Karşılıklı Gol_Yok": 1.57,
+        "Handikaplı Maç Sonucu 0:1_1": 1.8,
         "Handikaplı Maç Sonucu 0:1_0": 3.22,
-        "Handikaplı Maç Sonucu 0:1_2": 2.49,
-        "Maç Sonucu ve Alt/Üst 2.5_1 ve Alt": 3.32,
-        "Maç Sonucu ve Alt/Üst 2.5_0 ve Alt": 5.33,
-        "Maç Sonucu ve Alt/Üst 2.5_2 ve Alt": 12.8,
-        "Maç Sonucu ve Alt/Üst 2.5_1 ve Üst": 1.85,
-        "Maç Sonucu ve Alt/Üst 2.5_0 ve Üst": 17.1,
-        "Maç Sonucu ve Alt/Üst 2.5_2 ve Üst": 11.5,
-        "-_0 ve 2": 1.62,
-        "İlk Yarı Sonucu_1": 1.69,
-        "İlk Yarı Sonucu_0": 2.28,
-        "İlk Yarı Sonucu_2": 6.21,
-        "İkinci Yarı Sonucu_1": 1.58,
-        "İkinci Yarı Sonucu_0": 2.63,
-        "İkinci Yarı Sonucu_2": 5.55,
+        "Handikaplı Maç Sonucu 0:1_2": 2.6,
+        "Maç Sonucu ve Alt/Üst 2.5_1 ve Alt": 3.24,
+        "Maç Sonucu ve Alt/Üst 2.5_0 ve Alt": 5.42,
+        "Maç Sonucu ve Alt/Üst 2.5_2 ve Alt": 13.55,
+        "Maç Sonucu ve Alt/Üst 2.5_1 ve Üst": 1.82,
+        "Maç Sonucu ve Alt/Üst 2.5_0 ve Üst": 18.2,
+        "Maç Sonucu ve Alt/Üst 2.5_2 ve Üst": 12.65,
+        "-_0 ve 2": 1.65,
+        "İlk Yarı Sonucu_1": 1.64,
+        "İlk Yarı Sonucu_0": 2.3,
+        "İlk Yarı Sonucu_2": 6.57,
+        "İkinci Yarı Sonucu_1": 1.54,
+        "İkinci Yarı Sonucu_0": 2.64,
+        "İkinci Yarı Sonucu_2": 5.87,
         "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var": 12.05,
-        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok": 1.86,
-        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var": 7.92,
-        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok": 2.97,
+        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok": 1.82,
+        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var": 8.15,
+        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok": 2.98,
         "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var": 35.5,
-        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok": 6.9,
-        "İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Alt": 3.08,
-        "İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Alt": 3.0,
-        "İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Alt": 8.33,
-        "İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Üst": 3.33,
-        "İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Üst": 8.01,
-        "İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Üst": 21.1,
-        "İlk Yarı Karşılıklı Gol_Var": 4.17,
+        "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok": 7.27,
+        "İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Alt": 3.03,
+        "İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Alt": 3.02,
+        "İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Alt": 8.71,
+        "İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Üst": 3.24,
+        "İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Üst": 8.26,
+        "İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Üst": 23.1,
+        "İlk Yarı Karşılıklı Gol_Var": 4.27,
         "-_1 ve 2": 1.3,
         "İlk Yarı Tek/Çift_Tek": 1.79,
         "İlk Yarı Tek/Çift_Çift": 1.57,
-        "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Var": 8.79,
-        "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Var": 2.13,
-        "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Yok": 2.3,
-        "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Yok": 4.79,
-        "Maç Sonucu ve Karşılıklı Gol_1 ve Var": 2.86,
-        "Maç Sonucu ve Karşılıklı Gol_1 ve Yok": 2.04,
-        "Maç Sonucu ve Karşılıklı Gol_0 ve Var": 5.8,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Var": 9.05,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Var": 2.17,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Yok": 2.28,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Yok": 4.54,
+        "Maç Sonucu ve Karşılıklı Gol_1 ve Var": 2.87,
+        "Maç Sonucu ve Karşılıklı Gol_1 ve Yok": 1.96,
+        "Maç Sonucu ve Karşılıklı Gol_0 ve Var": 6.04,
         "Maç Sonucu ve Karşılıklı Gol_0 ve Yok": 13.6,
-        "Maç Sonucu ve Karşılıklı Gol_2 ve Var": 12.55,
-        "Maç Sonucu ve Karşılıklı Gol_2 ve Yok": 11.75,
+        "Maç Sonucu ve Karşılıklı Gol_2 ve Var": 13.75,
+        "Maç Sonucu ve Karşılıklı Gol_2 ve Yok": 12.5,
         "Alt/Üst 1.5_Alt": 3.58,
         "Alt/Üst 1.5_Üst": 1.09,
         "Alt/Üst 3.5_Alt": 1.27,
         "Alt/Üst 3.5_Üst": 2.46,
-        "Ev Sahibi Alt/Üst 1.5_Alt": 2.18,
-        "Ev Sahibi Alt/Üst 1.5_Üst": 1.36,
-        "Deplasman Alt/Üst 0.5_Alt": 1.82,
-        "Deplasman Alt/Üst 0.5_Üst": 1.55,
+        "Ev Sahibi Alt/Üst 1.5_Alt": 2.23,
+        "Ev Sahibi Alt/Üst 1.5_Üst": 1.34,
+        "Deplasman Alt/Üst 0.5_Alt": 1.77,
+        "Deplasman Alt/Üst 0.5_Üst": 1.6,
         "Her İki Yarıda da Alt 1.5_Evet": 2.45,
         "Her İki Yarıda da Alt 1.5_Hayır": 1.27,
         "Her İki Yarıda da Üst 1.5_Evet": 4.2,
         "İlk Yarı Alt/Üst 1.5_Alt": 1.36,
         "İlk Yarı Alt/Üst 1.5_Üst": 2.18,
-        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Alt": 2.16,
-        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Üst": 1.37,
-        "Deplasman İlk Yarı Altı/Üstü 0.5_Alt": 1.21,
-        "Deplasman İlk Yarı Altı/Üstü 0.5_Üst": 2.73,
+        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Alt": 2.19,
+        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Üst": 1.36,
+        "Deplasman İlk Yarı Altı/Üstü 0.5_Alt": 1.19,
+        "Deplasman İlk Yarı Altı/Üstü 0.5_Üst": 2.83,
         "Toplam Gol_0-1 gol": 3.71,
         "Toplam Gol_2-3 gol": 1.83,
         "Toplam Gol_4-5 gol": 3.16,
         "Toplam Gol_6+ gol": 10.65,
-        "Hangi Yarıda Daha Fazla Gol Olur_1.": 2.67,
+        "Hangi Yarıda Daha Fazla Gol Olur_1.": 2.66,
         "Hangi Yarıda Daha Fazla Gol Olur_Eşit": 3.34,
-        "Hangi Yarıda Daha Fazla Gol Olur_2.": 1.92,
-        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_1.": 2.72,
-        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_Eşit": 2.8,
-        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_2.": 2.13,
-        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_1.": 4.02,
-        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_Eşit": 1.61,
-        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_2.": 3.1,
+        "Hangi Yarıda Daha Fazla Gol Olur_2.": 1.93,
+        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_1.": 2.71,
+        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_Eşit": 2.82,
+        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_2.": 2.12,
+        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_1.": 4.11,
+        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_Eşit": 1.57,
+        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_2.": 3.18,
         "Tek / Çift_Tek": 1.68,
         "Tek / Çift_Çift": 1.67,
-        "İkinci Yarı Karşılıklı Gol_Var": 3.35,
-        "İkinci Yarı Karşılıklı Gol_Yok": 1.12,
-        "Ev Sahibi Her İki Yarıda da Gol Atar_Evet": 1.97,
-        "Ev Sahibi Her İki Yarıda da Gol Atar_Hayır": 1.46,
-        "Deplasman Her İki Yarıda da Gol Atar_Evet": 6.51,
-        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır": 1.33,
-        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır": 5.56,
-        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet": 18.25,
-        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet": 4.08
+        "İkinci Yarı Karşılıklı Gol_Var": 3.44,
+        "İkinci Yarı Karşılıklı Gol_Yok": 1.11,
+        "Ev Sahibi Her İki Yarıda da Gol Atar_Evet": 1.93,
+        "Ev Sahibi Her İki Yarıda da Gol Atar_Hayır": 1.47,
+        "Deplasman Her İki Yarıda da Gol Atar_Evet": 6.85,
+        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır": 1.31,
+        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır": 5.66,
+        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet": 19.2,
+        "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet": 4.16
       }
     },
     {
-      "index": 261,
+      "index": 267,
       "mac_kodu": "92",
       "ev_sahibi": "Dinamo Minsk",
       "deplasman": "Maxline Rogachev",
       "saat": "19:00",
       "lig": "",
       "tarih": "2026-05-03",
-      "cekme_zamani": "2026-05-03T18:18:30.885362",
+      "cekme_zamani": "2026-05-03T18:31:00.945462",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -22033,7 +22135,7 @@
       }
     },
     {
-      "index": 262,
+      "index": 268,
       "mac_kodu": "94",
       "ev_sahibi": "Recife",
       "deplasman": "Ceara CE",
@@ -22153,7 +22255,7 @@
       }
     },
     {
-      "index": 263,
+      "index": 269,
       "mac_kodu": "262",
       "ev_sahibi": "Austin FC",
       "deplasman": "Saint Louis City SC",
@@ -22421,7 +22523,7 @@
       }
     },
     {
-      "index": 264,
+      "index": 270,
       "mac_kodu": "93",
       "ev_sahibi": "Goianiense",
       "deplasman": "Juventude",
@@ -22540,7 +22642,7 @@
       }
     },
     {
-      "index": 265,
+      "index": 271,
       "mac_kodu": "39",
       "ev_sahibi": "Colo Colo",
       "deplasman": "Coquimbo Unido",
@@ -22605,7 +22707,7 @@
       }
     },
     {
-      "index": 266,
+      "index": 272,
       "mac_kodu": "239",
       "ev_sahibi": "River Plate",
       "deplasman": "Atl. Tucuman",
@@ -22854,7 +22956,7 @@
       }
     },
     {
-      "index": 267,
+      "index": 273,
       "mac_kodu": "241",
       "ev_sahibi": "Internacional",
       "deplasman": "Fluminense",
@@ -23107,7 +23209,7 @@
       }
     },
     {
-      "index": 268,
+      "index": 274,
       "mac_kodu": "93",
       "ev_sahibi": "Vila Nova",
       "deplasman": "Athletic Club MG",
@@ -23139,7 +23241,7 @@
       }
     },
     {
-      "index": 269,
+      "index": 275,
       "mac_kodu": "240",
       "ev_sahibi": "Velez Sarsfield",
       "deplasman": "New Old Boys",
@@ -23171,7 +23273,7 @@
       }
     },
     {
-      "index": 270,
+      "index": 276,
       "mac_kodu": "238",
       "ev_sahibi": "Estudiantes Río Cuarto",
       "deplasman": "Instituto AC Cordoba",
@@ -23203,7 +23305,7 @@
       }
     },
     {
-      "index": 271,
+      "index": 277,
       "mac_kodu": "244",
       "ev_sahibi": "Arsenal",
       "deplasman": "Atletico Madrid",
@@ -23235,7 +23337,7 @@
       }
     },
     {
-      "index": 272,
+      "index": 278,
       "mac_kodu": "249",
       "ev_sahibi": "Bayern Münih",
       "deplasman": "Paris Saint Germain",
@@ -23505,7 +23607,7 @@
       }
     },
     {
-      "index": 273,
+      "index": 279,
       "mac_kodu": "246",
       "ev_sahibi": "Freiburg",
       "deplasman": "Braga",
@@ -23766,7 +23868,7 @@
       }
     },
     {
-      "index": 274,
+      "index": 280,
       "mac_kodu": "242",
       "ev_sahibi": "Crystal Palace",
       "deplasman": "Shakhtar Donetsk",

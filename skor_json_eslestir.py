@@ -22,7 +22,6 @@ def tarayici_baslat():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
-    # Tarayıcı penceresinin otomatik kapanmasını engelle
     options.add_experimental_option("detach", False)
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
@@ -40,7 +39,6 @@ def mac_json_oku():
 
 def mac_json_kaydet(data):
     data["updated"] = datetime.datetime.now().isoformat()
-    # Klasör yoksa oluştur
     os.makedirs(os.path.dirname(MAC_JSON), exist_ok=True)
     with open(MAC_JSON, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
@@ -50,14 +48,13 @@ def temizle_takim_adi(ad):
     if not ad:
         return ""
     ad = ad.lower().strip()
-    # Türkçe karakter dönüşümü düzeltildi
     tr_map = {'ç': 'c', 'ğ': 'g', 'ı': 'i', 'i': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u', 'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u'}
     for k, v in tr_map.items():
         ad = ad.replace(k, v)
     silinecekler = [
         " fc", "fc ", " united", " utd", " city", " as ", " ac ", " us ", " sc", 
         " fk", " nk", " cs", " cd", " deportivo", " club", " atletico", " atl.",
-        " athletic", " 1911", " 1919", " 1908", " 1912", " 2000", "spor", "kulubu", "sk"
+        " athletic", " 1911", " 1919", " 1908", " 1912", " 2000", "spor", "kulubu", "sk", "if", "ff"
     ]
     for s in silinecekler:
         ad = ad.replace(s, "")
@@ -84,16 +81,12 @@ def takim_eslesir_mi(ad1, ad2):
 def spordb_duz_metin_parse(text, aktif_tarih):
     skorlar = []
     lines = [line.strip() for line in text.split("\n") if line.strip() != ""]
-    
-    # Skor kalıbı: en az bir rakam, tire, en az bir rakam şeklinde
     skor_kalibi = re.compile(r'(\d+)\s*-\s*(\d+)')
     
     for i, line in enumerate(lines):
-        # İki farklı skor olmalı (maç skoru ve ilk yarı skoru)
         bulunan_skorlar = skor_kalibi.findall(line)
         if len(bulunan_skorlar) >= 2:
             try:
-                # Parçaları ayır
                 parcalar = re.split(r'(\d+\s*-\s*\d+)', line)
                 parcalar = [p.strip() for p in parcalar if p.strip()]
                 
@@ -111,7 +104,7 @@ def spordb_duz_metin_parse(text, aktif_tarih):
                     "skor_1y_ev": skor_1y_ev, "skor_1y_dep": skor_1y_dep
                 })
             except Exception as e:
-                print(f"⚠️ Satır ayrıştırılamadı: {line} | Hata: {str(e)}")
+                print(f"⚠️ Satır ayrıştırılamadı: {line[:50]}... | Hata: {str(e)}")
                 continue
     return skorlar
 
@@ -119,69 +112,104 @@ def spordb_skorlari_cek(driver, gunler):
     url = "https://www.spordb.com/iddaa-programi/"
     print(f"📡 {url} açılıyor...")
     driver.get(url)
-    # Sayfanın tamamen yüklenmesini bekle
+    
     try:
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.TAG_NAME, "select"))
         )
+        print("✅ Sayfa tamamen yüklendi")
     except:
-        print("⚠️ Sayfa zamanında yüklenemedi, devam ediliyor...")
-    time.sleep(5)
+        print("⚠️ Sayfa zamanında yüklenemedi, yine de devam ediliyor...")
+    time.sleep(3)
     
     tum_skorlar = []
     print(f"   📅 Kontrol edilecek günler: {', '.join(gunler)}")
 
-    for gun in gunler:
-        print(f"\n   📅 {gun} tarihi spordb'de aranıyor...")
-        try:
-            # Tüm açılır menüleri al
-            selectler = driver.find_elements(By.TAG_NAME, "select")
-            hedef_select = None
-            
-            for sel in selectler:
-                try:
-                    secenekler = sel.find_elements(By.TAG_NAME, "option")
-                    # Sadece tarih içeren ve hafta bilgisi olmayan menüyü seç
-                    if secenekler and any(re.search(r'\d{2}\.\d{2}\.\d{4}', opt.text.strip()) for opt in secenekler):
-                        hedef_select = sel
-                        break
-                except:
+    try:
+        # Tüm açılır menüleri al
+        tum_selectler = driver.find_elements(By.TAG_NAME, "select")
+        gunluk_menu = None
+
+        # 🔑 Önemli Kısım: İki menüyü ayırt ediyoruz
+        for select in tum_selectler:
+            try:
+                # Menüdeki seçenekleri al
+                secenekler = select.find_elements(By.TAG_NAME, "option")
+                if not secenekler:
                     continue
-            
-            if not hedef_select:
-                print("   ⚠️ Tarih seçim menüsü bulunamadı.")
+
+                # Eğer seçenek metninde " - " varsa bu haftalık menüdür -> ATLA
+                if any(" - " in opt.text.strip() for opt in secenekler):
+                    continue
+
+                # Eğer seçenek metni sadece GG.AA.YYYY formatındaysa bu GÜNLÜK menüdür -> KULLAN
+                if any(re.match(r'^\d{2}\.\d{2}\.\d{4}', opt.text.strip()) for opt in secenekler):
+                    gunluk_menu = select
+                    print("✅ Günlük tarih menüsü bulundu!")
+                    break
+            except:
                 continue
-            
-            secenekler = hedef_select.find_elements(By.TAG_NAME, "option")
-            secildi_mi = False
-            
+
+        if not gunluk_menu:
+            print("❌ Günlük tarih menüsü bulunamadı!")
+            return []
+
+        secenekler = gunluk_menu.find_elements(By.TAG_NAME, "option")
+        print(f"ℹ️ Menüde toplam {len(secenekler)} adet gün var")
+
+        # Her hedef gün için kontrol et
+        for gun in gunler:
+            print(f"\n   📅 {gun} tarihi aranıyor...")
+            bulundu = False
+
             for opt in secenekler:
                 opt_metin = opt.text.strip()
+
+                # Hem tam eşleşme hem de yanında gün ismi olsa bile eşleş
                 if gun in opt_metin:
                     deger = opt.get_attribute("value")
-                    secim_nesnesi = Select(hedef_select)
-                    secim_nesnesi.select_by_value(deger)
-                    print(f"      ✅ {gun} seçildi, yükleniyor...")
-                    # Verilerin yüklenmesi için yeterli süre bekle
-                    time.sleep(15)
-                    
+                    secim = Select(gunluk_menu)
+                    secim.select_by_value(deger)
+                    print(f"      ✅ '{opt_metin}' seçildi, yükleniyor...")
+
+                    # İçerik değişimini bekle
+                    eski_icerik = driver.find_element(By.TAG_NAME, "body").text
+                    time.sleep(5)
+
+                    maksimum_bekleme = 20
+                    for saniye in range(maksimum_bekleme):
+                        yeni_icerik = driver.find_element(By.TAG_NAME, "body").text
+                        if yeni_icerik != eski_icerik:
+                            print(f"      ✅ İçerik {saniye+1}. saniyede güncellendi")
+                            break
+                        time.sleep(1)
+
                     # Tarih formatını ISO'ya çevir
                     gun_parcalari = gun.split(".")
                     iso_tarih = f"{gun_parcalari[2]}-{gun_parcalari[1]}-{gun_parcalari[0]}"
-                    
+
+                    # Skorları çek
                     sayfa_icerigi = driver.find_element(By.TAG_NAME, "body").text
                     cekilen_skorlar = spordb_duz_metin_parse(sayfa_icerigi, iso_tarih)
                     tum_skorlar.extend(cekilen_skorlar)
-                    
-                    secildi_mi = True
+
+                    print(f"      ✅ {gun} tarihinden {len(cekilen_skorlar)} maç skoru alındı")
+                    bulundu = True
                     break
-            
-            if not secildi_mi:
-                print(f"      ⚠️ {gun} seçeneği listede bulunamadı.")
-        
-        except Exception as hata:
-            print(f"      ⚠️ Tarih işlenirken hata: {str(hata)}")
-    
+
+            if not bulundu:
+                print(f"      ❌ {gun} menüde bulunamadı.")
+                # Menüdeki ilk 5 günü gösterelim ki ne var görelim
+                try:
+                    print(f"      ℹ️ Menüdeki mevcut günlerden örnek:")
+                    for i, opt in enumerate(secenekler[:5]):
+                        print(f"         - {opt.text.strip()}")
+                except:
+                    pass
+
+    except Exception as hata:
+        print(f"❌ Genel işlem hatası: {str(hata)}")
+
     print(f"\n   ✅ SporDB'den toplam {len(tum_skorlar)} bitmiş maç skoru okundu.")
     return tum_skorlar
 
@@ -191,12 +219,11 @@ def skorlari_guncelle(data, skorlar):
     eksik_gecmis_maclar = []
     bugun_iso = datetime.date.today().isoformat()
 
-    # Önce maç verisinin geçerliliğini kontrol et
     if "matches" not in data or not isinstance(data["matches"], list):
+        print("❌ JSON verisinde 'matches' bölümü bulunamadı!")
         return 0, 0, []
 
     for mac in data["matches"]:
-        # Durum anahtarı yoksa varsayılan değer ata
         if mac.get("durum", "baslamadi") != "baslamadi":
             continue
         
@@ -213,7 +240,7 @@ def skorlari_guncelle(data, skorlar):
                 mac["skor_1y_dep"] = skor["skor_1y_dep"]
                 guncellenen += 1
                 bulundu = True
-                print(f"   ✅ EŞLEŞTİ: {mac.get('ev_sahibi')} {skor['skor_ev']}-{skor['skor_dep']} {skor['dep']}")
+                print(f"   ✅ EŞLEŞTİ: {mac.get('ev_sahibi')} {skor['skor_ev']}-{skor['skor_dep']} {mac.get('deplasman')} ({mac.get('tarih')})")
                 break
         
         if not bulundu:
@@ -224,11 +251,11 @@ def skorlari_guncelle(data, skorlar):
                 tar = mac.get("tarih", "Bilinmeyen Tarih")
                 eksik_gecmis_maclar.append(f"{ev} vs {dep} ({tar})")
     
-    return guncellenen, bulunamayan, eksik_gecmis_maclar
+    return guncellenen, bulunamayan, eksik_listesi if 'eksik_listesi' in locals() else eksik_gecmis_maclar
 
 def main():
     print("============================================================")
-    print("⚽ Skor Güncelleyici (Akıllı Eşleştirme v6.1)...")
+    print("⚽ Skor Güncelleyici (Günlük Menü Düzeltmesi v7.1)...")
     print("============================================================")
     
     data = mac_json_oku()

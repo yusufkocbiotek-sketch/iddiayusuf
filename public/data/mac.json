@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-04T08:04:18.883055",
+  "updated": "2026-05-04T08:16:30.672916",
   "matches": [
     {
       "index": 1,
@@ -29824,6 +29824,40 @@
     },
     {
       "index": 336,
+      "mac_kodu": "",
+      "ev_sahibi": "Hawassa Kenema SC",
+      "deplasman": "Sheger Ketema",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-04",
+      "cekme_zamani": "2026-05-04T08:16:30.614566",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 337,
+      "mac_kodu": "",
+      "ev_sahibi": "Defence Force FC",
+      "deplasman": "Adama City FC",
+      "saat": "",
+      "lig": "",
+      "tarih": "2026-05-04",
+      "cekme_zamani": "2026-05-04T08:14:58.376657",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {}
+    },
+    {
+      "index": 338,
       "mac_kodu": "94",
       "ev_sahibi": "Recife",
       "deplasman": "Ceara CE",
@@ -29943,7 +29977,7 @@
       }
     },
     {
-      "index": 337,
+      "index": 339,
       "mac_kodu": "",
       "ev_sahibi": "Strongest",
       "deplasman": "Academia del Balompie",
@@ -29997,7 +30031,7 @@
       }
     },
     {
-      "index": 338,
+      "index": 340,
       "mac_kodu": "672",
       "ev_sahibi": "Austin FC",
       "deplasman": "Saint Louis City SC",
@@ -30686,7 +30720,7 @@
       }
     },
     {
-      "index": 339,
+      "index": 341,
       "mac_kodu": "92",
       "ev_sahibi": "Goianiense",
       "deplasman": "Juventude",
@@ -30803,7 +30837,7 @@
       }
     },
     {
-      "index": 340,
+      "index": 342,
       "mac_kodu": "39",
       "ev_sahibi": "Colo Colo",
       "deplasman": "Coquimbo Unido",
@@ -30867,7 +30901,7 @@
       }
     },
     {
-      "index": 341,
+      "index": 343,
       "mac_kodu": "401",
       "ev_sahibi": "River Plate",
       "deplasman": "Atl. Tucuman",
@@ -31279,7 +31313,7 @@
       }
     },
     {
-      "index": 342,
+      "index": 344,
       "mac_kodu": "665",
       "ev_sahibi": "Internacional",
       "deplasman": "Fluminense",
@@ -31956,7 +31990,7 @@
       }
     },
     {
-      "index": 343,
+      "index": 345,
       "mac_kodu": "661",
       "ev_sahibi": "Chapecoense",
       "deplasman": "Bragantino SP",
@@ -32631,7 +32665,7 @@
       }
     },
     {
-      "index": 344,
+      "index": 346,
       "mac_kodu": "39",
       "ev_sahibi": "AD Municipal Liberia",
       "deplasman": "Deportivo Saprissa",
@@ -32695,7 +32729,7 @@
       }
     },
     {
-      "index": 345,
+      "index": 347,
       "mac_kodu": "",
       "ev_sahibi": "San Francisc",
       "deplasman": "San Juan FC",
@@ -32753,7 +32787,7 @@
       }
     },
     {
-      "index": 346,
+      "index": 348,
       "mac_kodu": "39",
       "ev_sahibi": "Carabobo FC",
       "deplasman": "Metropolitan",
@@ -32817,7 +32851,7 @@
       }
     },
     {
-      "index": 347,
+      "index": 349,
       "mac_kodu": "39",
       "ev_sahibi": "Club Leones Del Norte",
       "deplasman": "CS Emelec",
@@ -32881,7 +32915,7 @@
       }
     },
     {
-      "index": 348,
+      "index": 350,
       "mac_kodu": "36",
       "ev_sahibi": "Municipal",
       "deplasman": "Deportivo G",
@@ -32940,7 +32974,7 @@
       }
     },
     {
-      "index": 349,
+      "index": 351,
       "mac_kodu": "39",
       "ev_sahibi": "Atl. Junior",
       "deplasman": "Deportivo Pasto",
@@ -33004,7 +33038,7 @@
       }
     },
     {
-      "index": 350,
+      "index": 352,
       "mac_kodu": "37",
       "ev_sahibi": "America De Cali",
       "deplasman": "CS Deportivo Pereira",
@@ -33064,7 +33098,7 @@
       }
     },
     {
-      "index": 351,
+      "index": 353,
       "mac_kodu": "96",
       "ev_sahibi": "Monterey Bay FC",
       "deplasman": "Tulsa Roughnecks",
@@ -33185,7 +33219,7 @@
       }
     },
     {
-      "index": 352,
+      "index": 354,
       "mac_kodu": "269",
       "ev_sahibi": "CF America",
       "deplasman": "Pumas Unam",
@@ -33468,7 +33502,7 @@
       }
     },
     {
-      "index": 353,
+      "index": 355,
       "mac_kodu": "",
       "ev_sahibi": "Guarani Asu",
       "deplasman": "Nacional Asuncion",
@@ -33525,7 +33559,7 @@
       }
     },
     {
-      "index": 354,
+      "index": 356,
       "mac_kodu": "37",
       "ev_sahibi": "Melgar",
       "deplasman": "Cajamarca",
@@ -33585,7 +33619,7 @@
       }
     },
     {
-      "index": 355,
+      "index": 357,
       "mac_kodu": "",
       "ev_sahibi": "Albion FC",
       "deplasman": "Nacional",
@@ -33615,7 +33649,7 @@
       }
     },
     {
-      "index": 356,
+      "index": 358,
       "mac_kodu": "97",
       "ev_sahibi": "Pacific FC",
       "deplasman": "Vancouver Langley FC",
@@ -33737,7 +33771,7 @@
       }
     },
     {
-      "index": 357,
+      "index": 359,
       "mac_kodu": "39",
       "ev_sahibi": "Cancun FC",
       "deplasman": "Tampico Madero",
@@ -33801,7 +33835,7 @@
       }
     },
     {
-      "index": 358,
+      "index": 360,
       "mac_kodu": "98",
       "ev_sahibi": "America MG",
       "deplasman": "Crb Al",
@@ -33920,7 +33954,7 @@
       }
     },
     {
-      "index": 359,
+      "index": 361,
       "mac_kodu": "94",
       "ev_sahibi": "Avai SC",
       "deplasman": "Gremio Novo",
@@ -34039,7 +34073,7 @@
       }
     },
     {
-      "index": 360,
+      "index": 362,
       "mac_kodu": "658",
       "ev_sahibi": "Mirassol FC SP",
       "deplasman": "Corinthians",
@@ -34703,7 +34737,7 @@
       }
     },
     {
-      "index": 361,
+      "index": 363,
       "mac_kodu": "39",
       "ev_sahibi": "Deportes Limache",
       "deplasman": "O'Higgins",
@@ -34767,7 +34801,7 @@
       }
     },
     {
-      "index": 362,
+      "index": 364,
       "mac_kodu": "35",
       "ev_sahibi": "Xelaju",
       "deplasman": "CD Marquense",
@@ -34826,7 +34860,7 @@
       }
     },
     {
-      "index": 363,
+      "index": 365,
       "mac_kodu": "",
       "ev_sahibi": "CD Suchitepequez",
       "deplasman": "Chichicasteco FC",
@@ -34861,7 +34895,7 @@
       }
     },
     {
-      "index": 364,
+      "index": 366,
       "mac_kodu": "40",
       "ev_sahibi": "Tepatitlan FC",
       "deplasman": "CD Mineros De Zacatecas",
@@ -34926,7 +34960,7 @@
       }
     },
     {
-      "index": 365,
+      "index": 367,
       "mac_kodu": "270",
       "ev_sahibi": "Deportivo Toluca",
       "deplasman": "CF Pachuca",
@@ -35214,14 +35248,14 @@
       }
     },
     {
-      "index": 366,
+      "index": 368,
       "mac_kodu": "36",
       "ev_sahibi": "Persib Bandung",
       "deplasman": "Psim Yogyakarta",
       "saat": "11:30",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:00:54.723316",
+      "cekme_zamani": "2026-05-04T08:10:55.742825",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35274,14 +35308,14 @@
       }
     },
     {
-      "index": 367,
+      "index": 369,
       "mac_kodu": "40",
       "ev_sahibi": "PSM Makassar",
       "deplasman": "Bhayangkara",
       "saat": "11:30",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:00:29.815519",
+      "cekme_zamani": "2026-05-04T08:10:30.770310",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35339,14 +35373,14 @@
       }
     },
     {
-      "index": 368,
+      "index": 370,
       "mac_kodu": "",
       "ev_sahibi": "Wolaita Dicha SC",
       "deplasman": "Hadiya Hossana FC",
       "saat": "13:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:01:19.671697",
+      "cekme_zamani": "2026-05-04T08:11:20.658296",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35394,14 +35428,14 @@
       }
     },
     {
-      "index": 369,
+      "index": 371,
       "mac_kodu": "",
       "ev_sahibi": "Mashujaa FC",
       "deplasman": "Tabora United FC",
       "saat": "14:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:01:44.742744",
+      "cekme_zamani": "2026-05-04T08:11:45.673543",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35450,14 +35484,14 @@
       }
     },
     {
-      "index": 370,
+      "index": 372,
       "mac_kodu": "38",
       "ev_sahibi": "Persijap Jepara",
       "deplasman": "Persija Jakarta",
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:02:11.280199",
+      "cekme_zamani": "2026-05-04T08:12:10.649141",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35513,14 +35547,14 @@
       }
     },
     {
-      "index": 371,
+      "index": 373,
       "mac_kodu": "40",
       "ev_sahibi": "Aston Villa (K)",
       "deplasman": "West Ham United (K)",
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:02:37.757297",
+      "cekme_zamani": "2026-05-04T08:12:35.748966",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35578,14 +35612,14 @@
       }
     },
     {
-      "index": 372,
+      "index": 374,
       "mac_kodu": "",
       "ev_sahibi": "Huddersfield Town U21",
       "deplasman": "Bournemouth U21",
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:03:02.856347",
+      "cekme_zamani": "2026-05-04T08:13:00.701850",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35636,14 +35670,14 @@
       }
     },
     {
-      "index": 373,
+      "index": 375,
       "mac_kodu": "",
       "ev_sahibi": "Peterborough United U21",
       "deplasman": "Nottingham Forest U21",
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:03:27.946235",
+      "cekme_zamani": "2026-05-04T08:13:25.801941",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35691,117 +35725,6 @@
         "Tek / Çift_Çift": 1.62,
         "İkinci Yarı Karşılıklı Gol_Var": 2.12,
         "İkinci Yarı Karşılıklı Gol_Yok": 1.38
-      }
-    },
-    {
-      "index": 374,
-      "mac_kodu": "",
-      "ev_sahibi": "Hawassa Kenema SC",
-      "deplasman": "Sheger Ketema",
-      "saat": "16:00",
-      "lig": "",
-      "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:04:18.821599",
-      "durum": "baslamadi",
-      "skor_ev": 0,
-      "skor_dep": 0,
-      "skor_1y_ev": 0,
-      "skor_1y_dep": 0,
-      "kaynak": "iddaa.com",
-      "oranlar": {
-        "Maç Sonucu_1": 2.51,
-        "Maç Sonucu_0": 2.44,
-        "Maç Sonucu_2": 2.59,
-        "Handikaplı Maç Sonucu 0:1_1": 5.82,
-        "Handikaplı Maç Sonucu 0:1_0": 3.64,
-        "Handikaplı Maç Sonucu 0:1_2": 1.24,
-        "Çifte Şans_1 ve 0": 1.24,
-        "Çifte Şans_1 ve 2": 1.28,
-        "Çifte Şans_0 ve 2": 1.25,
-        "İlk Yarı Sonucu_1": 3.34,
-        "İlk Yarı Sonucu_0": 1.66,
-        "İlk Yarı Sonucu_2": 3.43,
-        "İkinci Yarı Sonucu_1": 2.93,
-        "İkinci Yarı Sonucu_0": 1.93,
-        "İkinci Yarı Sonucu_2": 2.99,
-        "İlk Yarı Karşılıklı Gol_Var": 5.61,
-        "İlk Yarı Çifte Şans_1 ve 0": 1.12,
-        "İlk Yarı Çifte Şans_1 ve 2": 1.64,
-        "İlk Yarı Çifte Şans_0 ve 2": 1.13,
-        "İlk Yarı Tek/Çift_Tek": 2.05,
-        "İlk Yarı Tek/Çift_Çift": 1.42,
-        "Alt/Üst 1.5_Alt": 2.01,
-        "Alt/Üst 1.5_Üst": 1.43,
-        "Ev Sahibi Alt/Üst 0.5_Alt": 2.22,
-        "Ev Sahibi Alt/Üst 0.5_Üst": 1.35,
-        "Deplasman Alt/Üst 0.5_Alt": 2.17,
-        "Deplasman Alt/Üst 0.5_Üst": 1.36,
-        "İlk Yarı Alt/Üst 0.5_Alt": 1.93,
-        "İlk Yarı Alt/Üst 0.5_Üst": 1.47,
-        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Alt": 1.31,
-        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Üst": 2.33,
-        "Deplasman İlk Yarı Altı/Üstü 0.5_Alt": 1.3,
-        "Deplasman İlk Yarı Altı/Üstü 0.5_Üst": 2.36,
-        "Karşılıklı Gol_Var": 2.03,
-        "Karşılıklı Gol_Yok": 1.42,
-        "Tek / Çift_Tek": 1.79,
-        "Tek / Çift_Çift": 1.57,
-        "İkinci Yarı Karşılıklı Gol_Var": 4.34
-      }
-    },
-    {
-      "index": 375,
-      "mac_kodu": "",
-      "ev_sahibi": "Defence Force FC",
-      "deplasman": "Adama City FC",
-      "saat": "16:00",
-      "lig": "",
-      "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T08:03:53.892105",
-      "durum": "baslamadi",
-      "skor_ev": 0,
-      "skor_dep": 0,
-      "skor_1y_ev": 0,
-      "skor_1y_dep": 0,
-      "kaynak": "iddaa.com",
-      "oranlar": {
-        "Maç Sonucu_1": 1.78,
-        "Maç Sonucu_0": 2.73,
-        "Maç Sonucu_2": 3.75,
-        "Handikaplı Maç Sonucu 0:1_1": 3.59,
-        "Handikaplı Maç Sonucu 0:1_0": 3.03,
-        "Handikaplı Maç Sonucu 0:1_2": 1.56,
-        "Çifte Şans_1 ve 0": 1.09,
-        "Çifte Şans_1 ve 2": 1.21,
-        "Çifte Şans_0 ve 2": 1.54,
-        "İlk Yarı Sonucu_1": 2.54,
-        "İlk Yarı Sonucu_0": 1.69,
-        "İlk Yarı Sonucu_2": 4.79,
-        "İkinci Yarı Sonucu_1": 2.25,
-        "İkinci Yarı Sonucu_0": 2.0,
-        "İkinci Yarı Sonucu_2": 4.03,
-        "İlk Yarı Karşılıklı Gol_Var": 5.88,
-        "-_1 ve 2": 1.62,
-        "-_0 ve 2": 1.24,
-        "İlk Yarı Tek/Çift_Tek": 2.03,
-        "İlk Yarı Tek/Çift_Çift": 1.43,
-        "Alt/Üst 1.5_Alt": 2.01,
-        "Alt/Üst 1.5_Üst": 1.43,
-        "Ev Sahibi Alt/Üst 1.5_Alt": 1.3,
-        "Ev Sahibi Alt/Üst 1.5_Üst": 2.33,
-        "Deplasman Alt/Üst 0.5_Alt": 1.76,
-        "Deplasman Alt/Üst 0.5_Üst": 1.6,
-        "İlk Yarı Alt/Üst 0.5_Alt": 1.96,
-        "İlk Yarı Alt/Üst 0.5_Üst": 1.46,
-        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Alt": 1.46,
-        "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Üst": 1.97,
-        "Deplasman İlk Yarı Altı/Üstü 0.5_Alt": 1.18,
-        "Deplasman İlk Yarı Altı/Üstü 0.5_Üst": 2.9,
-        "Karşılıklı Gol_Var": 2.18,
-        "Karşılıklı Gol_Yok": 1.36,
-        "Tek / Çift_Tek": 1.73,
-        "Tek / Çift_Çift": 1.62,
-        "İkinci Yarı Karşılıklı Gol_Var": 4.61
       }
     },
     {

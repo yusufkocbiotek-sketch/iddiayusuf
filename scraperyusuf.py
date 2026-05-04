@@ -6,7 +6,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 
 CIKTI_DOSYA = "public/data/mac.json"
@@ -17,20 +16,9 @@ def tarayici_baslat():
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
-    
-    # --- BOT KORUMASI AŞMA AYARLARI ---
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option('useAutomationExtension', False)
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
-    # ---------------------------------
-    
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
-    
-    # Tarayıcıya "Ben bir bot değilim" sinyalini ver (webdriver özelliğini sil)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    
     print("✅ Chrome başlatıldı!")
     return driver
 
@@ -54,7 +42,6 @@ def mac_json_kaydet(yeni_maclar):
     data["matches"] = yeni_liste
     data["updated"] = datetime.datetime.now().isoformat()
     
-    os.makedirs(os.path.dirname(CIKTI_DOSYA), exist_ok=True)
     with open(CIKTI_DOSYA, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     print(f"   💾 Toplam {len(yeni_liste)} maç kaydedildi")
@@ -152,11 +139,8 @@ def tum_maclari_yukle(driver, url):
     return 0
 
 def iddaa_cek(driver):
-    # Bugünün tarihini alıyoruz (JSON'a yazdırmak için)
     bugun = datetime.date.today()
-    
-    # İDDAA'DAKİ DOĞRU URL (Tarih parametresi olmadan direkt bugünün maçları)
-    url = "https://www.iddaa.com/program/futbol"
+    url = f"https://www.iddaa.com/program/futbol?date={bugun.strftime('%d.%m.%Y')}"
     
     print(f"📡 {url}")
     toplam = tum_maclari_yukle(driver, url)
@@ -206,14 +190,12 @@ def iddaa_cek(driver):
         
         for deneme in range(3):
             try:
-                # Sayfayı yeniden yükle ve maç listesine dön
                 driver.get(url)
-                time.sleep(5)
+                time.sleep(10)
                 
                 body = driver.find_element(By.TAG_NAME, "body")
                 lines = [l.strip() for l in body.text.split("\n") if l.strip()]
                 
-                # Temel oranları (MS 1, X, 2) çek
                 for li in range(len(lines) - 15):
                     if lines[li + 2] == mac['ev'] and lines[li + 4] == mac['dep'] and lines[li + 3] == "-":
                         mac_saat = lines[li + 1] if saat_mi(lines[li + 1]) else ""
@@ -243,38 +225,23 @@ def iddaa_cek(driver):
                                 pass
                         break
                 
-                # Detay oranlarını çekmek için maça tıkla
                 takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
                 for ta in takim_els:
                     ta_text = ta.text.strip()
                     if mac['ev'] in ta_text and mac['dep'] in ta_text:
-                        try:
-                            # 1. Maçı ekranda görünür yap
-                            driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ta)
-                            time.sleep(1)
-                            
-                            # 2. İDDAA'NIN BOTU KANDIRMAK İÇİN GERÇEK FARE HAREKETİ (ActionChains)
-                            actions = ActionChains(driver)
-                            actions.move_to_element(ta).click().perform()
-                            
-                            # 3. Sayfanın (Oranların) yüklenmesi için bekle
-                            time.sleep(4)
-                            
-                            # 4. Sayfayı aşağı yukarı kaydırarak tembel yüklenen (lazy-load) verileri tetikle
-                            driver.execute_script("window.scrollTo(0, 600);")
-                            time.sleep(1)
-                            driver.execute_script("window.scrollTo(0, 1200);")
-                            time.sleep(1)
+                        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ta)
+                        time.sleep(2)
+                        driver.execute_script("arguments[0].click();", ta)
+                        time.sleep(6)
+                        
+                        if tumu_bekle(driver, 25):
+                            driver.execute_script("window.scrollTo(0, 800);")
+                            time.sleep(2)
+                            driver.execute_script("window.scrollTo(0, 1600);")
+                            time.sleep(2)
                             driver.execute_script("window.scrollTo(0, 0);")
                             time.sleep(2)
-                            
-                            # 5. Oranların yüklenip yüklenmediğini kontrol et
-                            if tumu_bekle(driver, 15):
-                                detay_oranlar = detay_parse(driver)
-                            else:
-                                print("      ⚠️ Detay paneli açılmadı.")
-                        except Exception as click_err:
-                            print(f"      ⚠️ Tıklama Hatası: {str(click_err)[:40]}")
+                            detay_oranlar = detay_parse(driver)
                         break
                 
                 if len(detay_oranlar) > 0:
@@ -307,7 +274,7 @@ def iddaa_cek(driver):
             "deplasman": mac['dep'],
             "saat": mac_saat,
             "lig": "",
-            "tarih": bugun.isoformat(), # Tarih buraya dinamik olarak yazılıyor
+            "tarih": bugun.isoformat(),
             "cekme_zamani": datetime.datetime.now().isoformat(),
             "durum": "baslamadi",
             "skor_ev": 0,
@@ -352,7 +319,7 @@ def mac_cek():
             print("\n🎉 İşlem tamamlandı!")
             print(f"\n📌 GitHub'a yükleyin:")
             print(f"   git add -A")
-            print(f'   git commit -m "Oranlar ve temel veriler güncellendi"')
+            print(f'   git commit -m "Oranlar guncellendi"')
             print(f"   git push")
     except Exception as e:
         print(f"❌ Hata: {e}")

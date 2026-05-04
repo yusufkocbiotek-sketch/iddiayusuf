@@ -177,9 +177,29 @@ def main():
     
     # Son 3 günün tarihlerini otomatik al
     bugun = datetime.date.today()
-    aranacak_gunler = [
-        (bugun - datetime.timedelta(days=i)).strftime("%d.%m.%Y") for i in range(3)
+        aranacak_gunler = [
+        "Bugün",
+        "Dün",
+        "02.05.2026" # Örnek, burası dinamik olmalı
     ]
+    
+    # Son 3 günün adını al (Bugün, Dün, 02 Mayıs, Cumartesi gibi)
+    tarih_adlari = []
+    try:
+        selects = driver.find_elements(By.TAG_NAME, "select")
+        for sel in selects:
+            opts = sel.find_elements(By.TAG_NAME, "option")
+            if any("." in opt.text for opt in opts) and not any("Hafta" in opt.text for opt in opts):
+                for i in range(min(3, len(opts))):
+                    tarih_adlari.append(opts[i].text.strip())
+                break
+    except:
+        pass
+        
+    if not tarih_adlari:
+        tarih_adlari = ["Bugün", "Dün"] # Fallback
+        
+    aranacak_gunler = tarih_adlari
     
     driver = None
     try:

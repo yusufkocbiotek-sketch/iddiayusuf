@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-04T13:04:56.496725",
+  "updated": "2026-05-04T13:13:49.021561",
   "matches": [
     {
       "index": 1,
@@ -35381,7 +35381,7 @@
       "saat": "14:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:02:02.467175",
+      "cekme_zamani": "2026-05-04T13:10:29.617156",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35437,7 +35437,7 @@
       "saat": "14:30",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:02:27.224926",
+      "cekme_zamani": "2026-05-04T13:10:54.594435",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35466,7 +35466,7 @@
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:04:31.602285",
+      "cekme_zamani": "2026-05-04T13:12:59.088489",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35524,7 +35524,7 @@
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:04:56.475866",
+      "cekme_zamani": "2026-05-04T13:13:24.110188",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35582,7 +35582,7 @@
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:02:52.053078",
+      "cekme_zamani": "2026-05-04T13:11:19.547723",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35646,7 +35646,7 @@
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:04:06.716993",
+      "cekme_zamani": "2026-05-04T13:12:34.122170",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35711,7 +35711,7 @@
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:03:41.796867",
+      "cekme_zamani": "2026-05-04T13:12:09.254873",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35732,7 +35732,7 @@
       "saat": "15:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T13:03:16.896487",
+      "cekme_zamani": "2026-05-04T13:11:44.376207",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35740,13 +35740,34 @@
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
-        "Maç Sonucu_1": 1.98,
+        "Maç Sonucu_1": 1.94,
         "Maç Sonucu_0": 3.18,
-        "Maç Sonucu_2": 2.94
+        "Maç Sonucu_2": 3.02
       }
     },
     {
       "index": 379,
+      "mac_kodu": "",
+      "ev_sahibi": "Muğlaspor Kulübü",
+      "deplasman": "Şanlıurfaspor",
+      "saat": "16:00",
+      "lig": "",
+      "tarih": "2026-05-04",
+      "cekme_zamani": "2026-05-04T13:13:48.998759",
+      "durum": "baslamadi",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
+      "kaynak": "iddaa.com",
+      "oranlar": {
+        "Maç Sonucu_1": 1.85,
+        "Maç Sonucu_0": 2.98,
+        "Maç Sonucu_2": 3.53
+      }
+    },
+    {
+      "index": 380,
       "mac_kodu": "93",
       "ev_sahibi": "Vila Nova",
       "deplasman": "Athletic Club MG",
@@ -35778,7 +35799,7 @@
       }
     },
     {
-      "index": 380,
+      "index": 381,
       "mac_kodu": "240",
       "ev_sahibi": "Velez Sarsfield",
       "deplasman": "New Old Boys",
@@ -35810,7 +35831,7 @@
       }
     },
     {
-      "index": 381,
+      "index": 382,
       "mac_kodu": "238",
       "ev_sahibi": "Estudiantes Río Cuarto",
       "deplasman": "Instituto AC Cordoba",
@@ -35842,7 +35863,7 @@
       }
     },
     {
-      "index": 382,
+      "index": 383,
       "mac_kodu": "244",
       "ev_sahibi": "Arsenal",
       "deplasman": "Atletico Madrid",
@@ -35874,7 +35895,7 @@
       }
     },
     {
-      "index": 383,
+      "index": 384,
       "mac_kodu": "249",
       "ev_sahibi": "Bayern Münih",
       "deplasman": "Paris Saint Germain",
@@ -36144,7 +36165,7 @@
       }
     },
     {
-      "index": 384,
+      "index": 385,
       "mac_kodu": "246",
       "ev_sahibi": "Freiburg",
       "deplasman": "Braga",
@@ -36405,7 +36426,7 @@
       }
     },
     {
-      "index": 385,
+      "index": 386,
       "mac_kodu": "242",
       "ev_sahibi": "Crystal Palace",
       "deplasman": "Shakhtar Donetsk",

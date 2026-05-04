@@ -22,6 +22,7 @@ def tarayici_baslat():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
+    options.add_argument("--disable-page-aligned-intervals")
     options.add_experimental_option("detach", False)
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
@@ -48,34 +49,54 @@ def temizle_takim_adi(ad):
     if not ad:
         return ""
     ad = ad.lower().strip()
-    tr_map = {'ç': 'c', 'ğ': 'g', 'ı': 'i', 'i': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u', 'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u'}
+    tr_map = {
+        'ç': 'c', 'ğ': 'g', 'ı': 'i', 'i': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u',
+        'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u', 'æ': 'ae', 'œ': 'oe',
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n', 'ã': 'a'
+    }
     for k, v in tr_map.items():
         ad = ad.replace(k, v)
     silinecekler = [
         " fc", "fc ", " united", " utd", " city", " as ", " ac ", " us ", " sc", 
         " fk", " nk", " cs", " cd", " deportivo", " club", " atletico", " atl.",
-        " athletic", " 1911", " 1919", " 1908", " 1912", " 2000", "spor", "kulubu", "sk", "if", "ff"
+        " athletic", "spor", "kulubu", "sk", "if", "ff", "bk", "gf", "fc.", "sk.", 
+        "bk.", "gsk", "gb", "genclik", "al ", "al-", "el ", "el-", "fc-", "sc-", 
+        "united ", "city ", " de ", " del ", " la ", " los ", " cf", "c.f.", "s.c.",
+        "b.c.", "f.c.", " jr", "sr", " ii", " iii", " iv", " v", " fc", " sk",
+        " 19", " 20", "19", "20", "spor", "kulubu", "takımı", "kulübü"
     ]
     for s in silinecekler:
         ad = ad.replace(s, "")
     ad = re.sub(r'[^a-z0-9]', '', ad)
-    return ad
+    ad = re.sub(r'(.)\1{2,}', r'\1\1', ad)
+    return ad if len(ad) >= 2 else ""
 
 def takim_eslesir_mi(ad1, ad2):
     ad1_temiz = temizle_takim_adi(ad1)
     ad2_temiz = temizle_takim_adi(ad2)
+    
     if not ad1_temiz or not ad2_temiz:
         return False
+    
     if ad1_temiz == ad2_temiz:
         return True
-    if len(ad1_temiz) > 3 and len(ad2_temiz) > 3:
+    
+    if len(ad1_temiz) > 2 and len(ad2_temiz) > 2:
         if ad1_temiz in ad2_temiz or ad2_temiz in ad1_temiz:
             return True
-        if ad1_temiz[:4] == ad2_temiz[:4]:
+    
+    if len(ad1_temiz) >=3 and len(ad2_temiz) >=3:
+        if ad1_temiz[:3] == ad2_temiz[:3]:
             return True
+    
+    if len(ad1_temiz) >=3 and len(ad2_temiz) >=3:
+        if ad1_temiz[-3:] == ad2_temiz[-3:]:
+            return True
+    
     benzerlik = difflib.SequenceMatcher(None, ad1_temiz, ad2_temiz).ratio()
-    if benzerlik > 0.70:
+    if benzerlik > 0.50:
         return True
+    
     return False
 
 def spordb_duz_metin_parse(text, aktif_tarih):
@@ -104,9 +125,26 @@ def spordb_duz_metin_parse(text, aktif_tarih):
                     "skor_1y_ev": skor_1y_ev, "skor_1y_dep": skor_1y_dep
                 })
             except Exception as e:
-                print(f"⚠️ Satır ayrıştırılamadı: {line[:50]}... | Hata: {str(e)}")
                 continue
     return skorlar
+
+def gunluk_menu_bul(driver):
+    try:
+        tum_selectler = driver.find_elements(By.TAG_NAME, "select")
+        for select in tum_selectler:
+            try:
+                secenekler = select.find_elements(By.TAG_NAME, "option")
+                if not secenekler:
+                    continue
+                if any(" - " in opt.text.strip() for opt in secenekler):
+                    continue
+                if any(re.match(r'^\d{2}\.\d{2}\.\d{4}', opt.text.strip()) for opt in secenekler):
+                    return select
+            except:
+                continue
+    except:
+        pass
+    return None
 
 def spordb_skorlari_cek(driver, gunler):
     url = "https://www.spordb.com/iddaa-programi/"
@@ -125,70 +163,48 @@ def spordb_skorlari_cek(driver, gunler):
     tum_skorlar = []
     print(f"   📅 Kontrol edilecek günler: {', '.join(gunler)}")
 
-    try:
-        # Tüm açılır menüleri al
-        tum_selectler = driver.find_elements(By.TAG_NAME, "select")
-        gunluk_menu = None
+    gunluk_menu = gunluk_menu_bul(driver)
+    if not gunluk_menu:
+        print("❌ Günlük menü bulunamadı!")
+        return []
+    print("✅ Günlük tarih menüsü bulundu!")
 
-        # 🔑 Önemli Kısım: İki menüyü ayırt ediyoruz
-        for select in tum_selectler:
-            try:
-                # Menüdeki seçenekleri al
-                secenekler = select.find_elements(By.TAG_NAME, "option")
-                if not secenekler:
-                    continue
-
-                # Eğer seçenek metninde " - " varsa bu haftalık menüdür -> ATLA
-                if any(" - " in opt.text.strip() for opt in secenekler):
-                    continue
-
-                # Eğer seçenek metni sadece GG.AA.YYYY formatındaysa bu GÜNLÜK menüdür -> KULLAN
-                if any(re.match(r'^\d{2}\.\d{2}\.\d{4}', opt.text.strip()) for opt in secenekler):
-                    gunluk_menu = select
-                    print("✅ Günlük tarih menüsü bulundu!")
-                    break
-            except:
+    for gun in gunler:
+        print(f"\n   📅 {gun} tarihi aranıyor...")
+        try:
+            gunluk_menu = gunluk_menu_bul(driver)
+            if not gunluk_menu:
+                print(f"      ❌ Menü yeniden bulunamadı, bu günü atlıyorum...")
                 continue
-
-        if not gunluk_menu:
-            print("❌ Günlük tarih menüsü bulunamadı!")
-            return []
-
-        secenekler = gunluk_menu.find_elements(By.TAG_NAME, "option")
-        print(f"ℹ️ Menüde toplam {len(secenekler)} adet gün var")
-
-        # Her hedef gün için kontrol et
-        for gun in gunler:
-            print(f"\n   📅 {gun} tarihi aranıyor...")
+                
+            secenekler = gunluk_menu.find_elements(By.TAG_NAME, "option")
             bulundu = False
 
             for opt in secenekler:
                 opt_metin = opt.text.strip()
-
-                # Hem tam eşleşme hem de yanında gün ismi olsa bile eşleş
                 if gun in opt_metin:
                     deger = opt.get_attribute("value")
                     secim = Select(gunluk_menu)
                     secim.select_by_value(deger)
                     print(f"      ✅ '{opt_metin}' seçildi, yükleniyor...")
 
-                    # İçerik değişimini bekle
                     eski_icerik = driver.find_element(By.TAG_NAME, "body").text
-                    time.sleep(5)
+                    time.sleep(7)
 
-                    maksimum_bekleme = 20
-                    for saniye in range(maksimum_bekleme):
-                        yeni_icerik = driver.find_element(By.TAG_NAME, "body").text
-                        if yeni_icerik != eski_icerik:
-                            print(f"      ✅ İçerik {saniye+1}. saniyede güncellendi")
-                            break
-                        time.sleep(1)
+                    yukleme_basladi = time.time()
+                    while time.time() - yukleme_basladi < 20:
+                        try:
+                            yeni_icerik = driver.find_element(By.TAG_NAME, "body").text
+                            if yeni_icerik != eski_icerik:
+                                print(f"      ✅ İçerik güncellendi")
+                                break
+                        except:
+                            pass
+                        time.sleep(0.5)
 
-                    # Tarih formatını ISO'ya çevir
                     gun_parcalari = gun.split(".")
                     iso_tarih = f"{gun_parcalari[2]}-{gun_parcalari[1]}-{gun_parcalari[0]}"
 
-                    # Skorları çek
                     sayfa_icerigi = driver.find_element(By.TAG_NAME, "body").text
                     cekilen_skorlar = spordb_duz_metin_parse(sayfa_icerigi, iso_tarih)
                     tum_skorlar.extend(cekilen_skorlar)
@@ -198,17 +214,11 @@ def spordb_skorlari_cek(driver, gunler):
                     break
 
             if not bulundu:
-                print(f"      ❌ {gun} menüde bulunamadı.")
-                # Menüdeki ilk 5 günü gösterelim ki ne var görelim
-                try:
-                    print(f"      ℹ️ Menüdeki mevcut günlerden örnek:")
-                    for i, opt in enumerate(secenekler[:5]):
-                        print(f"         - {opt.text.strip()}")
-                except:
-                    pass
+                print(f"      ❌ {gun} menüde bulunamadı")
 
-    except Exception as hata:
-        print(f"❌ Genel işlem hatası: {str(hata)}")
+        except Exception as hata:
+            print(f"      ❌ Hata: {str(hata)[:80]}...")
+            continue
 
     print(f"\n   ✅ SporDB'den toplam {len(tum_skorlar)} bitmiş maç skoru okundu.")
     return tum_skorlar
@@ -216,23 +226,28 @@ def spordb_skorlari_cek(driver, gunler):
 def skorlari_guncelle(data, skorlar):
     guncellenen = 0
     bulunamayan = 0
-    eksik_gecmis_maclar = []
+    eslesenler = []
+    eslesmeyenler = []
     bugun_iso = datetime.date.today().isoformat()
 
     if "matches" not in data or not isinstance(data["matches"], list):
         print("❌ JSON verisinde 'matches' bölümü bulunamadı!")
         return 0, 0, []
 
+    print("\n🔎 EŞLEŞTİRME SONUÇLARI:")
+    print("-"*70)
+
     for mac in data["matches"]:
         if mac.get("durum", "baslamadi") != "baslamadi":
             continue
         
         bulundu = False
+        mac_tarih = mac.get("tarih", "")
+        mac_ev = mac.get("ev_sahibi", "")
+        mac_dep = mac.get("deplasman", "")
+
         for skor in skorlar:
-            if (mac.get("tarih") == skor["tarih"] and 
-                takim_eslesir_mi(mac.get("ev_sahibi", ""), skor["ev"]) and 
-                takim_eslesir_mi(mac.get("deplasman", ""), skor["dep"])):
-                
+            if mac_tarih == skor["tarih"] and takim_eslesir_mi(mac_ev, skor["ev"]) and takim_eslesir_mi(mac_dep, skor["dep"]):
                 mac["durum"] = "bitti"
                 mac["skor_ev"] = skor["skor_ev"]
                 mac["skor_dep"] = skor["skor_dep"]
@@ -240,22 +255,23 @@ def skorlari_guncelle(data, skorlar):
                 mac["skor_1y_dep"] = skor["skor_1y_dep"]
                 guncellenen += 1
                 bulundu = True
-                print(f"   ✅ EŞLEŞTİ: {mac.get('ev_sahibi')} {skor['skor_ev']}-{skor['skor_dep']} {mac.get('deplasman')} ({mac.get('tarih')})")
+                eslesenler.append(f"✅ {mac_ev} {skor['skor_ev']}-{skor['skor_dep']} {mac_dep} | {mac_tarih}")
                 break
         
         if not bulundu:
             bulunamayan += 1
-            if mac.get("tarih", "") < bugun_iso:
-                ev = mac.get("ev_sahibi", "Bilinmeyen")
-                dep = mac.get("deplasman", "Bilinmeyen")
-                tar = mac.get("tarih", "Bilinmeyen Tarih")
-                eksik_gecmis_maclar.append(f"{ev} vs {dep} ({tar})")
+            if mac_tarih < bugun_iso:
+                eslesmeyenler.append(f"❌ {mac_ev} vs {mac_dep} ({mac_tarih})")
     
-    return guncellenen, bulunamayan, eksik_listesi if 'eksik_listesi' in locals() else eksik_gecmis_maclar
+    for eslesme in eslesenler:
+        print(eslesme)
+    
+    print("-"*70)
+    return guncellenen, bulunamayan, eslesmeyenler
 
 def main():
     print("============================================================")
-    print("⚽ Skor Güncelleyici (Günlük Menü Düzeltmesi v7.1)...")
+    print("⚽ Skor Güncelleyici (Kalıcı Hata Çözümü v9.0)...")
     print("============================================================")
     
     data = mac_json_oku()
@@ -266,11 +282,10 @@ def main():
         print("\n✅ Güncellenecek başlama/bitmemiş maç yok!")
         return
 
-    # Son 3 günün tarihlerini gün.ay.yıl formatında al
     bugun = datetime.date.today()
     aranacak_gunler = [
         (bugun - datetime.timedelta(days=i)).strftime("%d.%m.%Y") 
-        for i in range(3)
+        for i in range(7)
     ]
 
     tarayici = None
@@ -278,8 +293,7 @@ def main():
         tarayici = tarayici_baslat()
         bulunan_skorlar = spordb_skorlari_cek(tarayici, aranacak_gunler)
         
-        print("\n📝 Skorlar maçlarla eşleştiriliyor...")
-        guncellenen_sayi, bulunamayan_sayi, eksik_listesi = skorlari_guncelle(data, bulunan_skorlar)
+        guncellenen_sayi, bulunamayan_sayi, eslesmeyenler = skorlari_guncelle(data, bulunan_skorlar)
 
         print(f"\n{'='*60}")
         print(f"📊 İŞLEM SONUCU")
@@ -287,15 +301,20 @@ def main():
         print(f"   ❌ Eşleşmeyen maç sayısı : {bulunamayan_sayi}")
         print(f"{'='*60}")
 
-        if eksik_listesi:
+        if eslesmeyenler:
             print("\n⚠️ Skoru bulunamayan geçmiş maçlar (ilk 15):")
-            for mac_bilgisi in eksik_listesi[:15]:
-                print(f"   - {mac_bilgisi}")
+            for i, mac_bilgisi in enumerate(eslesmeyenler[:15], 1):
+                print(f"   {i}. {mac_bilgisi}")
 
         if guncellenen_sayi > 0:
             mac_json_kaydet(data)
             print(f"\n📌 Değişiklikleri depoya kaydetmek için:")
             print(f"   git add -A && git commit -m 'Skorlar güncellendi: {datetime.date.today()}' && git push")
+        else:
+            print(f"\nℹ️ Hiçbir maç eşleştirilemedi. Bunun nedenleri:")
+            print(f"   - Takım isimleri çok farklı yazılıyor")
+            print(f"   - Maç tarihleri kontrol edilen gün aralığında değil")
+            print(f"   - SporDB'de henüz bu maçların skoru girilmemiş")
 
     except Exception as ana_hata:
         print(f"\n❌ GENEL HATA: {str(ana_hata)}")

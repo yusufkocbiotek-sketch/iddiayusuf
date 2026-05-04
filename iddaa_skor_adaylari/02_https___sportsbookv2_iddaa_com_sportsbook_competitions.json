@@ -1,0 +1,2925 @@
+{
+  "isSuccess": true,
+  "data": [
+    {
+      "i": 4,
+      "cid": "KZ",
+      "p": 1040,
+      "ic": "https://i.iddaa.com/i/iddaa/90/kz.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Kazakistan Premier Lig",
+      "cref": 3103
+    },
+    {
+      "i": 19,
+      "cid": "FI",
+      "p": 1190,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fi.png",
+      "sn": "Ykkosliiga",
+      "si": "1",
+      "n": "Finlandiya Ykkonen",
+      "cref": 527
+    },
+    {
+      "i": 21,
+      "cid": "BR",
+      "p": 1210,
+      "ic": "https://i.iddaa.com/i/iddaa/90/br.png",
+      "sn": "Seri B",
+      "si": "1",
+      "n": "Brezilya Seri B",
+      "cref": 1449
+    },
+    {
+      "i": 43,
+      "cid": "GB",
+      "p": 34,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "PremierLig",
+      "si": "1",
+      "n": "İngiltere Premier Lig",
+      "cref": 1
+    },
+    {
+      "i": 45,
+      "cid": "DE",
+      "p": 55,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "Bundesliga",
+      "si": "1",
+      "n": "Almanya Bundesliga",
+      "cref": 42
+    },
+    {
+      "i": 51,
+      "cid": "SE",
+      "p": 159,
+      "ic": "https://i.iddaa.com/i/iddaa/90/se.png",
+      "sn": "Allsvenska",
+      "si": "1",
+      "n": "İsveç Allsvenskan",
+      "cref": 24
+    },
+    {
+      "i": 62,
+      "cid": "RU",
+      "p": 113,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ru.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Rusya Premier Lig",
+      "cref": 53
+    },
+    {
+      "i": 63,
+      "cid": "US",
+      "p": 1630,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "KABL",
+      "si": "2",
+      "n": "ABD Kadınlar Amerika Basketbol Lig",
+      "cref": 591
+    },
+    {
+      "i": 126,
+      "cid": "INT",
+      "p": 37,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "UEFA ŞampL",
+      "si": "1",
+      "n": "UEFA Şampiyonlar Ligi",
+      "cref": 23
+    },
+    {
+      "i": 129,
+      "cid": "ES",
+      "p": 36,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "La Liga",
+      "si": "1",
+      "n": "İspanya La Liga",
+      "cref": 36
+    },
+    {
+      "i": 132,
+      "cid": "DE",
+      "p": 115,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "2. Bundesl",
+      "si": "1",
+      "n": "Almanya 2. Bundesliga",
+      "cref": 41
+    },
+    {
+      "i": 138,
+      "cid": "US",
+      "p": 10,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "ABL",
+      "si": "2",
+      "n": "ABD Amerika Basketbol Ligi",
+      "cref": 177
+    },
+    {
+      "i": 148,
+      "cid": "BE",
+      "p": 97,
+      "ic": "https://i.iddaa.com/i/iddaa/90/be.png",
+      "sn": "Pro Lig",
+      "si": "1",
+      "n": "Belçika Pro Lig",
+      "cref": 38
+    },
+    {
+      "i": 202,
+      "cid": "PL",
+      "p": 193,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "Ekstraklas",
+      "si": "1",
+      "n": "Polonya Ekstraklasa",
+      "cref": 64
+    },
+    {
+      "i": 322,
+      "cid": "NL",
+      "p": 77,
+      "ic": "https://i.iddaa.com/i/iddaa/90/nl.png",
+      "sn": "Eredivisie",
+      "si": "1",
+      "n": "Hollanda Eredivisie",
+      "cref": 39
+    },
+    {
+      "i": 345,
+      "cid": "CZ",
+      "p": 151,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cz.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Çekya 1. Lig",
+      "cref": 49
+    },
+    {
+      "i": 347,
+      "cid": "DE",
+      "p": 4470,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "Bundesliga",
+      "si": "6",
+      "n": "Almanya Bundesliga",
+      "cref": 95
+    },
+    {
+      "i": 348,
+      "cid": "BR",
+      "p": 87,
+      "ic": "https://i.iddaa.com/i/iddaa/90/br.png",
+      "sn": "Serie A",
+      "si": "1",
+      "n": "Brezilya Serie A",
+      "cref": 83
+    },
+    {
+      "i": 349,
+      "cid": "SE",
+      "p": 4490,
+      "ic": "https://i.iddaa.com/i/iddaa/90/se.png",
+      "sn": "Superettan",
+      "si": "1",
+      "n": "İsveç Superettan",
+      "cref": 27
+    },
+    {
+      "i": 354,
+      "cid": "CN",
+      "p": 4540,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cn.png",
+      "sn": "Süper Lig",
+      "si": "1",
+      "n": "Çin Süper Lig",
+      "cref": 652
+    },
+    {
+      "i": 381,
+      "cid": "FR",
+      "p": 57,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "Lig 1",
+      "si": "1",
+      "n": "Fransa Ligue 1",
+      "cref": 4
+    },
+    {
+      "i": 402,
+      "cid": "SA",
+      "p": 79,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sa.png",
+      "sn": "Pro Lig",
+      "si": "1",
+      "n": "Suudi Arabistan Suudi Profesyonel Ligi",
+      "cref": 3708
+    },
+    {
+      "i": 421,
+      "cid": "INT",
+      "p": 521,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Şamp Ligi",
+      "si": "6",
+      "n": "Şamp. Ligi, Erkekler, Playoff",
+      "cref": 217
+    },
+    {
+      "i": 562,
+      "cid": "INT",
+      "p": 662,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ŞampLigi K",
+      "si": "6",
+      "n": "Şamp. Ligi, Kadınlar, Playoff",
+      "cref": 218
+    },
+    {
+      "i": 566,
+      "cid": "PT",
+      "p": 67,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pt.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Portekiz Premier Lig",
+      "cref": 52
+    },
+    {
+      "i": 568,
+      "cid": "AT",
+      "p": 131,
+      "ic": "https://i.iddaa.com/i/iddaa/90/at.png",
+      "sn": "Bundesliga",
+      "si": "1",
+      "n": "Avusturya Bundesliga",
+      "cref": 29
+    },
+    {
+      "i": 569,
+      "cid": "DK",
+      "p": 133,
+      "ic": "https://i.iddaa.com/i/iddaa/90/dk.png",
+      "sn": "Süper Lig",
+      "si": "1",
+      "n": "Danimarka Süper Lig",
+      "cref": 12
+    },
+    {
+      "i": 571,
+      "cid": "NO",
+      "p": 6710,
+      "ic": "https://i.iddaa.com/i/iddaa/90/no.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Norveç 1. Lig",
+      "cref": 6
+    },
+    {
+      "i": 573,
+      "cid": "NO",
+      "p": 191,
+      "ic": "https://i.iddaa.com/i/iddaa/90/no.png",
+      "sn": "Eliteserie",
+      "si": "1",
+      "n": "Norveç Eliteserien",
+      "cref": 5
+    },
+    {
+      "i": 576,
+      "cid": "HU",
+      "p": 6760,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "NB I",
+      "si": "1",
+      "n": "Macaristan NB I",
+      "cref": 50
+    },
+    {
+      "i": 577,
+      "cid": "GB",
+      "p": 6770,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "2. Lig",
+      "si": "1",
+      "n": "İskoçya 2. Lig",
+      "cref": 57
+    },
+    {
+      "i": 584,
+      "cid": "TR",
+      "p": 17,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tr.png",
+      "sn": "Süper Lig",
+      "si": "1",
+      "n": "Türkiye Süper Lig",
+      "cref": 62
+    },
+    {
+      "i": 588,
+      "cid": "INT",
+      "p": 39,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "UEFA Avrup",
+      "si": "1",
+      "n": "UEFA Avrupa Ligi Elemeleri",
+      "cref": 10909
+    },
+    {
+      "i": 590,
+      "cid": "GB",
+      "p": 6900,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "İskoçya 1. Lig",
+      "cref": 56
+    },
+    {
+      "i": 598,
+      "cid": "AT",
+      "p": 6980,
+      "ic": "https://i.iddaa.com/i/iddaa/90/at.png",
+      "sn": "2. Lig",
+      "si": "1",
+      "n": "Avusturya 2. Lig",
+      "cref": 30
+    },
+    {
+      "i": 613,
+      "cid": "GB",
+      "p": 7130,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "Championsh",
+      "si": "1",
+      "n": "İskoçya Championship",
+      "cref": 55
+    },
+    {
+      "i": 619,
+      "cid": "DE",
+      "p": 45,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "BBL",
+      "si": "2",
+      "n": "Almanya BBL",
+      "cref": 154
+    },
+    {
+      "i": 624,
+      "cid": "NO",
+      "p": 7240,
+      "ic": "https://i.iddaa.com/i/iddaa/90/no.png",
+      "sn": "2. Lig",
+      "si": "1",
+      "n": "Norveç 2. Lig, 1.Grup",
+      "cref": 396
+    },
+    {
+      "i": 628,
+      "cid": "FI",
+      "p": 171,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fi.png",
+      "sn": "Veikkausli",
+      "si": "1",
+      "n": "Finlandiya Veikkausliiga",
+      "cref": 31
+    },
+    {
+      "i": 630,
+      "cid": "IS",
+      "p": 7300,
+      "ic": "https://i.iddaa.com/i/iddaa/90/is.png",
+      "sn": "Urvalsdeil",
+      "si": "1",
+      "n": "İzlanda Urvalsdeild",
+      "cref": 102
+    },
+    {
+      "i": 636,
+      "cid": "KR",
+      "p": 195,
+      "ic": "https://i.iddaa.com/i/iddaa/90/kr.png",
+      "sn": "K-Lig 1",
+      "si": "1",
+      "n": "Güney Kore K-Lig 1",
+      "cref": 3284
+    },
+    {
+      "i": 665,
+      "cid": "FR",
+      "p": 7650,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "LNH Starli",
+      "si": "6",
+      "n": "Fransa LNH Starligue",
+      "cref": 2583
+    },
+    {
+      "i": 742,
+      "cid": "ZA",
+      "p": 8420,
+      "ic": "https://i.iddaa.com/i/iddaa/90/za.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Güney Afrika Premier Lig",
+      "cref": 3830
+    },
+    {
+      "i": 861,
+      "cid": "INT",
+      "p": 961,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Şamp Ligi",
+      "si": "2",
+      "n": "Şampiyonlar Ligi, Playofflar",
+      "cref": 54381
+    },
+    {
+      "i": 970,
+      "cid": "US",
+      "p": 155,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "ABD Champi",
+      "si": "1",
+      "n": "ABD Championship",
+      "cref": 78360
+    },
+    {
+      "i": 974,
+      "cid": "ID",
+      "p": 10740,
+      "ic": "https://i.iddaa.com/i/iddaa/90/id.png",
+      "sn": "End Süp.",
+      "si": "1",
+      "n": "Endonezya 1. Lig",
+      "cref": 4113
+    },
+    {
+      "i": 985,
+      "cid": "SG",
+      "p": 10850,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sg.png",
+      "sn": "Primera Li",
+      "si": "1",
+      "n": "Singapur Premier Lig",
+      "cref": 58
+    },
+    {
+      "i": 986,
+      "cid": "CZ",
+      "p": 10860,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cz.png",
+      "sn": "2. Lig",
+      "si": "1",
+      "n": "Çekya 2. Lig",
+      "cref": 843
+    },
+    {
+      "i": 997,
+      "cid": "PL",
+      "p": 10970,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Polonya 1. Lig",
+      "cref": 1427
+    },
+    {
+      "i": 1199,
+      "cid": "DZ",
+      "p": 12990,
+      "ic": "https://i.iddaa.com/i/iddaa/90/dz.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Cezayir 1. Lig",
+      "cref": 3657
+    },
+    {
+      "i": 1208,
+      "cid": "AU",
+      "p": 1308,
+      "ic": "https://i.iddaa.com/i/iddaa/90/au.png",
+      "sn": "A-Ligi",
+      "si": "1",
+      "n": "Avustralya A-Ligi Playofflar",
+      "cref": 7514
+    },
+    {
+      "i": 1213,
+      "cid": "AZ",
+      "p": 13130,
+      "ic": "https://i.iddaa.com/i/iddaa/90/az.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Azerbaycan Premier Lig",
+      "cref": 3590
+    },
+    {
+      "i": 1215,
+      "cid": "BY",
+      "p": 13150,
+      "ic": "https://i.iddaa.com/i/iddaa/90/by.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Belarus Premier Lig",
+      "cref": 616
+    },
+    {
+      "i": 1220,
+      "cid": "BE",
+      "p": 99,
+      "ic": "https://i.iddaa.com/i/iddaa/90/be.png",
+      "sn": "Pro Lig",
+      "si": "1",
+      "n": "Belçika Pro Lig, Şampiyona Turu",
+      "cref": 12656
+    },
+    {
+      "i": 1246,
+      "cid": "CO",
+      "p": 13460,
+      "ic": "https://i.iddaa.com/i/iddaa/90/co.png",
+      "sn": "Primera A",
+      "si": "1",
+      "n": "Kolombiya Primera A, Kapanış",
+      "cref": 19236
+    },
+    {
+      "i": 1275,
+      "cid": "EG",
+      "p": 13750,
+      "ic": "https://i.iddaa.com/i/iddaa/90/eg.png",
+      "sn": "Kupa",
+      "si": "1",
+      "n": "Mısır Kupası",
+      "cref": 4480
+    },
+    {
+      "i": 1328,
+      "cid": "HU",
+      "p": 14280,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "Kupa",
+      "si": "1",
+      "n": "Macaristan Kupası",
+      "cref": 227
+    },
+    {
+      "i": 1329,
+      "cid": "IS",
+      "p": 14290,
+      "ic": "https://i.iddaa.com/i/iddaa/90/is.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "İzlanda 1. Lig",
+      "cref": 582
+    },
+    {
+      "i": 1606,
+      "cid": "INT",
+      "p": 1706,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "CONCACAF Ş",
+      "si": "1",
+      "n": "CONCACAF Şampiyonlar Ligi, Ele",
+      "cref": 9895
+    },
+    {
+      "i": 1629,
+      "cid": "INT",
+      "p": 1729,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "UEFA ŞL Ka",
+      "si": "1",
+      "n": "UEFA Şamp. Ligi, Kadınlar, El.",
+      "cref": 11392
+    },
+    {
+      "i": 1780,
+      "cid": "IT",
+      "p": 169,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "Serie C",
+      "si": "1",
+      "n": "İtalya Serie C, Yükselme Playoffları",
+      "cref": 44009
+    },
+    {
+      "i": 1809,
+      "cid": "KR",
+      "p": 19090,
+      "ic": "https://i.iddaa.com/i/iddaa/90/kr.png",
+      "sn": "K-Lig 2",
+      "si": "1",
+      "n": "Güney Kore K-Lig 2",
+      "cref": 6230
+    },
+    {
+      "i": 1814,
+      "cid": "LV",
+      "p": 19140,
+      "ic": "https://i.iddaa.com/i/iddaa/90/lv.png",
+      "sn": "Virsliga",
+      "si": "1",
+      "n": "Letonya Virsliga",
+      "cref": 1279
+    },
+    {
+      "i": 1817,
+      "cid": "LT",
+      "p": 19170,
+      "ic": "https://i.iddaa.com/i/iddaa/90/lt.png",
+      "sn": "A Ligi",
+      "si": "1",
+      "n": "Litvanya A Ligi",
+      "cref": 1260
+    },
+    {
+      "i": 1858,
+      "cid": "MA",
+      "p": 19580,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ma.png",
+      "sn": "Botola",
+      "si": "1",
+      "n": "Fas Botola",
+      "cref": 3640
+    },
+    {
+      "i": 1861,
+      "cid": "NL",
+      "p": 75,
+      "ic": "https://i.iddaa.com/i/iddaa/90/nl.png",
+      "sn": "Eredivisie",
+      "si": "1",
+      "n": "Hollanda Eredivisie Yükselme/Düşme P-O",
+      "cref": 6016
+    },
+    {
+      "i": 1866,
+      "cid": "GB",
+      "p": 1966,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "Premiershi",
+      "si": "1",
+      "n": "Kuzey İrlanda Premiership, Avrupa Ligi Playo",
+      "cref": 52229
+    },
+    {
+      "i": 1881,
+      "cid": "PE",
+      "p": 1981,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pe.png",
+      "sn": "Primera Li",
+      "si": "1",
+      "n": "Peru Primera Ligi, Açılış",
+      "cref": 34467
+    },
+    {
+      "i": 1907,
+      "cid": "QA",
+      "p": 2007,
+      "ic": "https://i.iddaa.com/i/iddaa/90/qa.png",
+      "sn": "Emir Kupa",
+      "si": "1",
+      "n": "Katar Emir Kupası",
+      "cref": 6716
+    },
+    {
+      "i": 1920,
+      "cid": "RU",
+      "p": 2020,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ru.png",
+      "sn": "Kupa",
+      "si": "1",
+      "n": "Rusya Kupası",
+      "cref": 387
+    },
+    {
+      "i": 1925,
+      "cid": "GB",
+      "p": 179,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "Premiershi",
+      "si": "1",
+      "n": "İskoçya Premiership, Düşme/Yükselme",
+      "cref": 35018
+    },
+    {
+      "i": 1926,
+      "cid": "GB",
+      "p": 2026,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "Championsh",
+      "si": "1",
+      "n": "İskoçya Championship, Düşme/Yükselme P",
+      "cref": 4366
+    },
+    {
+      "i": 1927,
+      "cid": "GB",
+      "p": 2027,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gb.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "İskoçya 1. Lig, Düşme/Yükselme Playoff",
+      "cref": 4367
+    },
+    {
+      "i": 1940,
+      "cid": "SK",
+      "p": 2040,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sk.png",
+      "sn": "Superliga",
+      "si": "1",
+      "n": "Slovakya Superliga, Şampiyonluk Turu",
+      "cref": 68369
+    },
+    {
+      "i": 1942,
+      "cid": "SK",
+      "p": 2042,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sk.png",
+      "sn": "Superliga",
+      "si": "1",
+      "n": "Slovakya Superliga, Düşme turu",
+      "cref": 68371
+    },
+    {
+      "i": 1951,
+      "cid": "ES",
+      "p": 121,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "La Liga 2",
+      "si": "1",
+      "n": "İspanya La Liga 2",
+      "cref": 37
+    },
+    {
+      "i": 1978,
+      "cid": "TN",
+      "p": 2078,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tn.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Tunus 1. Lig",
+      "cref": 4295
+    },
+    {
+      "i": 1980,
+      "cid": "TR",
+      "p": 29,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tr.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Türkiye 1. Lig",
+      "cref": 101
+    },
+    {
+      "i": 1981,
+      "cid": "TR",
+      "p": 63,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tr.png",
+      "sn": "1. Lig Yük",
+      "si": "1",
+      "n": "Türkiye 1. Lig, Yükselme",
+      "cref": 4416
+    },
+    {
+      "i": 1983,
+      "cid": "TR",
+      "p": 31,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tr.png",
+      "sn": "TürkiyeKup",
+      "si": "1",
+      "n": "Türkiye Kupası",
+      "cref": 63
+    },
+    {
+      "i": 2001,
+      "cid": "AE",
+      "p": 21010,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ae.png",
+      "sn": "Körfez Lig",
+      "si": "1",
+      "n": "Birleşik Arap Emirlikleri Arap Gulf Ligi",
+      "cref": 3608
+    },
+    {
+      "i": 2007,
+      "cid": "UY",
+      "p": 2107,
+      "ic": "https://i.iddaa.com/i/iddaa/90/uy.png",
+      "sn": "Primera",
+      "si": "1",
+      "n": "Uruguay Primera Lig, Açılış",
+      "cref": 57776
+    },
+    {
+      "i": 2021,
+      "cid": "CN",
+      "p": 35,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cn.png",
+      "sn": "Çin Basket",
+      "si": "2",
+      "n": "Çin CBA",
+      "cref": 10233
+    },
+    {
+      "i": 2023,
+      "cid": "FR",
+      "p": 21230,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "Pro A",
+      "si": "2",
+      "n": "Fransa Pro A",
+      "cref": 272
+    },
+    {
+      "i": 2024,
+      "cid": "FR",
+      "p": 2124,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "Pro A",
+      "si": "2",
+      "n": "Fransa Pro A, Playoff",
+      "cref": 6074
+    },
+    {
+      "i": 2030,
+      "cid": "GR",
+      "p": 33,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gr.png",
+      "sn": "A1",
+      "si": "2",
+      "n": "Yunanistan A1 Playofflar",
+      "cref": 6014
+    },
+    {
+      "i": 2102,
+      "cid": "INT",
+      "p": 2202,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "VTB Birleş",
+      "si": "2",
+      "n": "VTB Birleşik Ligi, Playofflar",
+      "cref": 27997
+    },
+    {
+      "i": 2104,
+      "cid": "INT",
+      "p": 2204,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ABA Ligi",
+      "si": "2",
+      "n": "ABA Ligi, Playoff",
+      "cref": 5786
+    },
+    {
+      "i": 2170,
+      "cid": "IT",
+      "p": 2270,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "Serie A",
+      "si": "2",
+      "n": "İtalya Serie A",
+      "cref": 269
+    },
+    {
+      "i": 2173,
+      "cid": "PL",
+      "p": 2273,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "PLK",
+      "si": "2",
+      "n": "Polonya PLK",
+      "cref": 3191
+    },
+    {
+      "i": 2176,
+      "cid": "ES",
+      "p": 40,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "Liga ACB",
+      "si": "2",
+      "n": "İspanya Liga ACB",
+      "cref": 271
+    },
+    {
+      "i": 2179,
+      "cid": "TR",
+      "p": 15,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tr.png",
+      "sn": "BSL",
+      "si": "2",
+      "n": "Türkiye Basketbol Süper Ligi",
+      "cref": 595
+    },
+    {
+      "i": 2183,
+      "cid": "US",
+      "p": 10,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "NBA PO",
+      "si": "2",
+      "n": "ABD ABL, Playoff",
+      "cref": 10561
+    },
+    {
+      "i": 2266,
+      "cid": "INT",
+      "p": 2366,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "EHF AvpLig",
+      "si": "6",
+      "n": "EHF Avrupa Ligi",
+      "cref": 842
+    },
+    {
+      "i": 2322,
+      "cid": "NO",
+      "p": 2422,
+      "ic": "https://i.iddaa.com/i/iddaa/90/no.png",
+      "sn": "Eliteserie",
+      "si": "6",
+      "n": "Norveç Eliteserien, Playofflar",
+      "cref": 5802
+    },
+    {
+      "i": 2328,
+      "cid": "ES",
+      "p": 24280,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "Asobal",
+      "si": "6",
+      "n": "İspanya Asobal",
+      "cref": 157
+    },
+    {
+      "i": 2333,
+      "cid": "SE",
+      "p": 2433,
+      "ic": "https://i.iddaa.com/i/iddaa/90/se.png",
+      "sn": "Elitserien",
+      "si": "6",
+      "n": "İsveç Elitserien, Erkekler Playoffla",
+      "cref": 5742
+    },
+    {
+      "i": 2336,
+      "cid": "FR",
+      "p": 2436,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "A Ligi",
+      "si": "23",
+      "n": "Fransa Lig A, Playofflar",
+      "cref": 15630
+    },
+    {
+      "i": 2339,
+      "cid": "DE",
+      "p": 2439,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "1. Bundesl",
+      "si": "23",
+      "n": "Almanya 1. Bundesliga,Playofflar",
+      "cref": 10422
+    },
+    {
+      "i": 2354,
+      "cid": "INT",
+      "p": 2454,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Şamp Ligi",
+      "si": "23",
+      "n": "Şamp. Ligi, Erkekler, Playoff",
+      "cref": 10079
+    },
+    {
+      "i": 2397,
+      "cid": "INT",
+      "p": 2497,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ŞampLigi K",
+      "si": "23",
+      "n": "Şamp. Ligi, Kadınlar, Playoff",
+      "cref": 10078
+    },
+    {
+      "i": 2436,
+      "cid": "IT",
+      "p": 2536,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "Superlega",
+      "si": "23",
+      "n": "İtalya Superlega, Playoff",
+      "cref": 10385
+    },
+    {
+      "i": 2440,
+      "cid": "PL",
+      "p": 2540,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "Liga Siatk",
+      "si": "23",
+      "n": "Polonya Liga Siatkowki, Playofflar",
+      "cref": 15564
+    },
+    {
+      "i": 2663,
+      "cid": "DE",
+      "p": 27630,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "Bundesli 2",
+      "si": "6",
+      "n": "Almanya Bundesliga 2",
+      "cref": 16956
+    },
+    {
+      "i": 2901,
+      "cid": "PY",
+      "p": 30010,
+      "ic": "https://i.iddaa.com/i/iddaa/90/py.png",
+      "sn": "Intermedia",
+      "si": "1",
+      "n": "Paraguay Intermedia Ligi",
+      "cref": 13304
+    },
+    {
+      "i": 5161,
+      "cid": "EC",
+      "p": 5261,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ec.png",
+      "sn": "Ekvador Pr",
+      "si": "1",
+      "n": "Ekvador Pro Lig",
+      "cref": 16887
+    },
+    {
+      "i": 5441,
+      "cid": "GR",
+      "p": 95,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gr.png",
+      "sn": "SüperLig,Ş",
+      "si": "1",
+      "n": "Yunanistan Süper Lig, Şampiyonluk Grubu",
+      "cref": 92225
+    },
+    {
+      "i": 5576,
+      "cid": "SA",
+      "p": 56760,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sa.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Suudi Arabistan 1. Lig",
+      "cref": 9466
+    },
+    {
+      "i": 5593,
+      "cid": "NG",
+      "p": 5693,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ng.png",
+      "sn": "PremierLig",
+      "si": "1",
+      "n": "Nijerya Profesyonel Futbol Ligi",
+      "cref": 9324
+    },
+    {
+      "i": 5609,
+      "cid": "JP",
+      "p": 5709,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "B.Ligi",
+      "si": "2",
+      "n": "Japonya B.Ligi",
+      "cref": 10146
+    },
+    {
+      "i": 5610,
+      "cid": "BH",
+      "p": 5710,
+      "ic": "https://i.iddaa.com/i/iddaa/90/bh.png",
+      "sn": "PremierLig",
+      "si": "1",
+      "n": "Bahreyn Premier Lig",
+      "cref": 4050
+    },
+    {
+      "i": 7782,
+      "cid": "TP",
+      "p": 7882,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tp.png",
+      "sn": "PremierLig",
+      "si": "1",
+      "n": "Tayvan Premier Ligi",
+      "cref": 16667
+    },
+    {
+      "i": 13222,
+      "cid": "INT",
+      "p": 13322,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Dünya Şamp",
+      "si": "4",
+      "n": "Dünya Şampiyonası,Bölüm1,GrupA",
+      "cref": 1970
+    },
+    {
+      "i": 13223,
+      "cid": "INT",
+      "p": 13323,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Dünya Şamp",
+      "si": "4",
+      "n": "Dünya Şampiyonası,Bölüm1,GrupB",
+      "cref": 19690
+    },
+    {
+      "i": 16061,
+      "cid": "EE",
+      "p": 161610,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ee.png",
+      "sn": "EstonKupa",
+      "si": "1",
+      "n": "Estonya Kupası",
+      "cref": 3069
+    },
+    {
+      "i": 16122,
+      "cid": "GR",
+      "p": 16222,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gr.png",
+      "sn": "A1 Playof",
+      "si": "23",
+      "n": "Yunanistan A1 Playofflar",
+      "cref": 10407
+    },
+    {
+      "i": 16182,
+      "cid": "NZ",
+      "p": 16282,
+      "ic": "https://i.iddaa.com/i/iddaa/90/nz.png",
+      "sn": "ZelandaNBL",
+      "si": "2",
+      "n": "Yeni Zelanda NBL",
+      "cref": 3077
+    },
+    {
+      "i": 16326,
+      "cid": "GE",
+      "p": 164260,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ge.png",
+      "sn": "Erovnuli",
+      "si": "1",
+      "n": "Gürcistan Erovnuli Ligi",
+      "cref": 3012
+    },
+    {
+      "i": 16330,
+      "cid": "JO",
+      "p": 164300,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jo.png",
+      "sn": "Ürdün ProL",
+      "si": "1",
+      "n": "Ürdün Pro Ligi",
+      "cref": 3939
+    },
+    {
+      "i": 16524,
+      "cid": "US",
+      "p": 16624,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "ABD NHL",
+      "si": "4",
+      "n": "ABD Amerikan Buz Hokeyi Ligi, PO",
+      "cref": 10560
+    },
+    {
+      "i": 16602,
+      "cid": "BR",
+      "p": 167020,
+      "ic": "https://i.iddaa.com/i/iddaa/90/br.png",
+      "sn": "Serie C A",
+      "si": "1",
+      "n": "Brezilya Serie C, Grup A",
+      "cref": 27213
+    },
+    {
+      "i": 17090,
+      "cid": "DE",
+      "p": 171900,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "2. Kadınla",
+      "si": "6",
+      "n": "Almanya 2. Bundesliga, Kadınlar",
+      "cref": 18835
+    },
+    {
+      "i": 17605,
+      "cid": "CZ",
+      "p": 177050,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cz.png",
+      "sn": "CFL B",
+      "si": "1",
+      "n": "Çekya CFL, B Grubu",
+      "cref": 84194
+    },
+    {
+      "i": 17982,
+      "cid": "OM",
+      "p": 180820,
+      "ic": "https://i.iddaa.com/i/iddaa/90/om.png",
+      "sn": "Umman Ligi",
+      "si": "1",
+      "n": "Umman Ligi",
+      "cref": 5023
+    },
+    {
+      "i": 18304,
+      "cid": "IN",
+      "p": 18404,
+      "ic": "https://i.iddaa.com/i/iddaa/90/in.png",
+      "sn": "HİNT SpLig",
+      "si": "1",
+      "n": "Hindistan Süper Ligi",
+      "cref": 38566
+    },
+    {
+      "i": 18461,
+      "cid": "FR",
+      "p": 18561,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "Pro B",
+      "si": "2",
+      "n": "Fransa Pro B",
+      "cref": 2857
+    },
+    {
+      "i": 19101,
+      "cid": "RU",
+      "p": 19201,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ru.png",
+      "sn": "Rusya VHL",
+      "si": "4",
+      "n": "Rusya VHL",
+      "cref": 19688
+    },
+    {
+      "i": 19114,
+      "cid": "TZ",
+      "p": 192140,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tz.png",
+      "sn": "PremierLig",
+      "si": "1",
+      "n": "Tanzanya Premier Lig",
+      "cref": 17652
+    },
+    {
+      "i": 19221,
+      "cid": "RU",
+      "p": 19321,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ru.png",
+      "sn": "Rusya KHL",
+      "si": "4",
+      "n": "Rusya KHL",
+      "cref": 5711
+    },
+    {
+      "i": 19710,
+      "cid": "HU",
+      "p": 198100,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "NB I",
+      "si": "6",
+      "n": "Macaristan NB I",
+      "cref": 1081
+    },
+    {
+      "i": 19843,
+      "cid": "SCO",
+      "p": 19943,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sco.png",
+      "sn": "Premiershi",
+      "si": "1",
+      "n": "İskoçya Premiership, Şampiyona Turu",
+      "cref": 101168
+    },
+    {
+      "i": 19901,
+      "cid": "BR",
+      "p": 20001,
+      "ic": "https://i.iddaa.com/i/iddaa/90/br.png",
+      "sn": "BreSüperPl",
+      "si": "23",
+      "n": "Brezilya Süper Ligi, Playoff",
+      "cref": 29562
+    },
+    {
+      "i": 20062,
+      "cid": "AT",
+      "p": 20162,
+      "ic": "https://i.iddaa.com/i/iddaa/90/at.png",
+      "sn": "Superliga",
+      "si": "2",
+      "n": "Avusturya Süper Lig, Playoff",
+      "cref": 4375
+    },
+    {
+      "i": 20131,
+      "cid": "DE",
+      "p": 20231,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "Alman DEL",
+      "si": "4",
+      "n": "Almanya DEL Playofflar",
+      "cref": 3048
+    },
+    {
+      "i": 20141,
+      "cid": "AR",
+      "p": 20241,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ar.png",
+      "sn": "ArjUluLig",
+      "si": "2",
+      "n": "Arjantin LNB,Playoffs",
+      "cref": 16031
+    },
+    {
+      "i": 20142,
+      "cid": "BR",
+      "p": 20242,
+      "ic": "https://i.iddaa.com/i/iddaa/90/br.png",
+      "sn": "NBB",
+      "si": "2",
+      "n": "Brezilya NBB,Playoffs",
+      "cref": 30089
+    },
+    {
+      "i": 20162,
+      "cid": "FI",
+      "p": 20262,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fi.png",
+      "sn": "Liiga",
+      "si": "4",
+      "n": "Finlandiya Liiga Playofflar",
+      "cref": 5705
+    },
+    {
+      "i": 20181,
+      "cid": "IT",
+      "p": 20281,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "SuperLega",
+      "si": "23",
+      "n": "İtalya SuperLega , Playoff",
+      "cref": 50791
+    },
+    {
+      "i": 20546,
+      "cid": "BO",
+      "p": 206460,
+      "ic": "https://i.iddaa.com/i/iddaa/90/bo.png",
+      "sn": "Profes Lig",
+      "si": "1",
+      "n": "Bolivya Profesyonel Lig",
+      "cref": 4330
+    },
+    {
+      "i": 20687,
+      "cid": "INT",
+      "p": 20787,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Ulus Hazır",
+      "si": "4",
+      "n": "Uluslararası Hazırlık Maçları",
+      "cref": 54940
+    },
+    {
+      "i": 20694,
+      "cid": "US",
+      "p": 20794,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "AHL,Playof",
+      "si": "4",
+      "n": "ABD AHL, Playofflar",
+      "cref": 13946
+    },
+    {
+      "i": 21661,
+      "cid": "RU",
+      "p": 21761,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ru.png",
+      "sn": "Kupa,Eleme",
+      "si": "1",
+      "n": "Rusya Kupası,Eleme",
+      "cref": 105060
+    },
+    {
+      "i": 22370,
+      "cid": "IT",
+      "p": 224700,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "Serie D",
+      "si": "1",
+      "n": "İtalya Serie D\r",
+      "cref": 29541
+    },
+    {
+      "i": 22378,
+      "cid": "SI",
+      "p": 224780,
+      "ic": "https://i.iddaa.com/i/iddaa/90/si.png",
+      "sn": "2.Lig",
+      "si": "1",
+      "n": "Slovenya 2.Lig",
+      "cref": 8210
+    },
+    {
+      "i": 22625,
+      "cid": "AE",
+      "p": 227250,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ae.png",
+      "sn": "1.Lig",
+      "si": "1",
+      "n": "Birleşik Arap Emirlikleri 1.Lig",
+      "cref": 7302
+    },
+    {
+      "i": 22643,
+      "cid": "ES",
+      "p": 22743,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "LEB Oro",
+      "si": "2",
+      "n": "İspanya LEB Oro",
+      "cref": 3046
+    },
+    {
+      "i": 23482,
+      "cid": "ET",
+      "p": 23582,
+      "ic": "https://i.iddaa.com/i/iddaa/90/et.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Etiyopya Premier Lig",
+      "cref": 26505
+    },
+    {
+      "i": 23986,
+      "cid": "INT",
+      "p": 41,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "UEFA Konfe",
+      "si": "1",
+      "n": "UEFA Avrupa Konferans Ligi",
+      "cref": 104106
+    },
+    {
+      "i": 24293,
+      "cid": "FR",
+      "p": 243930,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "LNH Pro Li",
+      "si": "6",
+      "n": "Fransa LNH Pro Lig",
+      "cref": 9176
+    },
+    {
+      "i": 24553,
+      "cid": "AR",
+      "p": 24653,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ar.png",
+      "sn": "Primera Na",
+      "si": "1",
+      "n": "Arjantin Primera Nacional",
+      "cref": 5071
+    },
+    {
+      "i": 25401,
+      "cid": "ES",
+      "p": 25501,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "Süperlig K",
+      "si": "23",
+      "n": "İspanya Süperlig, Kadınlar, Playofflar",
+      "cref": 50973
+    },
+    {
+      "i": 26076,
+      "cid": "AR",
+      "p": 26176,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ar.png",
+      "sn": "LNB, Düşme",
+      "si": "2",
+      "n": "Arjantin LNB, Düşme Playoff",
+      "cref": 52244
+    },
+    {
+      "i": 26401,
+      "cid": "CA",
+      "p": 26501,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ca.png",
+      "sn": "OHL,Playof",
+      "si": "4",
+      "n": "Kanada OHL, Playoff",
+      "cref": 25584
+    },
+    {
+      "i": 27443,
+      "cid": "HU",
+      "p": 275430,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "NB I,Kadın",
+      "si": "6",
+      "n": "Macaristan NB I, Kadınlar",
+      "cref": 3192
+    },
+    {
+      "i": 27511,
+      "cid": "FR",
+      "p": 276110,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "LFH 1.Lig ",
+      "si": "6",
+      "n": "Fransa LFH 1.Lig Kadınlar",
+      "cref": 804
+    },
+    {
+      "i": 27852,
+      "cid": "PH",
+      "p": 27952,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ph.png",
+      "sn": "PBA",
+      "si": "2",
+      "n": "Filipinler PBA, Commissioner Kupası",
+      "cref": 33498
+    },
+    {
+      "i": 28107,
+      "cid": "SI",
+      "p": 28207,
+      "ic": "https://i.iddaa.com/i/iddaa/90/si.png",
+      "sn": "1. SKL",
+      "si": "2",
+      "n": "Slovenya 1. A SKL",
+      "cref": 3305
+    },
+    {
+      "i": 29019,
+      "cid": "RU",
+      "p": 29119,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ru.png",
+      "sn": "Vysshaya L",
+      "si": "23",
+      "n": "Rusya Vysshaya Liga A",
+      "cref": 5435
+    },
+    {
+      "i": 29189,
+      "cid": "CZ",
+      "p": 292890,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cz.png",
+      "sn": "Bölgesel L",
+      "si": "1",
+      "n": "Çekya Krajsky prebor",
+      "cref": 11352
+    },
+    {
+      "i": 29567,
+      "cid": "CL",
+      "p": 29667,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cl.png",
+      "sn": "Ulusal Lig",
+      "si": "2",
+      "n": "Şili Ulusal Basketbol Ligi",
+      "cref": 18613
+    },
+    {
+      "i": 29569,
+      "cid": "ID",
+      "p": 29669,
+      "ic": "https://i.iddaa.com/i/iddaa/90/id.png",
+      "sn": "ENIBL",
+      "si": "2",
+      "n": "Endonezya, IBL",
+      "cref": 15389
+    },
+    {
+      "i": 29787,
+      "cid": "INT",
+      "p": 29887,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "İsveç Hoke",
+      "si": "4",
+      "n": "İsveç Buz Hokeyi Oyunları",
+      "cref": 192
+    },
+    {
+      "i": 30076,
+      "cid": "RU",
+      "p": 30176,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ru.png",
+      "sn": "MHL Playof",
+      "si": "4",
+      "n": "Rusya MHL Playofflar",
+      "cref": 22641
+    },
+    {
+      "i": 30686,
+      "cid": "CZ",
+      "p": 30786,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cz.png",
+      "sn": "Extraliga",
+      "si": "23",
+      "n": "Çekya Extraliga Playoff",
+      "cref": 15502
+    },
+    {
+      "i": 31577,
+      "cid": "UY",
+      "p": 31677,
+      "ic": "https://i.iddaa.com/i/iddaa/90/uy.png",
+      "sn": "Uruguay BL",
+      "si": "2",
+      "n": "Uruguay Basketbol Ligi Playoff",
+      "cref": 19385
+    },
+    {
+      "i": 32485,
+      "cid": "PT",
+      "p": 32585,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pt.png",
+      "sn": "Liga A1",
+      "si": "23",
+      "n": "Portekiz Liga A1, Sıralama Maçları",
+      "cref": 43015
+    },
+    {
+      "i": 32763,
+      "cid": "PR",
+      "p": 328630,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pr.png",
+      "sn": "P.Riko BSN",
+      "si": "2",
+      "n": "Porto Riko BSN",
+      "cref": 19697
+    },
+    {
+      "i": 33010,
+      "cid": "SE",
+      "p": 33110,
+      "ic": "https://i.iddaa.com/i/iddaa/90/se.png",
+      "sn": "İsv.BLP",
+      "si": "2",
+      "n": "İsveç Basketbol Ligi Playoff",
+      "cref": 7814
+    },
+    {
+      "i": 33038,
+      "cid": "SE",
+      "p": 33138,
+      "ic": "https://i.iddaa.com/i/iddaa/90/se.png",
+      "sn": "Elitserien",
+      "si": "6",
+      "n": "İsveç Elitserien, Kadınlar, Playoff",
+      "cref": 4278
+    },
+    {
+      "i": 33266,
+      "cid": "IQ",
+      "p": 33366,
+      "ic": "https://i.iddaa.com/i/iddaa/90/iq.png",
+      "sn": "Irak Ligi",
+      "si": "1",
+      "n": "Iraq U20 COSAFA Şampiyonası Grup C",
+      "cref": 7402
+    },
+    {
+      "i": 33298,
+      "cid": "VE",
+      "p": 33398,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ve.png",
+      "sn": "Ven Super ",
+      "si": "2",
+      "n": "Venezuela Superliga",
+      "cref": 97428
+    },
+    {
+      "i": 33355,
+      "cid": "AU",
+      "p": 33455,
+      "ic": "https://i.iddaa.com/i/iddaa/90/au.png",
+      "sn": "Queensland",
+      "si": "1",
+      "n": "Avustralya Queensland NPL, Women",
+      "cref": 43961
+    },
+    {
+      "i": 33461,
+      "cid": "DE",
+      "p": 335610,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "KadBundes",
+      "si": "1",
+      "n": "Almanya Amatör Bundesliga, Women",
+      "cref": 810
+    },
+    {
+      "i": 33472,
+      "cid": "ENG",
+      "p": 33572,
+      "ic": "https://i.iddaa.com/i/iddaa/90/eng.png",
+      "sn": "PremLig 2",
+      "si": "1",
+      "n": "İngiltere Amatör Premier League 2, Division 1",
+      "cref": 54849
+    },
+    {
+      "i": 33505,
+      "cid": "PT",
+      "p": 33605,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pt.png",
+      "sn": "2.Lig",
+      "si": "6",
+      "n": "Portekiz 2a Divisao",
+      "cref": 29547
+    },
+    {
+      "i": 33554,
+      "cid": "AU",
+      "p": 336540,
+      "ic": "https://i.iddaa.com/i/iddaa/90/au.png",
+      "sn": "NPL 1K",
+      "si": "1",
+      "n": "Avustralya NSW NPL 1, Women",
+      "cref": 31377
+    },
+    {
+      "i": 33563,
+      "cid": "TP",
+      "p": 33663,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tp.png",
+      "sn": "P Ligi",
+      "si": "2",
+      "n": "Tayvan P League",
+      "cref": 109505
+    },
+    {
+      "i": 33592,
+      "cid": "ENG",
+      "p": 33692,
+      "ic": "https://i.iddaa.com/i/iddaa/90/eng.png",
+      "sn": "KadSüpLig",
+      "si": "1",
+      "n": "İngiltere Amatör The FA Women's Super League",
+      "cref": 15635
+    },
+    {
+      "i": 33595,
+      "cid": "ES",
+      "p": 336950,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "3. Federas",
+      "si": "1",
+      "n": "İspanya Amatör Tercera Federacion, Group 10",
+      "cref": 5103
+    },
+    {
+      "i": 33597,
+      "cid": "PL",
+      "p": 336970,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "3. Lig G4",
+      "si": "1",
+      "n": "Polonya 3. Lig, Grup 4",
+      "cref": 72687
+    },
+    {
+      "i": 33704,
+      "cid": "GR",
+      "p": 33804,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gr.png",
+      "sn": "A1 Playoff",
+      "si": "6",
+      "n": "Yunanistan A1, Playofflar",
+      "cref": 27807
+    },
+    {
+      "i": 33721,
+      "cid": "SK",
+      "p": 33821,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sk.png",
+      "sn": "Extraliga",
+      "si": "2",
+      "n": "Slovakya, Extraliga, Playoff",
+      "cref": 30435
+    },
+    {
+      "i": 33962,
+      "cid": "DK",
+      "p": 34062,
+      "ic": "https://i.iddaa.com/i/iddaa/90/dk.png",
+      "sn": "Kvindeliga",
+      "si": "6",
+      "n": "Danimarka Kvind.,Kadınlr,Şamp.Turu Grup1",
+      "cref": 117835
+    },
+    {
+      "i": 33965,
+      "cid": "DK",
+      "p": 34065,
+      "ic": "https://i.iddaa.com/i/iddaa/90/dk.png",
+      "sn": "Kvindeliga",
+      "si": "6",
+      "n": "Danimarka Kvind.,Kadınlr,Şamp.Turu Grup2",
+      "cref": 117837
+    },
+    {
+      "i": 34037,
+      "cid": "US",
+      "p": 34137,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "ABD Kadın.",
+      "si": "2",
+      "n": "ABD Kad. Basket L.Sezon Öncesi",
+      "cref": 10596
+    },
+    {
+      "i": 34076,
+      "cid": "ES",
+      "p": 34176,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "Gençler 2",
+      "si": "1",
+      "n": "İspanya Division de Honor Juvenil - Gr",
+      "cref": 18618
+    },
+    {
+      "i": 34092,
+      "cid": "ES",
+      "p": 341920,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "Gençler Kl",
+      "si": "1",
+      "n": "İspanya Division de Honor Juvenil - Gr",
+      "cref": 18619
+    },
+    {
+      "i": 34104,
+      "cid": "KR",
+      "p": 34204,
+      "ic": "https://i.iddaa.com/i/iddaa/90/kr.png",
+      "sn": "KBL, Playo",
+      "si": "2",
+      "n": "G. Kore KBL, Playofflar",
+      "cref": 26537
+    },
+    {
+      "i": 34503,
+      "cid": "HU",
+      "p": 34603,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "NB I Kadın",
+      "si": "23",
+      "n": "Macaristan NB I, Kadınlar",
+      "cref": 123563
+    },
+    {
+      "i": 34543,
+      "cid": "HU",
+      "p": 34643,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "NB I, Play",
+      "si": "2",
+      "n": "Macaristan NB I, Playoff",
+      "cref": 70329
+    },
+    {
+      "i": 34545,
+      "cid": "DK",
+      "p": 34645,
+      "ic": "https://i.iddaa.com/i/iddaa/90/dk.png",
+      "sn": "Handboldli",
+      "si": "6",
+      "n": "Danimarka Handboldligaen Şamp. Turu, Gr2",
+      "cref": 114069
+    },
+    {
+      "i": 34584,
+      "cid": "EE",
+      "p": 34684,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ee.png",
+      "sn": "KML P.off",
+      "si": "2",
+      "n": "Estonia Estonya KML, Playofflar",
+      "cref": 18015
+    },
+    {
+      "i": 34786,
+      "cid": "IS",
+      "p": 34886,
+      "ic": "https://i.iddaa.com/i/iddaa/90/is.png",
+      "sn": "Urvalsdeil",
+      "si": "6",
+      "n": "İzlanda Urvalsdeild, Playofflar",
+      "cref": 59131
+    },
+    {
+      "i": 34833,
+      "cid": "CZ",
+      "p": 34933,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cz.png",
+      "sn": "NBL, Playo",
+      "si": "2",
+      "n": "Çekya NBL, Playoff",
+      "cref": 7911
+    },
+    {
+      "i": 34923,
+      "cid": "ES",
+      "p": 35023,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "sn": "İspanya K",
+      "si": "2",
+      "n": "İspanya Kadınlar Basketbol Ligi Playof",
+      "cref": 30090
+    },
+    {
+      "i": 34985,
+      "cid": "US",
+      "p": 35085,
+      "ic": "https://i.iddaa.com/i/iddaa/90/us.png",
+      "sn": "ECHL Playo",
+      "si": "4",
+      "n": "ABD ECHL, Playoff",
+      "cref": 103696
+    },
+    {
+      "i": 35009,
+      "cid": "PL",
+      "p": 35109,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "1. Liga, P",
+      "si": "23",
+      "n": "Polonya 1. Liga, Playoffs",
+      "cref": 130249
+    },
+    {
+      "i": 35030,
+      "cid": "AT",
+      "p": 35130,
+      "ic": "https://i.iddaa.com/i/iddaa/90/at.png",
+      "sn": "HLA Ligi",
+      "si": "6",
+      "n": "Avusturya HLA Ligi, Playofflar",
+      "cref": 4373
+    },
+    {
+      "i": 35051,
+      "cid": "BY",
+      "p": 351510,
+      "ic": "https://i.iddaa.com/i/iddaa/90/by.png",
+      "sn": "2. Lig",
+      "si": "1",
+      "n": "Belarus Vtoraya Ligi",
+      "cref": 11044
+    },
+    {
+      "i": 35114,
+      "cid": "AT",
+      "p": 35214,
+      "ic": "https://i.iddaa.com/i/iddaa/90/at.png",
+      "sn": "HLA Ligi",
+      "si": "6",
+      "n": "Avusturya HLA Ligi, Düşme Turu",
+      "cref": 4156
+    },
+    {
+      "i": 35258,
+      "cid": "BE",
+      "p": 35358,
+      "ic": "https://i.iddaa.com/i/iddaa/90/be.png",
+      "sn": "Belçika Er",
+      "si": "23",
+      "n": "Belçika Erkekler 1.Lig Playoff",
+      "cref": 43545
+    },
+    {
+      "i": 35304,
+      "cid": "HU",
+      "p": 35404,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "NB I, Sıra",
+      "si": "2",
+      "n": "Macaristan NB I, Sıralama Maçları",
+      "cref": 119905
+    },
+    {
+      "i": 35311,
+      "cid": "JP",
+      "p": 35411,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "B2. Ligi P",
+      "si": "2",
+      "n": "Japonya B2. Ligi, Playofflar",
+      "cref": 30434
+    },
+    {
+      "i": 35377,
+      "cid": "FR",
+      "p": 35477,
+      "ic": "https://i.iddaa.com/i/iddaa/90/fr.png",
+      "sn": "LFB Kadın",
+      "si": "2",
+      "n": "Fransa LFB Kadınlar Düşme Turu",
+      "cref": 59011
+    },
+    {
+      "i": 35464,
+      "cid": "BG",
+      "p": 35564,
+      "ic": "https://i.iddaa.com/i/iddaa/90/bg.png",
+      "sn": "Bulgar NBL",
+      "si": "2",
+      "n": "Bulgaria NBL",
+      "cref": 20572
+    },
+    {
+      "i": 35648,
+      "cid": "CH",
+      "p": 35748,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ch.png",
+      "sn": "SB Lig PO",
+      "si": "2",
+      "n": "İsviçre SB Lig, Playofflar",
+      "cref": 42228
+    },
+    {
+      "i": 35680,
+      "cid": "MX",
+      "p": 35780,
+      "ic": "https://i.iddaa.com/i/iddaa/90/mx.png",
+      "sn": "LNBPF",
+      "si": "2",
+      "n": "Meksika LNBPF, Women",
+      "cref": 118167
+    },
+    {
+      "i": 35737,
+      "cid": "NO",
+      "p": 35837,
+      "ic": "https://i.iddaa.com/i/iddaa/90/no.png",
+      "sn": "Eliteserie",
+      "si": "6",
+      "n": "Norveç Eliteserien,Kadınlar,Düş./Yük.",
+      "cref": 115269
+    },
+    {
+      "i": 35790,
+      "cid": "BG",
+      "p": 35890,
+      "ic": "https://i.iddaa.com/i/iddaa/90/bg.png",
+      "sn": "Parva Ligi",
+      "si": "1",
+      "n": "Bulgaristan Bulgar. Parva Ligi, Düşme Turu",
+      "cref": 33561
+    },
+    {
+      "i": 35791,
+      "cid": "BG",
+      "p": 35891,
+      "ic": "https://i.iddaa.com/i/iddaa/90/bg.png",
+      "sn": "Parva Ligi",
+      "si": "1",
+      "n": "Bulgaristan Bulgar. Parva Ligi, Şamp. Turu",
+      "cref": 33560
+    },
+    {
+      "i": 36481,
+      "cid": "IT",
+      "p": 36581,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "Serie A2",
+      "si": "2",
+      "n": "İtalya Serie A2, Playout",
+      "cref": 52088
+    },
+    {
+      "i": 44328,
+      "cid": "SL",
+      "p": 44428,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sl.png",
+      "sn": "Sierra Leo",
+      "si": "1",
+      "n": "Sierra Leone Premier Lig",
+      "cref": 32180
+    },
+    {
+      "i": 45094,
+      "cid": "PL",
+      "p": 45194,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "Süperlig ",
+      "si": "6",
+      "n": "Polonya Süperlig Play-off",
+      "cref": 15600
+    },
+    {
+      "i": 45095,
+      "cid": "PL",
+      "p": 45195,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pl.png",
+      "sn": "Süperlig",
+      "si": "6",
+      "n": "Polonya Süperlig Düşme Turu",
+      "cref": 15601
+    },
+    {
+      "i": 46194,
+      "cid": "INT",
+      "p": 38,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "UEFA Şamp",
+      "si": "1",
+      "n": "UEFA Şampiyonlar Ligi",
+      "cref": 151665
+    },
+    {
+      "i": 46195,
+      "cid": "INT",
+      "p": 39,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "UEFA Avrup",
+      "si": "1",
+      "n": "UEFA Avrupa Ligi",
+      "cref": 151681
+    },
+    {
+      "i": 46196,
+      "cid": "INT",
+      "p": 41,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "UEFA Konfe",
+      "si": "1",
+      "n": "UEFA Konferans Ligi",
+      "cref": 151677
+    },
+    {
+      "i": 46248,
+      "cid": "TR",
+      "p": 32,
+      "ic": "https://i.iddaa.com/i/iddaa/90/tr.png",
+      "sn": "Türkiye Ku",
+      "si": "1",
+      "n": "Türkiye Kupası, Elemeler",
+      "cref": 22735
+    },
+    {
+      "i": 46269,
+      "cid": "INT",
+      "p": 46369,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "BNXT Ligi",
+      "si": "2",
+      "n": "BNXT Ligi",
+      "cref": 153195
+    },
+    {
+      "i": 47154,
+      "cid": "AR",
+      "p": 47254,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ar.png",
+      "sn": "Primera LP",
+      "si": "1",
+      "n": "Arjantin Primera LFP, Apertura",
+      "cref": 162285
+    },
+    {
+      "i": 47539,
+      "cid": "EG",
+      "p": 47639,
+      "ic": "https://i.iddaa.com/i/iddaa/90/eg.png",
+      "sn": "Premier L",
+      "si": "1",
+      "n": "Mısır Premier Lig, Şampiyonluk Turu",
+      "cref": 36552
+    },
+    {
+      "i": 47573,
+      "cid": "EG",
+      "p": 47673,
+      "ic": "https://i.iddaa.com/i/iddaa/90/eg.png",
+      "sn": "Premier Li",
+      "si": "1",
+      "n": "Mısır Premier League, Relegation Rou",
+      "cref": 25441
+    },
+    {
+      "i": 47695,
+      "cid": "PT",
+      "p": 47795,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pt.png",
+      "sn": "Ulusal Ş.K",
+      "si": "23",
+      "n": "Portekiz Ulusal Şamp.,Kadınlar,Playoff",
+      "cref": 159591
+    },
+    {
+      "i": 47784,
+      "cid": "DE",
+      "p": 47884,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "Bundesliga",
+      "si": "6",
+      "n": "Almanya Women Bundesliga Playoffs",
+      "cref": 5855
+    },
+    {
+      "i": 47955,
+      "cid": "IT",
+      "p": 48055,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "Serie A2",
+      "si": "2",
+      "n": "İtalya Serie A2, Play-In",
+      "cref": 154295
+    },
+    {
+      "i": 49038,
+      "cid": "AR",
+      "p": 49138,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ar.png",
+      "sn": "Primera LP",
+      "si": "1",
+      "n": "Arjantin Primera LPF, Kapanış",
+      "cref": 170677
+    },
+    {
+      "i": 49356,
+      "cid": "RO",
+      "p": 49456,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ro.png",
+      "sn": "1. Lig",
+      "si": "1",
+      "n": "Romanya Romania Liga 1",
+      "cref": -49356
+    },
+    {
+      "i": 49387,
+      "cid": "AR",
+      "p": 49487,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ar.png",
+      "sn": "Primera Na",
+      "si": "1",
+      "n": "Argentina Primera Nacional",
+      "cref": -49387
+    },
+    {
+      "i": 49452,
+      "cid": "CZ",
+      "p": 49552,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cz.png",
+      "sn": "2. Lig",
+      "si": "1",
+      "n": "Czech Republic Second Division",
+      "cref": -49452
+    },
+    {
+      "i": 49816,
+      "cid": "CH",
+      "p": 49916,
+      "ic": "https://i.iddaa.com/i/iddaa/90/ch.png",
+      "sn": "Challenge ",
+      "si": "1",
+      "n": "Switzerland İsviçre Challenge Ligi",
+      "cref": -49816
+    },
+    {
+      "i": 50710,
+      "cid": "CO",
+      "p": 50810,
+      "ic": "https://i.iddaa.com/i/iddaa/90/co.png",
+      "sn": "Primera B",
+      "si": "1",
+      "n": "Colombia Kolombiya Primera B",
+      "cref": -50710
+    },
+    {
+      "i": 50757,
+      "cid": "PT",
+      "p": 50857,
+      "ic": "https://i.iddaa.com/i/iddaa/90/pt.png",
+      "sn": "2. Lig",
+      "si": "1",
+      "n": "Portugal Portekiz 2. Lig",
+      "cref": -50757
+    },
+    {
+      "i": 51261,
+      "cid": "SK",
+      "p": 51361,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sk.png",
+      "sn": "Superliga",
+      "si": "1",
+      "n": "Slovakia Super Liga",
+      "cref": -51261
+    },
+    {
+      "i": 52331,
+      "cid": "IT",
+      "p": 45,
+      "ic": "https://i.iddaa.com/i/iddaa/90/it.png",
+      "sn": "Italy Seri",
+      "si": "1",
+      "n": "Italy Serie A",
+      "cref": -52331
+    },
+    {
+      "i": 52643,
+      "cid": "CL",
+      "p": 52743,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cl.png",
+      "sn": "Şili B",
+      "si": "1",
+      "n": "Chile Şili Primera B",
+      "cref": -52643
+    },
+    {
+      "i": 55018,
+      "cid": "SG",
+      "p": 55118,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sg.png",
+      "sn": "Singapur P",
+      "si": "1",
+      "n": "Singapore Premier League",
+      "cref": -55018
+    },
+    {
+      "i": 55576,
+      "cid": "INT",
+      "p": 55676,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Gran Premi",
+      "si": "11",
+      "n": "Gran Premio de Mexico 2026",
+      "cref": 1291021
+    },
+    {
+      "i": 55577,
+      "cid": "INT",
+      "p": 55677,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "British Gr",
+      "si": "11",
+      "n": "British Grand Prix 2026",
+      "cref": 1288429
+    },
+    {
+      "i": 55579,
+      "cid": "INT",
+      "p": 55679,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "United Sta",
+      "si": "11",
+      "n": "United States Grand Prix 2026",
+      "cref": 1290733
+    },
+    {
+      "i": 55583,
+      "cid": "INT",
+      "p": 55683,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Spanish Gr",
+      "si": "11",
+      "n": "Spanish Grand Prix 2026",
+      "cref": 1289869
+    },
+    {
+      "i": 55584,
+      "cid": "INT",
+      "p": 55684,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Las Vegas ",
+      "si": "11",
+      "n": "Las Vegas Grand Prix 2026",
+      "cref": 1291597
+    },
+    {
+      "i": 55585,
+      "cid": "INT",
+      "p": 55685,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Dutch Gran",
+      "si": "11",
+      "n": "Dutch Grand Prix 2026",
+      "cref": 1289293
+    },
+    {
+      "i": 55586,
+      "cid": "INT",
+      "p": 55686,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Azerbaijan",
+      "si": "11",
+      "n": "Azerbaijan Grand Prix 2026",
+      "cref": 1290157
+    },
+    {
+      "i": 55588,
+      "cid": "INT",
+      "p": 55688,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Hungarian ",
+      "si": "11",
+      "n": "Hungarian Grand Prix 2026",
+      "cref": 1289005
+    },
+    {
+      "i": 55590,
+      "cid": "INT",
+      "p": 55690,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Austrian G",
+      "si": "11",
+      "n": "Austrian Grand Prix 2026",
+      "cref": 1288141
+    },
+    {
+      "i": 55591,
+      "cid": "INT",
+      "p": 55691,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Singapore ",
+      "si": "11",
+      "n": "Singapore Grand Prix 2026",
+      "cref": 1290445
+    },
+    {
+      "i": 55593,
+      "cid": "INT",
+      "p": 55693,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Italian Gr",
+      "si": "11",
+      "n": "Italian Grand Prix 2026",
+      "cref": 1289581
+    },
+    {
+      "i": 55594,
+      "cid": "INT",
+      "p": 55694,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Belgian Gr",
+      "si": "11",
+      "n": "Belgian Grand Prix 2026",
+      "cref": 1288717
+    },
+    {
+      "i": 55595,
+      "cid": "INT",
+      "p": 55695,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Abu Dhabi ",
+      "si": "11",
+      "n": "Abu Dhabi Grand Prix 2026",
+      "cref": 1292173
+    },
+    {
+      "i": 55596,
+      "cid": "INT",
+      "p": 55696,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Qatar Gran",
+      "si": "11",
+      "n": "Qatar Grand Prix 2026",
+      "cref": 1291885
+    },
+    {
+      "i": 55598,
+      "cid": "INT",
+      "p": 55698,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Monaco Gra",
+      "si": "11",
+      "n": "Monaco Grand Prix 2026",
+      "cref": 1287565
+    },
+    {
+      "i": 55601,
+      "cid": "INT",
+      "p": 55701,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Barcelona ",
+      "si": "11",
+      "n": "Barcelona Grand Prix 2026",
+      "cref": 1287853
+    },
+    {
+      "i": 55602,
+      "cid": "INT",
+      "p": 55702,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Sao Paulo ",
+      "si": "11",
+      "n": "Sao Paulo Grand Prix 2025",
+      "cref": 1291309
+    },
+    {
+      "i": 55603,
+      "cid": "INT",
+      "p": 55703,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Canadian G",
+      "si": "11",
+      "n": "Canadian Grand Prix 2026",
+      "cref": 1287277
+    },
+    {
+      "i": 58086,
+      "cid": "HU",
+      "p": 58186,
+      "ic": "https://i.iddaa.com/i/iddaa/90/hu.png",
+      "sn": "Hungary NB",
+      "si": "1",
+      "n": "Hungary NB II",
+      "cref": -58086
+    },
+    {
+      "i": 58165,
+      "cid": "INT",
+      "p": 58265,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "F1 2026",
+      "si": "11",
+      "n": "Formula 1 2026",
+      "cref": 1285547
+    },
+    {
+      "i": 62000,
+      "cid": "ZA",
+      "p": 62100,
+      "ic": "https://i.iddaa.com/i/iddaa/90/za.png",
+      "sn": "Championsh",
+      "si": "1",
+      "n": "South Africa National First Di",
+      "cref": -62000
+    },
+    {
+      "i": 63004,
+      "cid": "JP",
+      "p": 63104,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "J2/J3 Ligi",
+      "si": "1",
+      "n": "Japonya J2/J3 Ligi, Batı A",
+      "cref": 182726
+    },
+    {
+      "i": 63006,
+      "cid": "JP",
+      "p": 63106,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "J2/J3 Ligi",
+      "si": "1",
+      "n": "Japonya J2/J3 Ligi, Batı B",
+      "cref": 182728
+    },
+    {
+      "i": 63007,
+      "cid": "JP",
+      "p": 63107,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "J1 Ligi, D",
+      "si": "1",
+      "n": "Japonya J1 Ligi, Doğu",
+      "cref": 182712
+    },
+    {
+      "i": 63008,
+      "cid": "JP",
+      "p": 63108,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "J1 Ligi, B",
+      "si": "1",
+      "n": "Japonya J1 Ligi, Batı",
+      "cref": 182714
+    },
+    {
+      "i": 63692,
+      "cid": "JP",
+      "p": 63792,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "J1 Ligi",
+      "si": "1",
+      "n": "Japonya Japan J. League 100 Year Visio",
+      "cref": -63692
+    },
+    {
+      "i": 63729,
+      "cid": "JP",
+      "p": 63829,
+      "ic": "https://i.iddaa.com/i/iddaa/90/jp.png",
+      "sn": "J2/J3 Ligi",
+      "si": "1",
+      "n": "Japonya Japan J. League 2/3 100 Year V",
+      "cref": -63729
+    },
+    {
+      "i": 68502,
+      "cid": "CL",
+      "p": 68602,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cl.png",
+      "sn": "LaLiga Kup",
+      "si": "1",
+      "n": "Şili La Liga Kupası, Grup A",
+      "cref": 186788
+    },
+    {
+      "i": 68506,
+      "cid": "CL",
+      "p": 68606,
+      "ic": "https://i.iddaa.com/i/iddaa/90/cl.png",
+      "sn": "Şili Lig K",
+      "si": "1",
+      "n": "Chile Şili Lig Kupası",
+      "cref": -68506
+    },
+    {
+      "i": 70584,
+      "cid": "DK",
+      "p": 70684,
+      "ic": "https://i.iddaa.com/i/iddaa/90/dk.png",
+      "sn": "Herreligae",
+      "si": "6",
+      "n": "Danimarka Herreligaen, Championship Roun",
+      "cref": 188208
+    },
+    {
+      "i": 70703,
+      "cid": "INT",
+      "p": 70803,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ŞL Haft",
+      "si": "1",
+      "n": "Şamp. Ligi Haftalık Bahisler",
+      "cref": -70703
+    },
+    {
+      "i": 71915,
+      "cid": "DE",
+      "p": 72015,
+      "ic": "https://i.iddaa.com/i/iddaa/90/de.png",
+      "sn": "Bundesliga",
+      "si": "6",
+      "n": "Almanya Bundesliga, Women, Relegation ",
+      "cref": 33553
+    },
+    {
+      "i": 73047,
+      "cid": "NL",
+      "p": 73147,
+      "ic": "https://i.iddaa.com/i/iddaa/90/nl.png",
+      "sn": "Hollanda E",
+      "si": "1",
+      "n": "Netherlands Eredivisie Promoti",
+      "cref": -73047
+    },
+    {
+      "i": 73079,
+      "cid": "INT",
+      "p": 73179,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ABA Liga",
+      "si": "2",
+      "n": "ABA Liga, Play-in",
+      "cref": 174419
+    },
+    {
+      "i": 73124,
+      "cid": "INT",
+      "p": 73224,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "Dünya Takı",
+      "si": "20",
+      "n": "World Team Championships Final",
+      "cref": 188926
+    },
+    {
+      "i": 73636,
+      "cid": "INT",
+      "p": 73736,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Wuxi",
+      "si": "5",
+      "n": "ATP Challenger Wuxi",
+      "cref": 184342
+    },
+    {
+      "i": 73637,
+      "cid": "INT",
+      "p": 73737,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Franca",
+      "si": "5",
+      "n": "Francavilla, Italy",
+      "cref": 184348
+    },
+    {
+      "i": 73639,
+      "cid": "INT",
+      "p": 73739,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Santos",
+      "si": "5",
+      "n": "Santos, Brazil",
+      "cref": 184366
+    },
+    {
+      "i": 73640,
+      "cid": "INT",
+      "p": 73740,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "WTA Jiujia",
+      "si": "5",
+      "n": "Jiujiang, China",
+      "cref": 188170
+    },
+    {
+      "i": 73651,
+      "cid": "INT",
+      "p": 73751,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Brazza",
+      "si": "5",
+      "n": "ATP Challenger Brazzaville",
+      "cref": 184360
+    },
+    {
+      "i": 73653,
+      "cid": "INT",
+      "p": 73753,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Jiujia",
+      "si": "5",
+      "n": "WTA 125K Jiujiang, Çiftler",
+      "cref": 188172
+    },
+    {
+      "i": 73654,
+      "cid": "INT",
+      "p": 73754,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Franca",
+      "si": "5",
+      "n": "ATP Chall. Francavilla,Çiftler",
+      "cref": 184350
+    },
+    {
+      "i": 73655,
+      "cid": "INT",
+      "p": 73755,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Wuxi",
+      "si": "5",
+      "n": "ATP Challenger Wuxi, Çiftler",
+      "cref": 184344
+    },
+    {
+      "i": 73656,
+      "cid": "INT",
+      "p": 73756,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Roma",
+      "si": "5",
+      "n": "Rome, Italy, Qualifying",
+      "cref": 175547
+    },
+    {
+      "i": 73661,
+      "cid": "INT",
+      "p": 73761,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "WTA Roma",
+      "si": "5",
+      "n": "Rome, Italy, Qualifying",
+      "cref": 178853
+    },
+    {
+      "i": 73727,
+      "cid": "SCO",
+      "p": 73827,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sco.png",
+      "sn": "Scotland C",
+      "si": "1",
+      "n": "Scotland Championship Promotio",
+      "cref": -73727
+    },
+    {
+      "i": 73729,
+      "cid": "SCO",
+      "p": 73829,
+      "ic": "https://i.iddaa.com/i/iddaa/90/sco.png",
+      "sn": "Scotland L",
+      "si": "1",
+      "n": "Scotland League One Promotion/",
+      "cref": -73729
+    },
+    {
+      "i": 73735,
+      "cid": "INT",
+      "p": 73835,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Santos",
+      "si": "5",
+      "n": "ATP Challenger Santos, Çiftler",
+      "cref": 184368
+    },
+    {
+      "i": 73778,
+      "cid": "INT",
+      "p": 73878,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "WTA Roma",
+      "si": "5",
+      "n": "Rome, Italy",
+      "cref": 178855
+    },
+    {
+      "i": 73780,
+      "cid": "INT",
+      "p": 73880,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "sn": "ATP Roma",
+      "si": "5",
+      "n": "Rome, Italy",
+      "cref": 175549
+    },
+    {
+      "i": 91400,
+      "cid": "ES",
+      "p": 219530,
+      "ic": "https://i.iddaa.com/i/iddaa/90/es.png",
+      "si": "1",
+      "n": "İspanya Segunda RFEF",
+      "cref": 104364
+    },
+    {
+      "i": 137001,
+      "cid": "GTL",
+      "p": 1,
+      "ic": "https://i.iddaa.com/i/iddaa/90/gtl.png",
+      "si": "137",
+      "n": " GT SPORTS LİGİ (2x6 DAKİKA)"
+    },
+    {
+      "i": 137002,
+      "cid": "EAL",
+      "p": 2,
+      "ic": "https://i.iddaa.com/i/iddaa/90/eal.png",
+      "si": "137",
+      "n": " eADRIATIC LİGİ (2x5 DAKİKA)"
+    },
+    {
+      "i": 153001,
+      "cid": "NXL",
+      "p": 1,
+      "ic": "https://i.iddaa.com/i/iddaa/90/nxl.png",
+      "si": "153",
+      "n": " NEXTGEN NBA LİGİ (4x5 20 DAKİKA)"
+    },
+    {
+      "i": 245006,
+      "cid": "INT",
+      "p": 3559,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "si": "1",
+      "n": "Libertadores Kupası",
+      "cref": 309
+    },
+    {
+      "i": 245024,
+      "cid": "INT",
+      "p": 3574,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "si": "1",
+      "n": "Sudamericana Kupası",
+      "cref": 99934
+    },
+    {
+      "i": 251000,
+      "cid": "INT",
+      "p": 25,
+      "ic": "https://i.iddaa.com/i/iddaa/90/int.png",
+      "si": "2",
+      "n": "Euroleague"
+    }
+  ],
+  "message": ""
+}

@@ -1,0 +1,108 @@
+{
+  "isSuccess": true,
+  "data": {
+    "platform": "WEB",
+    "configValue": {
+      "coupon": {
+        "mobileFastSelectValues": [
+          100,
+          500,
+          1000,
+          5000,
+          10000
+        ]
+      },
+      "kingOdd": true,
+      "livechat": false,
+      "KingOddPage": false,
+      "desktoplivechat": false,
+      "kingOddHighLight": {
+        "sports": {
+          "1": {
+            "-1": {
+              "preValue": "3,8",
+              "preDetail": "3,8",
+              "liveDetail": "3,8"
+            }
+          },
+          "2": {
+            "-1": {
+              "preValue": "3,8",
+              "preDetail": "3,8",
+              "liveDetail": "3,8"
+            },
+            "2179": {
+              "preValue": "3,8",
+              "preDetail": "3,8",
+              "liveDetail": "3,8"
+            },
+            "2180": {
+              "preValue": "3,8",
+              "preDetail": "3,8",
+              "liveDetail": "3,8"
+            },
+            "2181": {
+              "preValue": "3,8",
+              "preDetail": "3,8",
+              "liveDetail": "3,8"
+            },
+            "2182": {
+              "preValue": "3,8",
+              "preDetail": "3,8",
+              "liveDetail": "3,8"
+            },
+            "251000": {
+              "preValue": "3,8",
+              "preDetail": "3,8",
+              "liveDetail": "3,8"
+            }
+          },
+          "5": {
+            "-1": {
+              "preValue": "3,5",
+              "preDetail": "3,5",
+              "liveDetail": "3,5"
+            }
+          },
+          "23": {
+            "-1": {
+              "preValue": "2",
+              "preDetail": "2",
+              "liveDetail": "2"
+            }
+          }
+        },
+        "templates": {
+          "pre": "Kral Oran ile Her Maçta Daha Yüksek Oran",
+          "preDetail": "Kral Oran ile Her Maçta Daha Yüksek Oran",
+          "liveDetail": "Canlıda Bu Maçta Daha Yüksek Oran"
+        }
+      }
+    },
+    "sportotoProgramName": "09-10 Mayıs",
+    "payinEndDate": "2026-05-09T14:25:00",
+    "nextDrawExpectedWin": 30137451.38,
+    "globalConfig": {
+      "coupon": {
+        "maxPrice": 20000,
+        "minPrice": 50,
+        "maxMultiCount": 100,
+        "maxLiveMultiCount": 100,
+        "maxEarning": 12500000,
+        "maxEventCount": 20,
+        "minMultiPrice": 2500,
+        "taxLimit": 66935,
+        "taxPercentage": 20
+      },
+      "soccerPool": {
+        "maxColumn": 2500,
+        "columnPrice": 10
+      },
+      "other": {
+        "phase": 5,
+        "balanceReset": 50
+      }
+    }
+  },
+  "message": ""
+}

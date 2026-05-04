@@ -52,22 +52,28 @@ def temizle_takim_adi(ad):
     tr_map = {
         'ç': 'c', 'ğ': 'g', 'ı': 'i', 'i': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u',
         'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u', 'æ': 'ae', 'œ': 'oe',
-        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n', 'ã': 'a'
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n', 'ã': 'a',
+        'è': 'e', 'ì': 'i', 'ò': 'o', 'ù': 'u', 'ý': 'y', 'å': 'a', 'ø': 'o'
     }
     for k, v in tr_map.items():
         ad = ad.replace(k, v)
     silinecekler = [
-        " fc", "fc ", " united", " utd", " city", " as ", " ac ", " us ", " sc", 
-        " fk", " nk", " cs", " cd", " deportivo", " club", " atletico", " atl.",
-        " athletic", "spor", "kulubu", "sk", "if", "ff", "bk", "gf", "fc.", "sk.", 
-        "bk.", "gsk", "gb", "genclik", "al ", "al-", "el ", "el-", "fc-", "sc-", 
-        "united ", "city ", " de ", " del ", " la ", " los ", " cf", "c.f.", "s.c.",
-        "b.c.", "f.c.", " jr", "sr", " ii", " iii", " iv", " v", " fc", " sk",
-        " 19", " 20", "19", "20", "spor", "kulubu", "takımı", "kulübü"
+        " fc", "fc ", " f.c", "f.c.", " sk", "sk ", " s.k", "s.k.",
+        " united", "utd", " utd", " city", " c", "c.",
+        " as ", " ac ", " us ", " sc", " fk", " nk", " cs", " cd", 
+        " deportivo", " club", " atletico", " atl.", "athletic",
+        "spor", "kulubu", "takimi", "kulübü", "team", "fussball",
+        "sk", "if", "ff", "bk", "gf", "gsk", "gb", "genclik",
+        "al ", "al-", "el ", "el-", "bin ", "beni ", "abu ",
+        "de ", "del ", "la ", "los ", "las ", "le ", "les ",
+        "cf", "c.f.", "s.c.", "b.c.", "f.c.", " jr", "sr", 
+        " ii", " iii", " iv", " v", " vii", " viii",
+        "19", "20", "18", "17", "16", "15", "14", "13", "12", "11",
+        "spor", "kulubu", "takımı", "kulübü", "resmi", "profesyonel"
     ]
     for s in silinecekler:
         ad = ad.replace(s, "")
-    ad = re.sub(r'[^a-z0-9]', '', ad)
+    ad = re.sub(r'[^a-z]', '', ad)
     ad = re.sub(r'(.)\1{2,}', r'\1\1', ad)
     return ad if len(ad) >= 2 else ""
 
@@ -85,16 +91,16 @@ def takim_eslesir_mi(ad1, ad2):
         if ad1_temiz in ad2_temiz or ad2_temiz in ad1_temiz:
             return True
     
-    if len(ad1_temiz) >=3 and len(ad2_temiz) >=3:
-        if ad1_temiz[:3] == ad2_temiz[:3]:
+    if len(ad1_temiz) >=2 and len(ad2_temiz) >=2:
+        if ad1_temiz[:2] == ad2_temiz[:2]:
             return True
     
-    if len(ad1_temiz) >=3 and len(ad2_temiz) >=3:
-        if ad1_temiz[-3:] == ad2_temiz[-3:]:
+    if len(ad1_temiz) >=2 and len(ad2_temiz) >=2:
+        if ad1_temiz[-2:] == ad2_temiz[-2:]:
             return True
     
     benzerlik = difflib.SequenceMatcher(None, ad1_temiz, ad2_temiz).ratio()
-    if benzerlik > 0.50:
+    if benzerlik > 0.40:
         return True
     
     return False
@@ -255,7 +261,7 @@ def skorlari_guncelle(data, skorlar):
                 mac["skor_1y_dep"] = skor["skor_1y_dep"]
                 guncellenen += 1
                 bulundu = True
-                eslesenler.append(f"✅ {mac_ev} {skor['skor_ev']}-{skor['skor_dep']} {mac_dep} | {mac_tarih}")
+                eslesenler.append(f"✅ {mac_ev} | {skor['ev']} -> {skor['skor_ev']}-{skor['skor_dep']} | {mac_dep} | {skor['dep']}")
                 break
         
         if not bulundu:
@@ -271,7 +277,7 @@ def skorlari_guncelle(data, skorlar):
 
 def main():
     print("============================================================")
-    print("⚽ Skor Güncelleyici (Kalıcı Hata Çözümü v9.0)...")
+    print("⚽ Skor Güncelleyici (SporDB Kaynağı - Son Sürüm)")
     print("============================================================")
     
     data = mac_json_oku()
@@ -315,13 +321,10 @@ def main():
             print(f"   - Takım isimleri çok farklı yazılıyor")
             print(f"   - Maç tarihleri kontrol edilen gün aralığında değil")
             print(f"   - SporDB'de henüz bu maçların skoru girilmemiş")
+            
+            # Her durumda komutu göster - TAM DÜZELTİLDİ
+            print(f"\n📌 Depoya gönderme komutu:")
+            print(f"   git add -A && git commit -m 'Kontrol: {datetime.date.today()}' && git push")
 
     except Exception as ana_hata:
-        print(f"\n❌ GENEL HATA: {str(ana_hata)}")
-    finally:
-        if tarayici:
-            print("\n🔒 Tarayıcı kapatılıyor...")
-            tarayici.quit()
-
-if __name__ == "__main__":
-    main()
+        print(f

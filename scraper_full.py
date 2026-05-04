@@ -202,45 +202,28 @@ def iddaa_cek(driver):
                         oran_start = li + 5
                         if lines[oran_start] == "Kral Oran":
                             oran_start = li + 7
-        if nokta_var_mi(lines[oran_start]):
-            try:
-                temel_oranlar = {
-                    "Maç Sonucu_1": float(lines[oran_start]),
-                    "Maç Sonucu_0": float(lines[oran_start + 1]),
-                    "Maç Sonucu_2": float(lines[oran_start + 2]),
-                }
-                
-                # Diğer oranları da ekle (hata verirse atla)
-                try:
-                    temel_oranlar["İY Sonuç_1"] = float(lines[oran_start + 3])
-                    temel_oranlar["İY Sonuç_0"] = float(lines[oran_start + 4])
-                    temel_oranlar["İY Sonuç_2"] = float(lines[oran_start + 5])
-                except: pass
-                
-                try:
-                    temel_oranlar["Handikap"] = lines[oran_start + 6]
-                    temel_oranlar["Handikap_1"] = float(lines[oran_start + 7])
-                    temel_oranlar["Handikap_0"] = float(lines[oran_start + 8])
-                    temel_oranlar["Handikap_2"] = float(lines[oran_start + 9])
-                except: pass
-                
-                try:
-                    temel_oranlar["Alt/Üst 2.5_Alt"] = float(lines[oran_start + 10])
-                    temel_oranlar["Alt/Üst 2.5_Üst"] = float(lines[oran_start + 11])
-                except: pass
-                
-                try:
-                    temel_oranlar["Karşılıklı Gol_Var"] = float(lines[oran_start + 12])
-                    temel_oranlar["Karşılıklı Gol_Yok"] = float(lines[oran_start + 13])
-                except: pass
-                
-                mac_kodu = lines[oran_start + 14]
-            except:
-                temel_oranlar = {}
-        else:
-            # Eğer MS1 oranı bile yoksa, bu maçı atla
-            i += 1
-            continue
+                        if nokta_var_mi(lines[oran_start]):
+                            try:
+                                temel_oranlar = {
+                                    "Maç Sonucu_1": float(lines[oran_start]),
+                                    "Maç Sonucu_0": float(lines[oran_start + 1]),
+                                    "Maç Sonucu_2": float(lines[oran_start + 2]),
+                                    "İY Sonuç_1": float(lines[oran_start + 3]),
+                                    "İY Sonuç_0": float(lines[oran_start + 4]),
+                                    "İY Sonuç_2": float(lines[oran_start + 5]),
+                                    "Handikap": lines[oran_start + 6],
+                                    "Handikap_1": float(lines[oran_start + 7]),
+                                    "Handikap_0": float(lines[oran_start + 8]),
+                                    "Handikap_2": float(lines[oran_start + 9]),
+                                    "Alt/Üst 2.5_Alt": float(lines[oran_start + 10]),
+                                    "Alt/Üst 2.5_Üst": float(lines[oran_start + 11]),
+                                    "Karşılıklı Gol_Var": float(lines[oran_start + 12]),
+                                    "Karşılıklı Gol_Yok": float(lines[oran_start + 13]),
+                                }
+                                mac_kodu = lines[oran_start + 14]
+                            except:
+                                pass
+                        break
                 
                 takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
                 for ta in takim_els:

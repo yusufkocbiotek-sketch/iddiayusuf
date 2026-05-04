@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-04T15:33:25.017713",
+  "updated": "2026-05-04T15:43:25.000115",
   "matches": [
     {
       "index": 1,
@@ -35708,7 +35708,7 @@
       "saat": "16:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:31:20.218526",
+      "cekme_zamani": "2026-05-04T15:41:20.511637",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35764,7 +35764,7 @@
       "saat": "16:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:30:55.181882",
+      "cekme_zamani": "2026-05-04T15:40:54.942831",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35816,7 +35816,7 @@
       "saat": "16:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:30:30.268517",
+      "cekme_zamani": "2026-05-04T15:40:30.117893",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35824,9 +35824,9 @@
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
-        "Maç Sonucu_1": 1.89,
-        "Maç Sonucu_0": 2.94,
-        "Maç Sonucu_2": 3.44
+        "Maç Sonucu_1": 1.72,
+        "Maç Sonucu_0": 3.06,
+        "Maç Sonucu_2": 3.96
       }
     },
     {
@@ -35837,7 +35837,7 @@
       "saat": "16:45",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:31:45.088994",
+      "cekme_zamani": "2026-05-04T15:41:45.346442",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35874,7 +35874,7 @@
       "saat": "17:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:32:09.997923",
+      "cekme_zamani": "2026-05-04T15:42:10.205962",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35911,7 +35911,7 @@
       "saat": "17:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:32:34.885813",
+      "cekme_zamani": "2026-05-04T15:42:35.050362",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -35941,7 +35941,7 @@
       "saat": "17:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:32:59.821570",
+      "cekme_zamani": "2026-05-04T15:42:59.986763",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -36004,7 +36004,7 @@
       "saat": "17:00",
       "lig": "",
       "tarih": "2026-05-04",
-      "cekme_zamani": "2026-05-04T15:33:25.002005",
+      "cekme_zamani": "2026-05-04T15:43:24.981902",
       "durum": "baslamadi",
       "skor_ev": 0,
       "skor_dep": 0,
@@ -36012,9 +36012,9 @@
       "skor_1y_dep": 0,
       "kaynak": "iddaa.com",
       "oranlar": {
-        "Maç Sonucu_1": 2.38,
-        "Maç Sonucu_0": 3.12,
-        "Maç Sonucu_2": 2.38
+        "Maç Sonucu_1": 2.41,
+        "Maç Sonucu_0": 3.03,
+        "Maç Sonucu_2": 2.41
       }
     },
     {

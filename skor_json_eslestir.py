@@ -1,9 +1,9 @@
 import json
 import os
 import time
-import datetime
 import re
 import difflib
+from datetime import datetime, timedelta  # ✅ DEĞİŞTİ: datetime modülünden direkt import
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -25,7 +25,7 @@ def mac_json_oku():
 
 def mac_json_kaydet(data):
     os.makedirs(os.path.dirname(MAC_JSON), exist_ok=True)
-    data["updated"] = datetime.datetime.now().isoformat()
+    data["updated"] = datetime.now().isoformat()  # ✅ DEĞİŞTİ: datetime.datetime → datetime
     with open(MAC_JSON, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -67,10 +67,26 @@ def spordb_veri_cek():
         select = Select(dropdown_element)
         
         # Tüm tarihleri al
-        tarihler = [opt.get_attribute("value") for opt in select.options if opt.get_attribute("value") != "*"]
+        tum_tarihler = [opt.get_attribute("value") for opt in select.options if opt.get_attribute("value") != "*"]
         
-        # Son 3 günü seç
-        son_3_gun = tarihler[-3:] if len(tarihler) >= 3 else tarihler
+        # 🎯 KRİTİK DÜZELTME: Bugünden (6 Mayıs) geriye doğru son 3 günü hesapla
+        bugun = datetime.now()  # ✅ DEĞİŞTİ: datetime.datetime → datetime
+        hedef_tarihler = []
+        
+        for i in range(3):  # 0, 1, 2 (Bugün, dün, evvelsi gün)
+            tarih_obj = bugun - timedelta(days=i)  # ✅ DEĞİŞTİ: datetime.timedelta → timedelta
+            # Dropdown formatına çevir: "DD.MM.YYYY" (örn: "06.05.2026")
+            tarih_str = tarih_obj.strftime("%Y-%m-%d")
+            hedef_tarihler.append(tarih_str)
+        
+        # Dropdown'da olan tarihleri filtrele (eğer o gün maç yoksa listede olmayabilir)
+        son_3_gun = [t for t in hedef_tarihler if t in tum_tarihler]
+        
+        # Eğer hesaplanan tarihlerden hiçbiri yoksa (çok nadir), mevcut son 3 günü al (yedek)
+        if not son_3_gun:
+            print(f"⚠️ {hedef_tarihler} tarihlerinde maç bulunamadı, mevcut son tarihler alınıyor...")
+            son_3_gun = tum_tarihler[-3:] if len(tum_tarihler) >= 3 else tum_tarihler
+            
         print(f"📅 Şu {len(son_3_gun)} gün taranacak: {son_3_gun}")
         
         cekilen_skorlar = []

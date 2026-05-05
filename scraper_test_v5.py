@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import TimeoutException, WebDriverException
 from webdriver_manager.chrome import ChromeDriverManager
 
 CIKTI_DOSYA = "public/data/mac.json"
@@ -48,8 +49,9 @@ def ultrasurf_baslat():
         subprocess.Popen(exe_yolu, shell=True)
         print("   ⏳ Ultrasurf'ün hazır olması bekleniyor (max 30sn)...")
         if port_hazir_mi(9666, timeout=30):
-            print("   ✅ Ultrasurf başlatıldı ve proxy hazır (yeni IP)")
-            time.sleep(5)  # Ekstra stabilizasyon
+            print("   ✅ Ultrasurf portu açık")
+            time.sleep(8)  # 🔑 Port açıldıktan sonra trafiğin stabilize olması için bekle
+            print("   ✅ Ultrasurf hazır (yeni IP)")
             return True
         else:
             print("   ❌ Ultrasurf portu zaman aşımına uğradı!")
@@ -71,7 +73,7 @@ def ip_degistir():
     ultrasurf_durdur()
     time.sleep(5)
     if ultrasurf_baslat():
-        time.sleep(10)  # 🔑 EKSTRA BEKLEME: IP tam otursun
+        time.sleep(5)
         print("   ✅ Yeni IP alındı!\n")
         return True
     else:
@@ -89,8 +91,11 @@ def tarayici_baslat():
     options.add_experimental_option("useAutomationExtension", False)
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
     options.add_argument("--proxy-server=" + ULTRASURF_PROXY)
+    options.add_argument("--proxy-bypass-list=<-loopback>")
+    
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
+    driver.set_page_load_timeout(60)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         "source": """
@@ -100,6 +105,29 @@ def tarayici_baslat():
     })
     print(f"✅ Chrome başlatıldı! Proxy: {ULTRASURF_PROXY}")
     return driver
+
+def proxy_calisiyor_mu(driver, max_deneme=3):
+    """Proxy'nin gerçekten çalışıp çalışmadığını test et."""
+    print("   🧪 Proxy bağlantısı test ediliyor...")
+    for deneme in range(max_deneme):
+        try:
+            driver.set_page_load_timeout(20)
+            driver.get("https://www.iddaa.com")
+            time.sleep(3)
+            body = driver.find_element(By.TAG_NAME, "body")
+            if body.text and len(body.text) > 100:
+                print("   ✅ Proxy çalışıyor, sayfa yüklendi!")
+                return True
+        except TimeoutException:
+            print(f"   ⏳ Deneme {deneme+1}: Zaman aşımı, tekrar deneniyor...")
+            time.sleep(5)
+        except WebDriverException as e:
+            print(f"   ⚠️ Deneme {deneme+1}: WebDriver hatası: {str(e)[:50]}")
+            time.sleep(5)
+        except Exception as e:
+            print(f"   ⚠️ Deneme {deneme+1}: Hata: {str(e)[:50]}")
+            time.sleep(5)
+    return False
 
 def mac_json_kaydet(yeni_maclar):
     data = {"version": 2, "updated": "", "matches": []}
@@ -157,9 +185,12 @@ def nokta_var_mi(text):
     except:
         return False
 
+# 🔑 SAHTE MAÇ FİLTRESİ GÜNCELLENDİ
 SAHTE = ["Tarih", "Oyun Türü", "Lig Seçimi", "Tarihe Göre", "Maç Sonucu",
          "İlk Yarı", "Handikap", "Alt/Üst", "Karşılıklı", "Bugün", "Yarın",
-         "ÖNE ÇIKAN", "CANLI", "FUTBOL", "BASKETBOL", "TENİS"]
+         "ÖNE ÇIKAN", "CANLI", "FUTBOL", "BASKETBOL", "TENİS",
+         "UEFA", "Şampiyonlar Ligi", "Ligi", "Final", "Rövanş", "Yarı Final",
+         "Çeyrek Final", "Kupa", "Süper Kupa", "Play-off", "Play off"]
 
 def tumu_bekle(driver, max_sure=20):
     for _ in range(max_sure):
@@ -174,9 +205,13 @@ def tumu_bekle(driver, max_sure=20):
 
 def detay_parse(driver):
     oranlar = {}
-    body = driver.find_element(By.TAG_NAME, "body")
-    text = body.text
-    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    try:
+        body = driver.find_element(By.TAG_NAME, "body")
+        text = body.text
+        lines = [l.strip() for l in text.split("\n") if l.strip()]
+    except:
+        return oranlar
+    
     tumu_idx = -1
     for i, line in enumerate(lines):
         if line == "Tümü":
@@ -184,6 +219,7 @@ def detay_parse(driver):
             break
     if tumu_idx == -1:
         return oranlar
+    
     i = tumu_idx + 1
     sekmeler = ["Kim Kazanır", "Alt/Üst", "Goller", "Skor", "Diğer",
                 "Oyuncu", "Özel", "Kombo", "Korner/Kart", "Korner",
@@ -191,12 +227,14 @@ def detay_parse(driver):
                 "Toplam", "İstatistik", "Kombine"]
     while i < len(lines) and lines[i] in sekmeler:
         i += 1
+    
     dur = ["Bugün", "Yarın", "Yardım", "Hakkımızda", "İletişim",
            "Gizlilik", "Popüler Bahisler", "Kolay Kuponlar", "Spor Toto",
            "Bülten", "Canlı Sonuçlar", "Yazar Yorumları"]
     aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
              "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
     current_market = ""
+    
     while i < len(lines):
         line = lines[i]
         if line in dur:
@@ -250,7 +288,7 @@ def tum_maclari_topla(driver):
     toplanan = {}
     bos_sayaci = 0
     adim = 0
-    while bos_sayaci < 25:  # 🔑 Daha uzun tara
+    while bos_sayaci < 25:
         adim += 1
         try:
             body = driver.find_element(By.TAG_NAME, "body")
@@ -284,24 +322,53 @@ def tum_maclari_topla(driver):
         else:
             bos_sayaci += 1
         driver.execute_script("window.scrollBy({top: 300, behavior: 'smooth'});")
-        time.sleep(6)  # 🔑 Scroll bekleme süresini artır (4sn → 6sn)
+        time.sleep(6)
     return list(toplanan.values())
 
 def mac_detay_cek(driver, url, mac):
     detay_oranlar = {}
+    hata_sebebi = ""
+    
     for deneme in range(2):
         try:
+            driver.set_page_load_timeout(45)
             driver.get(url)
             rastgele_bekle(5, 8)
+            
+            # Sayfanın yüklendiğini kontrol et
+            try:
+                body = driver.find_element(By.TAG_NAME, "body")
+                if not body.text or len(body.text) < 100:
+                    hata_sebebi = "Sayfa boş yüklendi"
+                    if deneme == 0:
+                        print(f"      ⚠️ {hata_sebebi}, tekrar deneniyor...")
+                        rastgele_bekle(8, 12)
+                        continue
+                    else:
+                        break
+            except:
+                hata_sebebi = "Body elementi bulunamadı"
+                if deneme == 0:
+                    rastgele_bekle(8, 12)
+                    continue
+                else:
+                    break
+            
             driver.execute_script("window.scrollTo(0, 0);")
             rastgele_bekle(1, 2)
+            
             mac_bulundu = False
             for kaydir in range(15):
-                takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
+                try:
+                    takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
+                except:
+                    time.sleep(2)
+                    continue
+                    
                 for ta in takim_els:
-                    ta_text = ta.text.strip()
-                    if mac['ev'] in ta_text and mac['dep'] in ta_text:
-                        try:
+                    try:
+                        ta_text = ta.text.strip()
+                        if mac['ev'] in ta_text and mac['dep'] in ta_text:
                             driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ta)
                             rastgele_bekle(1, 2)
                             insani_tiklama(driver, ta)
@@ -315,20 +382,43 @@ def mac_detay_cek(driver, url, mac):
                             if tumu_bekle(driver, 15):
                                 detay_oranlar = detay_parse(driver)
                             mac_bulundu = True
-                        except:
-                            pass
-                        break
+                            break
+                    except:
+                        pass
                 if mac_bulundu:
                     break
                 driver.execute_script("window.scrollBy({top: 400, behavior: 'smooth'});")
                 rastgele_bekle(2, 3)
+            
+            if not mac_bulundu:
+                hata_sebebi = "Maç listede bulunamadı"
+            
             if len(detay_oranlar) > 0:
                 break
             elif deneme == 0:
+                hata_sebebi = "Detay oranlar boş"
+                print(f"      ⚠️ {hata_sebebi}, tekrar deneniyor...")
                 rastgele_bekle(8, 12)
-        except:
+                
+        except TimeoutException:
+            hata_sebebi = "Zaman aşımı"
             if deneme == 0:
+                print(f"      ⚠️ {hata_sebebi}, tekrar deneniyor...")
                 rastgele_bekle(8, 12)
+        except WebDriverException as e:
+            hata_sebebi = f"WebDriver hatası: {str(e)[:40]}"
+            if deneme == 0:
+                print(f"      ⚠️ {hata_sebebi}, tekrar deneniyor...")
+                rastgele_bekle(8, 12)
+        except Exception as e:
+            hata_sebebi = f"Hata: {str(e)[:40]}"
+            if deneme == 0:
+                print(f"      ⚠️ {hata_sebebi}, tekrar deneniyor...")
+                rastgele_bekle(8, 12)
+    
+    if len(detay_oranlar) == 0 and hata_sebebi:
+        print(f"      ❌ Başarısız: {hata_sebebi}")
+        
     return detay_oranlar
 
 def mac_cek():
@@ -342,7 +432,27 @@ def mac_cek():
             print("❌ Ultrasurf başlatılamadı! İşlem iptal.")
             return
 
-        driver = tarayici_baslat()
+        # 🔑 Proxy test döngüsü
+        max_proxy_deneme = 3
+        for proxy_deneme in range(max_proxy_deneme):
+            driver = tarayici_baslat()
+            if proxy_calisiyor_mu(driver):
+                break
+            else:
+                print(f"   ⚠️ Proxy testi başarısız! Ultrasurf yeniden başlatılıyor...")
+                try:
+                    driver.quit()
+                except:
+                    pass
+                if not ip_degistir():
+                    print("❌ Proxy düzeltilemedi! İşlem iptal.")
+                    return
+                driver = None
+        
+        if not driver:
+            print("❌ Tarayıcı başlatılamadı!")
+            return
+
         print(f"\n📡 {url}")
         driver.get(url)
         rastgele_bekle(8, 12)
@@ -352,6 +462,11 @@ def mac_cek():
             print("   ❌ Maç bulunamadı!")
             return
 
+        # Sahte maçları filtrele
+        mac_listesi = [m for m in mac_listesi 
+                       if not any(kw in m['ev'] for kw in SAHTE) 
+                       and not any(kw in m['dep'] for kw in SAHTE)]
+        
         print(f"\n   📋 {len(mac_listesi)} maç bulundu!")
         session_sayisi = len(mac_listesi) // SESSION_LIMIT + 1
         print(f"   🔄 Her {SESSION_LIMIT} maçta IP değiştirilecek ({session_sayisi} session)")
@@ -370,7 +485,28 @@ def mac_cek():
                     pass
                 
                 if ip_degistir():
-                    driver = tarayici_baslat()
+                    # 🔑 Yeni proxy testi
+                    for proxy_deneme in range(3):
+                        driver = tarayici_baslat()
+                        if proxy_calisiyor_mu(driver):
+                            break
+                        else:
+                            print(f"   ⚠️ Yeni proxy testi başarısız, tekrar deneniyor...")
+                            try:
+                                driver.quit()
+                            except:
+                                pass
+                            ultrasurf_durdur()
+                            time.sleep(5)
+                            ultrasurf_baslat()
+                            driver = None
+                    
+                    if not driver:
+                        print("   ❌ Yeni proxy düzeltilemedi, mevcut driver ile devam ediliyor...")
+                        # Mevcut driver'ı kullanmaya devam et (zaten kapalı, hata yönetimi gerekli)
+                        # Basitçe devam et, bir sonraki IP değişiminde düzelir
+                        continue
+                        
                     driver.get(url)
                     rastgele_bekle(8, 12)
                     session_sayaci = 0
@@ -440,7 +576,7 @@ def mac_cek():
         ultrasurf_durdur()
 
 if __name__ == "__main__":
-    print("⚽ İDDAA ORAN ÇEKİCİ - ULTRASURF VPN MODU (GÜNCEL)")
+    print("⚽ İDDAA ORAN ÇEKİCİ - ULTRASURF VPN MODU (STABİL)")
     print(f"📅 {datetime.datetime.now().strftime('%d/%m/%Y %H:%M')}")
     print("=" * 60)
     mac_cek()

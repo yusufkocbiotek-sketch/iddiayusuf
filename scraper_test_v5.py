@@ -12,22 +12,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 
-# ============================
-# AYARLAR
-# ============================
 CIKTI_DOSYA = "public/data/mac.json"
-ULTRASURF_EXE = "u2211.exe"  # Ultrasurf dosya adı
+ULTRASURF_EXE = "u2211.exe"
 ULTRASURF_PROXY = "127.0.0.1:9666"
-SESSION_LIMIT = 10  # Her 10 maçta bir IP değiştir
+SESSION_LIMIT = 10
 
-# ============================
-# YARDIMCI FONKSİYONLAR
-# ============================
 def rastgele_bekle(min_sn, max_sn):
     time.sleep(random.uniform(min_sn, max_sn))
 
 def port_hazir_mi(port, timeout=30):
-    """Portun dinlemeye başlayıp başlamadığını kontrol eder."""
     baslangic = time.time()
     while time.time() - baslangic < timeout:
         try:
@@ -43,26 +36,20 @@ def port_hazir_mi(port, timeout=30):
     return False
 
 def ultrasurf_baslat():
-    """Ultrasurf'ü başlat ve portun hazır olmasını bekle."""
     print("   🌐 Ultrasurf başlatılıyor...")
     try:
         exe_yolu = os.path.join(os.path.dirname(os.path.abspath(__file__)), ULTRASURF_EXE)
-        
-        # Önce varsa durdur
         try:
             subprocess.run("taskkill /f /im " + ULTRASURF_EXE, shell=True, 
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             time.sleep(3)
         except:
             pass
-        
-        # Başlat
         subprocess.Popen(exe_yolu, shell=True)
         print("   ⏳ Ultrasurf'ün hazır olması bekleniyor (max 30sn)...")
-        
         if port_hazir_mi(9666, timeout=30):
             print("   ✅ Ultrasurf başlatıldı ve proxy hazır (yeni IP)")
-            time.sleep(3)
+            time.sleep(5)  # Ekstra stabilizasyon
             return True
         else:
             print("   ❌ Ultrasurf portu zaman aşımına uğradı!")
@@ -72,7 +59,6 @@ def ultrasurf_baslat():
         return False
 
 def ultrasurf_durdur():
-    """Ultrasurf'ü durdur."""
     try:
         subprocess.run("taskkill /f /im " + ULTRASURF_EXE, shell=True, 
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -81,12 +67,11 @@ def ultrasurf_durdur():
         pass
 
 def ip_degistir():
-    """Ultrasurf'ü kapat-aç = yeni IP."""
     print("\n   🔄 IP DEĞİŞTİRİLİYOR...")
     ultrasurf_durdur()
     time.sleep(5)
     if ultrasurf_baslat():
-        time.sleep(5)
+        time.sleep(10)  # 🔑 EKSTRA BEKLEME: IP tam otursun
         print("   ✅ Yeni IP alındı!\n")
         return True
     else:
@@ -94,7 +79,6 @@ def ip_degistir():
         return False
 
 def tarayici_baslat():
-    """Chrome'u Ultrasurf proxy ile başlat."""
     print("🌐 Chrome başlatılıyor...")
     options = Options()
     options.add_argument("--no-sandbox")
@@ -105,7 +89,6 @@ def tarayici_baslat():
     options.add_experimental_option("useAutomationExtension", False)
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
     options.add_argument("--proxy-server=" + ULTRASURF_PROXY)
-    
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -126,26 +109,21 @@ def mac_json_kaydet(yeni_maclar):
                 data = json.load(f)
         except:
             pass
-    
     guncel_dict = {}
     for m in data.get("matches", []):
         key = m['tarih'] + "_" + m['ev_sahibi'] + "_" + m['deplasman']
         guncel_dict[key] = m
-    
     for ym in yeni_maclar:
         key = ym['tarih'] + "_" + ym['ev_sahibi'] + "_" + ym['deplasman']
         if key in guncel_dict:
-            # Mevcut maçı güncelle (detay oranları ekle)
             mevcut = guncel_dict[key]
             if len(ym.get("oranlar", {})) > len(mevcut.get("oranlar", {})):
                 mevcut["oranlar"] = ym["oranlar"]
         else:
             guncel_dict[key] = ym
-    
     yeni_liste = sorted(guncel_dict.values(), key=lambda x: (x["tarih"], x.get("saat", "")))
     for i, m in enumerate(yeni_liste, 1):
         m["index"] = i
-    
     data["matches"] = yeni_liste
     data["updated"] = datetime.datetime.now().isoformat()
     os.makedirs(os.path.dirname(CIKTI_DOSYA), exist_ok=True)
@@ -268,11 +246,11 @@ def insani_tiklama(driver, element):
 
 def tum_maclari_topla(driver):
     driver.execute_script("window.scrollTo(0, 0);")
-    time.sleep(2)
+    time.sleep(3)
     toplanan = {}
     bos_sayaci = 0
     adim = 0
-    while bos_sayaci < 20:
+    while bos_sayaci < 25:  # 🔑 Daha uzun tara
         adim += 1
         try:
             body = driver.find_element(By.TAG_NAME, "body")
@@ -306,7 +284,7 @@ def tum_maclari_topla(driver):
         else:
             bos_sayaci += 1
         driver.execute_script("window.scrollBy({top: 300, behavior: 'smooth'});")
-        time.sleep(4)
+        time.sleep(6)  # 🔑 Scroll bekleme süresini artır (4sn → 6sn)
     return list(toplanan.values())
 
 def mac_detay_cek(driver, url, mac):
@@ -353,9 +331,6 @@ def mac_detay_cek(driver, url, mac):
                 rastgele_bekle(8, 12)
     return detay_oranlar
 
-# ============================
-# ANA FONKSİYON
-# ============================
 def mac_cek():
     baslangic = datetime.datetime.now()
     bugun = datetime.date.today()
@@ -363,18 +338,15 @@ def mac_cek():
     driver = None
 
     try:
-        # 1. Ultrasurf başlat
         if not ultrasurf_baslat():
             print("❌ Ultrasurf başlatılamadı! İşlem iptal.")
             return
 
-        # 2. Tarayıcı başlat
         driver = tarayici_baslat()
         print(f"\n📡 {url}")
         driver.get(url)
         rastgele_bekle(8, 12)
 
-        # 3. Maçları topla
         mac_listesi = tum_maclari_topla(driver)
         if not mac_listesi:
             print("   ❌ Maç bulunamadı!")
@@ -390,9 +362,7 @@ def mac_cek():
         basarisiz = 0
         session_sayaci = 0
 
-        # 4. Maçları tek tek çek
         for idx, mac in enumerate(mac_listesi):
-            # Her SESSION_LIMIT maçta bir IP DEĞİŞTİR
             if session_sayaci >= SESSION_LIMIT:
                 try:
                     driver.quit()
@@ -445,7 +415,6 @@ def mac_cek():
             print(f"      ⏳ 30 saniye bekleniyor...")
             time.sleep(30)
 
-        # 5. Final kayıt
         mac_json_kaydet(maclar)
         sure = datetime.datetime.now() - baslangic
         detayli = sum(1 for m in maclar if len(m.get("oranlar", {})) > 14)
@@ -471,7 +440,7 @@ def mac_cek():
         ultrasurf_durdur()
 
 if __name__ == "__main__":
-    print("⚽ İDDAA ORAN ÇEKİCİ - ULTRASURF VPN MODU")
+    print("⚽ İDDAA ORAN ÇEKİCİ - ULTRASURF VPN MODU (GÜNCEL)")
     print(f"📅 {datetime.datetime.now().strftime('%d/%m/%Y %H:%M')}")
     print("=" * 60)
     mac_cek()

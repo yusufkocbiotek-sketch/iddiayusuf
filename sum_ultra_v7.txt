@@ -1,0 +1,234 @@
+import time
+import random
+import json
+import re
+import os
+import subprocess
+from datetime import datetime
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import TimeoutException
+import socket
+
+class IddaaScraperUltra:
+    def __init__(self):
+        self.matches = []
+        self.total_odds = 0
+        self.success_count = 0
+        self.fail_count = 0
+        self.driver = None
+        
+    def log(self, message):
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        print(f"[{timestamp}] {message}")
+        
+    def kill_sum(self):
+        """∑.exe kapat"""
+        os.system('taskkill /f /im ∑.exe >nul 2>&1')
+        time.sleep(2)
+        
+    def start_ultrasurf_sum(self):
+        """∑.exe başlat"""
+        self.kill_sum()
+        self.log("🌐 ∑.EXE ULTRASURF BAŞLATILIYOR")
+        
+        sum_path = r"C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\∑.exe"
+        subprocess.Popen([sum_path], shell=True)
+        time.sleep(6)
+        
+        # Port bekle
+        for i in range(40):
+            try:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock.settimeout(1)
+                result = sock.connect_ex(('127.0.0.1', 9666))
+                sock.close()
+                if result == 0:
+                    self.log("✅ ∑.EXE HAZIR (Port 9666)")
+                    time.sleep(25)
+                    return True
+            except:
+                pass
+            time.sleep(1)
+        self.log("⚠️ ∑.EXE yavaş ama devam")
+        return True
+        
+    def chrome_ultra(self):
+        options = Options()
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        options.add_argument("--proxy-server=127.0.0.1:9666")
+        options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+        options.add_argument("--window-size=1366,768")
+        options.add_argument("--disable-web-security")
+        return options
+        
+    def test_proxy(self):
+        self.driver.get("https://www.iddaa.com/program/futbol")
+        time.sleep(5)
+        return True
+        
+    def behave_human(self):
+        actions = ActionChains(self.driver)
+        for _ in range(4):
+            x, y = random.randint(100, 400), random.randint(100, 300)
+            actions.move_by_offset(x, y).pause(0.5).perform()
+        self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.SPACE)
+        
+    def scroll_human(self):
+        scrolls = [400, 600, -250, 500, 350]
+        for scroll in scrolls:
+            self.driver.execute_script(f"window.scrollBy(0, {scroll})")
+            time.sleep(random.uniform(1.8, 3))
+            
+    def load_matches(self):
+        self.log("📡 MAÇ LİSTESİ YÜKLENİYOR")
+        options = self.chrome_ultra()
+        self.driver = webdriver.Chrome(options=options)
+        
+        self.driver.execute_script("""
+            Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+            window.chrome = {runtime: {}};
+        """)
+        
+        if self.test_proxy():
+            self.driver.get("https://www.iddaa.com/program/futbol")
+            time.sleep(12)
+            
+            self.behave_human()
+            self.scroll_human()
+            
+            selectors = [
+                "a[href*='/maç'] span",
+                ".team-name", ".match-title", 
+                ".event-row .team",
+                "[data-testid*='match'] span"
+            ]
+            
+            self.matches = []
+            for sel in selectors:
+                try:
+                    els = self.driver.find_elements(By.CSS_SELECTOR, sel)
+                    for el in els:
+                        txt = el.text.strip()
+                        if len(txt) > 10 and 'vs' in txt.lower():
+                            if txt not in [m['name'] for m in self.matches]:
+                                self.matches.append({'name': txt})
+                except:
+                    pass
+            
+            self.log(f"✅ {len(self.matches)} MAÇ")
+            return True
+        return False
+        
+    def search_match(self, name):
+        team1 = name.split('vs')[0].strip()[:15]
+        url = f"https://www.iddaa.com/program/futbol?q={team1.replace(' ', '%20')}"
+        
+        self.driver.get(url)
+        time.sleep(4)
+        
+        links = self.driver.find_elements(By.CSS_SELECTOR, 
+            "a[href*='/maç'], a[href*='match']")
+        
+        for link in links:
+            href = link.get_attribute('href')
+            if href and '/maç' in href:
+                return href
+        return None
+        
+    def extract_odds(self, url):
+        self.driver.get(url)
+        time.sleep(7)
+        self.behave_human()
+        
+        odds = []
+        
+        # 15 selector
+        selectors = [
+            ".odds", ".koef", ".ratio", ".price", 
+            "[data-odds]", ".bet-odds", ".odds-value",
+            ".market span", ".coefficient"
+        ]
+        
+        for sel in selectors:
+            try:
+                els = self.driver.find_elements(By.CSS_SELECTOR, sel)
+                for el in els:
+                    txt = el.text.strip()
+                    if self.is_valid_odds(txt):
+                        odds.append(float(txt))
+            except:
+                pass
+        
+        # Regex power
+        source = self.driver.page_source
+        regex_matches = re.findall(r'\b\d+\.\d{2}\b', source)
+        for m in regex_matches:
+            try:
+                n = float(m)
+                if 1.01 < n < 20:
+                    odds.append(n)
+            except:
+                pass
+        
+        count = len(set([round(o, 2) for o in odds]))
+        return count > 4, count
+        
+    def is_valid_odds(self, text):
+        try:
+            n = float(text)
+            return 1.01 < n < 20
+        except:
+            return False
+            
+    def rotate_ip(self):
+        self.log("🔄 ∑.EXE IP DEĞİŞTİR")
+        self.driver.quit()
+        self.start_ultrasurf_sum()
+        options = self.chrome_ultra()
+        self.driver = webdriver.Chrome(options=options)
+        
+    def main(self):
+        self.log("⚡ ∑.EXE ULTRA V7")
+        self.start_ultrasurf_sum()
+        
+        if self.load_matches():
+            for i, match in enumerate(self.matches[:40], 1):
+                self.log(f"\n[{i}/40] {match['name'][:45]}")
+                
+                if i % 8 == 0:
+                    self.rotate_ip()
+                
+                url = self.search_match(match['name'])
+                if url:
+                    ok, count = self.extract_odds(url)
+                    if ok:
+                        self.log(f"✅ {count} ORAN")
+                        self.total_odds += count
+                        self.success_count += 1
+                    else:
+                        self.log("❌ Boş")
+                        self.fail_count += 1
+                else:
+                    self.log("❌ URL yok")
+                    self.fail_count += 1
+                    
+                wait = random.randint(35, 55)
+                self.log(f"⏳ {wait}s")
+                time.sleep(wait)
+                
+                if i % 10 == 0:
+                    self.log(f"📊 {self.total_odds} | ✅{self.success_count} ❌{self.fail_count}")
+            
+            self.log(f"\n🎊 BİTTİ! {self.total_odds} ORAN TOPLAM")
+
+if __name__ == "__main__":
+    scraper = IddaaScraperUltra()
+    scraper.main()

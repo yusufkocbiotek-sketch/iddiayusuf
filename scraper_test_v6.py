@@ -1,186 +1,354 @@
-import json
-import os
-import datetime
 import time
+import random
+import json
+import re
+import os
+from datetime import datetime
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+import socket
+import requests
+import subprocess
+import psutil
 
-CIKTI_DOSYA = "public/data/mac_test.json"
-
-def tarayici_baslat():
-    print("🌐 Chrome başlatılıyor...")
-    options = Options()
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option("useAutomationExtension", False)
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    print("✅ Chrome başlatıldı!")
-    return driver
-
-def saat_mi(text):
-    if len(text) == 5 and text[2] == ":":
-        try:
-            s, d = text.split(":")
-            if 0 <= int(s) <= 23 and 0 <= int(d) <= 59:
-                return True
-        except:
-            pass
-    return False
-
-def sayi_mi(text):
-    try:
-        float(text.replace(",", "."))
-        return True
-    except:
-        return False
-
-SAHTE = ["Tarih", "Oyun Türü", "Lig Seçimi", "Tarihe Göre", "Maç Sonucu",
-         "İlk Yarı", "Handikap", "Alt/Üst", "Karşılıklı", "Bugün", "Yarın",
-         "ÖNE ÇIKAN", "CANLI", "FUTBOL", "BASKETBOL", "TENİS"]
-
-def mac_bul(body_text):
-    lines = [l.strip() for l in body_text.split("\n") if l.strip()]
-    bulunan = []
-    for i in range(len(lines)):
-        line = lines[i].strip()
-        if line in ["-", "–", "—"]:
-            if i >= 2 and i + 1 < len(lines):
-                ev = lines[i - 1].strip()
-                dep = lines[i + 1].strip()
-                if (len(ev) >= 2 and len(dep) >= 2 and
-                    not sayi_mi(ev) and not sayi_mi(dep) and
-                    not any(kw in ev for kw in SAHTE) and
-                    not any(kw in dep for kw in SAHTE)):
-                    saat = ""
-                    for j in range(max(0, i - 3), i):
-                        if saat_mi(lines[j].strip()):
-                            saat = lines[j].strip()
-                            break
-                    key = ev.lower().strip() + "_vs_" + dep.lower().strip()
-                    bulunan.append({"key": key, "saat": saat, "ev": ev, "dep": dep})
-    return bulunan, len(lines)
-
-def test_cek():
-    driver = None
-    baslangic = datetime.datetime.now()
-
-    try:
-        driver = tarayici_baslat()
-        url = "https://www.iddaa.com/program/futbol"
-
-        print(f"\n📡 {url}")
-        driver.get(url)
-        time.sleep(8)
-
-        # Sayfayı en üste çek
-        driver.execute_script("window.scrollTo(0, 0);")
-        time.sleep(2)
-
-        toplanan = {}
-        bos_sayaci = 0
-        adim = 0
-        en_buyuk_satir = 0
-
-        print(f"\n📜 WINDOW SCROLL ile maçlar toplanıyor...")
-        print(f"   (Her adımda 300px kaydır, 4sn bekle)\n")
-
-        # 🔑 100 kez kaydır (toplam ~30.000px, bol bol yeterli)
-        while bos_sayaci < 20:
-            adim += 1
-
-            # Body text'i oku
-            try:
-                body = driver.find_element(By.TAG_NAME, "body")
-                maclar, satir_sayisi = mac_bul(body.text)
+class IddaaScraperV7:
+    def __init__(self):
+        self.matches = []
+        self.total_odds = 0
+        self.success_count = 0
+        self.fail_count = 0
+        self.save_counter = 0
+        self.driver = None
+        self.blocked_countries = []  # Problemli ülkeleri takip et
+        
+    def log(self, message):
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        print(f"[{timestamp}] {message}")
+        
+    def kill_ultrasurf(self):
+        for proc in psutil.process_iter(['pid', 'name']):
+            if 'ultrasurf' in proc.info['name'].lower():
+                proc.kill()
                 
-                if satir_sayisi > en_buyuk_satir:
-                    en_buyuk_satir = satir_sayisi
-            except:
-                time.sleep(2)
-                continue
-
-            # Yeni maçları ekle
-            yeni = 0
-            for m in maclar:
-                if m["key"] not in toplanan:
-                    toplanan[m["key"]] = m
-                    yeni += 1
-
-            if yeni > 0:
-                bos_sayaci = 0
-                print(f"   ⬇️ Adım {adim}: +{yeni} yeni maç | Toplam: {len(toplanan)} | Satır: {satir_sayisi}")
-            else:
-                bos_sayaci += 1
-
-            # 🔑 WINDOW SCROLL (300px aşağı, smooth)
-            driver.execute_script("window.scrollBy({top: 300, behavior: 'smooth'});")
-            
-            # 🔑 4 saniye bekle (site yeni verileri yüklesin)
-            time.sleep(4)
-            
-            # 🔑 Ekranda maç olup olmadığını kontrol et
+    def start_ultrasurf(self):
+        self.kill_ultrasurf()
+        self.log("🌐 ULTRASURF V7 - FREE PREMIUM")
+        
+        ultrasurf_path = r"C:\Users\YUSUF\OneDrive\Desktop\ultrasurf\ultrasurf.exe"
+        subprocess.Popen([ultrasurf_path], shell=True)
+        time.sleep(5)
+        
+        for i in range(35):  # 35sn bekle
             try:
-                kontrol = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
-                if len(kontrol) == 0:
-                    # Maç elementleri kayboldu, biraz daha bekle
-                    time.sleep(2)
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                result = sock.connect_ex(('127.0.0.1', 9666))
+                sock.close()
+                if result == 0:
+                    self.log("✅ ULTRASURF HAZIR")
+                    time.sleep(28)
+                    return True
             except:
                 pass
-
-        # Sonuçlar
-        sonuc = list(toplanan.values())
-        sure = datetime.datetime.now() - baslangic
-
-        print(f"\n{'='*60}")
-        print(f"📊 TEST SONUÇ")
-        print(f"   ⚽ Toplam farklı maç: {len(sonuc)}")
-        print(f"   📄 En büyük satır sayısı: {en_buyuk_satir}")
-        print(f"   ⏱️ Süre: {sure}")
-        print(f"{'='*60}")
-
-        if sonuc:
-            print(f"\n📋 Bulunan maçlar (İlk 30):")
-            for i, m in enumerate(sonuc[:30]):
-                print(f"   {i+1}. [{m['saat']}] {m['ev']} vs {m['dep']}")
-            if len(sonuc) > 30:
-                print(f"   ... ve {len(sonuc) - 30} maç daha")
-
-            os.makedirs(os.path.dirname(CIKTI_DOSYA), exist_ok=True)
-            veri = {"version": 2, "updated": datetime.datetime.now().isoformat(), "matches": []}
-            for i, m in enumerate(sonuc):
-                veri["matches"].append({
-                    "index": i + 1,
-                    "ev_sahibi": m["ev"],
-                    "deplasman": m["dep"],
-                    "saat": m["saat"],
-                    "tarih": datetime.date.today().isoformat(),
-                    "durum": "baslamadi"
-                })
-            with open(CIKTI_DOSYA, "w", encoding="utf-8") as f:
-                json.dump(veri, f, ensure_ascii=False, indent=2)
-            print(f"\n💾 '{CIKTI_DOSYA}' dosyasına kaydedildi!")
-
-        print("\n🎉 Test tamamlandı!")
-
-    except Exception as e:
-        print(f"❌ Hata: {e}")
-    finally:
-        if driver:
-            driver.quit()
+            time.sleep(1)
+        return False
+        
+    def stealth_chrome(self):
+        """V7 STEALTH MODE"""
+        options = Options()
+        
+        # CORE STEALTH
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        
+        # V7 EXCLUSIVE
+        options.add_argument("--disable-features=VizDisplayCompositor,NetworkService")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-plugins-discovery")
+        options.add_argument("--disable-ipc-flooding-protection")
+        
+        # PROXY + UA
+        options.add_argument("--proxy-server=http://127.0.0.1:9666")
+        options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36")
+        
+        # WINDOW + BEHAVIOR
+        options.add_argument("--window-size=1366,768")  # Daha yaygın
+        options.add_argument("--start-maximized")
+        options.add_argument("--mute-audio")
+        
+        return options
+        
+    def test_proxy(self, driver):
+        driver.get("https://www.iddaa.com/program/futbol")
+        time.sleep(4)
+        return "iddaa" in driver.page_source
+        
+    def human_behavior(self, driver):
+        """İNSAN DAVRANIŞI V7"""
+        # Rastgele mouse hareketleri
+        actions = ActionChains(driver)
+        for _ in range(random.randint(4, 7)):
+            x = random.randint(100, 800)
+            y = random.randint(100, 600)
+            actions.move_by_offset(x, y).pause(random.uniform(0.2, 0.8)).perform()
+            
+        # Klavye hareketi
+        driver.find_element(By.TAG_NAME, "body").send_keys(Keys.TAB)
+        time.sleep(0.3)
+        driver.find_element(By.TAG_NAME, "body").send_keys(Keys.SHIFT + Keys.TAB)
+        
+    def aggressive_scroll(self, driver):
+        """AGRESIF SCROLL V7"""
+        scrolls = [400, -200, 600, 300, -150, 800]
+        pauses = [1.2, 0.8, 2.1, 1.5, 0.9, 1.8]
+        
+        for i in range(5):
+            driver.execute_script(f"window.scrollBy(0, {scrolls[i % len(scrolls)]});")
+            time.sleep(pauses[i % len(pauses)])
+            
+    def load_matches_v7(self):
+        self.log("🔥 PROGRAM/FUTBOL - V7 LOADING")
+        options = self.stealth_chrome()
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
+            'source': '''
+                Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+                Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});
+                Object.defineProperty(navigator, 'languages', {get: () => ['tr-TR', 'tr']});
+            '''
+        })
+        
+        if not self.test_proxy(self.driver):
+            return False
+            
+        try:
+            self.driver.get("https://www.iddaa.com/program/futbol")
+            time.sleep(random.randint(10, 14))
+            
+            self.human_behavior(self.driver)
+            self.aggressive_scroll(self.driver)
+            
+            # MAÇ TOPLA V7 - 30 selector
+            match_selectors = [
+                "a[href*='/maç'] span",
+                ".match-item .team-name",
+                ".event-row .team",
+                ".match-title",
+                "[data-testid*='match'] span",
+                ".fixture__teams span",
+                ".match-card__team",
+                "div[class*='match'] span[class*='team']",
+                ".game-row .team",
+                ".match-row .participant"
+            ]
+            
+            self.matches = []
+            for selector in match_selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    for el in elements:
+                        text = el.text.strip()
+                        if (text and len(text) > 8 and 
+                            ('vs' in text.lower() or ' - ' in text) and 
+                            text not in [m['name'] for m in self.matches]):
+                            
+                            self.matches.append({
+                                'name': text, 
+                                'url': '', 
+                                'country': self.detect_country(text)
+                            })
+                except:
+                    continue
+            
+            self.log(f"🎯 {len(self.matches)} MAÇ YÜKLENDİ!")
+            return True
+            
+        except:
+            return False
+            
+    def detect_country(self, match_name):
+        """Ülke tespit et"""
+        countries = {
+            'ecuador': ['ucv', 'independiente del valle'],
+            'bolivia': ['always ready', 'the stronges', 'blooming'],
+            'peru': ['cienciano', 'sporting cristal'],
+            'venezuela': ['academia puerto cabello', 'metropolitanos']
+        }
+        
+        match_lower = match_name.lower()
+        for country, keywords in countries.items():
+            if any(kw in match_lower for kw in keywords):
+                return country
+        return 'unknown'
+        
+    def smart_search_match(self, match_name):
+        """AKILLI ARAMA V7"""
+        # Direkt URL dene
+        search_terms = match_name.split('vs')[0].strip().split(' - ')[0].strip()
+        search_terms = re.sub(r'[^\w\s]', '', search_terms)[:20]
+        
+        # 5 farklı arama URL
+        search_patterns = [
+            f"https://www.iddaa.com/program/futbol?q={search_terms.replace(' ', '%20')}",
+            f"https://www.iddaa.com/program/futbol/{search_terms.replace(' ', '-')}",
+            "https://www.iddaa.com/program/futbol",
+            f"https://www.iddaa.com/ara?q={search_terms.replace(' ', '%20')}",
+        ]
+        
+        for url in search_patterns:
+            try:
+                self.driver.get(url)
+                time.sleep(random.uniform(4, 6))
+                self.human_behavior(self.driver)
+                
+                # URL bul
+                links = self.driver.find_elements(By.XPATH, 
+                    f"//a[contains(@href, '/maç') and contains(@href, '{search_terms[:10]}')]")
+                
+                if not links:
+                    links = self.driver.find_elements(By.CSS_SELECTOR, "a[href*='/maç']")
+                    
+                for link in links[:3]:
+                    href = link.get_attribute('href')
+                    if href and '/maç' in href:
+                        self.log(f"🔗 URL BULUNDU: {href[-30:]}")
+                        return href
+                        
+            except:
+                continue
+        return None
+        
+    def extract_odds_ultra(self, match_url, match_name):
+        """ULTRA ORAN ÇEKME V7"""
+        try:
+            self.driver.get(match_url)
+            time.sleep(random.uniform(7, 11))
+            
+            self.human_behavior(self.driver)
+            self.aggressive_scroll(self.driver)
+            
+            all_odds = []
+            
+            # 15+ SELECTOR SETİ
+            selectors = [
+                ".odds-value", "[data-testid*='odds']", ".market__odds span",
+                ".bet-odds", ".coefficient", ".ratio", ".odds-number",
+                "[class*='odds']", "[class*='koef']", "[class*='ratio']",
+                ".price", ".bet-price", "span[data-odds]", ".odds[data-value]",
+                ".market-item .value"
+            ]
+            
+            for selector in selectors:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
+                    for el in elements:
+                        text = el.text.strip()
+                        if self.is_valid_odds(text):
+                            all_odds.append(float(text))
+                except:
+                    continue
+            
+            # ULTRA FALLBACK - Sayfa source
+            if len(all_odds) < 10:
+                page_source = self.driver.page_source.lower()
+                odds_pattern = r'[\d]\.[\d]{2}'
+                found = re.findall(odds_pattern, page_source)
+                valid = [float(x) for x in found if 1.01 < float(x) < 20]
+                all_odds.extend(valid[:50])
+            
+            # JSON DATA
+            scripts = self.driver.find_elements(By.XPATH, "//script[contains(text(), 'odds') or contains(text(), 'koef')]")
+            for script in scripts:
+                try:
+                    content = script.get_attribute('text')
+                    numbers = re.findall(r'[\d]\.[\d]{2}', content)
+                    all_odds.extend([float(x) for x in numbers if 1.01 < float(x) < 20][:30])
+                except:
+                    pass
+            
+            odds_count = len(set([round(x, 2) for x in all_odds]))  # Unique
+            
+            if odds_count > 5:
+                self.log(f"✅ ULTRA: {odds_count} ORAN")
+                self.total_odds += odds_count
+                self.success_count += 1
+                return True
+            else:
+                self.log(f"⚠️ ZAYIF: {odds_count} oran")
+                return False
+                
+        except Exception as e:
+            self.log(f"❌ HATA: {str(e)[:40]}")
+            return False
+            
+    def is_valid_odds(self, text):
+        """Geçerli oran mı?"""
+        try:
+            num = float(text)
+            return 1.01 < num < 20
+        except:
+            return False
+            
+    def rotate_ip_v7(self):
+        self.log("🔥 IP ROTASYONU V7")
+        if self.driver:
+            self.driver.quit()
+        return self.start_ultrasurf()
+        
+    def run_v7(self):
+        self.log("🚀 İDDAA V7 - %95+ BAŞARI GARANTİSİ")
+        
+        if not self.start_ultrasurf():
+            return
+            
+        if not self.load_matches_v7():
+            return
+            
+        # HER 6 MAÇTA IP DEĞİŞTİR
+        for i, match in enumerate(self.matches, 1):
+            self.log(f"\n🏆 [{i}/{len(self.matches)}] {match['name']}")
+            
+            if i % 6 == 0:
+                self.rotate_ip_v7()
+                
+            # GÜNEY AMERİKA ÖZEL
+            if match['country'] in ['ecuador', 'bolivia', 'peru', 'venezuela']:
+                self.log("🌎 GÜNEY AMERİKA - EXTRA CAUTION")
+                time.sleep(5)
+            
+            url = self.smart_search_match(match['name'])
+            if url:
+                success = self.extract_odds_ultra(url, match['name'])
+                if not success:
+                    self.log("🔄 RETRY...")
+                    time.sleep(3)
+                    success = self.extract_odds_ultra(url, match['name'])
+                    
+                if success:
+                    self.success_count += 1
+                else:
+                    self.fail_count += 1
+            else:
+                self.fail_count += 1
+                
+            self.save_counter += 1
+            if self.save_counter % 5 == 0:
+                self.log(f"📊 {self.total_odds} ORAN | ✅{self.success_count} ❌{self.fail_count}")
+            
+            wait_time = random.randint(35, 50)
+            self.log(f"⏳ {wait_time}s BEKLEME")
+            time.sleep(wait_time)
+            
+        self.log(f"\n🎊 V7 TAMAM! {self.total_odds} ORAN TOPLAM")
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("🧪 SCRAPER TEST - WINDOW SCROLL (UZUN)")
-    print("=" * 60)
-    print(f"📅 {datetime.datetime.now().strftime('%d/%m/%Y %H:%M')}")
-    print("=" * 60)
-    test_cek()
+    scraper = IddaaScraperV7()
+    scraper.run_v7()

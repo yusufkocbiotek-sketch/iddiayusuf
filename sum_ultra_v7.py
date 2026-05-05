@@ -32,15 +32,16 @@ class IddaaScraperV7:
         print(f"[{timestamp}] {message}")
         
     def kill_ultrasurf(self):
-        for proc in psutil.process_iter(['pid', 'name']):
-            if 'ultrasurf' in proc.info['name'].lower():
-                proc.kill()
+    	"""PSUTIL'süz ∑ kapat"""
+   	 os.system('taskkill /f /im ∑.exe >nul 2>&1')
+    	os.system('taskkill /f /im ultrasurf.exe >nul 2>&1')
+    	time.sleep(2)
                 
     def start_ultrasurf(self):
         self.kill_ultrasurf()
         self.log("🌐 ULTRASURF V7 - FREE PREMIUM")
         
-        ultrasurf_path = r"C:\Users\YUSUF\OneDrive\Desktop\ultrasurf\ultrasurf.exe"
+        ultrasurf_path = r"C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\u2211.exe"
         subprocess.Popen([ultrasurf_path], shell=True)
         time.sleep(5)
         

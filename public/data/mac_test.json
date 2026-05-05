@@ -1,0 +1,1390 @@
+{
+  "version": 2,
+  "updated": "2026-05-05T00:43:23.875688",
+  "matches": [
+    {
+      "index": 1,
+      "ev_sahibi": "Waalwijk",
+      "deplasman": "Willem II",
+      "saat": "19:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 2,
+      "ev_sahibi": "Beşiktaş",
+      "deplasman": "Konyaspor",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 3,
+      "ev_sahibi": "AL Khaleej Saihat FC",
+      "deplasman": "Al Hilal",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 4,
+      "ev_sahibi": "Ahli Saudi",
+      "deplasman": "AL Fateh SC",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 5,
+      "ev_sahibi": "Bayern Münih",
+      "deplasman": "Paris Saint Germain",
+      "saat": "22:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 6,
+      "ev_sahibi": "Vila Nova",
+      "deplasman": "Athletic Club MG",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 7,
+      "ev_sahibi": "Velez Sarsfield",
+      "deplasman": "New Old Boys",
+      "saat": "01:15",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 8,
+      "ev_sahibi": "Penarol Uru",
+      "deplasman": "Defensor Sporting",
+      "saat": "01:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 9,
+      "ev_sahibi": "Quilmes Atletico Club",
+      "deplasman": "Chacarita Juniors",
+      "saat": "02:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 10,
+      "ev_sahibi": "FC Universitario de Vinto",
+      "deplasman": "Blooming",
+      "saat": "03:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 11,
+      "ev_sahibi": "Gimnasia Y Tiro de Salta",
+      "deplasman": "Agropecuario Argentino",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 12,
+      "ev_sahibi": "Estudiantes Río Cuarto",
+      "deplasman": "Instituto AC Cordoba",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 13,
+      "ev_sahibi": "Deportes Concepcion",
+      "deplasman": "Huachipato",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 14,
+      "ev_sahibi": "Bucheon",
+      "deplasman": "Jeju United",
+      "saat": "08:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 15,
+      "ev_sahibi": "Jeonbuk",
+      "deplasman": "Gwangju FC",
+      "saat": "08:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 16,
+      "ev_sahibi": "Gimcheon Sangmu FC",
+      "deplasman": "Ulsan Hora-I",
+      "saat": "10:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 17,
+      "ev_sahibi": "Gangwon FC",
+      "deplasman": "Pohang Steelers",
+      "saat": "10:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 18,
+      "ev_sahibi": "Daejeon Citizen",
+      "deplasman": "Incheon United FC",
+      "saat": "10:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 19,
+      "ev_sahibi": "Madura Utd.",
+      "deplasman": "Bali United FC",
+      "saat": "11:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 20,
+      "ev_sahibi": "FC Seoul",
+      "deplasman": "FC Anyang",
+      "saat": "13:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 21,
+      "ev_sahibi": "Ethiopia Nigd Bank",
+      "deplasman": "Saint George SC",
+      "saat": "13:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 22,
+      "ev_sahibi": "Tanjong Pagar United",
+      "deplasman": "Hougang United FC",
+      "saat": "14:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 23,
+      "ev_sahibi": "Liaoning S.",
+      "deplasman": "Chengdu Rongcheng",
+      "saat": "14:35",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 24,
+      "ev_sahibi": "Shandong Taishan",
+      "deplasman": "Shanghai Shenhua",
+      "saat": "14:35",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 25,
+      "ev_sahibi": "Pusamania Borneo",
+      "deplasman": "Persita Tangerang",
+      "saat": "15:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 26,
+      "ev_sahibi": "FK Karvan Yevlakh",
+      "deplasman": "Neftçi",
+      "saat": "15:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 27,
+      "ev_sahibi": "Dire Dawa Kenema",
+      "deplasman": "Ethiopian Coffee SC",
+      "saat": "15:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 28,
+      "ev_sahibi": "Chongqing Tonglianglong FC",
+      "deplasman": "Henan Songshan",
+      "saat": "15:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 29,
+      "ev_sahibi": "Mekelle 70 Enderta FC",
+      "deplasman": "Arba Minch Kenema",
+      "saat": "16:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 30,
+      "ev_sahibi": "Mumbai City FC",
+      "deplasman": "SC East Bengal",
+      "saat": "17:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 31,
+      "ev_sahibi": "Ajman Club",
+      "deplasman": "AL Jazira (UAE)",
+      "saat": "17:05",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 32,
+      "ev_sahibi": "AL Gharraf SC",
+      "deplasman": "AL Wakrah",
+      "saat": "17:15",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 33,
+      "ev_sahibi": "Newroz SC",
+      "deplasman": "AL Shorta Baghdad",
+      "saat": "17:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 34,
+      "ev_sahibi": "Duhok FC",
+      "deplasman": "AL Nafit Maysan",
+      "saat": "17:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 35,
+      "ev_sahibi": "Stara Zagora",
+      "deplasman": "PFC Montana 1921",
+      "saat": "17:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 36,
+      "ev_sahibi": "Shire Endaselassie FC",
+      "deplasman": "Ethiopia Electricity",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 37,
+      "ev_sahibi": "Oman FC",
+      "deplasman": "Samail SC",
+      "saat": "18:10",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 38,
+      "ev_sahibi": "Azam FC",
+      "deplasman": "Namungo FC",
+      "saat": "18:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 39,
+      "ev_sahibi": "Zalgiris Kaunas",
+      "deplasman": "FC Dziugas",
+      "saat": "18:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 40,
+      "ev_sahibi": "Flora Tall",
+      "deplasman": "Trans Narva",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 41,
+      "ev_sahibi": "Torpedo",
+      "deplasman": "FC Rustvai",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 42,
+      "ev_sahibi": "Gnistan",
+      "deplasman": "Inter Turku",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 43,
+      "ev_sahibi": "MSK Zilina",
+      "deplasman": "Z Michalovce",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 44,
+      "ev_sahibi": "MFK Skalica",
+      "deplasman": "FK Kosice",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 45,
+      "ev_sahibi": "Sitra Club",
+      "deplasman": "Al-Ahli SC Manama",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 46,
+      "ev_sahibi": "Al-Rifaa",
+      "deplasman": "Al-Shabbab",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 47,
+      "ev_sahibi": "Dibba",
+      "deplasman": "AL Bataeh",
+      "saat": "19:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 48,
+      "ev_sahibi": "AL Ittihad Kalba",
+      "deplasman": "AL Khaleej Khor Fakkan",
+      "saat": "19:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 49,
+      "ev_sahibi": "FC Baniyas",
+      "deplasman": "AL Dhafra Scc",
+      "saat": "19:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 50,
+      "ev_sahibi": "FK Riteriai",
+      "deplasman": "Ban Gargzdai",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 51,
+      "ev_sahibi": "Al-Sadd",
+      "deplasman": "AL Duhail SC",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 52,
+      "ev_sahibi": "AL Naft",
+      "deplasman": "AL Karma",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 53,
+      "ev_sahibi": "AL Talaba",
+      "deplasman": "AL Zawraa",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 54,
+      "ev_sahibi": "Loko Sofya",
+      "deplasman": "Botev Vratsa",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 55,
+      "ev_sahibi": "Falkenbergs FF",
+      "deplasman": "Norrköping",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 56,
+      "ev_sahibi": "Smouha SC",
+      "deplasman": "Zamalek",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 57,
+      "ev_sahibi": "El Ahly (MISIR)",
+      "deplasman": "Enppi Club",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 58,
+      "ev_sahibi": "Ceramica Cleopatra",
+      "deplasman": "Pyramids FC",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 59,
+      "ev_sahibi": "Siwelele FC",
+      "deplasman": "Durban City FC 2024",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 60,
+      "ev_sahibi": "Stellenbosch",
+      "deplasman": "Orlando Pirates B FC",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 61,
+      "ev_sahibi": "Magesi FC",
+      "deplasman": "Orbit College FC",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 62,
+      "ev_sahibi": "Chippa Utd",
+      "deplasman": "Sekhukhune United",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 63,
+      "ev_sahibi": "Dunfermline",
+      "deplasman": "Arbroath",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 64,
+      "ev_sahibi": "Alloa",
+      "deplasman": "Airdrieonian",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 65,
+      "ev_sahibi": "Queen of The South",
+      "deplasman": "Stenhousemuir",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 66,
+      "ev_sahibi": "Forfar",
+      "deplasman": "Hamilton",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 67,
+      "ev_sahibi": "Clyde Bank",
+      "deplasman": "Spartans Edinburgh FC",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 68,
+      "ev_sahibi": "Arsenal",
+      "deplasman": "Atletico Madrid",
+      "saat": "22:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 69,
+      "ev_sahibi": "UEFA Şampiyonlar Ligi",
+      "deplasman": "Yarı Final Rövanş Maçları (2 Maç)",
+      "saat": "22:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 70,
+      "ev_sahibi": "Rosario C",
+      "deplasman": "Libertad Asuncion",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 71,
+      "ev_sahibi": "Sporting Cristal",
+      "deplasman": "Palmeiras SP",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 72,
+      "ev_sahibi": "Independiente Petrolero",
+      "deplasman": "Caracas",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 73,
+      "ev_sahibi": "Deportivo Riestra",
+      "deplasman": "Gremio Porto",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 74,
+      "ev_sahibi": "CA Juventud De Las Piedras",
+      "deplasman": "Atletico Mineiro",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 75,
+      "ev_sahibi": "Barcelona SC",
+      "deplasman": "Boca Juniors",
+      "saat": "03:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 76,
+      "ev_sahibi": "Ucv FC",
+      "deplasman": "Independiente Del Valle",
+      "saat": "03:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 77,
+      "ev_sahibi": "Always Ready",
+      "deplasman": "Ath Lanus",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 78,
+      "ev_sahibi": "Academia Puerto Cabello",
+      "deplasman": "CS Cienciano",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 79,
+      "ev_sahibi": "CD Recoleta",
+      "deplasman": "Santos SP",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 80,
+      "ev_sahibi": "Tigres",
+      "deplasman": "Nashville SC",
+      "saat": "04:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 81,
+      "ev_sahibi": "CD Cuenca",
+      "deplasman": "San Lorenzo",
+      "saat": "05:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 82,
+      "ev_sahibi": "V-Varen",
+      "deplasman": "Fagiano",
+      "saat": "07:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 83,
+      "ev_sahibi": "Shimizu",
+      "deplasman": "Cerezo Osaka",
+      "saat": "07:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 84,
+      "ev_sahibi": "Nagoya",
+      "deplasman": "Gamba Osaka",
+      "saat": "08:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 85,
+      "ev_sahibi": "Fukuoka",
+      "deplasman": "Kyoto Sanga",
+      "saat": "08:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 86,
+      "ev_sahibi": "Tokyo",
+      "deplasman": "JEF United",
+      "saat": "09:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 87,
+      "ev_sahibi": "Sanfrecce Hiroshima",
+      "deplasman": "Vissel Kobe",
+      "saat": "09:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 88,
+      "ev_sahibi": "Kashima",
+      "deplasman": "M Hollyhock",
+      "saat": "10:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 89,
+      "ev_sahibi": "FC Machida Zelvia",
+      "deplasman": "Yokohama Marinos",
+      "saat": "10:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 90,
+      "ev_sahibi": "Kawasaki Frontale",
+      "deplasman": "Tokyo Verdy",
+      "saat": "11:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 91,
+      "ev_sahibi": "Kashiwa",
+      "deplasman": "Urawa Red",
+      "saat": "13:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 92,
+      "ev_sahibi": "Wuhan Three Towns",
+      "deplasman": "Qingdao Jonoon",
+      "saat": "14:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 93,
+      "ev_sahibi": "Shanghai Port",
+      "deplasman": "Shenzhen Peng City",
+      "saat": "14:35",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 94,
+      "ev_sahibi": "Beijing Guoan",
+      "deplasman": "Dalian Zhixing FC",
+      "saat": "14:35",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 95,
+      "ev_sahibi": "Yunnan Yukun",
+      "deplasman": "Zhejiang",
+      "saat": "15:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 96,
+      "ev_sahibi": "K Kyzylorda",
+      "deplasman": "K Almaty",
+      "saat": "17:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 97,
+      "ev_sahibi": "Punjab FC",
+      "deplasman": "Chennaiyin FC",
+      "saat": "17:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 98,
+      "ev_sahibi": "Slavya Sofya",
+      "deplasman": "FK Septemvri Sofia",
+      "saat": "17:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 99,
+      "ev_sahibi": "Dynamo Budejovice",
+      "deplasman": "Jihlava",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 100,
+      "ev_sahibi": "AC Sparta Prague B",
+      "deplasman": "1.SK Prostej",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 101,
+      "ev_sahibi": "FC Banik Ostrava B",
+      "deplasman": "Brno",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 102,
+      "ev_sahibi": "SK Hanacka Slavia Kromeriz",
+      "deplasman": "SK Slavia Praha B",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 103,
+      "ev_sahibi": "FK Jelgava",
+      "deplasman": "SK Super Nova",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 104,
+      "ev_sahibi": "ND Beltinci",
+      "deplasman": "NK Bistrica",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 105,
+      "ev_sahibi": "Nd Dravinja",
+      "deplasman": "NK Ilirija",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 106,
+      "ev_sahibi": "NK Bilje",
+      "deplasman": "Nafta",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 107,
+      "ev_sahibi": "Hegelmann",
+      "deplasman": "FK Panevezys",
+      "saat": "18:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 108,
+      "ev_sahibi": "Usti Nad Lab",
+      "deplasman": "Opava",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 109,
+      "ev_sahibi": "SK Lisen",
+      "deplasman": "Pribram",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 110,
+      "ev_sahibi": "Taborsko",
+      "deplasman": "MFK Chrudim",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 111,
+      "ev_sahibi": "S&B Vlasim",
+      "deplasman": "Vik. Zizkov",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 112,
+      "ev_sahibi": "Triglav",
+      "deplasman": "Jadran Dekani",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 113,
+      "ev_sahibi": "NK Brinje Grosuplje",
+      "deplasman": "Tabor Sezana",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 114,
+      "ev_sahibi": "Bayern Münih (K)",
+      "deplasman": "TSG Hoffenheim (K)",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 115,
+      "ev_sahibi": "Egersunds",
+      "deplasman": "Raufoss",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 116,
+      "ev_sahibi": "Zalgiris Vilnius",
+      "deplasman": "Siauliai",
+      "saat": "19:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 117,
+      "ev_sahibi": "Almere City",
+      "deplasman": "Graafschap",
+      "saat": "19:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 118,
+      "ev_sahibi": "FK Transinvest",
+      "deplasman": "Suduva",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 119,
+      "ev_sahibi": "Spartak Moskova",
+      "deplasman": "CSKA Moskova",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 120,
+      "ev_sahibi": "PFC Spartak Varna",
+      "deplasman": "FC Dobrudzha Dobrich",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 121,
+      "ev_sahibi": "Amazulu",
+      "deplasman": "Gold. Arrow",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 122,
+      "ev_sahibi": "Mamel Sundow",
+      "deplasman": "Kaizer Ch",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 123,
+      "ev_sahibi": "Richards Bay",
+      "deplasman": "Polokwane",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 124,
+      "ev_sahibi": "Marumo Gallants FC",
+      "deplasman": "TS Galaxy FC",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 125,
+      "ev_sahibi": "Cittadella",
+      "deplasman": "AC Lumezzane",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 126,
+      "ev_sahibi": "Casertana FC",
+      "deplasman": "Crotone",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 127,
+      "ev_sahibi": "SSD Citta Di Campobasso",
+      "deplasman": "ASD Pineto Calcio",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 128,
+      "ev_sahibi": "Cosenza",
+      "deplasman": "SSD Casarano Calcio",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 129,
+      "ev_sahibi": "Juventus U23",
+      "deplasman": "US Pianese",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 130,
+      "ev_sahibi": "Calcio Lecco 1912",
+      "deplasman": "AS Giana Erminio",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 131,
+      "ev_sahibi": "Dungannon S",
+      "deplasman": "Carrick Rang",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 132,
+      "ev_sahibi": "Brighton&Hove Albion (K)",
+      "deplasman": "Arsenal (K)",
+      "saat": "21:45",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 133,
+      "ev_sahibi": "Dep. La Gua.",
+      "deplasman": "Club Bolivar",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 134,
+      "ev_sahibi": "Cusco FC",
+      "deplasman": "Estudiantes",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 135,
+      "ev_sahibi": "Audax Italiano",
+      "deplasman": "Vasco Da Gama",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 136,
+      "ev_sahibi": "Torque",
+      "deplasman": "Palestino",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 137,
+      "ev_sahibi": "CSD Macara",
+      "deplasman": "CA Tigre",
+      "saat": "03:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 138,
+      "ev_sahibi": "Barracas",
+      "deplasman": "Club Olimpia",
+      "saat": "03:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 139,
+      "ev_sahibi": "Ind. Mendoza",
+      "deplasman": "Fluminense",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 140,
+      "ev_sahibi": "Independiente Santa Fe",
+      "deplasman": "Corinthians",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 141,
+      "ev_sahibi": "Botafogo RJ",
+      "deplasman": "Racing Club",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 142,
+      "ev_sahibi": "New Mexico",
+      "deplasman": "El Paso Loc",
+      "saat": "04:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 143,
+      "ev_sahibi": "Deportivo Toluca",
+      "deplasman": "Los Angeles FC",
+      "saat": "04:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 144,
+      "ev_sahibi": "CD Universidad Catolica",
+      "deplasman": "Cruzeiro MG",
+      "saat": "05:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 145,
+      "ev_sahibi": "CD Tolima",
+      "deplasman": "Nacional",
+      "saat": "05:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 146,
+      "ev_sahibi": "Alianza Atletico",
+      "deplasman": "America De Cali",
+      "saat": "05:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 147,
+      "ev_sahibi": "Talaea Gaish",
+      "deplasman": "Ghazl El Mahallah",
+      "saat": "17:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 148,
+      "ev_sahibi": "FK Tukums 2000/Tss",
+      "deplasman": "Ogre United",
+      "saat": "18:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 149,
+      "ev_sahibi": "Nd Slovan",
+      "deplasman": "NK Jesenice",
+      "saat": "18:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 150,
+      "ev_sahibi": "LKS Lodz",
+      "deplasman": "Pogon Grodzisk Mazowiecki",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 151,
+      "ev_sahibi": "PK-35",
+      "deplasman": "Mikkeli",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 152,
+      "ev_sahibi": "Dinamo Tiflis",
+      "deplasman": "FC Spaeri",
+      "saat": "19:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 153,
+      "ev_sahibi": "FK Auda",
+      "deplasman": "Grobinas SC",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 154,
+      "ev_sahibi": "Haras Hodood",
+      "deplasman": "ZED",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 155,
+      "ev_sahibi": "National Bank of Egypt SC",
+      "deplasman": "Ismaily Sc",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 156,
+      "ev_sahibi": "Çorum FK",
+      "deplasman": "Ankara Keçiörengücü",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 157,
+      "ev_sahibi": "Bodrum FK",
+      "deplasman": "Pendikspor",
+      "saat": "20:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 158,
+      "ev_sahibi": "Krasnodar",
+      "deplasman": "Dinamo Moskova",
+      "saat": "20:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 159,
+      "ev_sahibi": "AL Shabab FC (KSA)",
+      "deplasman": "AL Nassr",
+      "saat": "21:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 160,
+      "ev_sahibi": "Freiburg",
+      "deplasman": "Braga",
+      "saat": "22:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 161,
+      "ev_sahibi": "Aston Villa",
+      "deplasman": "Nottingham Forest",
+      "saat": "22:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 162,
+      "ev_sahibi": "Crystal Palace",
+      "deplasman": "Shakhtar Donetsk",
+      "saat": "22:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 163,
+      "ev_sahibi": "Strasbourg",
+      "deplasman": "Vallecano",
+      "saat": "22:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 164,
+      "ev_sahibi": "Mirassol FC SP",
+      "deplasman": "LDU Quito",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 165,
+      "ev_sahibi": "CA Platense",
+      "deplasman": "Penarol Uru",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 166,
+      "ev_sahibi": "Boston River",
+      "deplasman": "Millonarios",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 167,
+      "ev_sahibi": "O'Higgins",
+      "deplasman": "Sao Paulo SP",
+      "saat": "01:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 168,
+      "ev_sahibi": "Birmingham Legion",
+      "deplasman": "Miami",
+      "saat": "03:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 169,
+      "ev_sahibi": "Coquimbo Unido",
+      "deplasman": "U. Deportes",
+      "saat": "03:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 170,
+      "ev_sahibi": "Indep.Medell",
+      "deplasman": "Flamengo",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 171,
+      "ev_sahibi": "Carabobo FC",
+      "deplasman": "River Plate",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 172,
+      "ev_sahibi": "Blooming",
+      "deplasman": "Bragantino SP",
+      "saat": "03:30",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    },
+    {
+      "index": 173,
+      "ev_sahibi": "Atl. Junior",
+      "deplasman": "Cerro Porteno",
+      "saat": "05:00",
+      "tarih": "2026-05-05",
+      "durum": "baslamadi"
+    }
+  ]
+}

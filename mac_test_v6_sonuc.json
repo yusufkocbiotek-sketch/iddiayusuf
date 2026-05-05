@@ -1,0 +1,57 @@
+{
+  "test_tarihi": "2026-05-05T00:27:29.861382",
+  "toplam_satir": 407,
+  "bulunan_mac_sayisi": 10,
+  "matches": [
+    {
+      "saat": "19:45",
+      "ev": "Waalwijk",
+      "dep": "Willem II"
+    },
+    {
+      "saat": "20:30",
+      "ev": "Beşiktaş",
+      "dep": "Konyaspor"
+    },
+    {
+      "saat": "21:00",
+      "ev": "AL Khaleej Saihat FC",
+      "dep": "Al Hilal"
+    },
+    {
+      "saat": "21:00",
+      "ev": "Ahli Saudi",
+      "dep": "AL Fateh SC"
+    },
+    {
+      "saat": "22:00",
+      "ev": "Bayern Münih",
+      "dep": "Paris Saint Germain"
+    },
+    {
+      "saat": "01:00",
+      "ev": "Vila Nova",
+      "dep": "Athletic Club MG"
+    },
+    {
+      "saat": "01:15",
+      "ev": "Velez Sarsfield",
+      "dep": "New Old Boys"
+    },
+    {
+      "saat": "01:30",
+      "ev": "Penarol Uru",
+      "dep": "Defensor Sporting"
+    },
+    {
+      "saat": "02:00",
+      "ev": "Quilmes Atletico Club",
+      "dep": "Chacarita Juniors"
+    },
+    {
+      "saat": "03:00",
+      "ev": "FC Universitario de Vinto",
+      "dep": "Blooming"
+    }
+  ]
+}

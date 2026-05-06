@@ -11,6 +11,11 @@ cd /d "%~dp0"
 echo Python dosyası çalıştırılıyor...
 python scraper_full.py
 
+echo GitHub'a yukleniyor...
+git add -A
+git commit -m "Otomatik hizli guncelleme %date% %time%"
+git push
+
 echo.
 echo =====================================================
 echo İşlem tamamlandı. Pencereyi kapatmak için bir tuşa basın...

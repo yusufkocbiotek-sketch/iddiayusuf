@@ -1,10 +1,13 @@
 import os
 import re
 import time
+import uuid
 import random
 import socket
+import shutil
 import subprocess
 from datetime import datetime
+from pathlib import Path
 
 import psutil
 from selenium import webdriver
@@ -18,15 +21,15 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 
 # ---------------- AYARLAR (KENDINE GORE DEGISTIR) ----------------
-# BURAYI GERÇEK ULTRASURF EXE ADIYLA DEGISTIR (ornegin: ultrasurf.exe)
-ULTRASURF_EXE_PATH = r"C:\Users\yusuf\OneDrive\Desktop\iddiayusuf-main\u2211.exe
+# GERÇEK ULTRASURF EXE YOLUNU BURAYA YAZ (ornegin: ultrasurf.exe)
+ULTRASURF_EXE_PATH = r"C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\u2211.exe"
 ULTRASURF_PORT = 9666  # Ultrasurf varsayilan proxy portu
 
-# iddaa.com'daki MAC SATIR (ROW) SELECTOR'UNU BURAYA YAZ
+# iddaa.com'daki MAC SATIR (ROW) SELECTOR'U
 # SENIN HTML'INE GORE EN GUCLU ADAY: ".event-row"
 ROW_SELECTOR = ".event-row"  # Gerekirse inspect ile dogrusunu bulup degistir
 
-# Sayfa yuklenirken bekleyecegimiz konteyner adaylari (ilk bulunani kullanir)
+# Mac listesi yuklenirken bekleyecegimiz konteyner adaylari
 CONTAINER_CANDIDATES = [
     ROW_SELECTOR,
     ".program-list",
@@ -36,7 +39,8 @@ CONTAINER_CANDIDATES = [
     "body",
 ]
 
-# Oran cekmede kullanilacak selector adaylari (detay sayfasi icin)
+# Oran cekmede kullanilacak selector adaylari (detay sayfasi)
+# Daha genis set: bazen site farkli class isimleri kullanabiliyor
 ODDS_SELECTORS = [
     ".odds-value",
     "[data-testid*='odds']",
@@ -53,6 +57,9 @@ ODDS_SELECTORS = [
     "span[data-odds]",
     ".odds[data-value]",
     ".market-item .value",
+    "table.odds td",
+    "div[class*='market'] span",
+    "button[data-odd]",  # bazi arayuzlerde buton icerisinde olabilir
 ]
 
 # Takim isimlerini cekmek icin alt selector adaylari (mac satiri icinde)
@@ -66,17 +73,47 @@ TEAM_SELECTORS = [
     "a[class*='team']",
 ]
 
+# Her kac mac'ta bir IP degistirilsin?
+IP_ROTATE_EVERY = 10
+
+# Proxy/IP kontrolu icin test adresi
+IP_CHECK_URL = "https://httpbin.org/ip"
+
+# Profil klasorlerinin temizlenecegi dizin
+CHROME_PROFILES_DIR = "chrome_profiles"
+
 
 class V7Killer:
     def __init__(self):
         self.driver = None
         self.matches = []
-        self.total_odds = 0
-        self.success = 0
-        self.fail = 0
+        self.total_odds_count = 0
+        self.success_count = 0
+        self.fail_count = 0
         self.processed_count = 0  # dongu disinda guvenli sayac
         self.ultrasurf_port = ULTRASURF_PORT
         self.ultrasurf_path = ULTRASURF_EXE_PATH
+        self.current_profile_dir = None  # her IP rotasyonunda yeni profil
+
+        # Profil dizinini hazirla
+        Path(CHROME_PROFILES_DIR).mkdir(parents=True, exist_ok=True)
+        # Eski profil klasorlerini temizle (opsiyonel ama faydali)
+        self.cleanup_old_profiles(max_age_hours=6)
+
+    # ---------------- TEMIZLIK ----------------
+    def cleanup_old_profiles(self, max_age_hours=6):
+        """Belirli bir yasindan eski chrome profil klasorlerini siler."""
+        try:
+            now = time.time()
+            for item in os.listdir(CHROME_PROFILES_DIR):
+                item_path = os.path.join(CHROME_PROFILES_DIR, item)
+                if os.path.isdir(item_path):
+                    mtime = os.path.getmtime(item_path)
+                    age_hours = (now - mtime) / 3600.0
+                    if age_hours > max_age_hours:
+                        shutil.rmtree(item_path, ignore_errors=True)
+        except Exception:
+            pass
 
     # ---------------- LOGGING ----------------
     def log(self, message):
@@ -134,7 +171,7 @@ class V7Killer:
         return False
 
     # ---------------- SELENIUM ----------------
-    def stealth_chrome_options(self):
+    def stealth_chrome_options(self, user_data_dir=None):
         """Bot tespitini zorlastiran Chrome ayarlari."""
         options = Options()
         # Temel
@@ -143,7 +180,7 @@ class V7Killer:
         options.add_argument("--disable-blink-features=AutomationControlled")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option("useAutomationExtension", False)
-        # Ek
+        # Ek gizlilik / stabilite
         options.add_argument("--disable-extensions")
         options.add_argument("--mute-audio")
         options.add_argument("--start-maximized")
@@ -156,10 +193,13 @@ class V7Killer:
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/121.0.0.0 Safari/537.36"
         )
+        # Her IP rotasyonunda yeni profil (oturum sifirlama)
+        if user_data_dir:
+            options.add_argument(f"--user-data-dir={user_data_dir}")
         return options
 
-    def init_driver(self):
-        options = self.stealth_chrome_options()
+    def init_driver(self, user_data_dir=None):
+        options = self.stealth_chrome_options(user_data_dir=user_data_dir)
         self.driver = webdriver.Chrome(options=options)
         # WebDriver tespitini zorlastir
         self.driver.execute_cdp_cmd(
@@ -223,7 +263,7 @@ class V7Killer:
         """Proxy'nin calisip calismadigini kontrol icin IP'yi loglar."""
         try:
             driver.set_page_load_timeout(20)
-            driver.get("https://httpbin.org/ip")
+            driver.get(IP_CHECK_URL)
             time.sleep(2)
             ip_text = driver.find_element(By.TAG_NAME, "body").text.strip()
             self.log(f"CIKAN IP (proxy kontrol): {ip_text}")
@@ -246,6 +286,8 @@ class V7Killer:
                 "cloudflare",
                 "checking your browser",
                 "just a moment",
+                "ddos protection",
+                "unusual traffic",
             ]
             for b in blockers:
                 if b in page_text:
@@ -294,43 +336,92 @@ class V7Killer:
         except Exception:
             return False
 
-    def extract_odds_from_page(self, driver):
-        """Sayfadan oranlari ceker (detay sayfasi icin)."""
-        all_odds = []
-        # Selector tabanli
-        for sel in ODDS_SELECTORS:
+    def extract_odds_count_from_page(self, driver, max_wait=25, retries=2):
+        """
+        Detay sayfasindan gecerli oran sayisini ceker.
+        - Explicit wait ile oran konteynerini bekler
+        - retries kadar tekrar deneme (bekle + refresh + farkli selector seti)
+        """
+        last_error = None
+        for attempt in range(retries + 1):
             try:
-                elems = driver.find_elements(By.CSS_SELECTOR, sel)
-                for el in elems:
-                    txt = el.text.strip()
-                    if self.is_valid_odds(txt):
-                        all_odds.append(float(txt.replace(",", ".")))
-            except Exception:
-                continue
-        # Fallback: regex
-        if len(all_odds) < 10:
-            try:
-                page_source = driver.page_source
-                found = re.findall(r"([1-9]\d?\.\d{1,2})", page_source)
-                for f in found:
-                    fv = float(f)
-                    if 1.01 < fv < 20.0:
-                        all_odds.append(fv)
-            except Exception:
-                pass
-        # Benzersiz
-        unique = set()
-        for o in all_odds:
-            unique.add(round(o, 2))
-        return len(unique)
+                # 1) Oran konteynerini bekle (herhangi bir gecerli oran elementi gorunene kadar)
+                WebDriverWait(driver, max_wait).until(
+                    lambda d: any(
+                        self.is_valid_odds(el.text.strip())
+                        for sel in ODDS_SELECTORS
+                        for el in d.find_elements(By.CSS_SELECTOR, sel)
+                    )
+                )
+                # 2) Kisa JS dolum beklemesi
+                time.sleep(random.uniform(1.0, 2.0))
+
+                # 3) Oranlari topla
+                all_odds_vals = []
+                for sel in ODDS_SELECTORS:
+                    try:
+                        elems = driver.find_elements(By.CSS_SELECTOR, sel)
+                        for el in elems:
+                            txt = el.text.strip()
+                            if self.is_valid_odds(txt):
+                                all_odds_vals.append(float(txt.replace(",", ".")))
+                    except Exception:
+                        continue
+
+                # 4) Fallback: sayfa kaynak kodundan regex
+                if len(all_odds_vals) < 10:
+                    try:
+                        page_source = driver.page_source
+                        found = re.findall(r"([1-9]\d?\.\d{1,2})", page_source)
+                        for f in found:
+                            fv = float(f)
+                            if 1.01 < fv < 20.0:
+                                all_odds_vals.append(fv)
+                    except Exception:
+                        pass
+
+                # 5) Benzersiz oran sayisi
+                unique_odds = set()
+                for o in all_odds_vals:
+                    unique_odds.add(round(o, 2))
+                odds_count = len(unique_odds)
+
+                if odds_count > 5:
+                    self.log(f"DETAY ORANLAR: {odds_count} adet bulundu")
+                    return odds_count
+                else:
+                    self.log(f"YETERSIZ ORAN ({odds_count}) - deneme {attempt + 1}/{retries + 1}")
+
+            except TimeoutException as e:
+                last_error = e
+                self.log(f"Oran konteyneri zaman asimi - deneme {attempt + 1}/{retries + 1}")
+            except Exception as e:
+                last_error = e
+                self.log(f"HATA (oran cekme) - deneme {attempt + 1}/{retries + 1}: {str(e)[:80]}")
+
+            # Tekrar denemeden once aksiyonlar
+            if attempt < retries:
+                time.sleep(random.uniform(2.5, 4.5))
+                # Sayfayi yenilemeyi dene
+                try:
+                    driver.refresh()
+                    time.sleep(random.uniform(2.0, 3.5))
+                except Exception:
+                    pass
+
+        self.log(f"BASARISIZ: Detay oranlar bos (son hata: {last_error})")
+        return 0
 
     # ---------------- MAC LISTESI ----------------
     def load_all_matches(self):
         self.log("IDDAA PROGRAM/FUTBOL SAYFASI YUKLENIYOR")
-        self.init_driver()
+        # Her liste yuklemede yeni profil kullan (temiz oturum)
+        self.current_profile_dir = os.path.join(CHROME_PROFILES_DIR, str(uuid.uuid4()))
+        os.makedirs(self.current_profile_dir, exist_ok=True)
+        self.init_driver(user_data_dir=self.current_profile_dir)
 
         try:
-            # Proxy kontrolu (onemli)
+            # Proxy kontrolu
             self.verify_proxy_ip(self.driver)
 
             url = "https://www.iddaa.com/program/futbol"
@@ -344,7 +435,7 @@ class V7Killer:
                 self.quit_driver()
                 return False
 
-            # Mac satirlarini bekle
+            # Konteyner / mac satirlarini bekle
             loaded = False
             for sel in CONTAINER_CANDIDATES:
                 try:
@@ -387,17 +478,28 @@ class V7Killer:
                     if name:
                         key = name.lower()
                         # Basit filtre
-                        if any(x in key for x in ["öne çıkan", "lig seçimi", "tarih", "oyun türü"]):
+                        if any(x in key for x in [
+                            "öne çıkan", "lig seçimi", "tarih", "oyun türü", "filtrele", "temizle"
+                        ]):
                             continue
                         if key not in seen:
                             seen.add(key)
-                            self.matches.append({"name": name, "url": ""})
+                            # URL bulmak icin satirdaki linki dene
+                            match_url = ""
+                            try:
+                                link_el = r.find_element(By.CSS_SELECTOR, "a[href*='/mac']")
+                                href = link_el.get_attribute("href")
+                                if href:
+                                    match_url = href
+                            except Exception:
+                                pass
+                            self.matches.append({"name": name, "url": match_url})
                 except Exception:
                     continue
 
             self.log(f"TOPLAM {len(self.matches)} MAC BULUNDU")
             for m in self.matches[:8]:
-                self.log(f"  - {m['name']}")
+                self.log(f"  - {m['name']} ({m['url'][:60] if m['url'] else 'URL yok'})")
 
             return len(self.matches) > 0
 
@@ -405,6 +507,22 @@ class V7Killer:
             self.log(f"HATA: Mac listesi yuklenemedi: {e}")
             self.quit_driver()
             return False
+
+    # ---------------- IP ROTASYONU ----------------
+    def rotate_ip(self):
+        self.log("IP ROTASYONU BASLATILIYOR")
+        self.quit_driver()
+        if self.start_ultrasurf():
+            # Yeni profil ile driver baslat
+            self.current_profile_dir = os.path.join(CHROME_PROFILES_DIR, str(uuid.uuid4()))
+            os.makedirs(self.current_profile_dir, exist_ok=True)
+            self.init_driver(user_data_dir=self.current_profile_dir)
+            # Proxy kontrolu
+            if self.verify_proxy_ip(self.driver):
+                self.log("IP ROTASYONU BASARILI")
+                return True
+        self.log("UYARI: IP rotasyonu basarisiz oldu")
+        return False
 
     # ---------------- ANA AKIS ----------------
     def attack(self):
@@ -419,39 +537,70 @@ class V7Killer:
         # Mac listesini yukle
         if not self.load_all_matches():
             self.log("KRITIK: Mac listesi bos veya yuklenemedi")
-            # istersen burada return yapabilirsin
+            # devam etmeyebilirsin; simdilik devam ediyoruz
 
-        # Hedef
-        target = min(60, len(self.matches)) if self.matches else 0
+        # Hedef belirle
+        target = min(120, len(self.matches)) if self.matches else 0
         self.log(f"HEDEF: {target} MAC")
+        self.log(f"Her {IP_ROTATE_EVERY} mac'ta bir IP degistirilecek")
 
-        # Maclari isle (simulasyon)
+        # Maclari isle
         for i, match in enumerate(self.matches[:target], 1):
             self.processed_count = i
             self.log(f"ISLENIYOR [{i}/{target}]: {match['name']}")
 
-            time.sleep(random.uniform(2.0, 3.5))
-            if random.random() > 0.25:
-                odds_found = random.randint(10, 85)
-                self.total_odds += odds_found
-                self.success += 1
-                self.log(f"BASARILI: {odds_found} oran")
-            else:
-                self.fail += 1
-                self.log("BASARISIZ: Oran bulunamadi")
+            # IP rotasyonu kontrolu
+            if i % IP_ROTATE_EVERY == 0:
+                self.rotate_ip()
 
+            # Mac URL'sini al
+            url = match.get("url", "")
+            if not url:
+                self.log("URL bulunamadi, mac atlandi")
+                self.fail_count += 1
+                time.sleep(random.uniform(20, 30))
+                continue
+
+            # Detay sayfasina git ve oranlari cek
+            try:
+                self.driver.set_page_load_timeout(45)
+                self.driver.get(url)
+                time.sleep(random.uniform(1.5, 2.5))
+                # Engel kontrolu
+                if self.page_has_blocker(self.driver):
+                    self.log("UYARI: Detay sayfasinda guvenlik/engel tespit edildi (mac atlandi)")
+                    self.fail_count += 1
+                    time.sleep(random.uniform(20, 30))
+                    continue
+                # Oranlari cek
+                odds_count = self.extract_odds_count_from_page(self.driver, max_wait=25, retries=2)
+                if odds_count > 5:
+                    self.total_odds_count += odds_count
+                    self.success_count += 1
+                    self.log(f"BASARILI: {odds_count} oran | Toplam: {self.total_odds_count}")
+                else:
+                    self.fail_count += 1
+                    self.log(f"BASARISIZ: Oran bulunamadi | Fail: {self.fail_count}")
+            except Exception as e:
+                self.fail_count += 1
+                self.log(f"HATA (detay sayfasi): {str(e)[:80]} | Fail: {self.fail_count}")
+
+            # Ara rapor
             if i % 5 == 0:
                 self.log(
-                    f"RAPOR: Toplam Oran={self.total_odds} | "
-                    f"Basarili={self.success} | Basarisiz={self.fail}"
+                    f"RAPOR: Toplam Oran={self.total_odds_count} | "
+                    f"Basarili={self.success_count} | Basarisiz={self.fail_count} | Islenen={self.processed_count}"
                 )
 
-            time.sleep(random.uniform(25, 40))
+            # Bekleme
+            wait_time = random.randint(25, 40)
+            self.log(f"BEKLEME: {wait_time} saniye")
+            time.sleep(wait_time)
 
         # Sonuc
         self.log(
-            f"GOREV TAMAMLANDI: Toplam Oran={self.total_odds} | "
-            f"Basarili={self.success} | Islenen={self.processed_count}"
+            f"GOREV TAMAMLANDI: Toplam Oran={self.total_odds_count} | "
+            f"Basarili={self.success_count} | Basarisiz={self.fail_count} | Islenen={self.processed_count}"
         )
         self.quit_driver()
 

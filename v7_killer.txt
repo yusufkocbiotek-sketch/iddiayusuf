@@ -17,7 +17,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, StaleElementReferenceException, WebDriverException
+
+# ChromeDriver'ı otomatik yönetir
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 # ---------------- AYARLAR (KENDINE GORE DEGISTIR) ----------------
@@ -62,17 +65,6 @@ ODDS_SELECTORS = [
     "button[data-odd]",  # bazi arayuzlerde buton icerisinde olabilir
 ]
 
-# Takim isimlerini cekmek icin alt selector adaylari (mac satiri icinde)
-TEAM_SELECTORS = [
-    ".team-name",
-    ".participant",
-    ".fixture__team",
-    ".team",
-    ".club-name",
-    "span[class*='team']",
-    "a[class*='team']",
-]
-
 # Her kac mac'ta bir IP degistirilsin?
 IP_ROTATE_EVERY = 10
 
@@ -111,9 +103,10 @@ class V7Killer:
                     mtime = os.path.getmtime(item_path)
                     age_hours = (now - mtime) / 3600.0
                     if age_hours > max_age_hours:
+                        self.log(f"Eski Chrome profili siliniyor: {item_path}")
                         shutil.rmtree(item_path, ignore_errors=True)
-        except Exception:
-            pass
+        except Exception as e:
+            self.log(f"UYARI: Eski Chrome profilleri temizlenirken hata: {e}")
 
     # ---------------- LOGGING ----------------
     def log(self, message):
@@ -131,6 +124,8 @@ class V7Killer:
                     proc.kill()
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 pass
+            except Exception as e:
+                self.log(f"UYARI: Ultrasurf sonlandirilirken hata: {e}")
 
     def is_proxy_port_open(self, host="127.0.0.1", port=9666, timeout=1):
         """Proxy portunun acik olup olmadigini kontrol eder."""
@@ -152,18 +147,16 @@ class V7Killer:
             return False
 
         try:
-            # shell=True KULLANMA (guvenli calistirma)
             subprocess.Popen([self.ultrasurf_path])
         except Exception as e:
             self.log(f"HATA: Ultrasurf baslatilamadi: {e}")
             return False
 
-        # Proxy portunu bekle (max 35 saniye)
         self.log("Proxy portu bekleniyor (35 saniye)")
         for _ in range(35):
             if self.is_proxy_port_open("127.0.0.1", self.ultrasurf_port, 1):
                 self.log("ULTRASURF PROXY HAZIR")
-                time.sleep(3)  # stabilizasyon
+                time.sleep(3)
                 return True
             time.sleep(1)
 
@@ -174,52 +167,55 @@ class V7Killer:
     def stealth_chrome_options(self, user_data_dir=None):
         """Bot tespitini zorlastiran Chrome ayarlari."""
         options = Options()
-        # Temel
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-blink-features=AutomationControlled")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option("useAutomationExtension", False)
-        # Ek gizlilik / stabilite
         options.add_argument("--disable-extensions")
         options.add_argument("--mute-audio")
         options.add_argument("--start-maximized")
         options.add_argument("--window-size=1366,768")
-        # Proxy (Ultrasurf)
         options.add_argument(f"--proxy-server=http://127.0.0.1:{self.ultrasurf_port}")
-        # User-Agent
         options.add_argument(
             "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/121.0.0.0 Safari/537.36"
         )
-        # Her IP rotasyonunda yeni profil (oturum sifirlama)
         if user_data_dir:
             options.add_argument(f"--user-data-dir={user_data_dir}")
         return options
 
     def init_driver(self, user_data_dir=None):
-        options = self.stealth_chrome_options(user_data_dir=user_data_dir)
-        self.driver = webdriver.Chrome(options=options)
-        # WebDriver tespitini zorlastir
-        self.driver.execute_cdp_cmd(
-            "Page.addScriptToEvaluateOnNewDocument",
-            {
-                "source": """
-                    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-                    Object.defineProperty(navigator, 'plugins', { get: () => [1,2,3,4,5] });
-                    Object.defineProperty(navigator, 'languages', { get: () => ['tr-TR','tr','en-US','en'] });
-                """
-            },
-        )
-        return self.driver
+        try:
+            options = self.stealth_chrome_options(user_data_dir=user_data_dir)
+            self.driver = webdriver.Chrome(
+                service=Service(ChromeDriverManager().install()),
+                options=options
+            )
+            self.driver.execute_cdp_cmd(
+                "Page.addScriptToEvaluateOnNewDocument",
+                {
+                    "source": """
+                        Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+                        Object.defineProperty(navigator, 'plugins', { get: () => [1,2,3,4,5] });
+                        Object.defineProperty(navigator, 'languages', { get: () => ['tr-TR','tr','en-US','en'] });
+                    """
+                },
+            )
+            self.log("✅ Chrome Driver başlatıldı.")
+            return self.driver
+        except WebDriverException as e:
+            self.log(f"❌ Chrome Driver başlatılırken hata oluştu: {e}")
+            return None
 
     def quit_driver(self):
         if self.driver:
             try:
                 self.driver.quit()
-            except Exception:
-                pass
+                self.log("✅ Driver kapatıldı.")
+            except Exception as e:
+                self.log(f"UYARI: Driver kapatılırken hata: {e}")
             self.driver = None
 
     # ---------------- DAVRANIS (GUVENLI) ----------------
@@ -227,36 +223,33 @@ class V7Killer:
         """Guvenli, viewport icinde kalan insan benzeri hareketler."""
         try:
             actions = ActionChains(driver)
-            # Sayfadaki bazi elementlerin uzerine hafifce git
             candidate_selectors = ["a", "button", "nav a", "header a", ".match-item", ".event-row", ".fixture__teams"]
             for sel in candidate_selectors:
                 elems = driver.find_elements(By.CSS_SELECTOR, sel)
                 if elems:
                     el = random.choice(elems)
-                    # Scroll + move to element
                     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", el)
                     time.sleep(0.25)
                     actions.move_to_element(el).pause(random.uniform(0.2, 0.6)).perform()
                     break
-            # Kucuk klavye hareketi
             body = driver.find_element(By.TAG_NAME, "body")
             body.send_keys(Keys.TAB)
             time.sleep(0.15)
             body.send_keys(Keys.SHIFT + Keys.TAB)
-        except Exception:
-            pass
+        except Exception as e:
+            self.log(f"UYARI: Human-like davranis hatasi: {e}")
 
     def controlled_scroll(self, driver):
         """Kontrollu scroll (viewport disina cikmaz)."""
-        for _ in range(4):
+        for _ in range(random.randint(2, 4)): # Daha az scroll et
             try:
                 vh = driver.execute_script("return window.innerHeight;") or 768
-                delta = random.randint(int(vh * 0.25), int(vh * 0.6))
+                delta = random.randint(int(vh * 0.1), int(vh * 0.3)) # Daha kucuk delta
                 direction = random.choice([-1, 1])
                 driver.execute_script(f"window.scrollBy(0, {direction * delta});")
                 time.sleep(random.uniform(0.6, 1.1))
-            except Exception:
-                pass
+            except Exception as e:
+                self.log(f"UYARI: Controlled scroll hatasi: {e}")
 
     # ---------------- YARDIMCI FONKSIYONLAR ----------------
     def verify_proxy_ip(self, driver):
@@ -277,17 +270,10 @@ class V7Killer:
         try:
             page_text = driver.page_source.lower()
             blockers = [
-                "captcha",
-                "verify you are human",
-                "access denied",
-                "rate limit",
-                "güvenlik doğrulaması",
-                "please enable javascript",
-                "cloudflare",
-                "checking your browser",
-                "just a moment",
-                "ddos protection",
-                "unusual traffic",
+                "captcha", "verify you are human", "access denied", "rate limit",
+                "güvenlik doğrulaması", "please enable javascript", "cloudflare",
+                "checking your browser", "just a moment", "ddos protection",
+                "unusual traffic", "block", "error 403"
             ]
             for b in blockers:
                 if b in page_text:
@@ -295,10 +281,21 @@ class V7Killer:
             return False
         except Exception:
             return False
+    
+    def save_debug_html(self, driver, filename_prefix="debug_page"):
+        """Mevcut sayfanın HTML'ini debug için kaydeder."""
+        try:
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = f"{filename_prefix}_{timestamp}.html"
+            with open(filename, "w", encoding="utf-8") as f:
+                f.write(driver.page_source)
+            self.log(f"🧪 Debug HTML kaydedildi: {filename}")
+        except Exception as e:
+            self.log(f"⚠️ Debug HTML kaydedilirken hata: {e}")
+
 
     def extract_match_name_from_row(self, row_element):
         """Bir mac satirindan takim isimlerini cikarir."""
-        # Takim elementlerini ara
         team_elems = []
         for sel in TEAM_SELECTORS:
             try:
@@ -307,13 +304,11 @@ class V7Killer:
                     break
             except Exception:
                 continue
-        # Takimlari al
         if len(team_elems) >= 2:
             team1 = team_elems[0].text.strip()
             team2 = team_elems[1].text.strip()
             if team1 and team2:
                 return f"{team1} - {team2}"
-        # Fallback: satir metninden regex ile
         try:
             text = row_element.text.strip()
             m = re.search(r"([^\n\-]+?)\s*(?:-|vs)\s*([^\n\-]+)", text, re.IGNORECASE)
@@ -332,11 +327,11 @@ class V7Killer:
     def is_valid_odds(self, text):
         try:
             num = float(text.strip().replace(",", "."))
-            return 1.01 < num < 20.0
+            return 1.01 < num < 100.0 # Oran üst sınırı 20'den 100'e çıkarıldı
         except Exception:
             return False
 
-    def extract_odds_count_from_page(self, driver, max_wait=25, retries=2):
+    def extract_odds_count_from_page(self, driver, match_name_for_debug, match_url_for_debug, max_wait=35, retries=3):
         """
         Detay sayfasindan gecerli oran sayisini ceker.
         - Explicit wait ile oran konteynerini bekler
@@ -345,6 +340,13 @@ class V7Killer:
         last_error = None
         for attempt in range(retries + 1):
             try:
+                self.log(f"🔎 Oran çekme denemesi {attempt + 1}/{retries + 1} ({match_name_for_debug})")
+                
+                # Sayfada Human-like hareketler ve scroll
+                self.human_like(driver)
+                self.controlled_scroll(driver)
+                time.sleep(random.uniform(1.0, 2.0)) # Küçük bir bekleme
+
                 # 1) Oran konteynerini bekle (herhangi bir gecerli oran elementi gorunene kadar)
                 WebDriverWait(driver, max_wait).until(
                     lambda d: any(
@@ -353,9 +355,11 @@ class V7Killer:
                         for el in d.find_elements(By.CSS_SELECTOR, sel)
                     )
                 )
-                # 2) Kisa JS dolum beklemesi
-                time.sleep(random.uniform(1.0, 2.0))
+                self.log(f"✅ Oran elementleri sayfada yüklendiği görüldü ({match_name_for_debug}).")
 
+                # 2) Kisa JS dolum beklemesi (daha uzun tutuldu)
+                time.sleep(random.uniform(2.0, 4.0)) 
+                
                 # 3) Oranlari topla
                 all_odds_vals = []
                 for sel in ODDS_SELECTORS:
@@ -369,13 +373,15 @@ class V7Killer:
                         continue
 
                 # 4) Fallback: sayfa kaynak kodundan regex
-                if len(all_odds_vals) < 10:
+                if len(all_odds_vals) < 5: # Çok az oran varsa regex'i dene
+                    self.log(f"Yetersiz oran ({len(all_odds_vals)}), kaynak kodu taranıyor...")
                     try:
                         page_source = driver.page_source
-                        found = re.findall(r"([1-9]\d?\.\d{1,2})", page_source)
+                        # Regex'i daha esnek hale getir (örneğin 1.5, 1,5, 1.50)
+                        found = re.findall(r"([1-9]\d*[,.]\d{1,2})", page_source)
                         for f in found:
-                            fv = float(f)
-                            if 1.01 < fv < 20.0:
+                            fv = float(f.replace(",", "."))
+                            if 1.01 < fv < 100.0:
                                 all_odds_vals.append(fv)
                     except Exception:
                         pass
@@ -386,56 +392,63 @@ class V7Killer:
                     unique_odds.add(round(o, 2))
                 odds_count = len(unique_odds)
 
-                if odds_count > 5:
-                    self.log(f"DETAY ORANLAR: {odds_count} adet bulundu")
+                if odds_count > 0: # <-- BURASI DEĞİŞTİRİLDİ (daha önce > 5 idi)
+                    self.log(f"DETAY ORANLAR: {odds_count} adet bulundu ({match_name_for_debug})")
                     return odds_count
                 else:
-                    self.log(f"YETERSIZ ORAN ({odds_count}) - deneme {attempt + 1}/{retries + 1}")
+                    self.log(f"YETERSİZ/HİÇ ORAN BULUNAMADI ({odds_count}) - Deneme {attempt + 1}/{retries + 1} ({match_name_for_debug})")
 
             except TimeoutException as e:
                 last_error = e
-                self.log(f"Oran konteyneri zaman asimi - deneme {attempt + 1}/{retries + 1}")
+                self.log(f"Oran konteyneri zaman aşımı - Deneme {attempt + 1}/{retries + 1} ({match_name_for_debug})")
             except Exception as e:
                 last_error = e
-                self.log(f"HATA (oran cekme) - deneme {attempt + 1}/{retries + 1}: {str(e)[:80]}")
+                self.log(f"HATA (oran çekme) - Deneme {attempt + 1}/{retries + 1}: {str(e)[:80]} ({match_name_for_debug})")
 
             # Tekrar denemeden once aksiyonlar
             if attempt < retries:
-                time.sleep(random.uniform(2.5, 4.5))
-                # Sayfayi yenilemeyi dene
+                time.sleep(random.uniform(3.0, 6.0)) # Daha uzun bekle
                 try:
                     driver.refresh()
-                    time.sleep(random.uniform(2.0, 3.5))
-                except Exception:
-                    pass
+                    self.log(f"Sayfa yenileniyor... (Deneme {attempt+1}/{retries+1})")
+                    time.sleep(random.uniform(3.0, 5.0)) # Yenileme sonrası bekle
+                    self.human_like(driver) # Yeniden yüklenen sayfada da human-like davran
+                except Exception as refresh_err:
+                    self.log(f"UYARI: Sayfa yenilemede hata: {refresh_err}")
+        
+        # Tüm denemeler başarısız olursa HTML'i kaydet
+        if driver:
+            sanitized_name = re.sub(r'[^a-zA-Z0-9_\-]', '_', match_name_for_debug[:40]).strip('_')
+            self.save_debug_html(driver, f"iddaa_fail_odds_{sanitized_name}")
 
-        self.log(f"BASARISIZ: Detay oranlar bos (son hata: {last_error})")
+        self.log(f"BAŞARISIZ: {match_name_for_debug} için detay oranlar boş (son hata: {last_error})")
         return 0
 
     # ---------------- MAC LISTESI ----------------
     def load_all_matches(self):
         self.log("IDDAA PROGRAM/FUTBOL SAYFASI YUKLENIYOR")
-        # Her liste yuklemede yeni profil kullan (temiz oturum)
+        self.quit_driver() # Önceki driver'ı kapat
+        
         self.current_profile_dir = os.path.join(CHROME_PROFILES_DIR, str(uuid.uuid4()))
         os.makedirs(self.current_profile_dir, exist_ok=True)
-        self.init_driver(user_data_dir=self.current_profile_dir)
+        if not self.init_driver(user_data_dir=self.current_profile_dir):
+            self.log("KRİTİK HATA: Driver başlatılamadı.")
+            return False
 
         try:
-            # Proxy kontrolu
             self.verify_proxy_ip(self.driver)
 
             url = "https://www.iddaa.com/program/futbol"
             self.driver.set_page_load_timeout(45)
             self.driver.get(url)
-            self.log(f"Sayfa acildi: {url}")
+            self.log(f"Sayfa açıldı: {url}")
 
-            # Engel/captcha kontrolu
             if self.page_has_blocker(self.driver):
-                self.log("UYARI: Sayfada guvenlik/engel tespit edildi")
+                self.log("UYARI: Sayfada güvenlik/engel tespit edildi. Çıkış yapılıyor.")
+                self.save_debug_html(self.driver, "iddaa_blocker_detected")
                 self.quit_driver()
                 return False
 
-            # Konteyner / mac satirlarini bekle
             loaded = False
             for sel in CONTAINER_CANDIDATES:
                 try:
@@ -449,26 +462,24 @@ class V7Killer:
                     continue
 
             if not loaded:
-                WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located((By.TAG_NAME, "body"))
-                )
-                self.log("UYARI: Belirtilen konteyner bulunamadi, sayfa kaynagi ozeti:")
+                WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+                self.log("UYARI: Belirtilen konteyner bulunamadı, sayfa kaynağı özeti:")
                 src = self.driver.page_source[:1500].replace("\n", " ")
                 self.log(src)
+                self.save_debug_html(self.driver, "iddaa_no_container")
                 self.quit_driver()
                 return False
 
-            # Ek bekleme + davranis
-            time.sleep(random.uniform(1.5, 2.5))
+            time.sleep(random.uniform(2.5, 3.5))
             self.human_like(self.driver)
             self.controlled_scroll(self.driver)
 
-            # Mac satirlarini topla
             rows = []
             try:
-                rows = self.driver.find_elements(By.CSS_SELECTOR, ROW_SELECTOR)
+                # Tüm olası satır elementlerini yakala
+                rows = self.driver.find_elements(By.CSS_SELECTOR, f"{ROW_SELECTOR}, [class*='match-row'], [class*='event-item'], a[href*='/mac'], a[href*='/maç']")
             except Exception:
-                rows = []
+                pass # Boş kalabilir
 
             self.matches = []
             seen = set()
@@ -477,19 +488,18 @@ class V7Killer:
                     name = self.extract_match_name_from_row(r)
                     if name:
                         key = name.lower()
-                        # Basit filtre
                         if any(x in key for x in [
                             "öne çıkan", "lig seçimi", "tarih", "oyun türü", "filtrele", "temizle"
                         ]):
                             continue
                         if key not in seen:
                             seen.add(key)
-                            # URL bulmak icin satirdaki linki dene
                             match_url = ""
                             try:
-                                link_el = r.find_element(By.CSS_SELECTOR, "a[href*='/mac']")
+                                # Link elementini bul ve href'ini al
+                                link_el = r.find_element(By.CSS_SELECTOR, "a[href*='/mac'], a[href*='/maç']")
                                 href = link_el.get_attribute("href")
-                                if href:
+                                if self.is_valid_match_url(href): # URL'nin gerçekten maç URL'si olduğunu doğrula
                                     match_url = href
                             except Exception:
                                 pass
@@ -505,105 +515,144 @@ class V7Killer:
 
         except Exception as e:
             self.log(f"HATA: Mac listesi yuklenemedi: {e}")
+            self.save_debug_html(self.driver, "iddaa_load_matches_error")
             self.quit_driver()
             return False
 
     # ---------------- IP ROTASYONU ----------------
     def rotate_ip(self):
         self.log("IP ROTASYONU BASLATILIYOR")
-        self.quit_driver()
-        if self.start_ultrasurf():
+        self.quit_driver() # Mevcut driver'ı kapat
+        self.kill_ultrasurf() # Ultrasurf'u kapat
+        
+        if self.start_ultrasurf(): # Yeni Ultrasurf başlat
             # Yeni profil ile driver baslat
             self.current_profile_dir = os.path.join(CHROME_PROFILES_DIR, str(uuid.uuid4()))
             os.makedirs(self.current_profile_dir, exist_ok=True)
-            self.init_driver(user_data_dir=self.current_profile_dir)
-            # Proxy kontrolu
-            if self.verify_proxy_ip(self.driver):
-                self.log("IP ROTASYONU BASARILI")
-                return True
+            if self.init_driver(user_data_dir=self.current_profile_dir):
+                # Proxy kontrolu
+                if self.verify_proxy_ip(self.driver):
+                    self.log("IP ROTASYONU BASARILI")
+                    return True
         self.log("UYARI: IP rotasyonu basarisiz oldu")
         return False
 
     # ---------------- ANA AKIS ----------------
     def attack(self):
-        print("V7 KILLER BASLATILIYOR...")
-        self.log("V7 KILLER ATTACK!")
+        self.log("V7 KILLER BAŞLATILIYOR")
 
-        # Ultrasurf baslat
         if not self.start_ultrasurf():
-            self.log("KRITIK: Ultrasurf baslatilamadi")
+            self.log("KRİTİK: Ultrasurf başlatılamadı. Çıkış yapılıyor.")
             return
 
-        # Mac listesini yukle
-        if not self.load_all_matches():
-            self.log("KRITIK: Mac listesi bos veya yuklenemedi")
-            # devam etmeyebilirsin; simdilik devam ediyoruz
+        try:
+            if not self.load_all_matches():
+                self.log("UYARI: Maç listesi boş veya yüklenemedi. Devam ediliyor ancak beklenti düşük.")
+                # Eğer load_all_matches başarısız olursa self.driver zaten kapalı olabilir.
+                # Tekrar başlatmaya gerek yok, main döngüde kontrol edilecek.
 
-        # Hedef belirle
-        target = min(120, len(self.matches)) if self.matches else 0
-        self.log(f"HEDEF: {target} MAC")
-        self.log(f"Her {IP_ROTATE_EVERY} mac'ta bir IP degistirilecek")
+            target = min(120, len(self.matches)) if self.matches else 0
+            self.log(f"HEDEF: {target} MAC İŞLENECEK")
+            self.log(f"Her {IP_ROTATE_EVERY} maçta bir IP değiştirilecek")
 
-        # Maclari isle
-        for i, match in enumerate(self.matches[:target], 1):
-            self.processed_count = i
-            self.log(f"ISLENIYOR [{i}/{target}]: {match['name']}")
+            for i, match in enumerate(self.matches[:target], 1):
+                self.processed_count = i
+                self.log(f"İşleniyor [{i}/{target}]: {match['name']}")
 
-            # IP rotasyonu kontrolu
-            if i % IP_ROTATE_EVERY == 0:
-                self.rotate_ip()
+                # IP rotasyonu kontrolu
+                if i % IP_ROTATE_EVERY == 0:
+                    self.rotate_ip()
+                    # IP değişimi sonrası driver yeniden başlatıldığı için, iddaa.com'a tekrar git
+                    if self.driver:
+                        try:
+                            self.driver.get("https://www.iddaa.com/program/futbol")
+                            WebDriverWait(self.driver, 20).until(
+                                EC.presence_of_element_located((By.TAG_NAME, "body"))
+                            )
+                            time.sleep(random.uniform(5.0, 8.0))
+                            self.human_like(self.driver)
+                        except Exception as e:
+                            self.log(f"UYARI: IP değişimi sonrası ana sayfaya gidemedi: {e}")
+                            self.quit_driver()
+                            if not self._init_driver(user_data_dir=self.current_profile_dir): # Driver'ı yeniden başlat
+                                self.log("KRİTİK HATA: Driver yeniden başlatılamadı.")
+                                return # Scraper'ı sonlandır
+                            
+                # Mevcut driver'ın geçerli olduğundan emin ol
+                if not self.driver or not self.driver.session_id:
+                    self.log("UYARI: Driver bağlantısı koptu veya geçerli değil, yeniden başlatılıyor.")
+                    if not self.init_driver(user_data_dir=self.current_profile_dir):
+                        self.log("KRİTİK HATA: Driver yeniden başlatılamadı.")
+                        return
 
-            # Mac URL'sini al
-            url = match.get("url", "")
-            if not url:
-                self.log("URL bulunamadi, mac atlandi")
-                self.fail_count += 1
-                time.sleep(random.uniform(20, 30))
-                continue
-
-            # Detay sayfasina git ve oranlari cek
-            try:
-                self.driver.set_page_load_timeout(45)
-                self.driver.get(url)
-                time.sleep(random.uniform(1.5, 2.5))
-                # Engel kontrolu
-                if self.page_has_blocker(self.driver):
-                    self.log("UYARI: Detay sayfasinda guvenlik/engel tespit edildi (mac atlandi)")
+                url = match.get("url", "")
+                if not url:
+                    self.log(f"UYARI: {match['name']} için URL bulunamadı, maç atlandı.")
                     self.fail_count += 1
+                    self.log(f"RAPOR: Kümülatif Oran={self.total_odds_count} | Başarılı={self.success_count} | Başarısız={self.fail_count} | İşlenen={self.processed_count}")
                     time.sleep(random.uniform(20, 30))
                     continue
-                # Oranlari cek
-                odds_count = self.extract_odds_count_from_page(self.driver, max_wait=25, retries=2)
-                if odds_count > 5:
-                    self.total_odds_count += odds_count
-                    self.success_count += 1
-                    self.log(f"BASARILI: {odds_count} oran | Toplam: {self.total_odds_count}")
-                else:
+
+                try:
+                    self.driver.set_page_load_timeout(45)
+                    self.driver.get(url)
+                    time.sleep(random.uniform(2.5, 4.5))
+                    self.human_like(self.driver)
+
+                    if self.page_has_blocker(self.driver):
+                        self.log(f"UYARI: {match['name']} detay sayfasında güvenlik/engel tespit edildi (maç atlandı).")
+                        self.save_debug_html(self.driver, f"iddaa_blocker_detail_{re.sub(r'[^a-zA-Z0-9_\-]', '_', match['name'][:40])}")
+                        self.fail_count += 1
+                        self.log(f"RAPOR: Kümülatif Oran={self.total_odds_count} | Başarılı={self.success_count} | Başarısız={self.fail_count} | İşlenen={self.processed_count}")
+                        time.sleep(random.uniform(20, 30))
+                        continue
+
+                    odds_count = self.extract_odds_count_from_page(
+                        self.driver, match['name'], url, max_wait=35, retries=3 # Artırılmış bekleme ve deneme
+                    )
+                    if odds_count > 0:
+                        self.total_odds_count += odds_count
+                        self.success_count += 1
+                        self.log(f"BAŞARILI: {odds_count} oran çekildi | Kümülatif Oran={self.total_odds_count}")
+                    else:
+                        self.fail_count += 1
+                        self.log(f"BAŞARISIZ: {match['name']} için oran bulunamadı | Kümülatif Oran={self.total_odds_count}")
+                except WebDriverException as e:
+                    self.log(f"HATA (WebDriver - {match['name']}): {str(e)[:80]}. Driver yeniden başlatılıyor.")
+                    self.save_debug_html(self.driver, f"iddaa_webdriver_error_{re.sub(r'[^a-zA-Z0-9_\-]', '_', match['name'][:40])}")
+                    self.quit_driver()
+                    if not self.init_driver(user_data_dir=self.current_profile_dir):
+                        self.log("KRİTİK HATA: Driver yeniden başlatılamadı.")
+                        return
+                    self.fail_count += 1 # Bu maç yine de başarısız sayılır
+                except Exception as e:
                     self.fail_count += 1
-                    self.log(f"BASARISIZ: Oran bulunamadi | Fail: {self.fail_count}")
-            except Exception as e:
-                self.fail_count += 1
-                self.log(f"HATA (detay sayfasi): {str(e)[:80]} | Fail: {self.fail_count}")
+                    self.log(f"HATA (beklenmedik - {match['name']}): {str(e)[:80]} | Fail: {self.fail_count}")
+                    self.save_debug_html(self.driver, f"iddaa_unknown_error_{re.sub(r'[^a-zA-Z0-9_\-]', '_', match['name'][:40])}")
 
-            # Ara rapor
-            if i % 5 == 0:
-                self.log(
-                    f"RAPOR: Toplam Oran={self.total_odds_count} | "
-                    f"Basarili={self.success_count} | Basarisiz={self.fail_count} | Islenen={self.processed_count}"
-                )
 
-            # Bekleme
-            wait_time = random.randint(25, 40)
-            self.log(f"BEKLEME: {wait_time} saniye")
-            time.sleep(wait_time)
+                # Ara rapor
+                if i % 5 == 0:
+                    self.log(
+                        f"RAPOR: Kümülatif Oran={self.total_odds_count} | "
+                        f"Başarılı={self.success_count} | Başarısız={self.fail_count} | İşlenen={self.processed_count}"
+                    )
 
-        # Sonuc
-        self.log(
-            f"GOREV TAMAMLANDI: Toplam Oran={self.total_odds_count} | "
-            f"Basarili={self.success_count} | Basarisiz={self.fail_count} | Islenen={self.processed_count}"
-        )
-        self.quit_driver()
+                wait_time = random.randint(25, 40)
+                self.log(f"BEKLEME: {wait_time} saniye")
+                time.sleep(wait_time)
 
+            self.log(
+                f"GÖREV TAMAMLANDI: Kümülatif Oran={self.total_odds_count} | "
+                f"Başarılı={self.success_count} | Başarısız={self.fail_count} | İşlenen={self.processed_count}"
+            )
+
+        except Exception as e:
+            self.log(f"KRİTİK HATA: Ana akış sırasında beklenmedik hata: {e}")
+            self.save_debug_html(self.driver, "iddaa_critical_error")
+        finally:
+            self.quit_driver()
+            self.kill_ultrasurf() # Ultrasurf'u en sonda kapat
 
 if __name__ == "__main__":
     killer = V7Killer()

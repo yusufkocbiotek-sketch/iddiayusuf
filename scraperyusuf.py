@@ -2,6 +2,10 @@ import json
 import os
 import datetime
 import time
+import shutil
+import subprocess
+from pathlib import Path
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -11,26 +15,117 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 CIKTI_DOSYA = "public/data/mac.json"
 
+# =========================
+# GIT OTOMATİK COMMIT/PUSH
+# =========================
+ENABLE_GIT_AUTOPUSH = True          # İstemezsen False yap
+GIT_STAGE_FILES = [CIKTI_DOSYA]     # Sadece mac.json stage edilecek
+
+REPO_ROOT = Path(__file__).resolve().parent  # scriptin bulunduğu klasör (repo kökü varsayımı)
+
+def _find_git_exe():
+    exe = shutil.which("git")
+    if exe:
+        return exe
+
+    candidates = [
+        r"C:\Program Files\Git\cmd\git.exe",
+        r"C:\Program Files\Git\bin\git.exe",
+        r"C:\Program Files (x86)\Git\cmd\git.exe",
+        r"C:\Program Files (x86)\Git\bin\git.exe",
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            return c
+    return None
+
+def _run_git(args, cwd=None):
+    git_exe = _find_git_exe()
+    if not git_exe:
+        raise RuntimeError("Git bulunamadı. Git for Windows kur veya PATH'e ekle.")
+    return subprocess.run([git_exe, *args], cwd=cwd, text=True, capture_output=True)
+
+def _turkce_gun_kisa(dt: datetime.datetime) -> str:
+    # Monday=0 .. Sunday=6
+    mapping = ["Pts", "Sal", "Çar", "Per", "Cum", "Cts", "Paz"]
+    return mapping[dt.weekday()]
+
+def _format_commit_msg(dt: datetime.datetime) -> str:
+    # ör: "Otomatik hizli guncelleme Per 07.05.2026 06:33:35,94"
+    cs = int(dt.microsecond / 10000)  # centisecond 0-99
+    return f"Otomatik hizli guncelleme {_turkce_gun_kisa(dt)} {dt.strftime('%d.%m.%Y %H:%M:%S')},{cs:02d}"
+
+def git_add_commit_pull_push():
+    if not ENABLE_GIT_AUTOPUSH:
+        return
+
+    if not (REPO_ROOT / ".git").exists():
+        print("⚠️ Git: .git yok, repo değil. Otomatik push atlandı.")
+        return
+
+    try:
+        # add (sadece hedef dosyalar)
+        r = _run_git(["add", *GIT_STAGE_FILES], cwd=str(REPO_ROOT))
+        if r.returncode != 0:
+            print("⚠️ git add hata:", (r.stderr or r.stdout).strip())
+            return
+
+        # staged değişiklik var mı?
+        r = _run_git(["diff", "--cached", "--quiet"], cwd=str(REPO_ROOT))
+        if r.returncode == 0:
+            print("ℹ️ Git: Değişiklik yok -> commit/push yapılmadı.")
+            return
+
+        # commit
+        msg = _format_commit_msg(datetime.datetime.now())
+        r = _run_git(["commit", "-m", msg], cwd=str(REPO_ROOT))
+        if r.returncode != 0:
+            print("⚠️ git commit hata:", (r.stderr or r.stdout).strip())
+            return
+        print(f"✅ Git commit: {msg}")
+
+        # pull --rebase (push reddini engellemek için)
+        r = _run_git(["pull", "--rebase", "--autostash"], cwd=str(REPO_ROOT))
+        if r.returncode != 0:
+            print("⚠️ git pull --rebase hata:", (r.stderr or r.stdout).strip())
+            print("💡 Çakışma olabilir. Manuel düzeltip push atman gerekebilir.")
+            return
+
+        # push
+        r = _run_git(["push"], cwd=str(REPO_ROOT))
+        if r.returncode != 0:
+            print("⚠️ git push hata:", (r.stderr or r.stdout).strip())
+            print("💡 Kimlik doğrulama/remote sorunu olabilir. Manuel push deneyin.")
+            return
+
+        print("✅ Git push tamamlandı.")
+
+    except Exception as e:
+        print(f"⚠️ Git otomasyon hatası: {e}")
+
 def tarayici_baslat():
     print("🌐 Chrome başlatılıyor...")
     options = Options()
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
-    
+
     # --- BOT KORUMASI AŞMA AYARLARI ---
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+    options.add_argument(
+        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    )
     # ---------------------------------
-    
+
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
-    
+
     # Tarayıcıya "Ben bir bot değilim" sinyalini ver (webdriver özelliğini sil)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    
+
     print("✅ Chrome başlatıldı!")
     return driver
 
@@ -42,18 +137,18 @@ def mac_json_kaydet(yeni_maclar):
                 data = json.load(f)
         except:
             pass
-    
+
     guncel_dict = {f"{m['tarih']}_{m['ev_sahibi']}_{m['deplasman']}": m for m in data.get("matches", [])}
     for ym in yeni_maclar:
         guncel_dict[f"{ym['tarih']}_{ym['ev_sahibi']}_{ym['deplasman']}"] = ym
-    
+
     yeni_liste = sorted(guncel_dict.values(), key=lambda x: (x["tarih"], x["saat"]))
     for i, m in enumerate(yeni_liste, 1):
         m["index"] = i
-    
+
     data["matches"] = yeni_liste
     data["updated"] = datetime.datetime.now().isoformat()
-    
+
     os.makedirs(os.path.dirname(CIKTI_DOSYA), exist_ok=True)
     with open(CIKTI_DOSYA, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
@@ -152,22 +247,19 @@ def tum_maclari_yukle(driver, url):
     return 0
 
 def iddaa_cek(driver):
-    # Bugünün tarihini alıyoruz (JSON'a yazdırmak için)
     bugun = datetime.date.today()
-    
-    # İDDAA'DAKİ DOĞRU URL (Tarih parametresi olmadan direkt bugünün maçları)
     url = "https://www.iddaa.com/program/futbol"
-    
+
     print(f"📡 {url}")
     toplam = tum_maclari_yukle(driver, url)
-    
+
     if toplam == 0:
         print("   ❌ Maç bulunamadı!")
         return []
-    
+
     print(f"\n🔍 Maç isimleri toplanıyor...")
     takim_adlari = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
-    
+
     mac_listesi = []
     for ta in takim_adlari:
         try:
@@ -186,34 +278,33 @@ def iddaa_cek(driver):
                 mac_listesi.append({"ev": ev, "dep": dep})
         except:
             continue
-    
+
     print(f"   📋 {len(mac_listesi)} maç bulundu:")
     for i, m in enumerate(mac_listesi):
         print(f"      {i+1}. {m['ev']} vs {m['dep']}")
-    
+
     print(f"\n🔽 Maçlar tek tek açılıyor...\n")
     maclar = []
     basarili = 0
     basarisiz = 0
-    
+
     for idx, mac in enumerate(mac_listesi):
         print(f"   [{idx+1}/{len(mac_listesi)}] {mac['ev']} vs {mac['dep']}")
-        
+
         temel_oranlar = {}
         detay_oranlar = {}
         mac_saat = ""
         mac_kodu = ""
-        
+
         for deneme in range(3):
             try:
-                # Sayfayı yeniden yükle ve maç listesine dön
                 driver.get(url)
                 time.sleep(5)
-                
+
                 body = driver.find_element(By.TAG_NAME, "body")
                 lines = [l.strip() for l in body.text.split("\n") if l.strip()]
-                
-                # Temel oranları (MS 1, X, 2) çek
+
+                # Temel oranlar
                 for li in range(len(lines) - 15):
                     if lines[li + 2] == mac['ev'] and lines[li + 4] == mac['dep'] and lines[li + 3] == "-":
                         mac_saat = lines[li + 1] if saat_mi(lines[li + 1]) else ""
@@ -242,33 +333,27 @@ def iddaa_cek(driver):
                             except:
                                 pass
                         break
-                
-                # Detay oranlarını çekmek için maça tıkla
+
+                # Detay oranları için tıkla
                 takim_els = driver.find_elements(By.CSS_SELECTOR, ".i_tnw__t8AmC")
                 for ta in takim_els:
                     ta_text = ta.text.strip()
                     if mac['ev'] in ta_text and mac['dep'] in ta_text:
                         try:
-                            # 1. Maçı ekranda görünür yap
                             driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", ta)
                             time.sleep(1)
-                            
-                            # 2. İDDAA'NIN BOTU KANDIRMAK İÇİN GERÇEK FARE HAREKETİ (ActionChains)
+
                             actions = ActionChains(driver)
                             actions.move_to_element(ta).click().perform()
-                            
-                            # 3. Sayfanın (Oranların) yüklenmesi için bekle
                             time.sleep(4)
-                            
-                            # 4. Sayfayı aşağı yukarı kaydırarak tembel yüklenen (lazy-load) verileri tetikle
+
                             driver.execute_script("window.scrollTo(0, 600);")
                             time.sleep(1)
                             driver.execute_script("window.scrollTo(0, 1200);")
                             time.sleep(1)
                             driver.execute_script("window.scrollTo(0, 0);")
                             time.sleep(2)
-                            
-                            # 5. Oranların yüklenip yüklenmediğini kontrol et
+
                             if tumu_bekle(driver, 15):
                                 detay_oranlar = detay_parse(driver)
                             else:
@@ -276,30 +361,30 @@ def iddaa_cek(driver):
                         except Exception as click_err:
                             print(f"      ⚠️ Tıklama Hatası: {str(click_err)[:40]}")
                         break
-                
+
                 if len(detay_oranlar) > 0:
                     print(f"      ✅ {len(detay_oranlar)} detay oran çekildi")
                     break
-                
+
                 if deneme < 2:
                     print(f"      ⏳ Deneme {deneme+1} başarısız, 30sn sonra tekrar...")
                     time.sleep(30)
                 else:
                     print("      ❌ 3 deneme de başarısız oldu")
-                    
+
             except Exception as e:
                 print(f"      ⚠️ Hata: {str(e)[:60]}")
                 if deneme < 2:
                     print(f"      ⏳ Hata sonrası 30sn bekleniyor...")
                     time.sleep(30)
-        
+
         if len(detay_oranlar) > 0:
             basarili += 1
         else:
             basarisiz += 1
-        
+
         tum_oranlar = {**temel_oranlar, **detay_oranlar}
-        
+
         maclar.append({
             "index": 0,
             "mac_kodu": mac_kodu,
@@ -307,7 +392,7 @@ def iddaa_cek(driver):
             "deplasman": mac['dep'],
             "saat": mac_saat,
             "lig": "",
-            "tarih": bugun.isoformat(), # Tarih buraya dinamik olarak yazılıyor
+            "tarih": bugun.isoformat(),
             "cekme_zamani": datetime.datetime.now().isoformat(),
             "durum": "baslamadi",
             "skor_ev": 0,
@@ -317,13 +402,13 @@ def iddaa_cek(driver):
             "kaynak": "iddaa.com",
             "oranlar": tum_oranlar
         })
-        
+
         print(f"      📊 Toplam {len(tum_oranlar)} oran")
-        
+
         if (idx + 1) % 10 == 0:
             mac_json_kaydet(maclar)
             print(f"   💾 {len(maclar)} maç kaydedildi (✅{basarili} ❌{basarisiz})")
-    
+
     return maclar
 
 def mac_cek():
@@ -350,15 +435,18 @@ def mac_cek():
         if maclar:
             mac_json_kaydet(maclar)
             print("\n🎉 İşlem tamamlandı!")
-            print(f"\n📌 GitHub'a yükleyin:")
-            print(f"   git add -A")
-            print(f'   git commit -m "Oranlar ve temel veriler güncellendi"')
-            print(f"   git push")
+
+            # ✅ OTOMATİK GIT ADD/COMMIT/PULL/PUSH
+            git_add_commit_pull_push()
+
     except Exception as e:
         print(f"❌ Hata: {e}")
     finally:
         if driver:
-            driver.quit()
+            try:
+                driver.quit()
+            except Exception:
+                pass
 
 if __name__ == "__main__":
     print("⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI")

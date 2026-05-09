@@ -1,0 +1,526 @@
+{
+  "created_at": "2026-05-08T20:21:34.044152",
+  "source_url": "https://www.spordb.com/iddaa-programi",
+  "count": 53,
+  "matches": [
+    {
+      "spordb_match_id": "4066333",
+      "tarih": "2026-05-08",
+      "teams_slug": "platense-ca-penarol",
+      "skor_ev": 1,
+      "skor_dep": 1,
+      "score_text": "1-1",
+      "cekme_zamani": "2026-05-08T20:21:31.751056"
+    },
+    {
+      "spordb_match_id": "4066357",
+      "tarih": "2026-05-08",
+      "teams_slug": "mirassol-fc-ldu-quito",
+      "skor_ev": 2,
+      "skor_dep": 0,
+      "score_text": "2-0",
+      "cekme_zamani": "2026-05-08T20:21:31.802742"
+    },
+    {
+      "spordb_match_id": "4067991",
+      "tarih": "2026-05-08",
+      "teams_slug": "llaneros-atletico-fc",
+      "skor_ev": 3,
+      "skor_dep": 0,
+      "score_text": "3-0",
+      "cekme_zamani": "2026-05-08T20:21:31.852502"
+    },
+    {
+      "spordb_match_id": "4066404",
+      "tarih": "2026-05-08",
+      "teams_slug": "boston-river-millonarios",
+      "skor_ev": 2,
+      "skor_dep": 4,
+      "score_text": "2-4",
+      "cekme_zamani": "2026-05-08T20:21:31.896034"
+    },
+    {
+      "spordb_match_id": "4066405",
+      "tarih": "2026-05-08",
+      "teams_slug": "o-higgins-sao-paulo",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:31.935146"
+    },
+    {
+      "spordb_match_id": "4066297",
+      "tarih": "2026-05-08",
+      "teams_slug": "coquimbo-unido-universitario",
+      "skor_ev": 2,
+      "skor_dep": 1,
+      "score_text": "2-1",
+      "cekme_zamani": "2026-05-08T20:21:31.971077"
+    },
+    {
+      "spordb_match_id": "4059107",
+      "tarih": "2026-05-08",
+      "teams_slug": "birmingham-legion-miami-fc",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:32.018553"
+    },
+    {
+      "spordb_match_id": "4066285",
+      "tarih": "2026-05-08",
+      "teams_slug": "medellin-flamengo",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:32.057479",
+      "ev_sahibi": "Medellin 0-0 Flamengo",
+      "deplasman": "3.67"
+    },
+    {
+      "spordb_match_id": "4066464",
+      "tarih": "2026-05-08",
+      "teams_slug": "blooming-bragantino",
+      "skor_ev": 0,
+      "skor_dep": 6,
+      "score_text": "0-6",
+      "cekme_zamani": "2026-05-08T20:21:32.093181"
+    },
+    {
+      "spordb_match_id": "4066465",
+      "tarih": "2026-05-08",
+      "teams_slug": "carabobo-river-plate",
+      "skor_ev": 1,
+      "skor_dep": 2,
+      "score_text": "1-2",
+      "cekme_zamani": "2026-05-08T20:21:32.130177"
+    },
+    {
+      "spordb_match_id": "4067980",
+      "tarih": "2026-05-08",
+      "teams_slug": "atletico-bucaramanga-real-santander",
+      "skor_ev": 5,
+      "skor_dep": 0,
+      "score_text": "5-0",
+      "cekme_zamani": "2026-05-08T20:21:32.168316"
+    },
+    {
+      "spordb_match_id": "4066345",
+      "tarih": "2026-05-08",
+      "teams_slug": "junior-cerro-porteno",
+      "skor_ev": 0,
+      "skor_dep": 1,
+      "score_text": "0-1",
+      "cekme_zamani": "2026-05-08T20:21:32.206291"
+    },
+    {
+      "spordb_match_id": "4032347",
+      "tarih": "2026-05-08",
+      "teams_slug": "kryvbas-kryvyi-rih-karpaty-lviv-2020",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:32.240716"
+    },
+    {
+      "spordb_match_id": "4060191",
+      "tarih": "2026-05-08",
+      "teams_slug": "shb-da-nang-fc-binh-duong",
+      "skor_ev": 2,
+      "skor_dep": 0,
+      "score_text": "2-0",
+      "cekme_zamani": "2026-05-08T20:21:32.279764"
+    },
+    {
+      "spordb_match_id": "4061872",
+      "tarih": "2026-05-08",
+      "teams_slug": "bfc-daugavpils-fk-riga",
+      "skor_ev": 1,
+      "skor_dep": 3,
+      "score_text": "1-3",
+      "cekme_zamani": "2026-05-08T20:21:32.319104"
+    },
+    {
+      "spordb_match_id": "4067424",
+      "tarih": "2026-05-08",
+      "teams_slug": "lokomotiv-plovdiv-arda-kardzhali",
+      "skor_ev": 2,
+      "skor_dep": 0,
+      "score_text": "2-0",
+      "cekme_zamani": "2026-05-08T20:21:32.364822"
+    },
+    {
+      "spordb_match_id": "4065197",
+      "tarih": "2026-05-08",
+      "teams_slug": "ilves-tampere-oulu",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:32.409810",
+      "ev_sahibi": "Ilves Tampere 1-0 Oulu",
+      "deplasman": "2.62"
+    },
+    {
+      "spordb_match_id": "4065198",
+      "tarih": "2026-05-08",
+      "teams_slug": "tps-turku-hjk-helsinki",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:32.478783",
+      "ev_sahibi": "TPS Turku 1-0 HJK Helsinki",
+      "deplasman": "4.03"
+    },
+    {
+      "spordb_match_id": "4032350",
+      "tarih": "2026-05-08",
+      "teams_slug": "zhytychi-zhytomyr-oleksandria",
+      "skor_ev": 2,
+      "skor_dep": 1,
+      "score_text": "2-1",
+      "cekme_zamani": "2026-05-08T20:21:32.518445",
+      "ev_sahibi": "Zhytychi Zhytomyr 2-1 Oleksandria",
+      "deplasman": "1.06"
+    },
+    {
+      "spordb_match_id": "4067789",
+      "tarih": "2026-05-08",
+      "teams_slug": "fakel-ska-khabarovsk",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:32.559169",
+      "ev_sahibi": "Fakel 0-0 SKA Khabarovsk",
+      "deplasman": "1.09"
+    },
+    {
+      "spordb_match_id": "4067790",
+      "tarih": "2026-05-08",
+      "teams_slug": "chayka-chernomorets",
+      "skor_ev": 0,
+      "skor_dep": 2,
+      "score_text": "0-2",
+      "cekme_zamani": "2026-05-08T20:21:32.597271",
+      "ev_sahibi": "Chayka 0-2 Chernomorets",
+      "deplasman": "2.27"
+    },
+    {
+      "spordb_match_id": "4063631",
+      "tarih": "2026-05-08",
+      "teams_slug": "baranovichi-arsenal",
+      "skor_ev": 1,
+      "skor_dep": 1,
+      "score_text": "1-1",
+      "cekme_zamani": "2026-05-08T20:21:32.637514",
+      "ev_sahibi": "Baranovichi 1-1 Arsenal",
+      "deplasman": "2.77"
+    },
+    {
+      "spordb_match_id": "4027002",
+      "tarih": "2026-05-08",
+      "teams_slug": "lks-lodz-swit-szczecin",
+      "skor_ev": 1,
+      "skor_dep": 1,
+      "score_text": "1-1",
+      "cekme_zamani": "2026-05-08T20:21:32.674593"
+    },
+    {
+      "spordb_match_id": "4067966",
+      "tarih": "2026-05-08",
+      "teams_slug": "stade-tunisien-ben-guerdane",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:32.710212",
+      "ev_sahibi": "Stade Tunisien 0-0 Ben Guerdane",
+      "deplasman": "1.38"
+    },
+    {
+      "spordb_match_id": "4065058",
+      "tarih": "2026-05-08",
+      "teams_slug": "haka-eif-ekenas",
+      "skor_ev": 3,
+      "skor_dep": 2,
+      "score_text": "3-2",
+      "cekme_zamani": "2026-05-08T20:21:32.747023"
+    },
+    {
+      "spordb_match_id": "4043864",
+      "tarih": "2026-05-08",
+      "teams_slug": "sabah-kapaz",
+      "skor_ev": 0,
+      "skor_dep": 1,
+      "score_text": "0-1",
+      "cekme_zamani": "2026-05-08T20:21:32.782342"
+    },
+    {
+      "spordb_match_id": "4027322",
+      "tarih": "2026-05-08",
+      "teams_slug": "rakow-czestochowa-korona-kielce",
+      "skor_ev": 2,
+      "skor_dep": 0,
+      "score_text": "2-0",
+      "cekme_zamani": "2026-05-08T20:21:32.821220"
+    },
+    {
+      "spordb_match_id": "4032914",
+      "tarih": "2026-05-08",
+      "teams_slug": "amstetten-austria-klagenfurt",
+      "skor_ev": 2,
+      "skor_dep": 0,
+      "score_text": "2-0",
+      "cekme_zamani": "2026-05-08T20:21:32.855543"
+    },
+    {
+      "spordb_match_id": "4032916",
+      "tarih": "2026-05-08",
+      "teams_slug": "fc-liefering-admira-wacker",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:32.891933"
+    },
+    {
+      "spordb_match_id": "4032918",
+      "tarih": "2026-05-08",
+      "teams_slug": "hertha-sturm-graz-ii",
+      "skor_ev": 2,
+      "skor_dep": 0,
+      "score_text": "2-0",
+      "cekme_zamani": "2026-05-08T20:21:32.928148"
+    },
+    {
+      "spordb_match_id": "4032919",
+      "tarih": "2026-05-08",
+      "teams_slug": "kapfenberger-sv-st-polten",
+      "skor_ev": 0,
+      "skor_dep": 3,
+      "score_text": "0-3",
+      "cekme_zamani": "2026-05-08T20:21:32.964111"
+    },
+    {
+      "spordb_match_id": "4032920",
+      "tarih": "2026-05-08",
+      "teams_slug": "rapid-wien-ii-first-vienna",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.001067"
+    },
+    {
+      "spordb_match_id": "4066027",
+      "tarih": "2026-05-08",
+      "teams_slug": "hobro-ik-b-93",
+      "skor_ev": 3,
+      "skor_dep": 2,
+      "score_text": "3-2",
+      "cekme_zamani": "2026-05-08T20:21:33.055988"
+    },
+    {
+      "spordb_match_id": "4066716",
+      "tarih": "2026-05-08",
+      "teams_slug": "thisted-akademisk-bk",
+      "skor_ev": 0,
+      "skor_dep": 1,
+      "score_text": "0-1",
+      "cekme_zamani": "2026-05-08T20:21:33.107481"
+    },
+    {
+      "spordb_match_id": "4061873",
+      "tarih": "2026-05-08",
+      "teams_slug": "rigas-skola-liepaja",
+      "skor_ev": 4,
+      "skor_dep": 0,
+      "score_text": "4-0",
+      "cekme_zamani": "2026-05-08T20:21:33.161223"
+    },
+    {
+      "spordb_match_id": "4062093",
+      "tarih": "2026-05-08",
+      "teams_slug": "jk-tammeka-tartu-fc-kuressaare",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:33.195354"
+    },
+    {
+      "spordb_match_id": "4066861",
+      "tarih": "2026-05-08",
+      "teams_slug": "vojvodina-cukaricki-stankom",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:33.234452"
+    },
+    {
+      "spordb_match_id": "4067979",
+      "tarih": "2026-05-08",
+      "teams_slug": "al-shahaniya-al-kharitiyath",
+      "skor_ev": 3,
+      "skor_dep": 0,
+      "score_text": "3-0",
+      "cekme_zamani": "2026-05-08T20:21:33.282064"
+    },
+    {
+      "spordb_match_id": "4048804",
+      "tarih": "2026-05-08",
+      "teams_slug": "kaiserslautern-arminia-bielefeld",
+      "skor_ev": 2,
+      "skor_dep": 0,
+      "score_text": "2-0",
+      "cekme_zamani": "2026-05-08T20:21:33.324120"
+    },
+    {
+      "spordb_match_id": "4048806",
+      "tarih": "2026-05-08",
+      "teams_slug": "paderborn-karlsruher-sc",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:33.363166"
+    },
+    {
+      "spordb_match_id": "4055810",
+      "tarih": "2026-05-08",
+      "teams_slug": "js-kabylie-es-setif",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:33.406138",
+      "ev_sahibi": "JS Kabylie 1-0 ES Setif",
+      "deplasman": "1.58"
+    },
+    {
+      "spordb_match_id": "4065027",
+      "tarih": "2026-05-08",
+      "teams_slug": "al-hussein-al-faisaly",
+      "skor_ev": 1,
+      "skor_dep": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-08T20:21:33.448215",
+      "ev_sahibi": "Al Hussein 1-0 Al Faisaly",
+      "deplasman": "2.08"
+    },
+    {
+      "spordb_match_id": "4062671",
+      "tarih": "2026-05-08",
+      "teams_slug": "viborg-sonderjyske",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.491303",
+      "ev_sahibi": "Viborg 0-0 SonderjyskE",
+      "deplasman": "1.36"
+    },
+    {
+      "spordb_match_id": "4065199",
+      "tarih": "2026-05-08",
+      "teams_slug": "kups-kuopio-sjk-seinajoki",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.528184",
+      "ev_sahibi": "KuPS Kuopio 0-0 SJK Seinajoki",
+      "deplasman": "1.53"
+    },
+    {
+      "spordb_match_id": "4065463",
+      "tarih": "2026-05-08",
+      "teams_slug": "elfsborg-brommapojkarna",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.562897",
+      "ev_sahibi": "Elfsborg 0-0 Brommapojkarna",
+      "deplasman": "1.61"
+    },
+    {
+      "spordb_match_id": "4063243",
+      "tarih": "2026-05-08",
+      "teams_slug": "ranheim-kongsvinger",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.600221",
+      "ev_sahibi": "Ranheim 0-0 Kongsvinger",
+      "deplasman": "2.09"
+    },
+    {
+      "spordb_match_id": "4065695",
+      "tarih": "2026-05-08",
+      "teams_slug": "orebro-ik-brage",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.636920",
+      "ev_sahibi": "Örebro 0-0 IK Brage",
+      "deplasman": "2.16"
+    },
+    {
+      "spordb_match_id": "4065696",
+      "tarih": "2026-05-08",
+      "teams_slug": "varbergs-boll-ifk-varnamo",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.674642",
+      "ev_sahibi": "Varbergs Boll 0-0 IFK Varnamo",
+      "deplasman": "1.88"
+    },
+    {
+      "spordb_match_id": "4067908",
+      "tarih": "2026-05-08",
+      "teams_slug": "eskisehirspor-ayvalikgucu-belediyespor",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.712199",
+      "ev_sahibi": "Eskişehirspor 0-0 Ayvalıkgücü Belediyespor",
+      "deplasman": "1.44"
+    },
+    {
+      "spordb_match_id": "4049057",
+      "tarih": "2026-05-08",
+      "teams_slug": "erzgebirge-aue-msv-duisburg",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.747389",
+      "ev_sahibi": "Erzgebirge Aue 0-0 MSV Duisburg",
+      "deplasman": "4.16"
+    },
+    {
+      "spordb_match_id": "4066743",
+      "tarih": "2026-05-08",
+      "teams_slug": "skive-ik-fc-helsingor",
+      "skor_ev": 0,
+      "skor_dep": 1,
+      "score_text": "0-1",
+      "cekme_zamani": "2026-05-08T20:21:33.784007",
+      "ev_sahibi": "Skive IK 0-1 FC Helsingor",
+      "deplasman": "1.88"
+    },
+    {
+      "spordb_match_id": "4067384",
+      "tarih": "2026-05-08",
+      "teams_slug": "cska-1948-sofia-cska-sofia",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.829816",
+      "ev_sahibi": "CSKA 1948 Sofia 0-0 CSKA Sofia",
+      "deplasman": "2.60"
+    },
+    {
+      "spordb_match_id": "4063632",
+      "tarih": "2026-05-08",
+      "teams_slug": "gomel-isloch-minsk",
+      "skor_ev": 0,
+      "skor_dep": 0,
+      "score_text": "0-0",
+      "cekme_zamani": "2026-05-08T20:21:33.880553",
+      "ev_sahibi": "Gomel 0-0 Isloch Minsk",
+      "deplasman": "2.09"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "created_at": "2026-05-09T06:38:23.796002",
+  "source_url": "https://www.spordb.com/iddaa-programi",
+  "count": 3,
+  "matches": [
+    {
+      "spordb_match_id": "4068029",
+      "tarih": "2026-05-09",
+      "teams_slug": "montevideo-wanderers-liverpool-montevideo",
+      "skor1": 1,
+      "skor2": 0,
+      "score_text": "1-0",
+      "cekme_zamani": "2026-05-09T06:38:23.739469",
+      "sp_home": "Montevideo Wanderers",
+      "sp_away": "Liverpool (Montevideo)",
+      "left_cells": [
+        "01:30",
+        "URUG P",
+        "3",
+        "Montevideo Wanderers"
+      ],
+      "right_cells": [
+        "Liverpool (Montevideo)",
+        "1-0",
+        "2.92",
+        "2.82",
+        "1.85",
+        "1.62",
+        "1.61",
+        "2.28",
+        "1.25"
+      ]
+    },
+    {
+      "spordb_match_id": "4059108",
+      "tarih": "2026-05-09",
+      "teams_slug": "lexington-sporting-monterey-bay",
+      "skor1": 3,
+      "skor2": 1,
+      "score_text": "3-1",
+      "cekme_zamani": "2026-05-09T06:38:23.751846",
+      "sp_home": "Lexington Sporting",
+      "sp_away": "Monterey Bay",
+      "left_cells": [
+        "02:30",
+        "ABDN",
+        "3",
+        "Lexington Sporting"
+      ],
+      "right_cells": [
+        "Monterey Bay",
+        "2-0",
+        "1.29",
+        "3.73",
+        "5.11",
+        "1.76",
+        "1.49",
+        "1.62",
+        "1.62",
+        "3.38",
+        "1.06",
+        "2.03",
+        "1.29",
+        "2.14",
+        "3.38",
+        "1.06",
+        "1.21",
+        "2.42",
+        "3.49",
+        "1.75"
+      ]
+    },
+    {
+      "spordb_match_id": "4059109",
+      "tarih": "2026-05-09",
+      "teams_slug": "colorado-springs-orange-county-sc",
+      "skor1": 2,
+      "skor2": 2,
+      "score_text": "2-2",
+      "cekme_zamani": "2026-05-09T06:38:23.761540",
+      "sp_home": "Colorado Springs",
+      "sp_away": "Orange County SC",
+      "left_cells": [
+        "04:00",
+        "ABDN",
+        "3",
+        "Colorado Springs"
+      ],
+      "right_cells": [
+        "Orange County SC",
+        "1-1",
+        "1.43",
+        "3.39",
+        "4.10",
+        "1.71",
+        "1.52",
+        "1.54",
+        "1.69",
+        "3.27",
+        "1.07",
+        "1.07",
+        "1.78",
+        "1.27",
+        "2.21",
+        "3.27",
+        "1.07",
+        "1.19",
+        "2.50",
+        "3.37",
+        "1.74"
+      ]
+    }
+  ]
+}

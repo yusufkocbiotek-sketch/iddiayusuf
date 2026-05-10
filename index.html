@@ -264,96 +264,195 @@
 <script>
 const JSON_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
 const GECMIS_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/gecmis_maclar.json";
-let tumMaclar=[],gecmisMaclar=[];
+let tumMaclar=[], gecmisMaclar=[];
 
-async function yukle(){try{const r=await fetch(JSON_URL+"?t="+Date.now());const d=await r.json();tumMaclar=d.matches||[];document.getElementById("info").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR");tarihleriDoldur();ligleriDoldur();filtrele();gecmisYukle()}catch(e){console.error(e)}}
-async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());gecmisMaclar=(await r.json()).matches||[];}catch(e){}}
-
-function tarihleriDoldur(){const s=document.getElementById("tarihSelect");[...new Set(tumMaclar.map(m=>m.tarih))].sort().forEach(t=>{const o=document.createElement("option");o.value=t;o.textContent=new Date(t).toLocaleDateString("tr-TR");s.appendChild(o);});}
-function ligleriDoldur(){const s=document.getElementById("ligSelect");const kl=document.getElementById("kesifLig");[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x))].sort().forEach(l=>{const o=document.createElement("option");o.value=l;o.textContent=l;s.appendChild(o.cloneNode(true));if(kl)kl.appendChild(o);});}
-
-function mainTab(i){document.querySelectorAll(".main-tab").forEach((t,idx)=>idx===i?t.classList.add("aktif"):t.classList.remove("aktif"));document.querySelectorAll(".tab-icerik").forEach((t,idx)=>idx===i?t.classList.add("aktif"):t.classList.remove("aktif"));if(i===2)setTimeout(kombineKesifFiltrele,100);}
-
-/* --- BÜLTEN & ANALİZ TEMEL FONKSİYONLAR --- */
-function pct(v){return v?Math.round(100/v)+"%":"";}
-function dogruOran(m,key){if(!m||m.durum!=="bitti")return false;const se=Number(m.skor_ev||0),sd=Number(m.skor_dep||0);if(key==="Maç Sonucu_1")return se>sd;if(key==="Maç Sonucu_0")return se===sd;if(key==="Maç Sonucu_2")return sd>se;if(key.includes("Var"))return se>0&&sd>0;if(key.includes("Yok"))return !(se>0&&sd>0);return false;}
-
-function filtrele(){const a=(document.getElementById("aramaInput").value||"").toLowerCase();const t=document.getElementById("tarihSelect").value;const l=document.getElementById("ligSelect").value;const d=document.getElementById("durumSelect").value;
-let maclar=tumMaclar.filter(m=>{if(a&&!(m.ev_sahibi||"").toLowerCase().includes(a)&&!(m.deplasman||"").toLowerCase().includes(a))return false;if(t&&m.tarih!==t)return false;if(l&&(m.lig||"")!==l)return false;if(d&&m.durum!==d)return false;return true;});
-render(maclar);
-document.getElementById("statsBar").innerHTML=`<div class="si"><div class="sv">${maclar.length}</div><div class="sl">Maç</div></div>`;
+// 1. VERİ YÜKLEME
+async function yukle(){
+  try {
+    const r = await fetch(JSON_URL+"?t="+Date.now());
+    const d = await r.json();
+    tumMaclar = d.matches || [];
+    document.getElementById("info").innerHTML = "Son: " + new Date(d.updated).toLocaleString("tr-TR");
+    tarihleriDoldur();
+    ligleriDoldur();
+    filtrele();
+    gecmisYukle();
+  } catch(e) {
+    console.error("Yükleme Hatası:", e);
+    document.getElementById("container").innerHTML = '<div class="hata">Veri çekilemedi.</div>';
+  }
 }
 
-function render(maclar){const c=document.getElementById("container");if(!maclar.length){c.innerHTML='<div class="bos">Sonuç yok</div>';return;}const grp={};maclar.forEach(m=>{if(!grp[m.tarih])grp[m.tarih]=[];grp[m.tarih].push(m);});let h="";
-Object.keys(grp).sort().forEach(tarih=>{const gm=grp[tarih];h+='<div class="gun-baslik">'+new Date(tarih).toLocaleDateString("tr-TR",{day:'numeric',month:'long'})+' <span>'+gm.length+'</span></div>';
-gm.forEach(m=>{const o=m.oranlar||{};const skor=m.durum==="bitti"?` <b style="color:#f0b90b">${m.skor_ev}-${m.skor_dep}</b>`:'';
-h+=`<div class="mac-satir"><div class="ms-saat">${m.saat||'-'}</div><div class="ms-takim"><div class="ev">${m.ev_sahibi}${skor}</div><div class="dep">${m.deplasman}</div></div>`;
-h+=oranHucre(o["Maç Sonucu_1"],m,"Maç Sonucu_1");h+=oranHucre(o["Maç Sonucu_0"],m,"Maç Sonucu_0");h+=oranHucre(o["Maç Sonucu_2"],m,"Maç Sonucu_2");
-h+=oranHucre(o["Karşılıklı Gol_Var"],m,"Karşılıklı Gol_Var");h+=oranHucre(o["Karşılıklı Gol_Yok"],m,"Karşılıklı Gol_Yok");h+='</div>';});});c.innerHTML=h;}
+async function gecmisYukle(){
+  try {
+    const r = await fetch(GECMIS_URL+"?t="+Date.now());
+    const d = await r.json();
+    gecmisMaclar = d.matches || [];
+  } catch(e) { console.error("Geçmiş Hatası:", e); }
+}
 
-function oranHucre(v,m,key){if(!v)return'<div class="oran-hucre"><div class="ov" style="color:#333">-</div></div>';const cls=dogruOran(m,key)?" dogru":"";return`<div class="oran-hucre${cls}"><div class="ov">${v}</div></div>`;}
-function resetFiltre(){document.getElementById("aramaInput").value="";document.getElementById("tarihSelect").value="";document.getElementById("ligSelect").value="";document.getElementById("durumSelect").value="";filtrele();}
+function tarihleriDoldur(){
+  const s = document.getElementById("tarihSelect");
+  if(!s) return;
+  [...new Set(tumMaclar.map(m=>m.tarih))].sort().forEach(t=>{
+    const o = document.createElement("option"); o.value=t; o.textContent=new Date(t).toLocaleDateString("tr-TR"); s.appendChild(o);
+  });
+}
 
-function analizYap(){const t=document.getElementById("analizOranTuru").value;const d=document.getElementById("analizOranDeger").value;if(!t||!d)return;
-const sonuc=gecmisMaclar.filter(m=>m.durum==="bitti"&&Math.abs(parseFloat(m.oranlar[t]||0)-parseFloat(d))<0.05);
-const tutan=sonuc.filter(m=>dogruOran(m,t)).length;const yuzde=sonuc.length?Math.round((tutan/sonuc.length)*100):0;
-document.getElementById("analizSonuc").innerHTML=`<h3>Sonuç</h3><p>Benzer Maç: ${sonuc.length} | Tutan: ${tutan} | Başarı: <b style="color:${yuzde>50?'#0f0':'#f00'}">%${yuzde}</b></p>`;}
+function ligleriDoldur(){
+  const s = document.getElementById("ligSelect");
+  const kl = document.getElementById("kesifLig");
+  if(!s && !kl) return;
+  [...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x))].sort().forEach(l=>{
+    const o = document.createElement("option"); o.value=l; o.textContent=l;
+    if(s) s.appendChild(o.cloneNode(true));
+    if(kl) kl.appendChild(o);
+  });
+}
+
+// 2. SEKME DEĞİŞTİRME
+function mainTab(i){
+  document.querySelectorAll(".main-tab").forEach((t,idx)=> idx===i ? t.classList.add("aktif") : t.classList.remove("aktif"));
+  document.querySelectorAll(".tab-icerik").forEach((t,idx)=> idx===i ? t.classList.add("aktif") : t.classList.remove("aktif"));
+  if(i === 2) setTimeout(kombineKesifFiltrele, 100);
+}
+
+// 3. BÜLTEN FONKSİYONLARI
+function pct(v){ return v ? Math.round(100/v)+"%" : ""; }
+
+function dogruOran(m,key){
+  if(!m || m.durum!=="bitti") return false;
+  const se=Number(m.skor_ev||0), sd=Number(m.skor_dep||0);
+  if(key==="Maç Sonucu_1") return se>sd;
+  if(key==="Maç Sonucu_0") return se===sd;
+  if(key==="Maç Sonucu_2") return sd>se;
+  if(key.includes("Var")) return se>0 && sd>0;
+  if(key.includes("Yok")) return !(se>0 && sd>0);
+  return false;
+}
+
+function filtrele(){
+  const a = (document.getElementById("aramaInput").value||"").toLowerCase();
+  const t = document.getElementById("tarihSelect").value;
+  const l = document.getElementById("ligSelect").value;
+  const d = document.getElementById("durumSelect").value;
+  
+  let maclar = tumMaclar.filter(m=>{
+    if(a && !(m.ev_sahibi||"").toLowerCase().includes(a) && !(m.deplasman||"").toLowerCase().includes(a)) return false;
+    if(t && m.tarih!==t) return false;
+    if(l && (m.lig||"")!==l) return false;
+    if(d && m.durum!==d) return false;
+    return true;
+  });
+  
+  render(maclar);
+  document.getElementById("statsBar").innerHTML = `<div class="si"><div class="sv">${maclar.length}</div><div class="sl">Maç</div></div>`;
+}
+
+function render(maclar){
+  const c = document.getElementById("container");
+  if(!maclar.length){ c.innerHTML='<div class="bos">Sonuç yok</div>'; return; }
+  
+  const grp={};
+  maclar.forEach(m=>{ if(!grp[m.tarih]) grp[m.tarih]=[]; grp[m.tarih].push(m); });
+  
+  let h="";
+  Object.keys(grp).sort().forEach(tarih=>{
+    const gm = grp[tarih];
+    h += `<div class="gun-baslik">${new Date(tarih).toLocaleDateString("tr-TR",{day:'numeric',month:'long'})} <span>${gm.length}</span></div>`;
+    
+    gm.forEach(m=>{
+      const o = m.oranlar||{};
+      const skor = m.durum==="bitti" ? ` <b style="color:#f0b90b">${m.skor_ev}-${m.skor_dep}</b>` : '';
+      
+      h += `<div class="mac-satir">
+        <div class="ms-saat">${m.saat||'-'}</div>
+        <div class="ms-takim">
+          <div class="ev">${m.ev_sahibi}${skor}</div>
+          <div class="dep">${m.deplasman}</div>
+        </div>`;
+        
+      h += oranHucre(o["Maç Sonucu_1"],m,"Maç Sonucu_1");
+      h += oranHucre(o["Maç Sonucu_0"],m,"Maç Sonucu_0");
+      h += oranHucre(o["Maç Sonucu_2"],m,"Maç Sonucu_2");
+      h += oranHucre(o["Karşılıklı Gol_Var"],m,"Karşılıklı Gol_Var");
+      h += oranHucre(o["Karşılıklı Gol_Yok"],m,"Karşılıklı Gol_Yok");
+      
+      h += `</div>`;
+    });
+  });
+  c.innerHTML = h;
+}
+
+function oranHucre(v,m,key){
+  if(!v) return '<div class="oran-hucre"><div class="ov" style="color:#333">-</div></div>';
+  const cls = dogruOran(m,key) ? " dogru" : "";
+  return `<div class="oran-hucre${cls}"><div class="ov">${v}</div></div>`;
+}
+
+function resetFiltre(){
+  document.getElementById("aramaInput").value="";
+  document.getElementById("tarihSelect").value="";
+  document.getElementById("ligSelect").value="";
+  document.getElementById("durumSelect").value="";
+  filtrele();
+}
+
+function analizYap(){
+  const t = document.getElementById("analizOranTuru").value;
+  const d = document.getElementById("analizOranDeger").value;
+  if(!t||!d) return;
+  
+  const sonuc = gecmisMaclar.filter(m => m.durum==="bitti" && Math.abs(parseFloat(m.oranlar[t]||0)-parseFloat(d))<0.05);
+  const tutan = sonuc.filter(m => dogruOran(m,t)).length;
+  const yuzde = sonuc.length ? Math.round((tutan/sonuc.length)*100) : 0;
+  
+  document.getElementById("analizSonuc").innerHTML = `
+    <div class="analiz-panel">
+      <h3>Sonuç</h3>
+      <p>Benzer Maç: ${sonuc.length} | Tutan: ${tutan}</p>
+      <p>Başarı: <b style="color:${yuzde>50?'#0f0':'#f00'}">%${yuzde}</b></p>
+    </div>`;
+}
 
 /* ============================================ */
-/* STRATEJİK KOMBİNE MOTORU (YENİ MANTIK)       */
+/* STRATEJİK KOMBİNE MOTORU (DÜZELTİLMİŞ)       */
 /* ============================================ */
 
-// Sadece işine yarayacak kombinasyonlar
 const STRATEJI_LISTESI = [
-  // TEMEL GÜVENLİK (Hangisi baskın?)
   { id: "MS1", ad: "MS<br>1", market: "Maç Sonucu_1" },
   { id: "MS0", ad: "MS<br>0", market: "Maç Sonucu_0" },
   { id: "MS2", ad: "MS<br>2", market: "Maç Sonucu_2" },
-  
-  // ASIL SORU: GOL OLACAK MI?
   { id: "KGV", ad: "KG<br>VAR", market: "Karşılıklı Gol_Var" },
   { id: "KGY", ad: "KG<br>YOK", market: "Karşılıklı Gol_Yok" },
-  
-  // DETAY: HANGİ YARIDA?
   { id: "IY_KG", ad: "İlk Yarı<br>KG", market: "İlk Yarı Karşılıklı Gol" },
   { id: "2Y_KG_EE", ad: "Her 2 Yarı<br>KG Evet", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur Evet / Evet" },
   { id: "2Y_KG_HH", ad: "Her 2 Yarı<br>KG Hayır", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur (Hayır / Hayır)" },
-  
-  // EKSTRA: İY/MS (Maçın kırılma anı)
   { id: "IY_MS", ad: "İY / MS", market: "İlk Yarı / Maç Sonucu" }
 ];
 
 function kesifDogruMu(m, item) {
   if (!m || m.durum !== "bitti") return false;
   const se = Number(m.skor_ev || 0), sd = Number(m.skor_dep || 0);
-  const tg = se + sd;
   const kg = se > 0 && sd > 0;
   const ms = se > sd ? "1" : (se === sd ? "0" : "2");
   
-  // İlk Yarı Verileri
   const iy_se = Number(m.iy_skor_ev || 0), iy_sd = Number(m.iy_skor_dep || 0);
   const iy_kg = iy_se > 0 && iy_sd > 0;
-  const iy_ms = iy_se > iy_sd ? "1" : (iy_se === iy_sd ? "0" : "2");
-  
-  // İkinci Yarı Hesaplama
   const iky_se = se - iy_se;
   const iky_sd = sd - iy_sd;
   const iky_kg = iky_se > 0 && iky_sd > 0;
 
   const id = item.id;
-
   if (id === "MS1") return ms === "1";
   if (id === "MS0") return ms === "0";
   if (id === "MS2") return ms === "2";
   if (id === "KGV") return kg;
   if (id === "KGY") return !kg;
-  
   if (id === "IY_KG") return iy_kg;
-  if (id === "2Y_KG_EE") return iy_kg && iky_kg; // Her iki yarıda da gol var
-  if (id === "2Y_KG_HH") return !iy_kg && !iky_kg; // Hiçbir yarıda KG yok
-  
-  if (id === "IY_MS") return true; // Bu market karmaşık olduğu için sadece oran benzerliğine bakacağız
-
+  if (id === "2Y_KG_EE") return iy_kg && iky_kg;
+  if (id === "2Y_KG_HH") return !iy_kg && !iky_kg;
+  if (id === "IY_MS") return true; 
   return false;
 }
 
@@ -364,7 +463,6 @@ function kesifYuzdeHesapla(hedefMac, item) {
   const hedefOran = parseFloat(hedefMac.oranlar[marketAdi]);
   if (isNaN(hedefOran)) return null;
 
-  // Tolerans %15
   const altSinir = hedefOran * 0.85;
   const ustSinir = hedefOran * 1.15;
 
@@ -376,7 +474,7 @@ function kesifYuzdeHesapla(hedefMac, item) {
     return !isNaN(bmOran) && bmOran >= altSinir && bmOran <= ustSinir;
   });
 
-  if (benzerMaclar.length < 5) return null; // En az 5 örnek lazım
+  if (benzerMaclar.length < 5) return null;
 
   let tutanSayisi = 0;
   benzerMaclar.forEach(bm => { if (kesifDogruMu(bm, item)) tutanSayisi++; });
@@ -387,7 +485,7 @@ function kesifYuzdeHesapla(hedefMac, item) {
 function kombineKesifFiltrele() {
   const arama = (document.getElementById("kesifArama")?.value || "").toLowerCase();
   const lig = document.getElementById("kesifLig")?.value || "";
-  const durum = document.getElementById("kesifDurum")?.value || "baslamadi"; // Varsayılan: Oynanacaklar
+  const durum = document.getElementById("kesifDurum")?.value || "baslamadi";
   const minYuzde = parseInt(document.getElementById("kesifMinYuzde")?.value || "60");
 
   let maclar = tumMaclar.filter(m => {
@@ -397,19 +495,16 @@ function kombineKesifFiltrele() {
     return true;
   });
 
-  // Analiz Yap
   let analizliMaclar = maclar.map(m => {
     let sonuclar = {};
     STRATEJI_LISTESI.forEach(item => { sonuclar[item.id] = kesifYuzdeHesapla(m, item); });
     return { ...m, analiz: sonuclar };
   });
 
-  // Filtrele: En az bir stratejisi yüksek olanları göster
   if (minYuzde > 0) {
     analizliMaclar = analizliMaclar.filter(m => Object.values(m.analiz).some(a => a && a.yuzde >= minYuzde));
   }
 
-  // Sırala: En yüksek yüzdeli maçlar üstte olsun
   analizliMaclar.sort((a, b) => {
     const maxA = Math.max(...Object.values(a.analiz).filter(x=>x).map(x=>x.yuzde), 0);
     const maxB = Math.max(...Object.values(b.analiz).filter(x=>x).map(x=>x.yuzde), 0);
@@ -448,71 +543,6 @@ function kesifRenderGrid(maclar) {
     const gm = grp[tarih];
     const d = new Date(tarih);
     
-    // Gün Başlığı
-    h += `<div style="padding:10px; background:#1a1a1a; color:#fff; font-weight:bold; border-bottom:1px solid #333;">
-            ${d.toLocaleDateString("tr-TR", {day:'numeric', month:'long', weekday:'long'})}
-          </div>`;
-
-    // --- TABLO BAŞLIĞI (HEADER) ---
-    h += '<div class="tablo-header">';
-    // Sol Sabit Kısım (Maç Bilgisi)
-    h += '<div class="ms-sabit-bolum" style="background:#1a1a1a; padding:10px; align-items:center;">';
-    h += '<div style="width:50px; text-align:center">Saat</div>';
-    h += '<div style="width:220px; text-align:left; padding-left:10px">Maç</div>';
-    h += '</div>';
-    
-    // Sağ Kaydırılabilir Kısım (Kombinasyonlar)
-    h += '<div class="kesif-kombinasyonlar-alani">';
-    STRATEJI_LISTESI.forEach(item => {
-      h += `<div class="kesif-hucre bg-gray" style="border-bottom:2px solid #555;"><div class="kh-baslik">${item.ad}</div></div>`;
-    });
-    h += '</div>';
-    h += '</div>'; // Tablo header bitişi
-
-    // --- MAÇ SATIRLARI ---
-    gm.forEach(m => {
-      // Tek bir satır başlangıcı
-      h += '<div class="mac-satir">';
-      
-      // 1. BÖLÜM: SOL SABİT (Maç Bilgisi)
-      h += '<div class="ms-sabit-bolum" style="background:#181818;">';
-      h += `<div style="width:50px; text-align:center; font-size:12px; color:#aaa;">${m.saat || "-"}</div>`;
-      h += `<div style="width:220px; text-align:left; padding-left:10px; font-size:13px;">
-              <div style="color:#fff; margin-bottom:2px; font-weight:bold;">${m.ev_sahibi || "?"}</div>
-              <div style="color:#888; font-size:11px;">vs ${m.deplasman || "?"}</div>
-            </div>`;
-      h += '</div>'; // Sol bölüm bitişi
-
-      // 2. BÖLÜM: SAĞ KAYDIRILABİLİR (Kombinasyonlar)
-      h += '<div class="kesif-kombinasyonlar-alani">';
-      STRATEJI_LISTESI.forEach(item => {
-        const sonuc = m.analiz[item.id];
-        if (sonuc && sonuc.yuzde !== null) {
-          const rClass = getRenkClass(sonuc.yuzde);
-          const tooltip = `${item.ad}: %${sonuc.yuzde} (${sonuc.tutan}/${sonuc.toplam})`;
-          h += `<div class="kesif-hucre ${rClass}" title="${tooltip}">
-                  <div class="kh-deger">%${sonuc.yuzde}</div>
-                </div>`;
-        } else {
-          h += `<div class="kesif-hucre bg-gray"><div class="kh-deger" style="color:#444">-</div></div>`;
-        }
-      });
-      h += '</div>'; // Sağ bölüm bitişi
-      
-      h += '</div>'; // Satır bitişi (.mac-satir)
-    });
-  });
-  container.innerHTML = h;
-}
-
-  const grp = {};
-  maclar.forEach(m => { if (!grp[m.tarih]) grp[m.tarih] = []; grp[m.tarih].push(m); });
-
-  let h = "";
-  Object.keys(grp).sort().forEach(tarih => {
-    const gm = grp[tarih];
-    const d = new Date(tarih);
-    
     h += `<div style="padding:10px; background:#1a1a1a; color:#fff; font-weight:bold; border-bottom:1px solid #333;">
             ${d.toLocaleDateString("tr-TR", {day:'numeric', month:'long', weekday:'long'})}
           </div>`;
@@ -523,7 +553,6 @@ function kesifRenderGrid(maclar) {
     h += '<div style="width:50px; text-align:center">Saat</div>';
     h += '<div style="width:220px; text-align:left; padding-left:10px">Maç</div>';
     h += '</div>';
-    
     h += '<div class="kesif-kombinasyonlar-alani">';
     STRATEJI_LISTESI.forEach(item => {
       h += `<div class="kesif-hucre bg-gray" style="border-bottom:2px solid #555;"><div class="kh-baslik">${item.ad}</div></div>`;
@@ -546,10 +575,7 @@ function kesifRenderGrid(maclar) {
         const sonuc = m.analiz[item.id];
         if (sonuc && sonuc.yuzde !== null) {
           const rClass = getRenkClass(sonuc.yuzde);
-          // Tooltip detayı
-          const tooltip = `${item.ad}: %${sonuc.yuzde} Başarı (${sonuc.tutan}/${sonuc.toplam} Benzer Maç)`;
-          
-          h += `<div class="kesif-hucre ${rClass}" title="${tooltip}">
+          h += `<div class="kesif-hucre ${rClass}" title="${item.ad}: %${sonuc.yuzde} (${sonuc.tutan}/${sonuc.toplam})">
                   <div class="kh-deger">%${sonuc.yuzde}</div>
                 </div>`;
         } else {
@@ -570,7 +596,9 @@ function kesifReset() {
   kombineKesifFiltrele();
 }
 
+// Başlat
 yukle();
+
 </script>
 </body>
 </html>

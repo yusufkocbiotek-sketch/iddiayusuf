@@ -56,7 +56,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .tablo-header, .mac-satir {
   display: inline-flex !important; 
   align-items: stretch;
-  min-width: 1400px; /* Genişlik yaratarak scroll açar */
   border-bottom: 1px solid #333;
 }
 
@@ -110,10 +109,41 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .ms-saat{text-align:center;padding:6px 2px;display:flex;flex-direction:column}
 .ms-saat .s{color:#00c853;font-weight:700;font-size:12px}
 .ms-saat .t{color:#444;font-size:8px}
-.ms-takim{padding:4px 6px;display:flex;flex-direction:column;gap:0;overflow:hidden}
-.ms-takim .ev{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ms-takim .dep{font-size:10px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ms-takim .skor{color:#f0b90b;font-weight:700;font-size:11px}
+/* ESKİ HALİ SİL, BUNU YAPIŞTIR */
+.ms-takim { 
+  flex: 1; /* BOŞLUĞU DOLDURMASI İÇİN ŞART */
+  padding-left: 10px; 
+  font-size: 14px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Dikey ortalama */
+  min-width: 0; /* Flex itemlarda taşmayı önler */
+}
+
+.ms-takim .ev { 
+  font-size: 13px; /* Biraz büyüttük */
+  font-weight: 600; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.ms-takim .dep { 
+  font-size: 11px; /* Biraz büyüttük */
+  color: #aaa; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.ms-takim .skor { 
+  color: #f0b90b; 
+  font-weight: 700; 
+  font-size: 12px; 
+  margin-left: 5px;
+}
 .oran-hucre{text-align:center;padding:4px 1px;cursor:default;border-left:1px solid #21262d}
 .oran-hucre .ov{font-size:11px;font-weight:700;color:#f0b90b}
 .oran-hucre .op{font-size:7px;color:#00c853;display:block}

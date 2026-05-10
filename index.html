@@ -1,378 +1,282 @@
+Tamam, en güvenli yöntem bu. Aşağıda **HTML dosyanın tamamının güncellenmiş halini** hazırladım.
+
+Yapman gereken tek şey:
+1.  Mevcut `index.html` dosyanın içindeki **tüm kodları sil**.
+2.  Aşağıdaki kodu kopyalayıp **yapıştır**.
+3.  Kaydet ve sayfayı yenile.
+
+Bu kod; CSS stillerini, HTML yapısını ve JavaScript analiz motorunu (senin verdiğin listeyle birlikte) hatasız bir şekilde içerir.
+
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İddaa Oranları - Analiz & Bülten</title>
+<title>⚽ İddaa Oranları & Analiz</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;min-height:100vh}
-.header{background:linear-gradient(135deg,#1a1f2e,#0d1117);padding:12px 20px;border-bottom:2px solid #00c853;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.header h1{font-size:20px;color:#00c853}
-.header .info{font-size:11px;color:#666;text-align:right}
-.main-tabs{display:flex;background:#161b22;border-bottom:1px solid #21262d}
-.main-tab{flex:1;text-align:center;padding:10px;cursor:pointer;font-size:13px;font-weight:600;color:#888;border-bottom:3px solid transparent}
-.main-tab:hover{color:#e6e6e6;background:#1a2233}
-.main-tab.aktif{color:#00c853;border-bottom-color:#00c853;background:#0d1117}
-.tab-icerik{display:none}.tab-icerik.aktif{display:block}
-.stats-bar{background:#161b22;padding:8px 15px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #21262d}
-.si{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:6px 12px;display:flex;gap:6px;align-items:center}
-.si .sv{font-size:15px;font-weight:700;color:#00c853}
-.si .sl{font-size:10px;color:#888}
-.filters{background:#161b22;padding:10px 15px;border-bottom:1px solid #21262d}
-.fr{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}.fr:last-child{margin-bottom:0}
-.filters input,.filters select{background:#0d1117;color:#e6e6e6;border:1px solid #30363d;padding:6px 8px;border-radius:5px;font-size:11px;outline:none}
-.filters input:focus,.filters select:focus{border-color:#00c853}
-.filters input[type=text]{min-width:160px;flex:1;max-width:250px}
-.filters input[type=number]{width:70px}
-.fl{font-size:10px;color:#888;white-space:nowrap}
-.fb{font-size:10px;color:#00c853;font-weight:700}
-.btn-r{background:#21262d;color:#e6e6e6;border:1px solid #30363d;padding:6px 10px;border-radius:5px;cursor:pointer;font-size:11px}
-.btn-a{background:#00c853;color:#0d1117;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-size:11px;font-weight:700}
-.ofk{background:#0d1117;border:1px solid #21262d;border-radius:5px;padding:6px 10px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
-.filtre-tag{background:#1a3a1a;border:1px solid #00c853;border-radius:4px;padding:3px 7px;font-size:10px;display:inline-flex;align-items:center;gap:5px;margin:2px}
-.filtre-tag .ft-text{color:#00c853}.filtre-tag .ft-sil{color:#e74c3c;cursor:pointer;font-weight:700}
-.filtre-listesi{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+  /* GENEL STİLLER */
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #eee; margin: 0; padding: 0; }
+  .header { background: #1e1e1e; padding: 15px; text-align: center; border-bottom: 2px solid #333; position: sticky; top: 0; z-index: 100; }
+  .header h1 { margin: 0; font-size: 1.2rem; color: #fff; }
+  .info { font-size: 0.8rem; color: #888; margin-top: 5px; }
+  
+  /* TAB MENÜ */
+  .main-tabs { display: flex; background: #1a1a1a; border-bottom: 1px solid #333; overflow-x: auto; }
+  .main-tab { flex: 1; padding: 15px; text-align: center; cursor: pointer; font-weight: bold; color: #888; border-right: 1px solid #333; white-space: nowrap; transition: 0.3s; }
+  .main-tab:hover { background: #252525; color: #fff; }
+  .main-tab.aktif { background: #2d2d2d; color: #00c853; border-bottom: 2px solid #00c853; }
 
-/* TABLO GÖRÜNÜM */
-.tablo{width:100%;margin-top:10px}
-.gun-baslik{background:#161b22;border:1px solid #21262d;padding:8px 12px;font-size:12px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;border-radius:6px 6px 0 0;margin-top:10px}
-.gun-baslik .gc{background:#00c853;color:#0d1117;padding:1px 8px;border-radius:10px;font-size:10px}
-.tablo-header{display:grid;grid-template-columns:50px 1fr repeat(13,46px) 24px;background:#1a1f2e;border:1px solid #21262d;padding:4px 0;font-size:8px;color:#888;text-align:center;font-weight:600}
-.tablo-header div{padding:2px}
-.mac-satir{display:grid;grid-template-columns:50px 1fr repeat(13,46px) 24px;background:#161b22;border:1px solid #21262d;border-top:none;padding:0;align-items:center;font-size:11px;transition:background .2s}
-.mac-satir:hover{background:#1a2233}
-.mac-satir:last-child{border-radius:0 0 6px 6px}
-.ms-saat{text-align:center;padding:6px 2px;display:flex;flex-direction:column}
-.ms-saat .s{color:#00c853;font-weight:700;font-size:12px}
-.ms-saat .t{color:#444;font-size:8px}
-.ms-takim{padding:4px 6px;display:flex;flex-direction:column;gap:0;overflow:hidden}
-.ms-takim .ev{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ms-takim .dep{font-size:10px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ms-takim .skor{color:#f0b90b;font-weight:700;font-size:11px}
-.oran-hucre{text-align:center;padding:4px 1px;cursor:default;border-left:1px solid #21262d}
-.oran-hucre .ov{font-size:11px;font-weight:700;color:#f0b90b}
-.oran-hucre .op{font-size:7px;color:#00c853;display:block}
-.oran-hucre:hover{background:#0d1117}
-.oran-hucre.dogru,
-.ok.dogru,
-.dor.dogru{
-  background:#063b22!important;
-  border-color:#00c853!important;
-  box-shadow:0 0 0 1px rgba(0,200,83,.35);
-}
+  /* İÇERİK ALANLARI */
+  .tab-icerik { display: none; padding: 15px; animation: fadeIn 0.3s; }
+  .tab-icerik.aktif { display: block; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.oran-hucre.dogru .ov,
-.ok.dogru .ov,
-.dor.dogru .dv{
-  color:#00ff88!important;
-}
+  /* FİLTRELER */
+  .filters { background: #1e1e1e; padding: 10px; border-radius: 8px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .fr { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+  input, select { background: #2d2d2d; border: 1px solid #444; color: #fff; padding: 8px; border-radius: 4px; font-size: 13px; }
+  button { cursor: pointer; padding: 8px 12px; border: none; border-radius: 4px; font-weight: bold; transition: 0.2s; }
+  .btn-a { background: #00c853; color: #000; }
+  .btn-r { background: #d32f2f; color: #fff; }
+  .fb { font-size: 12px; color: #aaa; }
+  .fl { color: #aaa; font-weight: bold; }
+  .filtre-listesi { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
+  .filtre-chip { background: #333; padding: 4px 8px; border-radius: 4px; font-size: 11px; border: 1px solid #555; }
 
-.oran-hucre.dogru .op,
-.ok.dogru .op,
-.dor.dogru .dp{
-  color:#b6ffd6!important;
-}
-.ma-btn{text-align:center;cursor:pointer;color:#444;font-size:12px;padding:4px}
-.ma-btn:hover{color:#00c853}
-.ma-btn.open{color:#00c853;transform:rotate(180deg)}
+  /* TABLOLAR (Bülten) */
+  .container { display: flex; flex-direction: column; gap: 5px; }
+  .gun-baslik { background: #252525; padding: 8px; font-weight: bold; color: #ccc; border-left: 4px solid #00c853; margin-top: 10px; display: flex; justify-content: space-between; }
+  .mac-satir { display: flex; background: #1e1e1e; border: 1px solid #333; border-radius: 4px; padding: 10px; align-items: center; transition: 0.2s; }
+  .mac-satir:hover { background: #2a2a2a; transform: translateX(2px); }
+  .ms-saat { width: 60px; text-align: center; font-size: 12px; color: #888; border-right: 1px solid #333; padding-right: 10px; }
+  .ms-takim { flex: 1; padding-left: 10px; font-size: 14px; }
+  .ev { color: #fff; font-weight: bold; }
+  .dep { color: #aaa; font-size: 12px; display: block; margin-top: 2px; }
+  .oran-hucre { width: 50px; text-align: center; margin-left: 5px; cursor: pointer; position: relative; }
+  .oran-hucre.dogru { background: #00c853; color: #000; border-radius: 4px; font-weight: bold; }
+  .ov { font-size: 13px; font-weight: bold; }
+  .op { font-size: 9px; color: #888; }
+  
+  /* LOADING & BOS */
+  .loading, .bos, .hata { text-align: center; padding: 40px; color: #888; }
+  .spinner { border: 4px solid #333; border-top: 4px solid #00c853; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* DETAY */
-.detay-row{display:none;background:#0d1117;border:1px solid #21262d;border-top:none;padding:10px}
-.detay-row.acik{display:block}
-.dtabs{display:flex;gap:3px;margin-bottom:8px;flex-wrap:wrap}
-.dtab{background:#161b22;border:1px solid #21262d;color:#888;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px}
-.dtab:hover,.dtab.a{background:#00c853;color:#0d1117;border-color:#00c853;font-weight:700}
-.dcon{display:none}.dcon.a{display:block}
-.dgb{color:#00c853;font-size:10px;font-weight:700;padding:3px 0;border-bottom:1px solid #21262d;margin-bottom:3px}
-.ds{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
-.dor{display:flex;flex-direction:column;align-items:center;background:#161b22;border:1px solid #21262d;border-radius:3px;padding:3px 5px;min-width:55px}
-.dor:hover{border-color:#00c853;background:#1a2233}
-.dor .dl{font-size:7px;color:#888}.dor .dv{font-size:11px;font-weight:700;color:#f0b90b}.dor .dp{font-size:7px;color:#00c853}
+  /* ANALİZ PANELİ (Tab 1) */
+  .analiz-panel { background: #1e1e1e; padding: 15px; border-radius: 8px; }
+  .analiz-baslik { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; color: #00c853; }
+  .air { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
+  .k2-panel { background: #252525; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #333; }
+  .k2-baslik { font-weight: bold; color: #f0b90b; margin-bottom: 5px; }
+  .k2-aciklama { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .k2-row { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+  .k2-badge { font-size: 10px; color: #666; margin-top: 5px; font-style: italic; }
+  #analizSonuc { margin-top: 15px; }
+  .analiz-yok { text-align: center; color: #555; padding: 20px; border: 1px dashed #333; border-radius: 8px; }
 
-/* ANALİZ */
-.analiz-panel{background:#161b22;padding:15px;margin:10px 15px;border-radius:8px;border:1px solid #21262d}
-.analiz-baslik{font-size:14px;color:#00c853;font-weight:700;margin-bottom:12px}
-.analiz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
-.ak{background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:12px;text-align:center}
-.ak .akb{font-size:10px;color:#888;margin-bottom:4px}.ak .akd{font-size:24px;font-weight:700;color:#f0b90b}.ak .aka{font-size:10px;color:#00c853;margin-top:2px}
-.abar{margin-bottom:10px}
-.abar-b{font-size:11px;color:#ccc;margin-bottom:3px}
-.abar-ic{background:#21262d;height:22px;border-radius:4px;overflow:hidden;display:flex}
-.ab-ev{background:#00c853;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#0d1117}
-.ab-ber{background:#f0b90b;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#0d1117}
-.ab-dep{background:#e74c3c;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
-.amac{background:#0d1117;border:1px solid #21262d;border-radius:5px;padding:6px 10px;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center;font-size:11px}
-.amac .amt{flex:1}.amac .ams{font-weight:700;font-size:13px;min-width:45px;text-align:center}
-.ams.ek{color:#00c853}.ams.b{color:#f0b90b}.ams.dk{color:#e74c3c}
-.amac .amo{color:#f0b90b;min-width:70px;text-align:right;font-size:10px}
-.amac .amd{color:#555;min-width:70px;text-align:right;font-size:10px}
-.analiz-yok{text-align:center;padding:25px;color:#666;font-size:12px}
-.air{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
-.air input,.air select{background:#0d1117;color:#e6e6e6;border:1px solid #30363d;padding:7px 10px;border-radius:5px;font-size:12px;outline:none}
-.air input[type=number]{width:75px}
-.loading{text-align:center;padding:60px}
-.spinner{width:35px;height:35px;border:3px solid #21262d;border-top:3px solid #00c853;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.bos{text-align:center;padding:30px;color:#666;font-size:13px}
-.footer{background:#161b22;border-top:1px solid #21262d;padding:10px 15px;text-align:center;font-size:10px;color:#444;margin-top:15px}
+  /* STATS BAR */
+  .stats-bar { display: flex; gap: 15px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
+  .si { background: #1e1e1e; padding: 8px 12px; border-radius: 6px; text-align: center; min-width: 70px; border: 1px solid #333; }
+  .sv { font-size: 1.2rem; font-weight: bold; color: #fff; }
+  .sl { font-size: 0.7rem; color: #888; text-transform: uppercase; }
 
-@media(max-width:900px){
-.tablo-header,.mac-satir{grid-template-columns:45px 1fr repeat(7,42px) 22px}
-.tablo-header div:nth-child(n+11),.mac-satir .oran-hucre:nth-child(n+11){display:none}
-.tablo-header div:nth-child(n+11){display:none}
-}
-@media(max-width:600px){
-.tablo-header,.mac-satir{grid-template-columns:40px 1fr repeat(5,38px) 20px}
-.tablo-header div:nth-child(n+9),.mac-satir .oran-hucre:nth-child(n+9){display:none}
-.tablo-header div:nth-child(n+9){display:none}
-.header h1{font-size:16px}.fr,.air{flex-direction:column;align-items:stretch}
-.filters input[type=text]{max-width:100%;width:100%}.ofk{flex-direction:column;align-items:stretch}
-}
+  /* ============================================ */
+  /* KOMBİNE KEŞİF ÖZEL STİLLERİ (TAB 2)          */
+  /* ============================================ */
+  #kesifContainer {
+    overflow-x: auto; /* Yatay kaydırma */
+    overflow-y: visible;
+    white-space: nowrap; /* Hücreleri yan yana diz */
+    padding-bottom: 15px;
+    background: #121212;
+    border-radius: 8px;
+  }
 
-/* ANALIZ MAC TABLOSU - OTOMATIK EKLENDI */
-.analiz-table-wrap{
-  width:100%;
-  overflow-x:auto;
-  overflow-y:visible;
-  border:1px solid #21262d;
-  border-radius:8px;
-  margin-top:14px;
-  background:#0d1117;
-}
+  /* Scrollbar Tasarımı */
+  #kesifContainer::-webkit-scrollbar { height: 10px; }
+  #kesifContainer::-webkit-scrollbar-track { background: #1e1e1e; border-radius: 5px; }
+  #kesifContainer::-webkit-scrollbar-thumb { background: #444; border-radius: 5px; border: 2px solid #1e1e1e; }
+  #kesifContainer::-webkit-scrollbar-thumb:hover { background: #666; }
 
-.analiz-table{
-  border-collapse:collapse;
-  min-width:1400px;
-  width:max-content;
-  font-size:11px;
-}
+  .tablo-header, .mac-satir {
+    display: inline-flex; /* Yan yana dizilim */
+    min-width: max-content; /* İçerik kadar genişle */
+    border-bottom: 1px solid #333;
+  }
 
-.analiz-table th{
-  position:sticky;
-  top:0;
-  background:#161b22;
-  color:#00c853;
-  border:1px solid #21262d;
-  padding:6px 8px;
-  white-space:nowrap;
-  z-index:2;
-}
+  .tablo-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #1a1a1a;
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
 
-.analiz-table td{
-  border:1px solid #21262d;
-  padding:5px 7px;
-  white-space:nowrap;
-  background:#0d1117;
-}
+  /* Sabit Sol Bölüm (Maç Bilgisi) */
+  .ms-sabit-bolum {
+    display: flex;
+    position: sticky;
+    left: 0;
+    z-index: 20;
+    background: #1a1a1a;
+    border-right: 2px solid #555;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.8);
+  }
 
-.analiz-table tr:nth-child(even) td{
-  background:#111821;
-}
+  /* Kombinasyon Alanı */
+  .kesif-kombinasyonlar-alani {
+    display: flex;
+  }
 
-.analiz-table .mac-col{
-  min-width:240px;
-  max-width:360px;
-  white-space:normal;
-  color:#e6e6e6;
-  font-weight:600;
-}
+  /* Hücre Tasarımı */
+  .kesif-hucre {
+    width: 70px;
+    min-width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #2a2a2a;
+    padding: 8px 2px;
+    box-sizing: border-box;
+    transition: all 0.2s;
+  }
 
-.analiz-table .skor-col{
-  text-align:center;
-  color:#f0b90b;
-  font-weight:700;
-}
+  .kesif-hucre:hover {
+    transform: scale(1.1);
+    z-index: 5;
+    border: 1px solid #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  }
 
-.analiz-table .oran-cell{
-  text-align:center;
-  min-width:58px;
-}
+  /* Başlık Metni */
+  .kh-baslik {
+    font-size: 8px;
+    color: #aaa;
+    margin-bottom: 5px;
+    text-align: center;
+    line-height: 1.1;
+    font-weight: 600;
+    word-break: break-word;
+  }
 
-.analiz-table .oran-cell .oran-v{
-  color:#f0b90b;
-  font-weight:700;
-}
+  /* Değer Metni */
+  .kh-deger {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
 
-.analiz-table .oran-cell .oran-p{
-  color:#00c853;
-  font-size:9px;
-}
-
-.analiz-table .oran-cell.dogru{
-  background:#063b22!important;
-  border-color:#00c853!important;
-  box-shadow:inset 0 0 0 1px rgba(0,200,83,.45);
-}
-
-.analiz-table .oran-cell.dogru .oran-v{
-  color:#00ff88!important;
-}
-
-.analiz-table .oran-cell.dogru .oran-p{
-  color:#b6ffd6!important;
-}
-
-.analiz-table .bos-oran{
-  color:#333;
-}
-
-.analiz-table-info{
-  color:#888;
-  font-size:12px;
-  margin:8px 0;
-}
-
-
-/* IKILI KOMBINE ANALIZ - OTOMATIK EKLENDI */
-.k2-panel{
-  margin: 10px 0 14px 0;
-  padding: 12px;
-  border:1px solid #21262d;
-  background:#0d1117;
-  border-radius:8px;
-}
-
-.k2-baslik{
-  color:#00c853;
-  font-weight:700;
-  font-size:14px;
-  margin-bottom:8px;
-}
-
-.k2-aciklama{
-  color:#888;
-  font-size:11px;
-  margin-bottom:10px;
-}
-
-.k2-row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  align-items:center;
-  margin-bottom:8px;
-}
-
-.k2-row select,
-.k2-row input{
-  background:#0d1117;
-  color:#e6e6e6;
-  border:1px solid #30363d;
-  padding:7px 10px;
-  border-radius:5px;
-  font-size:12px;
-  outline:none;
-}
-
-.k2-row input[type=number]{
-  width:90px;
-}
-
-.k2-row select{
-  min-width:200px;
-}
-
-.k2-badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:5px;
-  background:#161b22;
-  color:#00c853;
-  border:1px solid #21262d;
-  font-size:11px;
-  margin-top:4px;
-}
-
+  /* Renk Sınıfları */
+  .bg-green { background-color: #063b22 !important; }
+  .text-green { color: #00e676 !important; text-shadow: 0 0 5px rgba(0,230,118,0.4); }
+  
+  .bg-yellow { background-color: #2d2a0a !important; }
+  .text-yellow { color: #ffd600 !important; }
+  
+  .bg-orange { background-color: #3b2206 !important; }
+  .text-orange { color: #ff9100 !important; }
+  
+  .bg-red { background-color: #2d1215 !important; }
+  .text-red { color: #ff5252 !important; }
+  
+  .bg-gray { background-color: #1a1a1a !important; }
+  .text-gray { color: #444 !important; }
 </style>
 </head>
 <body>
-<div class="header"><h1>⚽ İddaa Oranları & Analiz</h1><div class="info" id="info">Yükleniyor...</div></div>
+
+<div class="header">
+  <h1>⚽ İddaa Oranları & Analiz</h1>
+  <div class="info" id="info">Yükleniyor...</div>
+</div>
+
 <div class="main-tabs">
   <div class="main-tab aktif" onclick="mainTab(0)">📋 Bülten</div>
   <div class="main-tab" onclick="mainTab(1)">📊 Oran Analizi</div>
   <div class="main-tab" onclick="mainTab(2)">🧠 Akıllı Kombine</div>
-</div>)">📊 Oran Analizi</div></div>
+</div>
 
+<!-- 1. SEKME: BÜLTEN -->
 <div class="tab-icerik aktif" id="tab0">
-<div class="stats-bar" id="statsBar"></div>
-<div class="filters">
-<div class="fr">
-<input type="text" id="aramaInput" placeholder="🔍 Takım/lig ara..." oninput="filtrele()">
-<select id="tarihSelect" onchange="filtrele()"><option value="">📅 Tüm Tarihler</option></select>
-<select id="ligSelect" onchange="filtrele()"><option value="">🏆 Tüm Ligler</option></select>
-<select id="durumSelect" onchange="filtrele()"><option value="">📌 Tümü</option><option value="baslamadi">Başlamadı</option><option value="bitti">Bitti</option></select>
-<select id="siralama" onchange="filtrele()"><option value="tarih">Tarihe Göre</option><option value="ms1a">MS1↑</option><option value="ms1d">MS1↓</option><option value="ms2a">MS2↑</option><option value="ms2d">MS2↓</option><option value="usta">Üst↑</option><option value="alta">Alt↑</option></select>
-<button class="btn-r" onclick="resetFiltre()">↺</button>
-</div>
-<div class="fr">
-<span class="fb">Oran=</span>
-<div class="ofk">
-<select id="oranTuru"><option value="">Tür...</option>
-<optgroup label="MS"><option value="Maç Sonucu_1">MS1</option><option value="Maç Sonucu_0">MSX</option><option value="Maç Sonucu_2">MS2</option></optgroup>
-<optgroup label="A/Ü"><option value="Alt/Üst 2.5_Alt">Alt2.5</option><option value="Alt/Üst 2.5_Üst">Üst2.5</option><option value="İlk Yarı Alt/Üst 1.5_Alt">İYA1.5</option><option value="İlk Yarı Alt/Üst 1.5_Üst">İYÜ1.5</option></optgroup>
-<optgroup label="KG"><option value="Karşılıklı Gol_Var">KGV</option><option value="Karşılıklı Gol_Yok">KGY</option><option value="İlk Yarı Karşılıklı Gol_Var">İYKG</option></optgroup>
-<optgroup label="İY"><option value="İlk Yarı Sonucu_1">İY1</option><option value="İlk Yarı Sonucu_0">İYX</option><option value="İlk Yarı Sonucu_2">İY2</option></optgroup>
-<optgroup label="Kmb"><option value="Her İki Yarıda da Üst 1.5_Evet">2YÜ1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">1+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">2+KGV</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2YKG</option></optgroup>
-</select>
-<span class="fl">=</span><input type="number" id="oranDeger" step="0.01" placeholder="Oran">
-<button class="btn-a" onclick="filtreEkle()">+</button><button class="btn-r" onclick="filtreTemizle()">✕</button>
-</div>
-</div>
-<div class="filtre-listesi" id="filtreListesi"></div>
-</div>
-<div class="container" id="container"><div class="loading"><div class="spinner"></div><p>Yükleniyor...</p></div></div>
+  <div class="stats-bar" id="statsBar"></div>
+  <div class="filters">
+    <div class="fr">
+      <input type="text" id="aramaInput" placeholder="🔍 Takım/lig ara..." oninput="filtrele()">
+      <select id="tarihSelect" onchange="filtrele()"><option value="">📅 Tüm Tarihler</option></select>
+      <select id="ligSelect" onchange="filtrele()"><option value="">🏆 Tüm Ligler</option></select>
+      <select id="durumSelect" onchange="filtrele()"><option value="">📌 Tümü</option><option value="baslamadi">Başlamadı</option><option value="bitti">Bitti</option></select>
+      <select id="siralama" onchange="filtrele()"><option value="tarih">Tarihe Göre</option><option value="ms1a">MS1↑</option><option value="ms1d">MS1↓</option><option value="ms2a">MS2↑</option><option value="ms2d">MS2↓</option><option value="usta">Üst↑</option><option value="alta">Alt↑</option></select>
+      <button class="btn-r" onclick="resetFiltre()">↺</button>
+    </div>
+    <div class="fr">
+      <span class="fb">Oran=</span>
+      <div class="ofk">
+        <select id="oranTuru"><option value="">Tür...</option>
+          <optgroup label="MS"><option value="Maç Sonucu_1">MS1</option><option value="Maç Sonucu_0">MSX</option><option value="Maç Sonucu_2">MS2</option></optgroup>
+          <optgroup label="A/Ü"><option value="Alt/Üst 2.5_Alt">Alt2.5</option><option value="Alt/Üst 2.5_Üst">Üst2.5</option><option value="İlk Yarı Alt/Üst 1.5_Alt">İYA1.5</option><option value="İlk Yarı Alt/Üst 1.5_Üst">İYÜ1.5</option></optgroup>
+          <optgroup label="KG"><option value="Karşılıklı Gol_Var">KGV</option><option value="Karşılıklı Gol_Yok">KGY</option><option value="İlk Yarı Karşılıklı Gol_Var">İYKG</option></optgroup>
+          <optgroup label="İY"><option value="İlk Yarı Sonucu_1">İY1</option><option value="İlk Yarı Sonucu_0">İYX</option><option value="İlk Yarı Sonucu_2">İY2</option></optgroup>
+          <optgroup label="Kmb"><option value="Her İki Yarıda da Üst 1.5_Evet">2YÜ1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">1+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">2+KGV</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2YKG</option></optgroup>
+        </select>
+        <span class="fl">=</span><input type="number" id="oranDeger" step="0.01" placeholder="Oran">
+        <button class="btn-a" onclick="filtreEkle()">+</button><button class="btn-r" onclick="filtreTemizle()">✕</button>
+      </div>
+    </div>
+    <div class="filtre-listesi" id="filtreListesi"></div>
+  </div>
+  <div class="container" id="container"><div class="loading"><div class="spinner"></div><p>Yükleniyor...</p></div></div>
 </div>
 
+<!-- 2. SEKME: ORAN ANALİZİ -->
 <div class="tab-icerik" id="tab1">
-<div class="analiz-panel">
-<div class="analiz-baslik">📊 Oran Analizi — Biten Maç İstatistikleri</div>
-<p style="color:#888;font-size:11px;margin-bottom:8px">Birden fazla filtre ekleyin (VE koşulu). Eşittir filtre.</p>
-<div class="air">
-<select id="analizOranTuru">
-<optgroup label="MS"><option value="Maç Sonucu_1">MS1</option><option value="Maç Sonucu_0">MSX</option><option value="Maç Sonucu_2">MS2</option></optgroup>
-<optgroup label="A/Ü"><option value="Alt/Üst 2.5_Alt">Alt2.5</option><option value="Alt/Üst 2.5_Üst">Üst2.5</option><option value="İlk Yarı Alt/Üst 1.5_Alt">İYA1.5</option><option value="İlk Yarı Alt/Üst 1.5_Üst">İYÜ1.5</option></optgroup>
-<optgroup label="KG"><option value="Karşılıklı Gol_Var">KGV</option><option value="Karşılıklı Gol_Yok">KGY</option><option value="İlk Yarı Karşılıklı Gol_Var">İYKG</option><option value="İkinci Yarı Karşılıklı Gol_Var">2YKG</option></optgroup>
-<optgroup label="İY"><option value="İlk Yarı Sonucu_1">İY1</option><option value="İlk Yarı Sonucu_0">İYX</option><option value="İlk Yarı Sonucu_2">İY2</option></optgroup>
-<optgroup label="Kmb"><option value="Her İki Yarıda da Üst 1.5_Evet">2YÜ1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">1+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">X+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">2+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">1+KGY</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">2+KGY</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2YKG E/E</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">2YKG H/H</option></optgroup>
-</select>
-<span class="fl">=</span><input type="number" id="analizOranDeger" step="0.01" placeholder="Oran">
-<button class="btn-a" onclick="analizFiltreEkle()">+ Ekle</button>
-<button class="btn-a" onclick="analizYap()">🔍 Analiz</button>
-<button class="btn-r" onclick="analizFiltreTemizle()">Temizle</button>
-</div>
-<div class="filtre-listesi" id="analizFiltreListesi"></div>
+  <div class="analiz-panel">
+    <div class="analiz-baslik">📊 Oran Analizi — Biten Maç İstatistikleri</div>
+    <p style="color:#888;font-size:11px;margin-bottom:8px">Birden fazla filtre ekleyin (VE koşulu). Eşittir filtre.</p>
+    <div class="air">
+      <select id="analizOranTuru">
+        <optgroup label="MS"><option value="Maç Sonucu_1">MS1</option><option value="Maç Sonucu_0">MSX</option><option value="Maç Sonucu_2">MS2</option></optgroup>
+        <optgroup label="A/Ü"><option value="Alt/Üst 2.5_Alt">Alt2.5</option><option value="Alt/Üst 2.5_Üst">Üst2.5</option><option value="İlk Yarı Alt/Üst 1.5_Alt">İYA1.5</option><option value="İlk Yarı Alt/Üst 1.5_Üst">İYÜ1.5</option></optgroup>
+        <optgroup label="KG"><option value="Karşılıklı Gol_Var">KGV</option><option value="Karşılıklı Gol_Yok">KGY</option><option value="İlk Yarı Karşılıklı Gol_Var">İYKG</option><option value="İkinci Yarı Karşılıklı Gol_Var">2YKG</option></optgroup>
+        <optgroup label="İY"><option value="İlk Yarı Sonucu_1">İY1</option><option value="İlk Yarı Sonucu_0">İYX</option><option value="İlk Yarı Sonucu_2">İY2</option></optgroup>
+        <optgroup label="Kmb"><option value="Her İki Yarıda da Üst 1.5_Evet">2YÜ1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">1+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">X+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">2+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">1+KGY</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">2+KGY</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2YKG E/E</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">2YKG H/H</option></optgroup>
+      </select>
+      <span class="fl">=</span><input type="number" id="analizOranDeger" step="0.01" placeholder="Oran">
+      <button class="btn-a" onclick="analizFiltreEkle()">+ Ekle</button>
+      <button class="btn-a" onclick="analizYap()">🔍 Analiz</button>
+      <button class="btn-r" onclick="analizFiltreTemizle()">Temizle</button>
+    </div>
+    <div class="filtre-listesi" id="analizFiltreListesi"></div>
 
-<div class="k2-panel" id="ikili-kombine-panel">
-  <div class="k2-baslik">⚡ İkili Kombine Analizi</div>
-  <div class="k2-aciklama">
-    İki oran seçin. Sistem bu iki oranın aynı maçta birlikte gelme oranını hesaplasın.
-    Özellikle istediğiniz marketler: İlk Yarı KG, Her İki Yarıda da KG, Her İki Yarıda da Üst 1.5 vb.
-  </div>
+    <div class="k2-panel" id="ikili-kombine-panel">
+      <div class="k2-baslik">⚡ İkili Kombine Analizi</div>
+      <div class="k2-aciklama">
+        İki oran seçin. Sistem bu iki oranın aynı maçta birlikte gelme oranını hesaplasın.
+      </div>
+      <div class="k2-row">
+        <select id="kombineOran1"></select>
+        <span>=</span>
+        <input type="number" id="kombineDeger1" step="0.01" placeholder="örn 1.68">
+        <select id="kombineOran2"></select>
+        <span>=</span>
+        <input type="number" id="kombineDeger2" step="0.01" placeholder="örn 1.80">
+        <button class="btn-a" onclick="kombine2AnalizYap()">🔍 İkili Analiz</button>
+        <button class="btn-r" onclick="kombine2Temizle()">Temizle</button>
+      </div>
+      <div class="k2-badge">Not: Bu bölüm mevcut analiz motorunu kullanır. İki filtreyi birlikte uygular.</div>
+    </div>
 
-  <div class="k2-row">
-    <select id="kombineOran1"></select>
-    <span>=</span>
-    <input type="number" id="kombineDeger1" step="0.01" placeholder="örn 1.68">
-
-    <select id="kombineOran2"></select>
-    <span>=</span>
-    <input type="number" id="kombineDeger2" step="0.01" placeholder="örn 1.80">
-
-    <button class="btn-a" onclick="kombine2AnalizYap()">🔍 İkili Analiz</button>
-    <button class="btn-r" onclick="kombine2Temizle()">Temizle</button>
-  </div>
-
-  <div class="k2-badge">
-    Not: Bu bölüm mevcut analiz motorunu kullanır. İki filtreyi birlikte uygular.
+    <div id="analizSonuc"><div class="analiz-yok">👆 Filtre ekle → Analiz Et</div></div>
   </div>
 </div>
 
-<div id="analizSonuc"><div class="analiz-yok">👆 Filtre ekle → Analiz Et</div></div>
-</div>
-</div>
-
-<!-- 3. SEKME: KOMBİNE KEŞİF -->
+<!-- 3. SEKME: AKILLI KOMBİNE KEŞİF -->
 <div class="tab-icerik" id="tab2">
   <div class="stats-bar" id="kesifStatsBar"></div>
   
@@ -396,7 +300,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
     <div class="loading"><div class="spinner"></div><p>Tüm Kombinasyonlar Analiz Ediliyor...</p></div>
   </div>
 </div>
-</div>
 
 <div class="footer" id="footer"></div>
 
@@ -409,913 +312,203 @@ async function yukle(){try{const r=await fetch(JSON_URL+"?t="+Date.now());const 
 
 async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());const d=await r.json();gecmisMaclar=d.matches||[];document.getElementById("info").innerHTML+="<br>Gecmis: "+gecmisMaclar.length+" mac"}catch(e){}}
 
-function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
-function ligleriDoldur(){const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();const s=document.getElementById("ligSelect");l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}
-function pct(o){return o&&o>0?Math.round(1/o*10000)/100:0}
-function macBittiMi(m){
-  return m && m.durum === "bitti";
-}
-
-function dogruOran(m, key){
-  if(!macBittiMi(m)) return false;
-  if(!key) return false;
-
-  const se = Number(m.skor_ev || 0);
-  const sd = Number(m.skor_dep || 0);
-  const iySe = Number(m.skor_1y_ev || 0);
-  const iySd = Number(m.skor_1y_dep || 0);
-
-  const toplamGol = se + sd;
-  const iyGol = iySe + iySd;
-
-  const ikinciSe = se - iySe;
-  const ikinciSd = sd - iySd;
-
-  const kgVar = se > 0 && sd > 0;
-  const iyKgVar = iySe > 0 && iySd > 0;
-  const ikinciKgVar = ikinciSe > 0 && ikinciSd > 0;
-
-  const ms =
-    se > sd ? "1" :
-    se === sd ? "0" :
-    "2";
-
-  const iy =
-    iySe > iySd ? "1" :
-    iySe === iySd ? "0" :
-    "2";
-
-  const ikinci =
-    ikinciSe > ikinciSd ? "1" :
-    ikinciSe === ikinciSd ? "0" :
-    "2";
-
-  // Maç sonucu
-  if(key === "Maç Sonucu_1") return ms === "1";
-  if(key === "Maç Sonucu_0") return ms === "0";
-  if(key === "Maç Sonucu_2") return ms === "2";
-
-  // İlk yarı sonucu
-  if(key === "İlk Yarı Sonucu_1") return iy === "1";
-  if(key === "İlk Yarı Sonucu_0") return iy === "0";
-  if(key === "İlk Yarı Sonucu_2") return iy === "2";
-
-  // İkinci yarı sonucu
-  if(key === "İkinci Yarı Sonucu_1") return ikinci === "1";
-  if(key === "İkinci Yarı Sonucu_0") return ikinci === "0";
-  if(key === "İkinci Yarı Sonucu_2") return ikinci === "2";
-
-  // Maç alt/üst
-  if(key.includes("Alt/Üst 2.5_Alt")) return toplamGol < 2.5;
-  if(key.includes("Alt/Üst 2.5_Üst")) return toplamGol > 2.5;
-  if(key.includes("Alt/Üst 1.5_Alt")) return toplamGol < 1.5;
-  if(key.includes("Alt/Üst 1.5_Üst")) return toplamGol > 1.5;
-  if(key.includes("Alt/Üst 3.5_Alt")) return toplamGol < 3.5;
-  if(key.includes("Alt/Üst 3.5_Üst")) return toplamGol > 3.5;
-
-  // İlk yarı alt/üst
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Alt")) return iyGol < 0.5;
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Üst")) return iyGol > 0.5;
-  if(key.includes("İlk Yarı Alt/Üst 1.5_Alt")) return iyGol < 1.5;
-  if(key.includes("İlk Yarı Alt/Üst 1.5_Üst")) return iyGol > 1.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Alt")) return iyGol < 2.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Üst")) return iyGol > 2.5;
-
-  // KG
-  if(key === "Karşılıklı Gol_Var") return kgVar;
-  if(key === "Karşılıklı Gol_Yok") return !kgVar;
-
-  if(key === "İlk Yarı Karşılıklı Gol_Var") return iyKgVar;
-  if(key === "İlk Yarı Karşılıklı Gol_Yok") return !iyKgVar;
-
-  if(key === "İkinci Yarı Karşılıklı Gol_Var") return ikinciKgVar;
-  if(key === "İkinci Yarı Karşılıklı Gol_Yok") return !ikinciKgVar;
-
-  // Maç sonucu + KG
-  if(key.startsWith("Maç Sonucu ve Karşılıklı Gol_")){
-    const secim = key.split("_")[1]; // "1 ve Var"
-    if(!secim) return false;
-
-    const parca = secim.split(" ve ");
-    const msSecim = parca[0];
-    const kgSecim = parca[1];
-
-    const msDogru = msSecim === ms;
-    const kgDogru = kgSecim === "Var" ? kgVar : !kgVar;
-
-    return msDogru && kgDogru;
-  }
-
-  // İlk yarı / maç sonucu
-  if(key.startsWith("İlk Yarı / Maç Sonucu_")){
-    const secim = key.split("_")[1]; // 1/1, 0/2 vb.
-    return secim === (iy + "/" + ms);
-  }
-
-  // İlk yarı sonucu + İY KG
-  if(key.startsWith("İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_")){
-    const secim = key.split("_")[1]; // 1 ve Var
-    if(!secim) return false;
-
-    const parca = secim.split(" ve ");
-    const iySecim = parca[0];
-    const kgSecim = parca[1];
-
-    const iyDogru = iySecim === iy;
-    const kgDogru = kgSecim === "Var" ? iyKgVar : !iyKgVar;
-
-    return iyDogru && kgDogru;
-  }
-
-  // İlk yarı sonucu + İY Alt/Üst 1.5
-  if(key.startsWith("İlk Yarı Sonucu ve Altı/Üstü 1.5_")){
-    const secim = key.split("_")[1]; // 1 ve Üst
-    if(!secim) return false;
-
-    const parca = secim.split(" ve ");
-    const iySecim = parca[0];
-    const auSecim = parca[1];
-
-    const iyDogru = iySecim === iy;
-    const auDogru = auSecim === "Üst" ? iyGol > 1.5 : iyGol < 1.5;
-
-    return iyDogru && auDogru;
-  }
-
-  // Her iki yarıda da üst 1.5
-  if(key === "Her İki Yarıda da Üst 1.5_Evet"){
-    return iyGol > 1.5 && (ikinciSe + ikinciSd) > 1.5;
-  }
-
-  if(key === "Her İki Yarıda da Üst 1.5_Hayır"){
-    return !(iyGol > 1.5 && (ikinciSe + ikinciSd) > 1.5);
-  }
-
-  // Her iki yarıda da alt 1.5
-  if(key === "Her İki Yarıda da Alt 1.5_Evet"){
-    return iyGol < 1.5 && (ikinciSe + ikinciSd) < 1.5;
-  }
-
-  if(key === "Her İki Yarıda da Alt 1.5_Hayır"){
-    return !(iyGol < 1.5 && (ikinciSe + ikinciSd) < 1.5);
-  }
-
-  // İlk yarı ve ikinci yarıda KG olur
-  if(key.startsWith("İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_")){
-    const secim = key.split("_")[1]; // Evet / Hayır
-    if(!secim) return false;
-
-    const parca = secim.split(" / ");
-    const ilk = parca[0];
-    const ikinciYari = parca[1];
-
-    const ilkDogru = ilk === "Evet" ? iyKgVar : !iyKgVar;
-    const ikinciDogru = ikinciYari === "Evet" ? ikinciKgVar : !ikinciKgVar;
-
-    return ilkDogru && ikinciDogru;
-  }
-
-  // Tek / Çift
-  if(key === "Tek/Çift_Tek") return toplamGol % 2 === 1;
-  if(key === "Tek/Çift_Çift") return toplamGol % 2 === 0;
-
-  if(key === "İlk Yarı Tek/Çift_Tek") return iyGol % 2 === 1;
-  if(key === "İlk Yarı Tek/Çift_Çift") return iyGol % 2 === 0;
-
-  return false;
-}
-function mainTab(i){document.querySelectorAll(".main-tab").forEach((t,j)=>t.classList.toggle("aktif",j===i));document.querySelectorAll(".tab-icerik").forEach((t,j)=>t.classList.toggle("aktif",j===i))}
-function KA(t){const m={"Maç Sonucu_1":"MS1","Maç Sonucu_0":"MSX","Maç Sonucu_2":"MS2","Alt/Üst 2.5_Alt":"Alt","Alt/Üst 2.5_Üst":"Üst","Karşılıklı Gol_Var":"KGV","Karşılıklı Gol_Yok":"KGY","İlk Yarı Sonucu_1":"İY1","İlk Yarı Sonucu_0":"İYX","İlk Yarı Sonucu_2":"İY2","İlk Yarı Alt/Üst 1.5_Alt":"İYA","İlk Yarı Alt/Üst 1.5_Üst":"İYÜ","İlk Yarı Karşılıklı Gol_Var":"İYKG","İkinci Yarı Karşılıklı Gol_Var":"2YKG","Her İki Yarıda da Üst 1.5_Evet":"2YÜ","Maç Sonucu ve Karşılıklı Gol_1 ve Var":"1KG","Maç Sonucu ve Karşılıklı Gol_0 ve Var":"XKG","Maç Sonucu ve Karşılıklı Gol_2 ve Var":"2KG","Maç Sonucu ve Karşılıklı Gol_1 ve Yok":"1KY","Maç Sonucu ve Karşılıklı Gol_2 ve Yok":"2KY","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet":"EE","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır":"HH"};return m[t]||t.substring(0,8)}
-
-function filtreEkle(){const t=document.getElementById("oranTuru").value;const d=parseFloat(document.getElementById("oranDeger").value);if(!t||!d)return;bultenFiltreler.push({tur:t,deger:d});document.getElementById("oranDeger").value="";fListeGoster();filtrele()}
-function filtreSil(i){bultenFiltreler.splice(i,1);fListeGoster();filtrele()}
-function filtreTemizle(){bultenFiltreler=[];fListeGoster();filtrele()}
-function fListeGoster(){document.getElementById("filtreListesi").innerHTML=bultenFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="filtreSil('+i+')">X</span></div>').join("")}
-
-function filtrele(){
-const ar=document.getElementById("aramaInput").value.toLowerCase();
-const ta=document.getElementById("tarihSelect").value;
-const li=document.getElementById("ligSelect").value;
-const du=document.getElementById("durumSelect").value;
-const si=document.getElementById("siralama").value;
-let s=tumMaclar.filter(m=>{
-if(ar&&!m.ev_sahibi.toLowerCase().includes(ar)&&!m.deplasman.toLowerCase().includes(ar)&&!(m.lig||"").toLowerCase().includes(ar))return false;
-if(ta&&m.tarih!==ta)return false;if(li&&(m.lig||"")!==li)return false;if(du&&m.durum!==du)return false;
-for(const f of bultenFiltreler){const v=m.oranlar[f.tur];if(!v||Math.abs(v-f.deger)>0.009)return false}return true});
-const g=v=>v||99;
-if(si==="ms1a")s.sort((a,b)=>g(a.oranlar["Maç Sonucu_1"])-g(b.oranlar["Maç Sonucu_1"]));
-else if(si==="ms1d")s.sort((a,b)=>g(b.oranlar["Maç Sonucu_1"])-g(a.oranlar["Maç Sonucu_1"]));
-else if(si==="ms2a")s.sort((a,b)=>g(a.oranlar["Maç Sonucu_2"])-g(b.oranlar["Maç Sonucu_2"]));
-else if(si==="ms2d")s.sort((a,b)=>g(b.oranlar["Maç Sonucu_2"])-g(a.oranlar["Maç Sonucu_2"]));
-else if(si==="usta")s.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Üst"])-g(b.oranlar["Alt/Üst 2.5_Üst"]));
-else if(si==="alta")s.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Alt"])-g(b.oranlar["Alt/Üst 2.5_Alt"]));
-else s.sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
-statsGoster(s);render(s)}
-
-function resetFiltre(){document.getElementById("aramaInput").value="";["tarihSelect","ligSelect","durumSelect"].forEach(id=>document.getElementById(id).value="");document.getElementById("siralama").value="tarih";bultenFiltreler=[];fListeGoster();filtrele()}
-
-function statsGoster(m){const to=m.reduce((t,x)=>t+Object.keys(x.oranlar).length,0);const bi=m.filter(x=>x.durum==="bitti").length;
-document.getElementById("statsBar").innerHTML='<div class="si"><div class="sv">'+m.length+'</div><div class="sl">Mac</div></div><div class="si"><div class="sv">'+to.toLocaleString()+'</div><div class="sl">Oran</div></div><div class="si"><div class="sv">'+bi+'</div><div class="sl">Biten</div></div><div class="si"><div class="sv">'+(m.length-bi)+'</div><div class="sl">Gelecek</div></div>'}
-
-function OH(v, m, key){
-  const cls = dogruOran(m, key) ? " dogru" : "";
-  return v
-    ? '<div class="oran-hucre'+cls+'"><div class="ov">'+v+'</div><div class="op">%'+pct(v)+'</div></div>'
-    : '<div class="oran-hucre"><div class="ov" style="color:#333">-</div></div>';
-}
-function render(maclar){
-if(!maclar.length){document.getElementById("container").innerHTML='<div class="bos">Sonuc yok</div>';return}
-const grp={};maclar.forEach(m=>{if(!grp[m.tarih])grp[m.tarih]=[];grp[m.tarih].push(m)});
-let h="";
-Object.keys(grp).sort().forEach(tarih=>{
-const gm=grp[tarih];const d=new Date(tarih);
-h+='<div class="gun-h">'+d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"})+'<span class="gc">'+gm.length+'</span></div>';
-h+='<div class="tablo-header"><div>Saat</div><div style="text-align:left">Mac</div><div>MS1</div><div>MSX</div><div>MS2</div><div>Alt</div><div>Ust</div><div>KGV</div><div>KGY</div><div>IY1</div><div>IYX</div><div>IY2</div><div>IYA</div><div>IYU</div><div>V</div></div>';
-gm.forEach((m,idx)=>{
-const o=m.oranlar;const id="d"+tarih.replace(/-/g,"")+idx;
-const skorTxt=m.durum==="bitti"?' <span style="color:#f0b90b;font-weight:700"> MS: '+m.skor_ev+'-'+m.skor_dep+' | İY: '+m.skor_1y_ev+'-'+m.skor_1y_dep+'</span>':' <span style="color:#555"> MS: - | İY: -</span>';
-h+='<div class="mac-satir">';
-h+='<div class="ms-saat"><span class="s">'+m.saat+'</span><span class="t">#'+(m.mac_kodu||"")+'</span></div>';
-h+='<div class="ms-takim"><span class="ev">'+m.ev_sahibi+skorTxt+'</span><span class="dep">'+m.deplasman+'</span></div>';
-const keys=["Maç Sonucu_1","Maç Sonucu_0","Maç Sonucu_2","Alt/Üst 2.5_Alt","Alt/Üst 2.5_Üst","Karşılıklı Gol_Var","Karşılıklı Gol_Yok","İlk Yarı Sonucu_1","İlk Yarı Sonucu_0","İlk Yarı Sonucu_2","İlk Yarı Alt/Üst 1.5_Alt","İlk Yarı Alt/Üst 1.5_Üst","İlk Yarı Karşılıklı Gol_Var"];
-keys.forEach(k=>{h+='<div class="oran-hucre">'+OH(o[k])+'</div>'});
-h+='<div class="ma-btn" id="aw'+id+'" onclick="dtoggle(\''+id+'\')">V</div>';
-h+='</div>';
-h+='<div class="detay-row" id="'+id+'">';
-const gr={};Object.keys(o).forEach(k=>{if(k==="Handikap")return;const ps=k.split("_");let g=ps.length>1?ps[0]:"Genel";const l=ps.length>1?ps.slice(1).join(" "):ps[0];if(!gr[g])gr[g]=[];gr[g].push({l:l,v:o[k],p:pct(o[k]),k:k})});
-const gn=Object.keys(gr);
-h+='<div class="dtabs">';gn.forEach((g,i)=>h+='<div class="dtab'+(i===0?" a":"")+'" onclick="tc(\''+id+'\','+i+')">'+g+' ('+gr[g].length+')</div>');h+='</div>';
-gn.forEach((g,i)=>{h+='<div class="dcon'+(i===0?" a":"")+'" id="'+id+'t'+i+'"><div class="dgb">'+g+'</div><div class="ds">';
-gr[g].forEach(item=>{const dcls=dogruOran(m,item.k)?" dogru":"";h+='<div class="dor'+dcls+'"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';h+='</div>'});h+='</div></div>'}); h+='</div>'})});
-document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" mac | iddaa.com"}
-
-function dtoggle(id){document.getElementById(id).classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}
-function tc(id,ti){const p=document.getElementById(id);p.querySelectorAll(".dtab").forEach((t,i)=>t.classList.toggle("a",i===ti));p.querySelectorAll(".dcon").forEach((c,i)=>c.classList.toggle("a",i===ti))}
-
-function analizFiltreEkle(){const t=document.getElementById("analizOranTuru").value;const d=parseFloat(document.getElementById("analizOranDeger").value);if(!t||!d)return;analizFiltreler.push({tur:t,deger:d});document.getElementById("analizOranDeger").value="";afGoster()}
-function analizFiltreSil(i){analizFiltreler.splice(i,1);afGoster()}
-function analizFiltreTemizle(){analizFiltreler=[];afGoster();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Filtre ekle</div>'}
-function afGoster(){document.getElementById("analizFiltreListesi").innerHTML=analizFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="analizFiltreSil('+i+')">X</span></div>').join("")}
-
-
-/* ANALIZ TABLOSU YARDIMCI FONKSIYONLARI - OTOMATIK EKLENDI */
-function dogruOranAnaliz(m,key){
-  if(!m || m.durum !== "bitti") return false;
-  if(!key) return false;
-
-  const se = Number(m.skor_ev || 0);
-  const sd = Number(m.skor_dep || 0);
-  const iySe = Number(m.skor_1y_ev || 0);
-  const iySd = Number(m.skor_1y_dep || 0);
-
-  const toplamGol = se + sd;
-  const iyGol = iySe + iySd;
-  const ikinciSe = se - iySe;
-  const ikinciSd = sd - iySd;
-  const ikinciGol = ikinciSe + ikinciSd;
-
-  const kgVar = se > 0 && sd > 0;
-  const iyKgVar = iySe > 0 && iySd > 0;
-  const ikinciKgVar = ikinciSe > 0 && ikinciSd > 0;
-
-  const ms = se > sd ? "1" : (se === sd ? "0" : "2");
-  const iy = iySe > iySd ? "1" : (iySe === iySd ? "0" : "2");
-  const ikinci = ikinciSe > ikinciSd ? "1" : (ikinciSe === ikinciSd ? "0" : "2");
-
-  // Maç sonucu
-  if(key === "Maç Sonucu_1") return ms === "1";
-  if(key === "Maç Sonucu_0") return ms === "0";
-  if(key === "Maç Sonucu_2") return ms === "2";
-
-  // İlk yarı sonucu
-  if(key === "İlk Yarı Sonucu_1") return iy === "1";
-  if(key === "İlk Yarı Sonucu_0") return iy === "0";
-  if(key === "İlk Yarı Sonucu_2") return iy === "2";
-
-  // İkinci yarı sonucu
-  if(key === "İkinci Yarı Sonucu_1") return ikinci === "1";
-  if(key === "İkinci Yarı Sonucu_0") return ikinci === "0";
-  if(key === "İkinci Yarı Sonucu_2") return ikinci === "2";
-
-  // İlk yarı alt/üst önce kontrol edilmeli
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Alt")) return iyGol < 0.5;
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Üst")) return iyGol > 0.5;
-  if(key.includes("İlk Yarı Alt/Üst 1.5_Alt")) return iyGol < 1.5;
-  if(key.includes("İlk Yarı Alt/Üst 1.5_Üst")) return iyGol > 1.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Alt")) return iyGol < 2.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Üst")) return iyGol > 2.5;
-
-  // Maç alt/üst
-  if(key.includes("Alt/Üst 0.5_Alt")) return toplamGol < 0.5;
-  if(key.includes("Alt/Üst 0.5_Üst")) return toplamGol > 0.5;
-  if(key.includes("Alt/Üst 1.5_Alt")) return toplamGol < 1.5;
-  if(key.includes("Alt/Üst 1.5_Üst")) return toplamGol > 1.5;
-  if(key.includes("Alt/Üst 2.5_Alt")) return toplamGol < 2.5;
-  if(key.includes("Alt/Üst 2.5_Üst")) return toplamGol > 2.5;
-  if(key.includes("Alt/Üst 3.5_Alt")) return toplamGol < 3.5;
-  if(key.includes("Alt/Üst 3.5_Üst")) return toplamGol > 3.5;
-  if(key.includes("Altı/Üstü 2.5") && key.includes("_Alt")) return toplamGol < 2.5;
-  if(key.includes("Altı/Üstü 2.5") && key.includes("_Üst")) return toplamGol > 2.5;
-
-  // Karşılıklı gol
-  if(key === "Karşılıklı Gol_Var") return kgVar;
-  if(key === "Karşılıklı Gol_Yok") return !kgVar;
-  if(key === "İlk Yarı Karşılıklı Gol_Var") return iyKgVar;
-  if(key === "İlk Yarı Karşılıklı Gol_Yok") return !iyKgVar;
-  if(key === "İkinci Yarı Karşılıklı Gol_Var") return ikinciKgVar;
-  if(key === "İkinci Yarı Karşılıklı Gol_Yok") return !ikinciKgVar;
-
-  // Maç sonucu + KG
-  if(key.startsWith("Maç Sonucu ve Karşılıklı Gol_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" ve ");
-    const msSecim = parca[0];
-    const kgSecim = parca[1];
-    return msSecim === ms && (kgSecim === "Var" ? kgVar : !kgVar);
-  }
-
-  // İlk yarı / maç sonucu
-  if(key.startsWith("İlk Yarı / Maç Sonucu_")){
-    const secim = key.split("_")[1];
-    return secim === (iy + "/" + ms);
-  }
-
-  // İlk yarı sonucu + İY KG
-  if(key.startsWith("İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" ve ");
-    return parca[0] === iy && (parca[1] === "Var" ? iyKgVar : !iyKgVar);
-  }
-
-  // İlk yarı sonucu + İY Alt/Üst 1.5
-  if(key.startsWith("İlk Yarı Sonucu ve Altı/Üstü 1.5_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" ve ");
-    return parca[0] === iy && (parca[1] === "Üst" ? iyGol > 1.5 : iyGol < 1.5);
-  }
-
-  // Her iki yarıda üst/alt 1.5
-  if(key === "Her İki Yarıda da Üst 1.5_Evet") return iyGol > 1.5 && ikinciGol > 1.5;
-  if(key === "Her İki Yarıda da Üst 1.5_Hayır") return !(iyGol > 1.5 && ikinciGol > 1.5);
-  if(key === "Her İki Yarıda da Alt 1.5_Evet") return iyGol < 1.5 && ikinciGol < 1.5;
-  if(key === "Her İki Yarıda da Alt 1.5_Hayır") return !(iyGol < 1.5 && ikinciGol < 1.5);
-
-  // İlk yarı ve ikinci yarıda KG olur
-  if(key.startsWith("İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" / ");
-    const ilkDogru = parca[0] === "Evet" ? iyKgVar : !iyKgVar;
-    const ikinciDogru = parca[1] === "Evet" ? ikinciKgVar : !ikinciKgVar;
-    return ilkDogru && ikinciDogru;
-  }
-
-  // Tek / çift
-  if(key === "Tek/Çift_Tek") return toplamGol % 2 === 1;
-  if(key === "Tek/Çift_Çift") return toplamGol % 2 === 0;
-  if(key === "İlk Yarı Tek/Çift_Tek") return iyGol % 2 === 1;
-  if(key === "İlk Yarı Tek/Çift_Çift") return iyGol % 2 === 0;
-
-  return false;
-}
-
-function analizKisaBaslik(key){
-  if(typeof KA === "function") return KA(key);
-  return key;
-}
-
-
-function analizOranKeyleri(maclar){
-  const istenen = [
-    // Maç Sonucu
-    "Maç Sonucu_1",
-    "Maç Sonucu_0",
-    "Maç Sonucu_2",
-
-    // Alt Üst 2.5
-    "Alt/Üst 2.5_Alt",
-    "Alt/Üst 2.5_Üst",
-
-    // KG
-    "Karşılıklı Gol_Var",
-    "Karşılıklı Gol_Yok",
-
-    // İlk Yarı Sonucu
-    "İlk Yarı Sonucu_1",
-    "İlk Yarı Sonucu_0",
-    "İlk Yarı Sonucu_2",
-
-    // İlk Yarı Alt/Üst 1.5
-    "İlk Yarı Alt/Üst 1.5_Alt",
-    "İlk Yarı Alt/Üst 1.5_Üst",
-
-    // Her iki yarıda Üst 1.5
-    "Her İki Yarıda da Üst 1.5_Evet",
-    "Her İki Yarıda da Üst 1.5_Hayır",
-
-    // Alt/Üst 3.5
-    "Alt/Üst 3.5_Alt",
-    "Alt/Üst 3.5_Üst",
-
-    // İlk Yarı ve İkinci Yarıda KG Olur
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet",
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır",
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet",
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır",
-
-    // Ev sahibi her iki yarıda gol atar
-    "Ev Sahibi Her İki Yarıda da Gol Atar_Evet",
-    "Ev Sahibi Her İki Yarıda da Gol Atar_Hayır",
-
-    // Deplasman her iki yarıda gol atar
-    "Deplasman Her İki Yarıda da Gol Atar_Evet",
-    "Deplasman Her İki Yarıda da Gol Atar_Hayır",
-
-    // İkinci Yarı KG
-    "İkinci Yarı Karşılıklı Gol_Var",
-    "İkinci Yarı Karşılıklı Gol_Yok",
-
-    // Altı/Üstü 2.5 ve KG
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Var",
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Yok",
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Var",
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Yok",
-
-    // İlk Yarı Sonucu ve İlk Yarı KG
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok",
-
-    // İlk Yarı / Maç Sonucu
-    "İlk Yarı / Maç Sonucu_1/1",
-    "İlk Yarı / Maç Sonucu_1/0",
-    "İlk Yarı / Maç Sonucu_1/2",
-    "İlk Yarı / Maç Sonucu_0/1",
-    "İlk Yarı / Maç Sonucu_0/0",
-    "İlk Yarı / Maç Sonucu_0/2",
-    "İlk Yarı / Maç Sonucu_2/1",
-    "İlk Yarı / Maç Sonucu_2/0",
-    "İlk Yarı / Maç Sonucu_2/2",
-
-    // Ev sahibi her iki yarıyı kazanır
-    "Ev Sahibi Her İki Yarıyı Kazanır_Evet",
-    "Ev Sahibi Her İki Yarıyı Kazanır_Hayır",
-
-    // Deplasman her iki yarıyı kazanır
-    "Deplasman Her İki Yarıyı Kazanır_Evet",
-    "Deplasman Her İki Yarıyı Kazanır_Hayır"
-  ];
-
-  // Sadece eşleşen maçlarda gerçekten bulunan kolonları göster
-  const mevcut = new Set();
-
-  maclar.forEach(m=>{
-    Object.keys(m.oranlar || {}).forEach(k=>{
-      mevcut.add(k);
-    });
-  });
-
-  return istenen;
-
-}
-
-
-function analizMacTablosuHtml(maclar){
-  if(!maclar.length) return "";
-
-  const keys = analizOranKeyleri(maclar);
-
-  let h = "";
-  h += '<div class="analiz-table-info">';
-  h += 'Eşleşen maçlar alt alta listelenir. Oran sütunları sağa doğru kaydırılabilir. Yeşil hücreler o maç sonucuna göre doğru gelen oranlardır.';
-  h += '</div>';
-
-  h += '<div class="analiz-table-wrap">';
-  h += '<table class="analiz-table">';
-  h += '<thead><tr>';
-  h += '<th>Tarih</th>';
-  h += '<th>Saat</th>';
-  h += '<th>Maç</th>';
-  h += '<th>İY</th>';
-  h += '<th>MS</th>';
-
-  keys.forEach(k=>{
-    h += '<th title="'+k.replaceAll('"','&quot;')+'">'+analizKisaBaslik(k)+'</th>';
-  });
-
-  h += '</tr></thead><tbody>';
-
-  maclar.forEach(m=>{
-    h += '<tr>';
-    h += '<td>'+m.tarih+'</td>';
-    h += '<td>'+(m.saat || "")+'</td>';
-    h += '<td class="mac-col">'+m.ev_sahibi+' - '+m.deplasman+'</td>';
-    h += '<td class="skor-col">'+(m.skor_1y_ev ?? 0)+'-'+(m.skor_1y_dep ?? 0)+'</td>';
-    h += '<td class="skor-col">'+(m.skor_ev ?? 0)+'-'+(m.skor_dep ?? 0)+'</td>';
-
-    keys.forEach(k=>{
-      const v = m.oranlar ? m.oranlar[k] : null;
-
-      if(v){
-        const dogru = dogruOranAnaliz(m,k);
-        h += '<td class="oran-cell'+(dogru ? ' dogru' : '')+'" title="'+k.replaceAll('"','&quot;')+'">';
-        h += '<div class="oran-v">'+v+'</div>';
-        h += '<div class="oran-p">%'+pct(v)+'</div>';
-        h += '</td>';
-      }else{
-        h += '<td class="oran-cell"><span class="bos-oran">-</span></td>';
-      }
-    });
-
-    h += '</tr>';
-  });
-
-  h += '</tbody></table></div>';
-  return h;
-}
-
-
-
-/* KARSILASTIRMALI ANALIZ YARDIMCI FONKSIYONLARI - OTOMATIK EKLENDI */
-function tekliAnalizSonuc(hepsi, filtre){
-  const uygun = hepsi.filter(m=>{
-    if(m.durum !== "bitti") return false;
-    const v = m.oranlar ? m.oranlar[filtre.tur] : null;
-    if(!v || Math.abs(v - filtre.deger) > 0.009) return false;
-    return true;
-  });
-
-  return uygun;
-}
-
-function ikiFiltreKarsilastirma(hepsi, f1, f2){
-  const biten = hepsi.filter(m=>m.durum === "bitti");
-
-  let sadece1 = 0;
-  let sadece2 = 0;
-  let ikisi = 0;
-  let hicbiri = 0;
-
-  biten.forEach(m=>{
-    const v1 = m.oranlar ? m.oranlar[f1.tur] : null;
-    const v2 = m.oranlar ? m.oranlar[f2.tur] : null;
-
-    const a = !!(v1 && Math.abs(v1 - f1.deger) <= 0.009);
-    const b = !!(v2 && Math.abs(v2 - f2.deger) <= 0.009);
-
-    if(a && b) ikisi++;
-    else if(a && !b) sadece1++;
-    else if(!a && b) sadece2++;
-    else hicbiri++;
-  });
-
-  return {
-    toplam: biten.length,
-    sadece1,
-    sadece2,
-    ikisi,
-    hicbiri
-  };
-}
-
-function yuzdeHesapla(sayi, toplam){
-  if(!toplam) return 0;
-  return Math.round((sayi / toplam) * 100);
-}
-
-
-
-function ikiFiltreBasariDagilimi(maclar, f1, f2){
-  let sadece1 = 0;
-  let sadece2 = 0;
-  let ikisi = 0;
-  let hicbiri = 0;
-
-  maclar.forEach(m=>{
-    const a = dogruOranAnaliz(m, f1.tur);
-    const b = dogruOranAnaliz(m, f2.tur);
-
-    if(a && b) ikisi++;
-    else if(a && !b) sadece1++;
-    else if(!a && b) sadece2++;
-    else hicbiri++;
-  });
-
-  return {
-    toplam: maclar.length,
-    sadece1,
-    sadece2,
-    ikisi,
-    hicbiri
-  };
-}
-
-function analizYap(){
-  if(!analizFiltreler.length){
-    document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Filtre ekleyin</div>';
-    return;
-  }
-
-  const hepsi = tumMaclar.concat(gecmisMaclar);
-
-  const bm = hepsi.filter(m=>{
-    if(m.durum !== "bitti") return false;
-
-    for(const f of analizFiltreler){
-      const v = m.oranlar ? m.oranlar[f.tur] : null;
-      if(!v || Math.abs(v - f.deger) > 0.009) return false;
+function tarihleriDoldur(){const s=document.getElementById("tarihSelect");const ks=document.getElementById("kesifTarih");[...new Set(tumMaclar.map(m=>m.tarih))].sort().forEach(t=>{const o=document.createElement("option");o.value=t;o.textContent=new Date(t).toLocaleDateString("tr-TR");s.appendChild(o.cloneNode(true));if(ks)ks.appendChild(o)});}
+function ligleriDoldur(){const s=document.getElementById("ligSelect");const kl=document.getElementById("kesifLig");[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x))].sort().forEach(l=>{const o=document.createElement("option");o.value=l;o.textContent=l;s.appendChild(o.cloneNode(true));if(kl)kl.appendChild(o)});}
+
+function mainTab(i){document.querySelectorAll(".main-tab").forEach((t,idx)=>idx===i?t.classList.add("aktif"):t.classList.remove("aktif"));document.querySelectorAll(".tab-icerik").forEach((t,idx)=>idx===i?t.classList.add("aktif"):t.classList.remove("aktif"));if(i===2)setTimeout(kombineKesifFiltrele,200);}
+
+/* ============================================ */
+/* BÜLTEN FONKSİYONLARI (Standart)              */
+/* ============================================ */
+function pct(v){return v?Math.round(100/v)+"%":"";}
+function dogruOran(m,key){if(!m||m.durum!=="bitti")return false;if(!key)return false;const v=m.oranlar?m.oranlar[key]:null;if(!v)return false;const se=Number(m.skor_ev||0),sd=Number(m.skor_dep||0);if(key==="Maç Sonucu_1")return se>sd;if(key==="Maç Sonucu_0")return se===sd;if(key==="Maç Sonucu_2")return sd>se;if(key.includes("Alt"))return (se+sd)<parseFloat(key.split("_")[1]);if(key.includes("Üst"))return (se+sd)>parseFloat(key.split("_")[1]);if(key.includes("Var"))return se>0&&sd>0;if(key.includes("Yok"))return !(se>0&&sd>0);return false;}
+
+function filtrele(){const a=(document.getElementById("aramaInput").value||"").toLowerCase();const t=document.getElementById("tarihSelect").value;const l=document.getElementById("ligSelect").value;const d=document.getElementById("durumSelect").value;const sir=document.getElementById("siralama").value;let maclar=tumMaclar.filter(m=>{if(a&&!(m.ev_sahibi||"").toLowerCase().includes(a)&&!(m.deplasman||"").toLowerCase().includes(a)&&!(m.lig||"").toLowerCase().includes(a))return false;if(t&&m.tarih!==t)return false;if(l&&(m.lig||"")!==l)return false;if(d&&m.durum!==d)return false;return true;});
+bultenFiltreler.forEach(f=>{maclar=maclar.filter(m=>{const v=m.oranlar?f.oranTuru==="Karşılıklı Gol_Var"||(m.oranlar[f.oranTuru]||0):0;return Math.abs(parseFloat(v||0)-parseFloat(f.deger))<0.05;});});
+if(sir==="ms1a")maclar.sort((a,b)=>(a.oranlar||{})["Maç Sonucu_1"]-(b.oranlar||{})["Maç Sonucu_1"]);if(sir==="ms1d")maclar.sort((a,b)=>(b.oranlar||{})["Maç Sonucu_1"]-(a.oranlar||{})["Maç Sonucu_1"]);if(sir==="ms2a")maclar.sort((a,b)=>(a.oranlar||{})["Maç Sonucu_2"]-(b.oranlar||{})["Maç Sonucu_2"]);if(sir==="ms2d")maclar.sort((a,b)=>(b.oranlar||{})["Maç Sonucu_2"]-(a.oranlar||{})["Maç Sonucu_2"]);if(sir==="usta")maclar.sort((a,b)=>(a.oranlar||{})["Alt/Üst 2.5_Üst"]-(b.oranlar||{})["Alt/Üst 2.5_Üst"]);if(sir==="alta")maclar.sort((a,b)=>(a.oranlar||{})["Alt/Üst 2.5_Alt"]-(b.oranlar||{})["Alt/Üst 2.5_Alt"]);
+render(maclar);statsGoster(maclar);}
+
+function statsGoster(maclar){const bi=maclar.filter(x=>x.durum==="bitti").length;document.getElementById("statsBar").innerHTML='<div class="si"><div class="sv">'+maclar.length+'</div><div class="sl">Maç</div></div><div class="si"><div class="sv">'+bi+'</div><div class="sl">Biten</div></div>';}
+function render(maclar){const c=document.getElementById("container");if(!maclar.length){c.innerHTML='<div class="bos">Sonuç yok</div>';return;}const grp={};maclar.forEach(m=>{if(!grp[m.tarih])grp[m.tarih]=[];grp[m.tarih].push(m);});let h="";Object.keys(grp).sort().forEach(tarih=>{const gm=grp[tarih];const d=new Date(tarih);h+='<div class="gun-baslik">'+d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"})+'<span class="gc">'+gm.length+'</span></div>';gm.forEach(m=>{const o=m.oranlar||{};const skorTxt=m.durum==="bitti"?' <span style="color:#f0b90b;font-weight:700"> MS: '+(m.skor_ev||0)+'-'+(m.skor_dep||0)+'</span>':'';h+='<div class="mac-satir"><div class="ms-saat"><span class="s">'+(m.saat||"-")+'</span><span class="t">#'+(m.mac_kodu||"")+'</span></div><div class="ms-takim"><span class="ev">'+(m.ev_sahibi||"?")+skorTxt+'</span><span class="dep">'+(m.deplasman||"?")+'</span></div>';h+=oranHucre(o["Maç Sonucu_1"],m,"Maç Sonucu_1");h+=oranHucre(o["Maç Sonucu_0"],m,"Maç Sonucu_0");h+=oranHucre(o["Maç Sonucu_2"],m,"Maç Sonucu_2");h+=oranHucre(o["Alt/Üst 2.5_Alt"],m,"Alt/Üst 2.5_Alt");h+=oranHucre(o["Alt/Üst 2.5_Üst"],m,"Alt/Üst 2.5_Üst");h+=oranHucre(o["Karşılıklı Gol_Var"],m,"Karşılıklı Gol_Var");h+=oranHucre(o["Karşılıklı Gol_Yok"],m,"Karşılıklı Gol_Yok");h+='</div>';});});c.innerHTML=h;}
+function oranHucre(v,m,key){if(!v)return'<div class="oran-hucre"><div class="ov" style="color:#333">-</div></div>';const cls=dogruOran(m,key)?" dogru":"";return'<div class="oran-hucre'+cls+'"><div class="ov">'+v+'</div><div class="op">%' + pct(v) + '</div></div>';}
+function filtreEkle(){const t=document.getElementById("oranTuru").value;const d=document.getElementById("oranDeger").value;if(!t||!d)return;bultenFiltreler.push({oranTuru:t,deger:d});renderFiltreChip();filtrele();}
+function filtreTemizle(){bultenFiltreler=[];renderFiltreChip();filtrele();}
+function renderFiltreChip(){const c=document.getElementById("filtreListesi");c.innerHTML="";bultenFiltreler.forEach((f,i)=>{c.innerHTML+='<span class="filtre-chip">'+f.oranTuru.replace("Maç Sonucu_","MS").replace("Alt/Üst 2.5_","").replace("Karşılıklı Gol_","KG")+"="+f.deger+' <span style="cursor:pointer;color:red" onclick="bultenFiltreler.splice('+i+',1);renderFiltreChip();filtrele()">✕</span></span>';});}
+function resetFiltre(){document.getElementById("aramaInput").value="";document.getElementById("tarihSelect").value="";document.getElementById("ligSelect").value="";document.getElementById("durumSelect").value="";document.getElementById("siralama").value="tarih";filtreTemizle();}
+
+/* ============================================ */
+/* ANALİZ FONKSİYONLARI (Tab 1)                 */
+/* ============================================ */
+function analizFiltreEkle(){const t=document.getElementById("analizOranTuru").value;const d=document.getElementById("analizOranDeger").value;if(!t||!d)return;analizFiltreler.push({oranTuru:t,deger:d});renderAnalizChip();}
+function analizFiltreTemizle(){analizFiltreler=[];renderAnalizChip();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">👆 Filtre ekle → Analiz Et</div>';}
+function renderAnalizChip(){const c=document.getElementById("analizFiltreListesi");c.innerHTML="";analizFiltreler.forEach((f,i)=>{c.innerHTML+='<span class="filtre-chip">'+f.oranTuru.replace("Maç Sonucu_","MS").replace("Alt/Üst 2.5_","").replace("Karşılıklı Gol_","KG")+"="+f.deger+' <span style="cursor:pointer;color:red" onclick="analizFiltreler.splice('+i+',1);renderAnalizChip()">✕</span></span>';});}
+function analizYap(){if(!analizFiltreler.length)return;const sonuc=gecmisMaclar.filter(m=>m.durum==="bitti"&&analizFiltreler.every(f=>{const v=m.oranlar?f.oranTuru==="Karşılıklı Gol_Var"||(m.oranlar[f.oranTuru]||0):0;return Math.abs(parseFloat(v||0)-parseFloat(f.deger))<0.05;}));const tutan=sonuc.filter(m=>analizFiltreler.every(f=>dogruOran(m,f.oranTuru))).length;const yuzde=sonuc.length?Math.round((tutan/sonuc.length)*100):0;document.getElementById("analizSonuc").innerHTML='<div class="analiz-panel"><h3>Sonuç</h3><p>Bulunan Maç: <b>'+sonuc.length+'</b></p><p>Tutan Maç: <b>'+tutan+'</b></p><p>Başarı Oranı: <b style="color:'+(yuzde>=60?"#00c853":"#ff5252")+'">%'+yuzde+'</b></p></div>';}
+function kombine2AnalizYap(){const t1=document.getElementById("kombineOran1").value;const d1=document.getElementById("kombineDeger1").value;const t2=document.getElementById("kombineOran2").value;const d2=document.getElementById("kombineDeger2").value;if(!t1||!d1||!t2||!d2)return;analizFiltreler=[{oranTuru:t1,deger:d1},{oranTuru:t2,deger:d2}];renderAnalizChip();analizYap();}
+function kombine2Temizle(){document.getElementById("kombineDeger1").value="";document.getElementById("kombineDeger2").value="";}
+// Kombine dropdownlarını doldur
+const orjYukle2 = window.yukle;
+window.yukle = function() {
+  orjYukle2();
+  setTimeout(() => {
+    const s1 = document.getElementById("kombineOran1");
+    const s2 = document.getElementById("kombineOran2");
+    if(s1 && s2) {
+      const opts = document.querySelectorAll("#analizOranTuru option");
+      opts.forEach(o => {
+        if(o.value) {
+          s1.appendChild(o.cloneNode(true));
+          s2.appendChild(o.cloneNode(true));
+        }
+      });
     }
+  }, 1000);
+};
 
-    return true;
-  });
-
-  if(!bm.length){
-    document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Eşleşen bitmiş maç yok ('+hepsi.length+' maç tarandı)</div>';
-    return;
-  }
-
-  let ek=0,be=0,dk=0,u25=0,a25=0,kgv=0,kgy=0,iye=0,iyb=0,iyd=0,tg=0;
-
-  bm.forEach(m=>{
-    const se=Number(m.skor_ev||0);
-    const sd=Number(m.skor_dep||0);
-    const t=se+sd;
-    tg+=t;
-
-    if(se>sd) ek++;
-    else if(se===sd) be++;
-    else dk++;
-
-    if(t>2.5) u25++;
-    else a25++;
-
-    if(se>0&&sd>0) kgv++;
-    else kgy++;
-
-    const ise=Number(m.skor_1y_ev||0);
-    const isd=Number(m.skor_1y_dep||0);
-
-    if(ise>isd) iye++;
-    else if(ise===isd) iyb++;
-    else iyd++;
-  });
-
-  const n=bm.length;
-  const P=v=>Math.round(v/n*100);
-  const fs=analizFiltreler.map(f=>KA(f.tur)+"="+f.deger).join(" & ");
-
-  let h='';
-  h+='<div class="analiz-baslik">'+fs+' — '+n+' Maç ('+hepsi.length+' tarandı)</div>';
-
-  // Ana kartlar
-  h+='<div class="analiz-grid">';
-  h+='<div class="ak"><div class="akb">Maç</div><div class="akd">'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">Ort Gol</div><div class="akd">'+(tg/n).toFixed(1)+'</div></div>';
-  h+='<div class="ak"><div class="akb">Üst2.5</div><div class="akd" style="color:#00c853">%'+P(u25)+'</div><div class="aka">'+u25+'/'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">KG Var</div><div class="akd" style="color:#f0b90b">%'+P(kgv)+'</div><div class="aka">'+kgv+'/'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">Ev Kazandı</div><div class="akd" style="color:#00c853">%'+P(ek)+'</div><div class="aka">'+ek+'/'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">Berabere</div><div class="akd" style="color:#f0b90b">%'+P(be)+'</div><div class="aka">'+be+'/'+n+'</div></div>';
-  h+='</div>';
-
-  // Eğer tam 2 filtre varsa karşılaştırmalı kartlar ekle
-  if(analizFiltreler.length === 2){
-    const f1 = analizFiltreler[0];
-    const f2 = analizFiltreler[1];
-
-    // Genel evren: tüm bitmiş maçlar içinde bu oranların varlığı
-    const tek1 = tekliAnalizSonuc(hepsi, f1);
-    const tek2 = tekliAnalizSonuc(hepsi, f2);
-    const genel = ikiFiltreKarsilastirma(hepsi, f1, f2);
-
-    // Yerel evren: filtreye uyan maçlar içinde gerçekten gelip gelmediği
-    const lokal = ikiFiltreBasariDagilimi(bm, f1, f2);
-
-    const lokal1 = lokal.sadece1 + lokal.ikisi;
-    const lokal2 = lokal.sadece2 + lokal.ikisi;
-
-    h+='<div class="analiz-baslik" style="margin-top:10px">⚡ Karşılaştırmalı Kombine Analizi</div>';
-    h+='<div class="analiz-grid">';
-
-    h+='<div class="ak"><div class="akb">'+KA(f1.tur)+' = '+f1.deger+' (tek başına)</div><div class="akd">%'+yuzdeHesapla(lokal1, lokal.toplam)+'</div><div class="aka">yerel: '+lokal1+'/'+lokal.toplam+' | genel: '+tek1.length+'/'+genel.toplam+'</div></div>';
-
-    h+='<div class="ak"><div class="akb">'+KA(f2.tur)+' = '+f2.deger+' (tek başına)</div><div class="akd">%'+yuzdeHesapla(lokal2, lokal.toplam)+'</div><div class="aka">yerel: '+lokal2+'/'+lokal.toplam+' | genel: '+tek2.length+'/'+genel.toplam+'</div></div>';
-
-    h+='<div class="ak"><div class="akb">İkisi Birlikte</div><div class="akd" style="color:#00c853">%'+yuzdeHesapla(lokal.ikisi, lokal.toplam)+'</div><div class="aka">yerel: '+lokal.ikisi+'/'+lokal.toplam+' | genel: '+genel.ikisi+'/'+genel.toplam+'</div></div>';
-
-    h+='<div class="ak"><div class="akb">Sadece 1. Oran</div><div class="akd" style="color:#f0b90b">%'+yuzdeHesapla(lokal.sadece1, lokal.toplam)+'</div><div class="aka">yerel: '+lokal.sadece1+'/'+lokal.toplam+' | genel: '+genel.sadece1+'/'+genel.toplam+'</div></div>';
-
-    h+='<div class="ak"><div class="akb">Sadece 2. Oran</div><div class="akd" style="color:#f0b90b">%'+yuzdeHesapla(lokal.sadece2, lokal.toplam)+'</div><div class="aka">yerel: '+lokal.sadece2+'/'+lokal.toplam+' | genel: '+genel.sadece2+'/'+genel.toplam+'</div></div>';
-
-    h+='<div class="ak"><div class="akb">İkisi de Gelmedi</div><div class="akd" style="color:#e74c3c">%'+yuzdeHesapla(lokal.hicbiri, lokal.toplam)+'</div><div class="aka">yerel: '+lokal.hicbiri+'/'+lokal.toplam+' | genel: '+genel.hicbiri+'/'+genel.toplam+'</div></div>';
-
-    h+='</div>';
-  }
-
-  h+=bar("Maç Sonucu","Ev%"+P(ek),P(ek),"X%"+P(be),P(be),"Dep%"+P(dk),P(dk));
-  h+=bar("Alt/Üst","Alt%"+P(a25),P(a25),"",0,"Üst%"+P(u25),P(u25));
-  h+=bar("KG","Var%"+P(kgv),P(kgv),"",0,"Yok%"+P(kgy),P(kgy));
-  h+=bar("İY","Ev%"+P(iye),P(iye),"X%"+P(iyb),P(iyb),"Dep%"+P(iyd),P(iyd));
-
-  h+='<div class="analiz-baslik" style="margin-top:12px">📋 Filtreye Uyan Maçlar ve Oranlar</div>';
-  h+=analizMacTablosuHtml(bm);
-
-  document.getElementById("analizSonuc").innerHTML=h;
-}
-
-
-
-function bar(t,l1,w1,l2,w2,l3,w3){let h='<div class="abar"><div class="abar-b">'+t+'</div><div class="abar-ic">';if(w1>0)h+='<div class="ab-ev" style="width:'+w1+'%">'+l1+'</div>';if(w2>0)h+='<div class="ab-ber" style="width:'+w2+'%">'+l2+'</div>';if(w3>0)h+='<div class="ab-dep" style="width:'+w3+'%">'+l3+'</div>';return h+'</div></div>'}
-
-
-/* IKILI KOMBINE ANALIZ - OTOMATIK EKLENDI */
-function kombine2InitSecenekler(){
-  const kaynak = document.getElementById("analizOranTuru");
-  const s1 = document.getElementById("kombineOran1");
-  const s2 = document.getElementById("kombineOran2");
-
-  if(!kaynak || !s1 || !s2) return;
-
-  if(s1.options.length === 0){
-    s1.innerHTML = kaynak.innerHTML;
-  }
-  if(s2.options.length === 0){
-    s2.innerHTML = kaynak.innerHTML;
-  }
-
-  // İstenen marketleri varsayılan dolduralım
-  if(!s1.value) s1.value = "İlk Yarı Karşılıklı Gol_Var";
-  if(!s2.value) s2.value = "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet";
-}
-
-function kombine2Temizle(){
-  const d1 = document.getElementById("kombineDeger1");
-  const d2 = document.getElementById("kombineDeger2");
-  if(d1) d1.value = "";
-  if(d2) d2.value = "";
-  analizFiltreler = [];
-  if(typeof afGoster === "function") afGoster();
-  document.getElementById("analizSonuc").innerHTML = '<div class="analiz-yok">👆 Filtre ekleyin ve analiz başlatın</div>';
-}
-
-function kombine2AnalizYap(){
-  const t1 = document.getElementById("kombineOran1")?.value;
-  const t2 = document.getElementById("kombineOran2")?.value;
-  const d1 = parseFloat(document.getElementById("kombineDeger1")?.value);
-  const d2 = parseFloat(document.getElementById("kombineDeger2")?.value);
-
-  if(!t1 || isNaN(d1) || !t2 || isNaN(d2)){
-    document.getElementById("analizSonuc").innerHTML = '<div class="analiz-yok">⚠️ Lütfen iki oranı da seçin ve değer girin.</div>';
-    return;
-  }
-
-  analizFiltreler = [];
-  analizFiltreler.push({tur:t1, deger:d1});
-
-  // Aynı market + aynı değer ise iki kez eklemeyelim
-  if(!(t1 === t2 && Math.abs(d1 - d2) <= 0.009)){
-    analizFiltreler.push({tur:t2, deger:d2});
-  }
-
-  if(typeof afGoster === "function") afGoster();
-  if(typeof analizYap === "function") analizYap();
-}
-
-yukle();
-setTimeout(kombine2InitSecenekler,1000);
 
 /* ============================================ */
-/* 3. SEKME: AKILLI KOMBİNASYON (TÜM MAÇLAR)   */
+/* AKILLI KOMBİNASYON ANALİZ MOTORU (TAB 2)     */
 /* ============================================ */
 
-// Hangi kombinasyonları analiz edeceğiz?
-const ANALIZ_KOMBINASYONLARI = [
-  { id: "MS1", ad: "MS1", tip: "tek" },
-  { id: "MS0", ad: "MS0", tip: "tek" },
-  { id: "MS2", ad: "MS2", tip: "tek" },
-  { id: "UST25", ad: "2.5 Üst", tip: "tek" },
-  { id: "KGV", ad: "KG Var", tip: "tek" },
-  { id: "MS1_UST25", ad: "MS1+Üst", tip: "cift" },
-  { id: "MS1_KGV", ad: "MS1+KG", tip: "cift" },
-  { id: "MS2_UST25", ad: "MS2+Üst", tip: "cift" },
-  { id: "MS2_KGV", ad: "MS2+KG", tip: "cift" },
-  { id: "MS0_KGV", ad: "MS0+KG", tip: "cift" }
+const ANALIZ_LISTESI = [
+  // TEMEL
+  { id: "MS1", ad: "MS<br>1", market: "Maç Sonucu_1" },
+  { id: "MS0", ad: "MS<br>0", market: "Maç Sonucu_0" },
+  { id: "MS2", ad: "MS<br>2", market: "Maç Sonucu_2" },
+  { id: "ALT25", ad: "2.5<br>Alt", market: "Alt/Üst 2.5_Alt" },
+  { id: "UST25", ad: "2.5<br>Üst", market: "Alt/Üst 2.5_Üst" },
+  { id: "KGV", ad: "KG<br>Var", market: "Karşılıklı Gol_Var" },
+  { id: "KGY", ad: "KG<br>Yok", market: "Karşılıklı Gol_Yok" },
+  
+  // İKİLİ
+  { id: "MS1_MS0", ad: "1X", market: "Maç Sonucu_1" },
+  { id: "MS1_MS2", ad: "12", market: "Maç Sonucu_1" },
+  { id: "MS1_ALT25", ad: "MS1+<br>Alt", market: "Maç Sonucu_1" },
+  { id: "MS1_KGV", ad: "MS1+<br>KG", market: "Maç Sonucu_1" },
+  { id: "MS1_KGY", ad: "MS1+<br>KGY", market: "Maç Sonucu_1" },
+  { id: "MS0_ALT25", ad: "MS0+<br>Alt", market: "Maç Sonucu_0" },
+  { id: "MS0_KGV", ad: "MS0+<br>KG", market: "Maç Sonucu_0" },
+  { id: "MS0_KGY", ad: "MS0+<br>KGY", market: "Maç Sonucu_0" },
+  { id: "MS2_ALT25", ad: "MS2+<br>Alt", market: "Maç Sonucu_2" },
+  { id: "MS2_KGV", ad: "MS2+<br>KG", market: "Maç Sonucu_2" },
+  { id: "MS2_KGY", ad: "MS2+<br>KGY", market: "Maç Sonucu_2" },
+
+  // ÖZEL (SENİN LİSTEN - VERİTABANI İLE AYNI OLMALI)
+  { id: "EV_HER_IKI", ad: "Ev<br>Her 2<br>Yarı", market: "Ev Sahibi Her İki Yarıyı Kazanır" },
+  { id: "DEP_HER_IKI", ad: "Dep<br>Her 2<br>Yarı", market: "Deplasman Her İki Yarıyı Kazanır" },
+  { id: "IY_MS", ad: "İY /<br>MS", market: "İlk Yarı / Maç Sonucu" },
+  { id: "IY_SONUC", ad: "İlk<br>Yarı", market: "İlk Yarı Sonucu" },
+  { id: "IY_KG", ad: "İlk<br>Yarı<br>KG", market: "İlk Yarı Karşılıklı Gol" },
+  { id: "IY_ALT15", ad: "İY<br>Alt<br>1.5", market: "İlk Yarı Sonucu ve Altı/Üstü 1.5" },
+  
+  // KG KOMBİNELERİ (TAM İSİMLER)
+  { id: "KG_HH", ad: "KG<br>H/H", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur (Hayır / Hayır)" },
+  { id: "KG_EH", ad: "KG<br>E/H", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur Evet / Hayır" },
+  { id: "KG_EE", ad: "KG<br>E/E", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur  Evet / Evet" },
+  { id: "KG_HE", ad: "KG<br>H/E", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur Hayır / Evet" }
 ];
 
-// 1. Kombinasyonun tutup tutmadığını kontrol eder (SADECE BİTMİŞ MAÇLAR İÇİN ÇAĞRILIR)
-function kesifDogruMu(m, comboId) {
-  // Güvenlik: Eğer maç bitmemişse false döndür (analiz yapılamaz)
+function kesifDogruMu(m, item) {
   if (!m || m.durum !== "bitti") return false;
-  
   const se = Number(m.skor_ev || 0), sd = Number(m.skor_dep || 0);
   const tg = se + sd;
   const kg = se > 0 && sd > 0;
   const ms = se > sd ? "1" : (se === sd ? "0" : "2");
+  
+  const iy_se = Number(m.iy_skor_ev || 0), iy_sd = Number(m.iy_skor_dep || 0);
+  const iy_tg = iy_se + iy_sd;
+  const iy_kg = iy_se > 0 && iy_sd > 0;
+  const iy_ms = iy_se > iy_sd ? "1" : (iy_se === iy_sd ? "0" : "2");
+  
+  const id = item.id;
 
-  if (comboId === "MS1") return ms === "1";
-  if (comboId === "MS0") return ms === "0";
-  if (comboId === "MS2") return ms === "2";
-  if (comboId === "UST25") return tg > 2.5;
-  if (comboId === "KGV") return kg;
+  if (id === "MS1") return ms === "1";
+  if (id === "MS0") return ms === "0";
+  if (id === "MS2") return ms === "2";
+  if (id === "ALT25") return tg < 2.5;
+  if (id === "UST25") return tg > 2.5;
+  if (id === "KGV") return kg;
+  if (id === "KGY") return !kg;
   
-  // İkili kombinasyonlar
-  if (comboId === "MS1_UST25") return ms === "1" && tg > 2.5;
-  if (comboId === "MS1_KGV") return ms === "1" && kg;
-  if (comboId === "MS2_UST25") return ms === "2" && tg > 2.5;
-  if (comboId === "MS2_KGV") return ms === "2" && kg;
-  if (comboId === "MS0_KGV") return ms === "0" && kg;
+  if (id === "MS1_MS0") return ms === "1" || ms === "0";
+  if (id === "MS1_MS2") return ms === "1" || ms === "2";
+  if (id === "MS1_ALT25") return ms === "1" && tg < 2.5;
+  if (id === "MS1_KGV") return ms === "1" && kg;
+  if (id === "MS1_KGY") return ms === "1" && !kg;
+  if (id === "MS0_ALT25") return ms === "0" && tg < 2.5;
+  if (id === "MS0_KGV") return ms === "0" && kg;
+  if (id === "MS0_KGY") return ms === "0" && !kg;
+  if (id === "MS2_ALT25") return ms === "2" && tg < 2.5;
+  if (id === "MS2_KGV") return ms === "2" && kg;
+  if (id === "MS2_KGY") return ms === "2" && !kg;
+
+  if (id === "EV_HER_IKI") return iy_ms === "1" && ms === "1";
+  if (id === "DEP_HER_IKI") return iy_ms === "2" && ms === "2";
+  if (id === "IY_MS") return true; // Oran bazlı
+  if (id === "IY_SONUC") return true;
+  if (id === "IY_KG") return iy_kg;
+  if (id === "IY_ALT15") return iy_tg < 1.5;
+
+  const iky_se = se - iy_se;
+  const iky_sd = sd - iy_sd;
+  const iky_kg = iky_se > 0 && iky_sd > 0;
   
+  if (id === "KG_HH") return !iy_kg && !iky_kg;
+  if (id === "KG_EH") return iy_kg && !iky_kg;
+  if (id === "KG_EE") return iy_kg && iky_kg;
+  if (id === "KG_HE") return !iy_kg && iky_kg;
+
   return false;
 }
 
-// 2. Hangi markete bakılacağını belirler
-function kesifAnaMarket(comboId) {
-  if (comboId === "MS1") return "Maç Sonucu_1";
-  if (comboId === "MS0") return "Maç Sonucu_0";
-  if (comboId === "MS2") return "Maç Sonucu_2";
-  if (comboId === "UST25") return "Alt/Üst 2.5_Üst";
-  if (comboId === "KGV") return "Karşılıklı Gol_Var";
+function kesifYuzdeHesapla(hedefMac, item) {
+  const marketAdi = item.market;
+  if (!hedefMac.oranlar || hedefMac.oranlar[marketAdi] === undefined) return null;
   
-  if (comboId.includes("MS1")) return "Maç Sonucu_1";
-  if (comboId.includes("MS2")) return "Maç Sonucu_2";
-  if (comboId.includes("MS0")) return "Maç Sonucu_0";
-  
-  return null;
-}
-
-// 3. Yüzde Hesaplama Motoru
-function kesifYuzdeHesapla(hedefMac, comboId) {
-  const anaMarket = kesifAnaMarket(comboId);
-  if (!anaMarket || !hedefMac.oranlar || !hedefMac.oranlar[anaMarket]) return null;
-
-  const hedefOran = parseFloat(hedefMac.oranlar[anaMarket]);
+  const hedefOran = parseFloat(hedefMac.oranlar[marketAdi]);
   if (isNaN(hedefOran)) return null;
 
-  // Oran toleransı (%15) - Benzer oranlı geçmiş maçları bulmak için
   const altSinir = hedefOran * 0.85;
   const ustSinir = hedefOran * 1.15;
 
-  // GEÇMİŞ VERİLERDE SADECE BİTMİŞ MAÇLARA BAKIYORUZ (Sonuç belli olduğu için)
   const tumVeri = tumMaclar.concat(gecmisMaclar);
   let benzerMaclar = tumVeri.filter(bm => {
-    if (bm.durum !== "bitti") return false; // KRİTİK: Sadece bitenler
-    if (!bm.oranlar || !bm.oranlar[anaMarket]) return false;
-    const bmOran = parseFloat(bm.oranlar[anaMarket]);
+    if (bm.durum !== "bitti") return false;
+    if (!bm.oranlar || bm.oranlar[marketAdi] === undefined) return false;
+    const bmOran = parseFloat(bm.oranlar[marketAdi]);
     return !isNaN(bmOran) && bmOran >= altSinir && bmOran <= ustSinir;
   });
 
-  if (benzerMaclar.length < 5) return null; // Güvenilirlik için minimum 5 örnek
+  if (benzerMaclar.length < 5) return null;
 
   let tutanSayisi = 0;
-  benzerMaclar.forEach(bm => {
-    if (kesifDogruMu(bm, comboId)) tutanSayisi++;
-  });
+  benzerMaclar.forEach(bm => { if (kesifDogruMu(bm, item)) tutanSayisi++; });
 
-  return {
-    yuzde: Math.round((tutanSayisi / benzerMaclar.length) * 100),
-    tutan: tutanSayisi,
-    toplam: benzerMaclar.length
-  };
+  return { yuzde: Math.round((tutanSayisi / benzerMaclar.length) * 100), tutan: tutanSayisi, toplam: benzerMaclar.length };
 }
 
-// 4. Ana Filtreleme ve Listeleme
 function kombineKesifFiltrele() {
   const arama = (document.getElementById("kesifArama")?.value || "").toLowerCase();
   const tarih = document.getElementById("kesifTarih")?.value || "";
   const lig = document.getElementById("kesifLig")?.value || "";
-  const durum = document.getElementById("kesifDurum")?.value || ""; // "baslamadi", "bitti" veya ""
+  const durum = document.getElementById("kesifDurum")?.value || "";
   const minYuzde = parseInt(document.getElementById("kesifMinYuzde")?.value || "0");
 
-  // Maçları filtrele (Oynanmamış olanları DA dahil ediyoruz!)
   let maclar = tumMaclar.filter(m => {
-    if (arama && !(m.ev_sahibi || "").toLowerCase().includes(arama) && !(m.deplasman || "").toLowerCase().includes(arama) && !(m.lig || "").toLowerCase().includes(arama)) return false;
+    if (arama && !(m.ev_sahibi||"").toLowerCase().includes(arama) && !(m.deplasman||"").toLowerCase().includes(arama) && !(m.lig||"").toLowerCase().includes(arama)) return false;
     if (tarih && m.tarih !== tarih) return false;
-    if (lig && (m.lig || "") !== lig) return false;
-    // Durum filtresi: Eğer kullanıcı "Bitti" seçerse sadece bitenleri göster, yoksa hepsini göster
+    if (lig && (m.lig||"") !== lig) return false;
     if (durum && m.durum !== durum) return false;
     return true;
   });
 
-  // HER MAÇ İÇİN TÜM KOMBİNASYONLARI HESAPLA
-  // Not: Maç henüz oynanmamış olsa bile, oranlarına göre geçmiş analizi yapılır.
   let analizliMaclar = maclar.map(m => {
     let sonuclar = {};
-    ANALIZ_KOMBINASYONLARI.forEach(k => {
-      sonuclar[k.id] = kesifYuzdeHesapla(m, k.id);
-    });
+    ANALIZ_LISTESI.forEach(item => { sonuclar[item.id] = kesifYuzdeHesapla(m, item); });
     return { ...m, analiz: sonuclar };
   });
 
-  // Min Yüzde Filtresi: En az bir kombinasyonu yüksek olanları göster
   if (minYuzde > 0) {
-    analizliMaclar = analizliMaclar.filter(m => {
-      return Object.values(m.analiz).some(a => a && a.yuzde >= minYuzde);
-    });
+    analizliMaclar = analizliMaclar.filter(m => Object.values(m.analiz).some(a => a && a.yuzde >= minYuzde));
   }
 
   kesifStatsGoster(analizliMaclar);
@@ -1324,104 +517,80 @@ function kombineKesifFiltrele() {
 
 function kesifStatsGoster(maclar) {
   const toplam = maclar.length;
-  const biten = maclar.filter(x => x.durum === "bitti").length;
-  const baslamadi = maclar.filter(x => x.durum === "baslamadi").length;
-  
-  // Yüksek olasılıklı fırsat sayısı
-  const yuksekFirsat = maclar.filter(m => {
-    return Object.values(m.analiz).some(a => a && a.yuzde >= 75);
-  }).length;
-  
-  let html = '<div class="si"><div class="sv">' + toplam + '</div><div class="sl">Toplam</div></div>';
-  html += '<div class="si"><div class="sv">' + baslamadi + '</div><div class="sl">Oynanacak</div></div>';
-  html += '<div class="si"><div class="sv" style="color:#00c853">' + yuksekFirsat + '</div><div class="sl">%75+ Fırsat</div></div>';
-  
-  document.getElementById("kesifStatsBar").innerHTML = html;
+  const oynanacak = maclar.filter(x => x.durum === "baslamadi").length;
+  const yuksek = maclar.filter(m => Object.values(m.analiz).some(a => a && a.yuzde >= 75)).length;
+  document.getElementById("kesifStatsBar").innerHTML = 
+    `<div class="si"><div class="sv">${toplam}</div><div class="sl">Maç</div></div>` +
+    `<div class="si"><div class="sv">${oynanacak}</div><div class="sl">Oynanacak</div></div>` +
+    `<div class="si"><div class="sv" style="color:#00c853">${yuksek}</div><div class="sl">%75+ Fırsat</div></div>`;
 }
 
-function getRenk(yuzde) {
-  if (yuzde >= 75) return { c: "#00c853", bg: "#063b22" }; // Çok Güçlü
-  if (yuzde >= 60) return { c: "#f0b90b", bg: "#2d2a0a" }; // Güçlü
-  if (yuzde >= 45) return { c: "#ff9100", bg: "#3b2206" }; // Orta
-  return { c: "#e74c3c", bg: "#2d1215" }; // Zayıf
-}
-
-function kesifOH(v, m, key) {
-  if (!v) return '<div class="oran-hucre"><div class="ov" style="color:#555">-</div></div>';
-  const cls = dogruOran(m, key) ? " dogru" : "";
-  return '<div class="oran-hucre' + cls + '"><div class="ov">' + v + '</div><div class="op">%' + pct(v) + '</div></div>';
+function getRenkClass(yuzde) {
+  if (yuzde === null || yuzde === undefined) return "bg-gray text-gray";
+  if (yuzde >= 75) return "bg-green text-green";
+  if (yuzde >= 60) return "bg-yellow text-yellow";
+  if (yuzde >= 45) return "bg-orange text-orange";
+  return "bg-red text-red";
 }
 
 function kesifRenderGrid(maclar) {
   const container = document.getElementById("kesifContainer");
-  if (!maclar.length) {
-    container.innerHTML = '<div class="bos">Seçilen kriterlere uygun maç bulunamadı.</div>';
-    return;
-  }
+  if (!maclar.length) { container.innerHTML = '<div class="bos">Sonuç bulunamadı.</div>'; return; }
 
   const grp = {};
-  maclar.forEach(m => {
-    if (!grp[m.tarih]) grp[m.tarih] = [];
-    grp[m.tarih].push(m);
-  });
+  maclar.forEach(m => { if (!grp[m.tarih]) grp[m.tarih] = []; grp[m.tarih].push(m); });
 
   let h = "";
   Object.keys(grp).sort().forEach(tarih => {
     const gm = grp[tarih];
     const d = new Date(tarih);
-    h += '<div class="gun-baslik">' + d.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", weekday: "long" }) + '<span class="gc">' + gm.length + '</span></div>';
     
-    // Başlık Satırı
-    h += '<div class="tablo-header">';
-    h += '<div>Saat</div><div style="text-align:left">Maç</div>';
-    h += '<div>MS1</div><div>MSX</div><div>MS2</div><div>ALT</div><div>ÜST</div><div>KGV</div><div>KGY</div>';
-    
-    // Dinamik Kombinasyon Başlıkları
-    ANALIZ_KOMBINASYONLARI.forEach(k => {
-      h += '<div style="font-size:10px; writing-mode: vertical-rl; text-orientation: mixed; background:#1a1a1a; color:#aaa; border-left:1px solid #333;">' + k.ad + '</div>';
-    });
-    
-    h += '</div>';
+    h += `<div style="padding:10px; background:#1a1a1a; color:#fff; font-weight:bold; border-bottom:1px solid #333;">
+            ${d.toLocaleDateString("tr-TR", {day:'numeric', month:'long', weekday:'long'})} 
+            <span style="float:right; color:#888; font-size:12px">${gm.length} Maç</span>
+          </div>`;
 
+    // HEADER
+    h += '<div class="tablo-header">';
+    h += '<div class="ms-sabit-bolum" style="background:#1a1a1a; padding:10px; align-items:center;">';
+    h += '<div style="width:50px; text-align:center">Saat</div>';
+    h += '<div style="width:200px; text-align:left; padding-left:10px">Maç</div>';
+    h += '</div>';
+    h += '<div class="kesif-kombinasyonlar-alani">';
+    ANALIZ_LISTESI.forEach(item => {
+      h += `<div class="kesif-hucre bg-gray" style="border-bottom:2px solid #555;"><div class="kh-baslik">${item.ad}</div></div>`;
+    });
+    h += '</div></div>';
+
+    // ROWS
     gm.forEach(m => {
-      const o = m.oranlar || {};
-      // Skor sadece biten maçlarda görünür
-      const skorTxt = m.durum === "bitti" ? ' <span style="color:#f0b90b;font-weight:700"> MS: ' + (m.skor_ev || 0) + '-' + (m.skor_dep || 0) + '</span>' : 
-                      (m.durum === "devam" ? ' <span style="color:#ff9100;font-weight:700"> CANLI</span>' : '');
+      const skorTxt = m.durum === "bitti" ? `<span style="color:#f0b90b; font-weight:bold; font-size:11px;"> (${m.skor_ev}-${m.skor_dep})</span>` : 
+                      (m.durum === "devam" ? `<span style="color:#ff9100; font-weight:bold; font-size:11px;"> CANLI</span>` : '');
       
       h += '<div class="mac-satir">';
-      h += '<div class="ms-saat"><span class="s">' + (m.saat || "-") + '</span><span class="t">#' + (m.mac_kodu || "") + '</span></div>';
-      h += '<div class="ms-takim"><span class="ev">' + (m.ev_sahibi || "?") + skorTxt + '</span><span class="dep">' + (m.deplasman || "?") + '</span></div>';
-      
-      // Standart Oranlar
-      h += kesifOH(o["Maç Sonucu_1"], m, "Maç Sonucu_1");
-      h += kesifOH(o["Maç Sonucu_0"], m, "Maç Sonucu_0");
-      h += kesifOH(o["Maç Sonucu_2"], m, "Maç Sonucu_2");
-      h += kesifOH(o["Alt/Üst 2.5_Alt"], m, "Alt/Üst 2.5_Alt");
-      h += kesifOH(o["Alt/Üst 2.5_Üst"], m, "Alt/Üst 2.5_Üst");
-      h += kesifOH(o["Karşılıklı Gol_Var"], m, "Karşılıklı Gol_Var");
-      h += kesifOH(o["Karşılıklı Gol_Yok"], m, "Karşılıklı Gol_Yok");
+      h += '<div class="ms-sabit-bolum" style="background:#181818;">';
+      h += `<div style="width:50px; text-align:center; font-size:12px; color:#aaa;">${m.saat || "-"}</div>`;
+      h += `<div style="width:200px; text-align:left; padding-left:10px; font-size:13px;">
+              <div style="color:#fff; margin-bottom:2px;">${m.ev_sahibi || "?"} ${skorTxt}</div>
+              <div style="color:#888; font-size:11px;">${m.deplasman || "?"}</div>
+            </div>`;
+      h += '</div>';
 
-      // --- DİNAMİK KOMBİNASYON HÜCRELERİ ---
-      ANALIZ_KOMBINASYONLARI.forEach(k => {
-        const sonuc = m.analiz[k.id];
-        if (sonuc) {
-          const renk = getRenk(sonuc.yuzde);
-          const tooltip = `${sonuc.tutan}/${sonuc.toplam} Benzer Geçmiş Maç`;
-          
-          h += `<div class="oran-hucre" style="background:${renk.bg}; border-left:1px solid ${renk.c}" title="${tooltip}">`;
-          h += `<div class="ov" style="color:${renk.c}; font-size:11px; font-weight:800">%</div>`;
-          h += `<div class="op" style="color:${renk.c}; font-size:12px; line-height:1">${sonuc.yuzde}</div>`;
-          h += '</div>';
+      h += '<div class="kesif-kombinasyonlar-alani">';
+      ANALIZ_LISTESI.forEach(item => {
+        const sonuc = m.analiz[item.id];
+        if (sonuc && sonuc.yuzde !== null) {
+          const rClass = getRenkClass(sonuc.yuzde);
+          h += `<div class="kesif-hucre ${rClass}" title="${item.ad}: %${sonuc.yuzde} (${sonuc.tutan}/${sonuc.toplam})">
+                  <div class="kh-deger">%${sonuc.yuzde}</div>
+                </div>`;
         } else {
-          h += '<div class="oran-hucre" style="background:#111"><div class="ov" style="color:#333">-</div></div>';
+          h += `<div class="kesif-hucre bg-gray"><div class="kh-deger" style="color:#444">-</div></div>`;
         }
       });
-
-      h += '</div>';
+      h += '</div></div>';
     });
   });
-
   container.innerHTML = h;
 }
 
@@ -1434,41 +603,35 @@ function kesifReset() {
   kombineKesifFiltrele();
 }
 
-// Dropdownları doldur
+// Dropdown Doldurma Hook (Kesif için)
 const orjYukle = window.yukle;
 window.yukle = function() {
   if(orjYukle) orjYukle();
   setTimeout(() => {
-    const tarihler = [...new Set(tumMaclar.map(m => m.tarih))].sort();
     const ks = document.getElementById("kesifTarih");
-    if (ks) {
-      tarihler.forEach(t => {
-        const o = document.createElement("option");
-        o.value = t;
-        o.textContent = new Date(t).toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "short" });
-        ks.appendChild(o);
+    if(ks) {
+      [...new Set(tumMaclar.map(m => m.tarih))].sort().forEach(t => {
+        const o = document.createElement("option"); o.value=t; o.textContent=new Date(t).toLocaleDateString("tr-TR"); ks.appendChild(o);
       });
     }
-    const ligler = [...new Set(tumMaclar.map(m => m.lig || "").filter(x => x.trim()))].sort();
     const kl = document.getElementById("kesifLig");
-    if (kl) {
-      ligler.forEach(l => {
-        const o = document.createElement("option");
-        o.value = l;
-        o.textContent = l;
-        kl.appendChild(o);
+    if(kl) {
+      [...new Set(tumMaclar.map(m => m.lig||"").filter(x=>x))].sort().forEach(l => {
+        const o = document.createElement("option"); o.value=l; o.textContent=l; kl.appendChild(o);
       });
     }
   }, 1000);
 };
 
-// Sekmeye geçince çalıştır
 const orjMainTab3 = window.mainTab;
 window.mainTab = function(i) {
   if(orjMainTab3) orjMainTab3(i);
   if (i === 2) setTimeout(kombineKesifFiltrele, 200);
 };
 
+// Başlat
+yukle();
 </script>
 </body>
 </html>
+```

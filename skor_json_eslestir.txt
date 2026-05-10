@@ -1,4 +1,4 @@
-import json, os, re, time, datetime, traceback, shutil, unicodedata
+import json, os, re, time, datetime, traceback, shutil, unicodedata, subprocess
 from pathlib import Path
 from difflib import SequenceMatcher
 
@@ -19,12 +19,12 @@ GECMIS_JSON_PATH = BASE_DIR / "public" / "data" / "gecmis_maclar.json"
 OUTPUT_SKOR_JSON = BASE_DIR / "public" / "data" / "skorlar_spordb.json"
 
 # =========================
-# AYAR
+# AYAR (DÜZELTİLDİ: SON 3 GÜN VE BUGÜN DAHİL)
 # =========================
 SPORDB_URL = "https://www.spordb.com/iddaa-programi"
 
-DAYS_BACK_FINISHED = 5     # son 5 gün
-INCLUDE_TODAY = False      # "bitti" için False önerilir
+DAYS_BACK_FINISHED = 3     # Son 3 gün
+INCLUDE_TODAY = True       # Bugünün maçlarını da al
 
 UPDATE_MAC_JSON = True
 UPDATE_GECMIS_JSON = True
@@ -191,14 +191,10 @@ def deep_scroll_collect(driver, max_steps=70):
 # TARİH SEÇ (dropdown)
 # =========================
 def select_date_dropdown(driver, iso_date: str) -> bool:
-    """
-    <select id="iddaa_dateselector"><option value="2026-05-08">...</option></select>
-    """
     try:
         sel_el = driver.find_element(By.CSS_SELECTOR, DATESELECTOR_CSS)
         sel = Select(sel_el)
 
-        # option var mı?
         values = [o.get_attribute("value") for o in sel.options]
         if iso_date not in values:
             return False
@@ -208,7 +204,6 @@ def select_date_dropdown(driver, iso_date: str) -> bool:
         sel.select_by_value(iso_date)
         time.sleep(0.8)
 
-        # filtre değişimini bekle: link sayısı değişsin veya stabil olsun
         for _ in range(25):
             now = len(driver.find_elements(By.CSS_SELECTOR, CANLI_LINK_SELECTOR))
             if now != before and now >= 0:
@@ -220,7 +215,7 @@ def select_date_dropdown(driver, iso_date: str) -> bool:
         return False
 
 # =========================
-# SPORDB PARSE (home=left son, away=right ilk)
+# SPORDB PARSE
 # =========================
 _ODDS_RE = re.compile(r"^\d+([.,]\d+)?$")
 
@@ -280,7 +275,6 @@ def pick_home_away(texts, idx):
     return home, away
 
 def collect_scores_for_date(driver, iso_date: str):
-    # dropdown ile günü seç
     ok = select_date_dropdown(driver, iso_date)
     if not ok:
         return []
@@ -307,7 +301,6 @@ def collect_scores_for_date(driver, iso_date: str):
             h, aw = pick_home_away(res.get("texts", []), res["idx"])
             item["sp_home"], item["sp_away"] = h, aw
 
-        # sadece isimler de geldiyse al
         if item["sp_home"] and item["sp_away"]:
             out.append(item)
 
@@ -354,7 +347,6 @@ def update_db(db_data: dict, scores: list, today_iso: str):
             if best_sc >= THRESH_OK:
                 matched += 1
 
-                # skor yön kontrolü
                 s_direct = team_sim(best.get("ev_sahibi",""), sp["sp_home"]) + team_sim(best.get("deplasman",""), sp["sp_away"])
                 s_swap = team_sim(best.get("ev_sahibi",""), sp["sp_away"]) + team_sim(best.get("deplasman",""), sp["sp_home"])
                 skor_ev, skor_dep = (sp["skor2"], sp["skor1"]) if s_swap > s_direct else (sp["skor1"], sp["skor2"])
@@ -365,7 +357,7 @@ def update_db(db_data: dict, scores: list, today_iso: str):
 
                 best["skor_ev"] = skor_ev
                 best["skor_dep"] = skor_dep
-                best["durum"] = "bitti"  # bu script “bitti” günlerini tarıyor
+                best["durum"] = "bitti"
                 best["spordb_match_id"] = sp["spordb_match_id"]
                 best["kaynak"] = "spordb.com"
                 best["cekme_zamani"] = sp["cekme_zamani"]
@@ -417,7 +409,7 @@ def update_db(db_data: dict, scores: list, today_iso: str):
 # =========================
 def main():
     print("=" * 70)
-    print("⚽ SPORDB SKOR ÇEKİCİ (V5.3) - Dropdown ile SON 5 GÜN")
+    print("⚽ SPORDB SKOR ÇEKİCİ (V5.4) - Dropdown ile SON 3 GÜN (BUGÜN DAHİL)")
     print("=" * 70)
 
     today = datetime.date.today()
@@ -431,11 +423,11 @@ def main():
     print("📅 Taranacak günler:", dates)
 
     driver = None
+    all_scores = [] # Hata vermemesi için global tanımlandı
     try:
         driver = build_driver()
         driver.get(SPORDB_URL)
 
-        all_scores = []
         for d in dates:
             print(f"\n🔎 Gün: {d}")
             day_scores = collect_scores_for_date(driver, d)
@@ -470,11 +462,6 @@ def main():
             save_json_atomic(gec, GECMIS_JSON_PATH)
             print(f"🧾 gecmis_maclar.json -> matched:{m} updated:{u} noop:{noop} added:{a} skipped:{s} not_matched:{nm}")
 
-        print("\n📌 Git:")
-        print("   git add public/data/mac.json public/data/gecmis_maclar.json public/data/skorlar_spordb.json")
-        print('   git commit -m "Skor guncelleme (son 5 gun)"')
-        print("   git push origin main")
-
     except Exception:
         traceback.print_exc()
     finally:
@@ -482,16 +469,36 @@ def main():
             try: driver.quit()
             except WebDriverException: pass
         
-        # Git işlemleri sadece skor çekme başarılı olursa ve driver kapandıktan sonra
-        if all_scores_fetched:
-            _perform_git_operations("Otomatik hizli guncelleme")
+        # DÜZELTİLDİ: Çalışır haldeki Git otomasyonu
+        try:
+            if len(all_scores) > 0:
+                print("\n🚀 Git otomasyonu başlatılıyor...")
+                repo_dir = BASE_DIR
+                files_to_add = ["public/data/mac.json", "public/data/gecmis_maclar.json", "public/data/skorlar_spordb.json"]
+                
+                for f in files_to_add:
+                    if (repo_dir / f).exists():
+                        subprocess.run(["git", "add", f], cwd=repo_dir, capture_output=True)
+                
+                status_result = subprocess.run(["git", "status", "--porcelain"], cwd=repo_dir, capture_output=True, text=True)
+                if status_result.stdout.strip():
+                    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    msg = f"🤖 Otomatik Skor Güncellemesi (Son 3 Gün) - {now_str}"
+                    subprocess.run(["git", "commit", "-m", msg], cwd=repo_dir, capture_output=True)
+                    push_res = subprocess.run(["git", "push"], cwd=repo_dir, capture_output=True, text=True)
+                    if push_res.returncode == 0:
+                        print("✅ Git push başarılı! Veriler depoya yüklendi.")
+                    else:
+                        print(f"⚠️ Git push hatası: {push_res.stderr}")
+                else:
+                    print("ℹ️ Git'te commit edilecek yeni değişiklik bulunamadı.")
+        except Exception as e:
+            print(f"⚠️ Git işlemi hatası: {e}")
 
     print("\n==============================================================")
     print("    🎉 TÜM İŞLEMLER TAMAMLANDI! (Kapanmak için bir tuşa basın)")
     print("==============================================================")
-    # pencerenin kapanmaması için pause
     input()
-
 
 if __name__ == "__main__":
     main()

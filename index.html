@@ -288,7 +288,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 </head>
 <body>
 <div class="header"><h1>⚽ İddaa Oranları & Analiz</h1><div class="info" id="info">Yükleniyor...</div></div>
-<div class="main-tabs"><div class="main-tab aktif" onclick="mainTab(0)">📋 Bülten</div><div class="main-tab" onclick="mainTab(1)">📊 Oran Analizi</div></div>
+<div class="main-tabs">
+  <div class="main-tab aktif" onclick="mainTab(0)">📋 Bülten</div>
+  <div class="main-tab" onclick="mainTab(1)">📊 Oran Analizi</div>
+  <div class="main-tab" onclick="mainTab(2)">🧠 Akıllı Kombine</div>
+</div>)">📊 Oran Analizi</div></div>
 
 <div class="tab-icerik aktif" id="tab0">
 <div class="stats-bar" id="statsBar"></div>
@@ -366,6 +370,50 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 
 <div id="analizSonuc"><div class="analiz-yok">👆 Filtre ekle → Analiz Et</div></div>
 </div>
+</div>
+
+<!-- 3. SEKME: AKILLI KOMBİNASYON -->
+<div class="tab-icerik" id="tab2">
+  <div class="analiz-panel">
+    <div class="analiz-baslik">🧠 Akıllı Kombinasyon Analizi — Geçmişe Dayalı Tahminler</div>
+    <p style="color:#888;font-size:11px;margin-bottom:12px">
+      Bu tablo, geçmiş maç verilerine göre her kombinasyonun gerçekleşme yüzdesini gösterir. 
+      Sadece MS1 oranı olan ve en az 5 geçmiş maç verisi bulunan maçlar listelenir.
+    </p>
+    
+    <div class="air" style="margin-bottom:15px">
+      <input type="text" id="akilliArama" placeholder="🔍 Takım ara..." oninput="akilliKombinasyonFiltrele()" style="min-width:200px">
+      <select id="akilliMinYuzde" onchange="akilliKombinasyonFiltrele()">
+        <option value="0">Tüm Yüzdeler</option>
+        <option value="50">%50+</option>
+        <option value="60">%60+</option>
+        <option value="70" selected>%70+</option>
+        <option value="80">%80+</option>
+      </select>
+      <span class="fb" id="akilliSayac">0 maç bulundu</span>
+    </div>
+
+    <div class="analiz-table-wrap">
+      <table class="analiz-table" id="akilliTablo">
+        <thead>
+          <tr>
+            <th style="min-width:200px">Maç</th>
+            <th>Saat</th>
+            <th>MS1 Oranı</th>
+            <th>MS1-MS0 (1X)</th>
+            <th>MS1-MS2 (12)</th>
+            <th>MS1 & 2.5 ALT</th>
+            <th>MS1 & 2.5 ÜST</th>
+            <th>MS1 & KG VAR</th>
+            <th>MS1 & KG YOK</th>
+          </tr>
+        </thead>
+        <tbody id="akilliTabloBody">
+          <tr><td colspan="9" class="analiz-yok">⏳ Veriler yükleniyor...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <div class="footer" id="footer"></div>
 
@@ -1157,6 +1205,101 @@ function kombine2AnalizYap(){
 
 yukle();
 setTimeout(kombine2InitSecenekler,1000);
+
+/* ============================================ */
+/* 3. SEKME: AKILLI KOMBİNASYON ANALİZİ         */
+/* ============================================ */
+
+function akilliKombinasyonFiltrele() {
+  const arama = (document.getElementById("akilliArama")?.value || "").toLowerCase();
+  const minYuzde = parseInt(document.getElementById("akilliMinYuzde")?.value || "0");
+  
+  // Sadece detayli_kombinasyonlar verisi olan maçları al
+  let maclar = tumMaclar.filter(m => m.detayli_kombinasyonlar);
+  
+  // Arama filtresi
+  if (arama) {
+    maclar = maclar.filter(m => 
+      (m.ev_sahibi || "").toLowerCase().includes(arama) || 
+      (m.deplasman || "").toLowerCase().includes(arama) ||
+      (m.lig || "").toLowerCase().includes(arama)
+    );
+  }
+  
+  // Yüzde filtresi: En az bir kombinasyon minYuzde üzerinde olmalı
+  if (minYuzde > 0) {
+    maclar = maclar.filter(m => {
+      const combos = m.detayli_kombinasyonlar;
+      return Object.values(combos).some(c => c.yuzde !== "-" && c.yuzde >= minYuzde);
+    });
+  }
+  
+  // Sayacı güncelle
+  const sayac = document.getElementById("akilliSayac");
+  if (sayac) sayac.textContent = maclar.length + " maç bulundu";
+  
+  // Tabloyu render et
+  akilliTabloRender(maclar);
+}
+
+function akilliTabloRender(maclar) {
+  const tbody = document.getElementById("akilliTabloBody");
+  if (!tbody) return;
+  
+  if (!maclar.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="analiz-yok">⚠️ Filtreye uygun maç bulunamadı.</td></tr>';
+    return;
+  }
+  
+  const comboKeys = ["MS1_MS0", "MS1_MS2", "MS1_ALT25", "MS1_UST25", "MS1_KGVAR", "MS1_KGYOK"];
+  
+  let html = "";
+  maclar.forEach(m => {
+    const combos = m.detayli_kombinasyonlar || {};
+    const ms1Oran = m.oranlar?.["Maç Sonucu_1"] || "-";
+    
+    html += "<tr>";
+    html += '<td class="mac-col">' + (m.ev_sahibi || "?") + " - " + (m.deplasman || "?") + "</td>";
+    html += "<td>" + (m.saat || "-") + "</td>";
+    html += '<td style="text-align:center;color:#f0b90b;font-weight:700">' + ms1Oran + "</td>";
+    
+    comboKeys.forEach(key => {
+      const c = combos[key];
+      if (!c) {
+        html += '<td style="text-align:center;color:#444">-</td>';
+        return;
+      }
+      
+      if (c.yuzde === "-") {
+        html += '<td style="text-align:center;color:#555" title="Yetersiz veri">-</td>';
+        return;
+      }
+      
+      let renk = "#e6e6e6";
+      if (c.renk === "yesil") renk = "#00c853";
+      else if (c.renk === "sari") renk = "#f0b90b";
+      else if (c.renk === "kirmizi") renk = "#e74c3c";
+      
+      html += '<td style="text-align:center;color:' + renk + ';font-weight:700" title="' + c.tutan + "/" + c.toplam + ' maç tuttu">';
+      html += "%" + c.yuzde;
+      html += '<div style="font-size:8px;color:#666;font-weight:400">(' + c.tutan + "/" + c.toplam + ")</div>";
+      html += "</td>";
+    });
+    
+    html += "</tr>";
+  });
+  
+  tbody.innerHTML = html;
+}
+
+// 3. sekmeye tıklandığında verileri yükle
+const orjMainTab = mainTab;
+mainTab = function(i) {
+  orjMainTab(i);
+  if (i === 2) {
+    setTimeout(akilliKombinasyonFiltrele, 100);
+  }
+};
 
 </script>
 </body>

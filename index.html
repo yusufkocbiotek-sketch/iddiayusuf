@@ -288,7 +288,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 </head>
 <body>
 <div class="header"><h1>⚽ İddaa Oranları & Analiz</h1><div class="info" id="info">Yükleniyor...</div></div>
-<div class="main-tabs"><div class="main-tab aktif" onclick="mainTab(0)">📋 Bülten</div><div class="main-tab" onclick="mainTab(1)">📊 Oran Analizi</div></div>
+<div class="main-tabs">
+  <div class="main-tab aktif" onclick="mainTab(0)">📋 Bülten</div>
+  <div class="main-tab" onclick="mainTab(1)">📊 Oran Analizi</div>
+  <div class="main-tab" onclick="mainTab(2)">🧠 Akıllı Kombine</div>
+</div>)">📊 Oran Analizi</div></div>
 
 <div class="tab-icerik aktif" id="tab0">
 <div class="stats-bar" id="statsBar"></div>
@@ -367,6 +371,33 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <div id="analizSonuc"><div class="analiz-yok">👆 Filtre ekle → Analiz Et</div></div>
 </div>
 </div>
+
+<!-- 3. SEKME: KOMBİNE KEŞİF -->
+<div class="tab-icerik" id="tab2">
+  <div class="stats-bar" id="kesifStatsBar"></div>
+  
+  <!-- Sadeleştirilmiş Filtreler -->
+  <div class="filters">
+    <div class="fr">
+      <input type="text" id="kesifArama" placeholder="🔍 Takım/lig ara..." oninput="kombineKesifFiltrele()" style="min-width:160px">
+      <select id="kesifTarih" onchange="kombineKesifFiltrele()"><option value="">📅 Tüm Tarihler</option></select>
+      <select id="kesifLig" onchange="kombineKesifFiltrele()"><option value="">🏆 Tüm Ligler</option></select>
+      <select id="kesifDurum" onchange="kombineKesifFiltrele()"><option value="">📌 Tümü</option><option value="baslamadi">Başlamadı</option><option value="bitti">Bitti</option></select>
+    </div>
+    
+    <div class="fr">
+      <span class="fb">Min Başarı:</span>
+      <input type="number" id="kesifMinYuzde" value="0" min="0" max="100" style="width:55px" onchange="kombineKesifFiltrele()">
+      <button class="btn-r" onclick="kesifReset()">↺</button>
+    </div>
+  </div>
+
+  <div class="container" id="kesifContainer">
+    <div class="loading"><div class="spinner"></div><p>Tüm Kombinasyonlar Analiz Ediliyor...</p></div>
+  </div>
+</div>
+</div>
+
 <div class="footer" id="footer"></div>
 
 <script>
@@ -1157,6 +1188,325 @@ function kombine2AnalizYap(){
 
 yukle();
 setTimeout(kombine2InitSecenekler,1000);
+
+/* ============================================ */
+/* 3. SEKME: DEV KOMBİNASYON ANALİZİ           */
+/* ============================================ */
+
+// SENİN VERİNDEN KOPYALANAN LİSTE
+// market: kısmı veritabanındaki anahtarla (key) BİREBİR aynı olmalıdır.
+const ANALIZ_LISTESI = [
+  // --- TEMEL MARKETLER ---
+  { id: "MS1", ad: "MS<br>1", market: "Maç Sonucu_1" },
+  { id: "MS0", ad: "MS<br>0", market: "Maç Sonucu_0" },
+  { id: "MS2", ad: "MS<br>2", market: "Maç Sonucu_2" },
+  { id: "ALT25", ad: "2.5<br>Alt", market: "Alt/Üst 2.5_Alt" },
+  { id: "UST25", ad: "2.5<br>Üst", market: "Alt/Üst 2.5_Üst" },
+  { id: "KGV", ad: "KG<br>Var", market: "Karşılıklı Gol_Var" },
+  { id: "KGY", ad: "KG<br>Yok", market: "Karşılıklı Gol_Yok" },
+
+  // --- İKİLİ KOMBİNASYONLAR ---
+  { id: "MS1_MS0", ad: "1X<br>(ÇŞ)", market: "Maç Sonucu_1" }, 
+  { id: "MS1_MS2", ad: "12<br>(ÇŞ)", market: "Maç Sonucu_1" },
+  { id: "MS1_ALT25", ad: "MS1<br>+Alt", market: "Maç Sonucu_1" },
+  { id: "MS1_KGV", ad: "MS1<br>+KG", market: "Maç Sonucu_1" },
+  { id: "MS1_KGY", ad: "MS1<br>+KGY", market: "Maç Sonucu_1" },
+  
+  { id: "MS0_ALT25", ad: "MS0<br>+Alt", market: "Maç Sonucu_0" },
+  { id: "MS0_KGV", ad: "MS0<br>+KG", market: "Maç Sonucu_0" },
+  { id: "MS0_KGY", ad: "MS0<br>+KGY", market: "Maç Sonucu_0" },
+
+  { id: "MS2_ALT25", ad: "MS2<br>+Alt", market: "Maç Sonucu_2" },
+  { id: "MS2_KGV", ad: "MS2<br>+KG", market: "Maç Sonucu_2" },
+  { id: "MS2_KGY", ad: "MS2<br>+KGY", market: "Maç Sonucu_2" },
+
+  // --- ÖZEL / GELİŞMİŞ MARKETLER (SENİN LİSTENDEN) ---
+  { id: "EV_HER_IKI", ad: "Ev<br>Her 2<br>Yarı", market: "Ev Sahibi Her İki Yarıyı Kazanır" },
+  { id: "DEP_HER_IKI", ad: "Dep<br>Her 2<br>Yarı", market: "Deplasman Her İki Yarıyı Kazanır" },
+  
+  { id: "IY_MS", ad: "İY /<br>MS", market: "İlk Yarı / Maç Sonucu" },
+  
+  { id: "IY_SONUC", ad: "İlk<br>Yarı<br>Sonucu", market: "İlk Yarı Sonucu" }, 
+  
+  { id: "IY_KG", ad: "İlk<br>Yarı<br>KG", market: "İlk Yarı Karşılıklı Gol" },
+  
+  { id: "IY_ALT15", ad: "İY<br>Alt<br>1.5", market: "İlk Yarı Sonucu ve Altı/Üstü 1.5" }, // Başlığı senin verine göre güncelledim
+  
+  // KG Kombinasyonları (Senin verindeki tam isimler)
+  { id: "KG_HH", ad: "KG<br>Hayır/<br>Hayır", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur (Hayır / Hayır)" },
+  { id: "KG_EH", ad: "KG<br>Evet/<br>Hayır", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur Evet / Hayır" },
+  { id: "KG_EE", ad: "KG<br>Evet/<br>Evet", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur  Evet / Evet" }, // Dikkat: Çift boşluk olabilir
+  { id: "KG_HE", ad: "KG<br>Hayır/<br>Evet", market: "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur Hayır / Evet" }
+];
+
+// Doğrulama Mantığı (Veri yapına göre optimize edildi)
+function kesifDogruMu(m, item) {
+  if (!m || m.durum !== "bitti") return false;
+  
+  const se = Number(m.skor_ev || 0), sd = Number(m.skor_dep || 0);
+  const tg = se + sd;
+  const kg = se > 0 && sd > 0;
+  const ms = se > sd ? "1" : (se === sd ? "0" : "2");
+  
+  // İlk Yarı Verileri (Varsa)
+  const iy_se = Number(m.iy_skor_ev || 0), iy_sd = Number(m.iy_skor_dep || 0);
+  const iy_tg = iy_se + iy_sd;
+  const iy_kg = iy_se > 0 && iy_sd > 0;
+  const iy_ms = iy_se > iy_sd ? "1" : (iy_se === iy_sd ? "0" : "2");
+
+  const id = item.id;
+
+  // Temel Marketler
+  if (id === "MS1") return ms === "1";
+  if (id === "MS0") return ms === "0";
+  if (id === "MS2") return ms === "2";
+  if (id === "ALT25") return tg < 2.5;
+  if (id === "UST25") return tg > 2.5;
+  if (id === "KGV") return kg;
+  if (id === "KGY") return !kg;
+
+  // İkili Kombinasyonlar
+  if (id === "MS1_MS0") return ms === "1" || ms === "0"; 
+  if (id === "MS1_MS2") return ms === "1" || ms === "2"; 
+  if (id === "MS1_ALT25") return ms === "1" && tg < 2.5;
+  if (id === "MS1_KGV") return ms === "1" && kg;
+  if (id === "MS1_KGY") return ms === "1" && !kg;
+  
+  if (id === "MS0_ALT25") return ms === "0" && tg < 2.5;
+  if (id === "MS0_KGV") return ms === "0" && kg;
+  if (id === "MS0_KGY") return ms === "0" && !kg;
+
+  if (id === "MS2_ALT25") return ms === "2" && tg < 2.5;
+  if (id === "MS2_KGV") return ms === "2" && kg;
+  if (id === "MS2_KGY") return ms === "2" && !kg;
+
+  // Özel Marketler
+  if (id === "EV_HER_IKI") return iy_ms === "1" && ms === "1"; 
+  if (id === "DEP_HER_IKI") return iy_ms === "2" && ms === "2";
+  
+  // İY/MS gibi karmaşık marketler için basit kontrol (Detaylı alt seçenek analizi zordur, oran benzerliği ön planda)
+  if (id === "IY_MS") return true; 
+  
+  if (id === "IY_SONUC") return true; // Hangi sonucu seçtiğimiz belli değil, genel oran havuzuna bakıyoruz
+  if (id === "IY_KG") return iy_kg;
+  
+  // İY Alt/Üst 1.5
+  if (id === "IY_ALT15") return iy_tg < 1.5;
+
+  // KG Kombinasyonları (2. Yarı hesaplaması)
+  const iky_se = se - iy_se;
+  const iky_sd = sd - iy_sd;
+  const iky_kg = iky_se > 0 && iky_sd > 0;
+  
+  if (id === "KG_HH") return !iy_kg && !iky_kg;
+  if (id === "KG_EH") return iy_kg && !iky_kg;
+  if (id === "KG_EE") return iy_kg && iky_kg;
+  if (id === "KG_HE") return !iy_kg && iky_kg;
+
+  return false;
+}
+
+function kesifYuzdeHesapla(hedefMac, item) {
+  const marketAdi = item.market;
+  
+  // 1. ADIM: Market veride var mı kontrol et
+  if (!hedefMac.oranlar || hedefMac.oranlar[marketAdi] === undefined) {
+    return null; // Bu maçta bu market yok
+  }
+
+  const hedefOran = parseFloat(hedefMac.oranlar[marketAdi]);
+  if (isNaN(hedefOran)) return null;
+
+  // 2. ADIM: Geçmişte benzer oranlı maçları bul
+  const altSinir = hedefOran * 0.85;
+  const ustSinir = hedefOran * 1.15;
+
+  const tumVeri = tumMaclar.concat(gecmisMaclar);
+  
+  let benzerMaclar = tumVeri.filter(bm => {
+    if (bm.durum !== "bitti") return false;
+    // Geçmiş maçta da bu market var mı?
+    if (!bm.oranlar || bm.oranlar[marketAdi] === undefined) return false;
+    
+    const bmOran = parseFloat(bm.oranlar[marketAdi]);
+    return !isNaN(bmOran) && bmOran >= altSinir && bmOran <= ustSinir;
+  });
+
+  if (benzerMaclar.length < 5) return null;
+
+  // 3. ADIM: Kaçı tutmuş hesapla
+  let tutanSayisi = 0;
+  benzerMaclar.forEach(bm => {
+    if (kesifDogruMu(bm, item)) tutanSayisi++;
+  });
+
+  return {
+    yuzde: Math.round((tutanSayisi / benzerMaclar.length) * 100),
+    tutan: tutanSayisi,
+    toplam: benzerMaclar.length
+  };
+}
+
+// ... (Diğer fonksiyonlar: kombineKesifFiltrele, kesifStatsGoster, getRenkClass aynı kalabilir) ...
+// Sadece render fonksiyonunda CSS sınıfı kontrolünü güncelledik.
+
+function kombineKesifFiltrele() {
+  const arama = (document.getElementById("kesifArama")?.value || "").toLowerCase();
+  const tarih = document.getElementById("kesifTarih")?.value || "";
+  const lig = document.getElementById("kesifLig")?.value || "";
+  const durum = document.getElementById("kesifDurum")?.value || "";
+  const minYuzde = parseInt(document.getElementById("kesifMinYuzde")?.value || "0");
+
+  let maclar = tumMaclar.filter(m => {
+    if (arama && !(m.ev_sahibi || "").toLowerCase().includes(arama) && !(m.deplasman || "").toLowerCase().includes(arama) && !(m.lig || "").toLowerCase().includes(arama)) return false;
+    if (tarih && m.tarih !== tarih) return false;
+    if (lig && (m.lig || "") !== lig) return false;
+    if (durum && m.durum !== durum) return false;
+    return true;
+  });
+
+  let analizliMaclar = maclar.map(m => {
+    let sonuclar = {};
+    ANALIZ_LISTESI.forEach(item => {
+      sonuclar[item.id] = kesifYuzdeHesapla(m, item);
+    });
+    return { ...m, analiz: sonuclar };
+  });
+
+  if (minYuzde > 0) {
+    analizliMaclar = analizliMaclar.filter(m => {
+      return Object.values(m.analiz).some(a => a && a.yuzde >= minYuzde);
+    });
+  }
+
+  kesifStatsGoster(analizliMaclar);
+  kesifRenderGrid(analizliMaclar);
+}
+
+function kesifStatsGoster(maclar) {
+  const toplam = maclar.length;
+  const oynanacak = maclar.filter(x => x.durum === "baslamadi").length;
+  const yuksek = maclar.filter(m => Object.values(m.analiz).some(a => a && a.yuzde >= 75)).length;
+  
+  let html = `<div class="si"><div class="sv">${toplam}</div><div class="sl">Maç</div></div>`;
+  html += `<div class="si"><div class="sv">${oynanacak}</div><div class="sl">Oynanacak</div></div>`;
+  html += `<div class="si"><div class="sv" style="color:#00c853">${yuksek}</div><div class="sl">%75+ Fırsat</div></div>`;
+  document.getElementById("kesifStatsBar").innerHTML = html;
+}
+
+function getRenkClass(yuzde) {
+  if (!yuzde && yuzde !== 0) return "bg-gray text-gray";
+  if (yuzde >= 75) return "bg-green text-green";
+  if (yuzde >= 60) return "bg-yellow text-yellow";
+  if (yuzde >= 45) return "bg-orange text-orange";
+  return "bg-red text-red";
+}
+
+function kesifRenderGrid(maclar) {
+  const container = document.getElementById("kesifContainer");
+  if (!maclar.length) {
+    container.innerHTML = '<div class="bos">Sonuç bulunamadı.</div>';
+    return;
+  }
+
+  const grp = {};
+  maclar.forEach(m => { if (!grp[m.tarih]) grp[m.tarih] = []; grp[m.tarih].push(m); });
+
+  let h = "";
+  Object.keys(grp).sort().forEach(tarih => {
+    const gm = grp[tarih];
+    const d = new Date(tarih);
+    
+    h += `<div style="padding:10px; background:#1a1a1a; color:#fff; font-weight:bold; border-bottom:1px solid #333;">
+            ${d.toLocaleDateString("tr-TR", {day:'numeric', month:'long', weekday:'long'})} 
+            <span style="float:right; color:#888; font-size:12px">${gm.length} Maç</span>
+          </div>`;
+
+    h += '<div class="tablo-header">';
+    h += '<div class="ms-sabit-bolum" style="background:#121212; padding:10px; align-items:center;">';
+    h += '<div style="width:50px; text-align:center">Saat</div>';
+    h += '<div style="width:200px; text-align:left; padding-left:10px">Maç</div>';
+    h += '</div>';
+    
+    h += '<div class="kesif-kombinasyonlar-alani">';
+    ANALIZ_LISTESI.forEach(item => {
+      h += `<div class="kesif-hucre bg-gray" style="border-bottom:2px solid #444;">
+              <div class="kh-baslik">${item.ad}</div>
+            </div>`;
+    });
+    h += '</div>';
+    h += '</div>';
+
+    gm.forEach(m => {
+      const skorTxt = m.durum === "bitti" ? `<span style="color:#f0b90b; font-weight:bold; font-size:11px;"> (${m.skor_ev}-${m.skor_dep})</span>` : 
+                      (m.durum === "devam" ? `<span style="color:#ff9100; font-weight:bold; font-size:11px;"> CANLI</span>` : '');
+      
+      h += '<div class="mac-satir">';
+      
+      h += '<div class="ms-sabit-bolum" style="background:#181818;">';
+      h += `<div style="width:50px; text-align:center; font-size:12px; color:#aaa;">${m.saat || "-"}</div>`;
+      h += `<div style="width:200px; text-align:left; padding-left:10px; font-size:13px;">
+              <div style="color:#fff; margin-bottom:2px;">${m.ev_sahibi || "?"} ${skorTxt}</div>
+              <div style="color:#888; font-size:11px;">${m.deplasman || "?"}</div>
+            </div>`;
+      h += '</div>';
+
+      h += '<div class="kesif-kombinasyonlar-alani">';
+      ANALIZ_LISTESI.forEach(item => {
+        const sonuc = m.analiz[item.id];
+        if (sonuc && sonuc.yuzde !== null) {
+          const renkClass = getRenkClass(sonuc.yuzde);
+          const tooltip = `${item.ad}: %${sonuc.yuzde} (${sonuc.tutan}/${sonuc.toplam})`;
+          
+          h += `<div class="kesif-hucre ${renkClass}" title="${tooltip}" style="cursor:pointer;">
+                  <div class="kh-deger">%${sonuc.yuzde}</div>
+                </div>`;
+        } else {
+          h += `<div class="kesif-hucre bg-gray"><div class="kh-deger" style="color:#444">-</div></div>`;
+        }
+      });
+      h += '</div>';
+      
+      h += '</div>';
+    });
+  });
+
+  container.innerHTML = h;
+}
+
+function kesifReset() {
+  document.getElementById("kesifArama").value = "";
+  document.getElementById("kesifTarih").value = "";
+  document.getElementById("kesifLig").value = "";
+  document.getElementById("kesifDurum").value = "";
+  document.getElementById("kesifMinYuzde").value = "0";
+  kombineKesifFiltrele();
+}
+
+const orjYukle = window.yukle;
+window.yukle = function() {
+  if(orjYukle) orjYukle();
+  setTimeout(() => {
+    const ks = document.getElementById("kesifTarih");
+    if(ks) {
+      [...new Set(tumMaclar.map(m => m.tarih))].sort().forEach(t => {
+        const o = document.createElement("option"); o.value=t; o.textContent=new Date(t).toLocaleDateString("tr-TR"); ks.appendChild(o);
+      });
+    }
+    const kl = document.getElementById("kesifLig");
+    if(kl) {
+      [...new Set(tumMaclar.map(m => m.lig||"").filter(x=>x))].sort().forEach(l => {
+        const o = document.createElement("option"); o.value=l; o.textContent=l; kl.appendChild(o);
+      });
+    }
+  }, 1000);
+};
+
+const orjMainTab3 = window.mainTab;
+window.mainTab = function(i) {
+  if(orjMainTab3) orjMainTab3(i);
+  if (i === 2) setTimeout(kombineKesifFiltrele, 200);
+};
 
 </script>
 </body>

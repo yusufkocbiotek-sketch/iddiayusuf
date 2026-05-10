@@ -284,64 +284,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
   margin-top:4px;
 }
 
-<style>
-/* --- STRATEJİK KOMBİNE TABLOSU STİLLERİ --- */
-#kesifContainer {
-  overflow-x: auto !important; /* Yatay kaydırma */
-  overflow-y: visible !important;
-  white-space: nowrap !important;
-  padding-bottom: 20px;
-  background: #121212;
-  border-radius: 8px;
-  width: 100%;
-  display: block;
-}
-
-#kesifContainer::-webkit-scrollbar { height: 12px; }
-#kesifContainer::-webkit-scrollbar-track { background: #000; }
-#kesifContainer::-webkit-scrollbar-thumb { background: #555; border-radius: 6px; border: 2px solid #000; }
-#kesifContainer::-webkit-scrollbar-thumb:hover { background: #00c853; }
-
-.tablo-header, .mac-satir {
-  display: inline-flex !important; /* YAN YANA DİZİLME GARANTİSİ */
-  align-items: stretch;
-  min-width: 1400px; /* Tabloyu genişletip scroll açar */
-  border-bottom: 1px solid #333;
-}
-
-.tablo-header {
-  position: sticky; top: 0; z-index: 10;
-  background: #1a1a1a; font-weight: bold; font-size: 10px;
-  text-transform: uppercase; color: #ccc;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
-
-.ms-sabit-bolum {
-  display: flex; position: sticky; left: 0; z-index: 20;
-  background: #1a1a1a; border-right: 3px solid #00c853;
-  box-shadow: 4px 0 15px rgba(0,0,0,0.9); flex-shrink: 0;
-}
-
-.kesif-kombinasyonlar-alani { display: inline-flex; }
-
-.kesif-hucre {
-  width: 80px; min-width: 80px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  border-left: 1px solid #333; padding: 10px 2px;
-  box-sizing: border-box; transition: all 0.2s; background: #181818;
-}
-
-.kesif-hucre:hover { transform: scale(1.15); z-index: 30; border: 1px solid #fff; background: #222; }
-
-.kh-baslik { font-size: 9px; color: #bbb; margin-bottom: 6px; text-align: center; line-height: 1.2; font-weight: 700; }
-.kh-deger { font-size: 15px; font-weight: 900; color: #fff; line-height: 1; }
-
-.bg-green { background-color: #063b22 !important; } .text-green { color: #00e676 !important; text-shadow: 0 0 8px rgba(0,230,118,0.6); }
-.bg-yellow { background-color: #3e3a00 !important; } .text-yellow { color: #ffd600 !important; }
-.bg-orange { background-color: #4d2c00 !important; } .text-orange { color: #ff9100 !important; }
-.bg-red { background-color: #3b0000 !important; } .text-red { color: #ff5252 !important; }
-.bg-gray { background-color: #1a1a1a !important; } .text-gray { color: #444 !important; }
+</style>
 </head>
 <body>
 <div class="header"><h1>⚽ İddaa Oranları & Analiz</h1><div class="info" id="info">Yükleniyor...</div></div>

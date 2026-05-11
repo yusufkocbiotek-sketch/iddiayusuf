@@ -271,7 +271,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <optgroup label="İY"><option value="İlk Yarı Sonucu_1">İY1</option><option value="İlk Yarı Sonucu_0">İYX</option><option value="İlk Yarı Sonucu_2">İY2</option></optgroup>
 <optgroup label="Kmb"><option value="Her İki Yarıda da Üst 1.5_Evet">2YÜ1.5</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">1+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">X+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">2+KGV</option><option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">1+KGY</option><option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">2+KGY</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2YKG E/E</option><option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">2YKG H/H</option></optgroup>
 <!-- ============================================ -->
-<!-- TAM UYUMLU FİLTRELER (JSON'A GÖRE AYARLANDI) -->
+<!-- ULTRA DETAYLI FİLTRELER (JSON UYUMLU)        -->
 <!-- ============================================ -->
 
 <optgroup label="🏆 Her İki Yarıyı Kazanır">
@@ -280,7 +280,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 </optgroup>
 
 <optgroup label="⏱️ İlk Yarı / Maç Sonucu (İY/MS)">
-  <!-- JSON'da 'İlk Yarı / Maç Sonucu_1/1' formatında -->
   <option value="İlk Yarı / Maç Sonucu_1/1">İY/MS 1/1</option>
   <option value="İlk Yarı / Maç Sonucu_1/0">İY/MS 1/0</option>
   <option value="İlk Yarı / Maç Sonucu_1/2">İY/MS 1/2</option>
@@ -293,7 +292,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 </optgroup>
 
 <optgroup label="🤝 Maç Sonucu ve KG (Kombine)">
-  <!-- JSON'da tam olarak bu isimlerle var -->
   <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">MS 1 + KG Var</option>
   <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">MS 1 + KG Yok</option>
   <option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">MS 0 + KG Var</option>
@@ -302,20 +300,66 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
   <option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">MS 2 + KG Yok</option>
 </optgroup>
 
+<optgroup label="⚽ İY Sonucu + İY KG">
+  <!-- Yeni Eklendi -->
+  <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var">İY 1 + KG Var</option>
+  <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok">İY 1 + KG Yok</option>
+  <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var">İY 0 + KG Var</option>
+  <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok">İY 0 + KG Yok</option>
+  <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var">İY 2 + KG Var</option>
+  <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok">İY 2 + KG Yok</option>
+</optgroup>
+
+<optgroup label="📉 İY Sonucu + İY Alt/Üst 1.5">
+  <!-- Yeni Eklendi -->
+  <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Alt">İY 1 + Alt 1.5</option>
+  <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Alt">İY 0 + Alt 1.5</option>
+  <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Alt">İY 2 + Alt 1.5</option>
+  <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Üst">İY 1 + Üst 1.5</option>
+  <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Üst">İY 0 + Üst 1.5</option>
+  <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Üst">İY 2 + Üst 1.5</option>
+</optgroup>
+
+<optgroup label="🥅 İkinci Yarı KG">
+  <!-- Yeni Eklendi -->
+  <option value="İkinci Yarı Karşılıklı Gol_Var">2. Yarı KG Var</option>
+  <option value="İkinci Yarı Karşılıklı Gol_Yok">2. Yarı KG Yok</option>
+</optgroup>
+
 <optgroup label="📈 Her İki Yarıda Üst 1.5">
   <option value="Her İki Yarıda da Üst 1.5_Evet">Her İki Yarıda da Üst 1.5 (Evet)</option>
 </optgroup>
 
-<optgroup label="🥅 İY ve 2Y KG (Detaylı)">
-  <!-- JSON'daki uzun isimler -->
-  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">İY & 2Y KG: H/H</option>
-  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır">İY & 2Y KG: E/H</option>
-  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">İY & 2Y KG: E/E</option>
-  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet">İY & 2Y KG: H/E</option>
+<optgroup label="🎯 Toplam Gol Aralığı">
+  <!-- Yeni Eklendi -->
+  <option value="Toplam Gol_0-1 gol">Toplam Gol: 0-1</option>
+  <option value="Toplam Gol_2-3 gol">Toplam Gol: 2-3</option>
+  <option value="Toplam Gol_4-5 gol">Toplam Gol: 4-5</option>
+  <option value="Toplam Gol_6+ gol">Toplam Gol: 6+</option>
+</optgroup>
+
+<optgroup label="🎯 Maç Skoru (Final Score)">
+  <!-- Yeni Eklendi - En popüler skorlar -->
+  <option value="Maç Skoru_1:0">Skor: 1-0</option>
+  <option value="Maç Skoru_2:0">Skor: 2-0</option>
+  <option value="Maç Skoru_2:1">Skor: 2-1</option>
+  <option value="Maç Skoru_3:0">Skor: 3-0</option>
+  <option value="Maç Skoru_3:1">Skor: 3-1</option>
+  <option value="Maç Skoru_3:2">Skor: 3-2</option>
+  <option value="Maç Skoru_0:0">Skor: 0-0</option>
+  <option value="Maç Skoru_1:1">Skor: 1-1</option>
+  <option value="Maç Skoru_2:2">Skor: 2-2</option>
+  <option value="Maç Skoru_3:3">Skor: 3-3</option>
+  <option value="Maç Skoru_0:1">Skor: 0-1</option>
+  <option value="Maç Skoru_0:2">Skor: 0-2</option>
+  <option value="Maç Skoru_1:2">Skor: 1-2</option>
+  <option value="Maç Skoru_0:3">Skor: 0-3</option>
+  <option value="Maç Skoru_1:3">Skor: 1-3</option>
+  <option value="Maç Skoru_2:3">Skor: 2-3</option>
+  <option value="Maç Skoru_diğer">Skor: Diğer</option>
 </optgroup>
 
 <optgroup label="🎯 İlk Yarı Skoru (Detaylı)">
-  <!-- JSON'da 'İlk Yarı Skoru_0:0' formatında -->
   <option value="İlk Yarı Skoru_0:0">İY Skoru 0-0</option>
   <option value="İlk Yarı Skoru_1:1">İY Skoru 1-1</option>
   <option value="İlk Yarı Skoru_2:2">İY Skoru 2-2</option>
@@ -328,9 +372,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
   <option value="İlk Yarı Skoru_diğer">İY Skoru Diğer</option>
 </optgroup>
 
-<!-- Not: JSON'da 'İlk Yarı/Maç Sonucu Skorları' çok detaylı (örn: 0-0 0-0). 
-     Bunları tek tek filtreye eklemek menüyü çok uzatır. 
-     Eğer istersen sadece popüler olanları (1/1, 2/1 vb.) ekleyebiliriz ama şimdilik yukarıdaki İY/MS yeterli olacaktır. -->
+<optgroup label="🥅 İY ve 2Y KG (Detaylı)">
+  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">İY & 2Y KG: H/H</option>
+  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır">İY & 2Y KG: E/H</option>
+  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">İY & 2Y KG: E/E</option>
+  <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet">İY & 2Y KG: H/E</option>
+</optgroup>
 </select>
 <span class="fl">=</span><input type="number" id="analizOranDeger" step="0.01" placeholder="Oran">
 <button class="btn-a" onclick="analizFiltreEkle()">+ Ekle</button>

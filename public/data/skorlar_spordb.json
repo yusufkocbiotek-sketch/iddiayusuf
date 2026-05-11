@@ -1,12 +1,12 @@
 {
-  "created_at": "2026-05-11T01:21:04.471484",
+  "created_at": "2026-05-11T07:21:03.222757",
   "source_url": "https://www.spordb.com/iddaa-programi",
   "days": [
     "2026-05-11",
     "2026-05-10",
     "2026-05-09"
   ],
-  "count": 432,
+  "count": 445,
   "matches": [
     {
       "spordb_match_id": "4065944",
@@ -14,7 +14,7 @@
       "teams_slug": "the-strongest-real-potosi",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:35.447431",
+      "cekme_zamani": "2026-05-11T07:20:33.916939",
       "sp_home": "The Strongest",
       "sp_away": "Real Potosi"
     },
@@ -22,9 +22,9 @@
       "spordb_match_id": "4055987",
       "tarih": "2026-05-11",
       "teams_slug": "corinthians-sao-paulo",
-      "skor1": 1,
-      "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:35.453067",
+      "skor1": 3,
+      "skor2": 2,
+      "cekme_zamani": "2026-05-11T07:20:33.922644",
       "sp_home": "Corinthians",
       "sp_away": "Sao Paulo"
     },
@@ -32,9 +32,9 @@
       "spordb_match_id": "4055991",
       "tarih": "2026-05-11",
       "teams_slug": "mirassol-fc-chapecoense",
-      "skor1": 0,
-      "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:35.457453",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-11T07:20:33.927584",
       "sp_home": "Mirassol FC",
       "sp_away": "Chapecoense"
     },
@@ -42,9 +42,9 @@
       "spordb_match_id": "4055993",
       "tarih": "2026-05-11",
       "teams_slug": "santos-bragantino",
-      "skor1": 0,
+      "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:35.462376",
+      "cekme_zamani": "2026-05-11T07:20:33.932443",
       "sp_home": "Santos",
       "sp_away": "Bragantino"
     },
@@ -54,7 +54,7 @@
       "teams_slug": "avai-fortaleza",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:35.466741",
+      "cekme_zamani": "2026-05-11T07:20:33.937517",
       "sp_home": "Avai",
       "sp_away": "Fortaleza"
     },
@@ -62,9 +62,9 @@
       "spordb_match_id": "4068047",
       "tarih": "2026-05-11",
       "teams_slug": "river-plate-san-lorenzo",
-      "skor1": 0,
-      "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:35.471031",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-11T07:20:33.942182",
       "sp_home": "River Plate",
       "sp_away": "San Lorenzo"
     },
@@ -72,11 +72,141 @@
       "spordb_match_id": "4067896",
       "tarih": "2026-05-11",
       "teams_slug": "deportivo-saprissa-municipal-liberia",
-      "skor1": 0,
+      "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:35.475202",
+      "cekme_zamani": "2026-05-11T07:20:33.947131",
       "sp_home": "Deportivo Saprissa",
       "sp_away": "Municipal Liberia"
+    },
+    {
+      "spordb_match_id": "4055990",
+      "tarih": "2026-05-11",
+      "teams_slug": "gremio-flamengo",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-11T07:20:33.952027",
+      "sp_home": "Gremio",
+      "sp_away": "Flamengo"
+    },
+    {
+      "spordb_match_id": "4063930",
+      "tarih": "2026-05-11",
+      "teams_slug": "novorizontino-botafogo-sp",
+      "skor1": 1,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-11T07:20:33.958283",
+      "sp_home": "Novorizontino",
+      "sp_away": "Botafogo SP"
+    },
+    {
+      "spordb_match_id": "4068034",
+      "tarih": "2026-05-11",
+      "teams_slug": "nacional-de-football-cerro",
+      "skor1": 4,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-11T07:20:33.963113",
+      "sp_home": "Nacional De Football",
+      "sp_away": "Cerro"
+    },
+    {
+      "spordb_match_id": "4067915",
+      "tarih": "2026-05-11",
+      "teams_slug": "pachuca-toluca",
+      "skor1": 2,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-11T07:20:33.968532",
+      "sp_home": "Pachuca",
+      "sp_away": "Toluca"
+    },
+    {
+      "spordb_match_id": "4058675",
+      "tarih": "2026-05-11",
+      "teams_slug": "minnesota-united-austin",
+      "skor1": 2,
+      "skor2": 2,
+      "cekme_zamani": "2026-05-11T07:20:33.974172",
+      "sp_home": "Minnesota United",
+      "sp_away": "Austin"
+    },
+    {
+      "spordb_match_id": "4055436",
+      "tarih": "2026-05-11",
+      "teams_slug": "sportivo-luqueno-libertad",
+      "skor1": 2,
+      "skor2": 3,
+      "cekme_zamani": "2026-05-11T07:20:33.979463",
+      "sp_home": "Sportivo Luqueno",
+      "sp_away": "Libertad"
+    },
+    {
+      "spordb_match_id": "4059485",
+      "tarih": "2026-05-11",
+      "teams_slug": "manta-macara",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-11T07:20:33.984396",
+      "sp_home": "Manta",
+      "sp_away": "Macara"
+    },
+    {
+      "spordb_match_id": "4068058",
+      "tarih": "2026-05-11",
+      "teams_slug": "once-caldas-junior",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-11T07:20:33.989343",
+      "sp_home": "Once Caldas",
+      "sp_away": "Junior"
+    },
+    {
+      "spordb_match_id": "4055994",
+      "tarih": "2026-05-11",
+      "teams_slug": "vasco-da-gama-atletico-paranaense",
+      "skor1": 1,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-11T07:20:33.994212",
+      "sp_home": "Vasco da Gama",
+      "sp_away": "Atletico Paranaense"
+    },
+    {
+      "spordb_match_id": "4065945",
+      "tarih": "2026-05-11",
+      "teams_slug": "blooming-bolivar",
+      "skor1": 0,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-11T07:20:33.999102",
+      "sp_home": "Blooming",
+      "sp_away": "Bolivar"
+    },
+    {
+      "spordb_match_id": "4068048",
+      "tarih": "2026-05-11",
+      "teams_slug": "velez-sarsfield-gimnasia-la-plata",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-11T07:20:34.003589",
+      "sp_home": "Velez Sarsfield",
+      "sp_away": "Gimnasia La Plata"
+    },
+    {
+      "spordb_match_id": "4058676",
+      "tarih": "2026-05-11",
+      "teams_slug": "los-angeles-fc-houston-dynamo",
+      "skor1": 1,
+      "skor2": 4,
+      "cekme_zamani": "2026-05-11T07:20:34.008516",
+      "sp_home": "Los Angeles FC",
+      "sp_away": "Houston Dynamo"
+    },
+    {
+      "spordb_match_id": "4067916",
+      "tarih": "2026-05-11",
+      "teams_slug": "pumas-unam-club-america",
+      "skor1": 3,
+      "skor2": 3,
+      "cekme_zamani": "2026-05-11T07:20:34.013188",
+      "sp_home": "Pumas UNAM",
+      "sp_away": "Club America"
     },
     {
       "spordb_match_id": "4055989",
@@ -84,7 +214,7 @@
       "teams_slug": "fluminense-vitoria",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.031255",
+      "cekme_zamani": "2026-05-11T07:20:47.621874",
       "sp_home": "Fluminense",
       "sp_away": "Vitoria"
     },
@@ -94,7 +224,7 @@
       "teams_slug": "guayaquil-city-fc-deportivo-cuenca",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.035988",
+      "cekme_zamani": "2026-05-11T07:20:47.627036",
       "sp_home": "Guayaquil City FC",
       "sp_away": "Deportivo Cuenca"
     },
@@ -104,7 +234,7 @@
       "teams_slug": "ponte-preta-sport-recife",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.040338",
+      "cekme_zamani": "2026-05-11T07:20:47.632987",
       "sp_home": "Ponte Preta",
       "sp_away": "Sport Recife"
     },
@@ -114,7 +244,7 @@
       "teams_slug": "aucas-universidad-catolica",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.044856",
+      "cekme_zamani": "2026-05-11T07:20:47.638636",
       "sp_home": "Aucas",
       "sp_away": "Universidad Catolica"
     },
@@ -124,7 +254,7 @@
       "teams_slug": "boca-juniors-huracan",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.049269",
+      "cekme_zamani": "2026-05-11T07:20:47.643719",
       "sp_home": "Boca Juniors",
       "sp_away": "Huracan"
     },
@@ -134,7 +264,7 @@
       "teams_slug": "ceara-atletico-goianiense",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.054251",
+      "cekme_zamani": "2026-05-11T07:20:47.648610",
       "sp_home": "Ceara",
       "sp_away": "Atletico Goianiense"
     },
@@ -144,7 +274,7 @@
       "teams_slug": "orsomarso-cucuta-deportivo",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.059055",
+      "cekme_zamani": "2026-05-11T07:20:47.654253",
       "sp_home": "Orsomarso",
       "sp_away": "Cucuta Deportivo"
     },
@@ -154,7 +284,7 @@
       "teams_slug": "greenville-triumph-richmond-kickers",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.063674",
+      "cekme_zamani": "2026-05-11T07:20:47.659870",
       "sp_home": "Greenville Triumph",
       "sp_away": "Richmond Kickers"
     },
@@ -164,7 +294,7 @@
       "teams_slug": "hartford-athletic-detroit-city",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.068558",
+      "cekme_zamani": "2026-05-11T07:20:47.665816",
       "sp_home": "Hartford Athletic",
       "sp_away": "Detroit City"
     },
@@ -174,7 +304,7 @@
       "teams_slug": "louisville-city-pittsburgh-riverhounds",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.072893",
+      "cekme_zamani": "2026-05-11T07:20:47.671408",
       "sp_home": "Louisville City",
       "sp_away": "Pittsburgh Riverhounds"
     },
@@ -184,7 +314,7 @@
       "teams_slug": "nacional-asuncion-sportivo-trinidense",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.077314",
+      "cekme_zamani": "2026-05-11T07:20:47.676605",
       "sp_home": "Nacional Asuncion",
       "sp_away": "Sportivo Trinidense"
     },
@@ -194,7 +324,7 @@
       "teams_slug": "atlanta-united-los-angeles-galaxy",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.081888",
+      "cekme_zamani": "2026-05-11T07:20:47.681352",
       "sp_home": "Atlanta United",
       "sp_away": "Los Angeles Galaxy"
     },
@@ -204,7 +334,7 @@
       "teams_slug": "charlotte-fc-fc-cincinnati",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.086429",
+      "cekme_zamani": "2026-05-11T07:20:47.686401",
       "sp_home": "Charlotte FC",
       "sp_away": "FC Cincinnati"
     },
@@ -214,7 +344,7 @@
       "teams_slug": "new-england-revolution-philadelphia-union",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.090910",
+      "cekme_zamani": "2026-05-11T07:20:47.691208",
       "sp_home": "New England Revolution",
       "sp_away": "Philadelphia Union"
     },
@@ -224,7 +354,7 @@
       "teams_slug": "rhode-island-tampa-bay-rowdies",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.095269",
+      "cekme_zamani": "2026-05-11T07:20:47.695945",
       "sp_home": "Rhode Island",
       "sp_away": "Tampa Bay Rowdies"
     },
@@ -234,7 +364,7 @@
       "teams_slug": "crb-operario-pr",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.100013",
+      "cekme_zamani": "2026-05-11T07:20:47.700757",
       "sp_home": "BRA2",
       "sp_away": "Operario PR"
     },
@@ -244,7 +374,7 @@
       "teams_slug": "bahia-cruzeiro",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.104572",
+      "cekme_zamani": "2026-05-11T07:20:47.705532",
       "sp_home": "Bahia",
       "sp_away": "Cruzeiro"
     },
@@ -254,7 +384,7 @@
       "teams_slug": "independiente-del-valle-barcelona-sc",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.108905",
+      "cekme_zamani": "2026-05-11T07:20:47.710482",
       "sp_home": "Independiente Del Valle",
       "sp_away": "Barcelona SC"
     },
@@ -264,7 +394,7 @@
       "teams_slug": "juventude-criciuma",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.113848",
+      "cekme_zamani": "2026-05-11T07:20:47.715722",
       "sp_home": "Juventude",
       "sp_away": "Criciuma"
     },
@@ -274,7 +404,7 @@
       "teams_slug": "argentinos-juniors-lanus",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.118670",
+      "cekme_zamani": "2026-05-11T07:20:47.720447",
       "sp_home": "Argentinos Juniors",
       "sp_away": "Lanus"
     },
@@ -284,7 +414,7 @@
       "teams_slug": "independiente-rivadavia-union-santa-fe",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.123115",
+      "cekme_zamani": "2026-05-11T07:20:47.725221",
       "sp_home": "Independiente Rivadavia",
       "sp_away": "Union Santa Fe"
     },
@@ -294,7 +424,7 @@
       "teams_slug": "fc-dallas-real-salt-lake",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.127772",
+      "cekme_zamani": "2026-05-11T07:20:47.729701",
       "sp_home": "FC Dallas",
       "sp_away": "Real Salt Lake"
     },
@@ -304,7 +434,7 @@
       "teams_slug": "new-mexico-united-las-vegas-lights",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.132838",
+      "cekme_zamani": "2026-05-11T07:20:47.735058",
       "sp_home": "New Mexico United",
       "sp_away": "Las Vegas Lights"
     },
@@ -314,7 +444,7 @@
       "teams_slug": "alianza-lima-sporting-cristal",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.137366",
+      "cekme_zamani": "2026-05-11T07:20:47.740390",
       "sp_home": "Alianza Lima",
       "sp_away": "Sporting Cristal"
     },
@@ -324,7 +454,7 @@
       "teams_slug": "guadalajara-tigres-uanl",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.141630",
+      "cekme_zamani": "2026-05-11T07:20:47.745234",
       "sp_home": "Guadalajara",
       "sp_away": "Tigres UANL"
     },
@@ -334,7 +464,7 @@
       "teams_slug": "nashville-dc-united",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.146819",
+      "cekme_zamani": "2026-05-11T07:20:47.750580",
       "sp_home": "Nashville",
       "sp_away": "DC United"
     },
@@ -344,7 +474,7 @@
       "teams_slug": "america-de-cali-santa-fe",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.154023",
+      "cekme_zamani": "2026-05-11T07:20:47.755269",
       "sp_home": "America de Cali",
       "sp_away": "Santa Fe"
     },
@@ -354,7 +484,7 @@
       "teams_slug": "colorado-rapids-louis-city",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.159014",
+      "cekme_zamani": "2026-05-11T07:20:47.760000",
       "sp_home": "Colorado Rapids",
       "sp_away": "Louis City"
     },
@@ -364,7 +494,7 @@
       "teams_slug": "oakland-roots-el-paso-locomotive",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.163770",
+      "cekme_zamani": "2026-05-11T07:20:47.765288",
       "sp_home": "Oakland Roots",
       "sp_away": "El Paso Locomotive"
     },
@@ -374,7 +504,7 @@
       "teams_slug": "phoenix-rising-san-antonio",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.168763",
+      "cekme_zamani": "2026-05-11T07:20:47.770217",
       "sp_home": "Phoenix Rising",
       "sp_away": "San Antonio"
     },
@@ -384,7 +514,7 @@
       "teams_slug": "cs-herediano-cs-cartagines",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.173954",
+      "cekme_zamani": "2026-05-11T07:20:47.775023",
       "sp_home": "CS Herediano",
       "sp_away": "CS Cartagines"
     },
@@ -394,7 +524,7 @@
       "teams_slug": "real-esteli-diriangen",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.178995",
+      "cekme_zamani": "2026-05-11T07:20:47.779981",
       "sp_home": "Real Esteli",
       "sp_away": "Diriangen"
     },
@@ -404,7 +534,7 @@
       "teams_slug": "portland-timbers-sporting-kansas-city",
       "skor1": 6,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.183943",
+      "cekme_zamani": "2026-05-11T07:20:47.784426",
       "sp_home": "Portland Timbers",
       "sp_away": "Sporting Kansas City"
     },
@@ -414,7 +544,7 @@
       "teams_slug": "san-jose-earthquakes-vancouver-whitecaps",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.188766",
+      "cekme_zamani": "2026-05-11T07:20:47.789127",
       "sp_home": "San Jose Earthquakes",
       "sp_away": "Vancouver Whitecaps"
     },
@@ -424,7 +554,7 @@
       "teams_slug": "cruz-azul-atlas",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.193623",
+      "cekme_zamani": "2026-05-11T07:20:47.794223",
       "sp_home": "Cruz Azul",
       "sp_away": "Atlas"
     },
@@ -434,7 +564,7 @@
       "teams_slug": "zweigen-kanazawa-albirex-niigata",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.198471",
+      "cekme_zamani": "2026-05-11T07:20:47.799117",
       "sp_home": "Zweigen Kanazawa",
       "sp_away": "Albirex Niigata"
     },
@@ -444,7 +574,7 @@
       "teams_slug": "shimizu-s-pulse-avispa-fukuoka",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.203660",
+      "cekme_zamani": "2026-05-11T07:20:47.803915",
       "sp_home": "Shimizu S-Pulse",
       "sp_away": "Avispa Fukuoka"
     },
@@ -454,7 +584,7 @@
       "teams_slug": "vissel-kobe-fagiano-okayama",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.208430",
+      "cekme_zamani": "2026-05-11T07:20:47.808766",
       "sp_home": "Vissel Kobe",
       "sp_away": "Fagiano Okayama"
     },
@@ -464,7 +594,7 @@
       "teams_slug": "yokohama-fmarinos-kashima-antlers",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.212853",
+      "cekme_zamani": "2026-05-11T07:20:47.813542",
       "sp_home": "Yokohama F.Marinos",
       "sp_away": "Kashima Antlers"
     },
@@ -474,7 +604,7 @@
       "teams_slug": "fukushima-united-jubilo-iwata",
       "skor1": 4,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.217240",
+      "cekme_zamani": "2026-05-11T07:20:47.818383",
       "sp_home": "Fukushima United",
       "sp_away": "Jubilo Iwata"
     },
@@ -484,7 +614,7 @@
       "teams_slug": "gainare-tottori-giravanz-kitakyushu",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.222143",
+      "cekme_zamani": "2026-05-11T07:20:47.823283",
       "sp_home": "Gainare Tottori",
       "sp_away": "Giravanz Kitakyushu"
     },
@@ -494,7 +624,7 @@
       "teams_slug": "kamatamare-sanuki-kochi-united",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.226986",
+      "cekme_zamani": "2026-05-11T07:20:47.828279",
       "sp_home": "Kamatamare Sanuki",
       "sp_away": "Kochi United"
     },
@@ -504,7 +634,7 @@
       "teams_slug": "roasso-kumamoto-ryukyu",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.231440",
+      "cekme_zamani": "2026-05-11T07:20:47.833092",
       "sp_home": "Roasso Kumamoto",
       "sp_away": "Ryukyu"
     },
@@ -514,7 +644,7 @@
       "teams_slug": "matsumoto-yamaga-fujieda-myfc",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.236407",
+      "cekme_zamani": "2026-05-11T07:20:47.837798",
       "sp_home": "Matsumoto Yamaga",
       "sp_away": "Fujieda MYFC"
     },
@@ -524,7 +654,7 @@
       "teams_slug": "montedio-yamagata-sagamihara",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.241328",
+      "cekme_zamani": "2026-05-11T07:20:47.843336",
       "sp_home": "Montedio Yamagata",
       "sp_away": "Sagamihara"
     },
@@ -534,7 +664,7 @@
       "teams_slug": "oita-trinita-sagan-tosu",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.245746",
+      "cekme_zamani": "2026-05-11T07:20:47.848128",
       "sp_home": "Oita Trinita",
       "sp_away": "Sagan Tosu"
     },
@@ -544,7 +674,7 @@
       "teams_slug": "shonan-bellmare-yokohama-fc",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.250289",
+      "cekme_zamani": "2026-05-11T07:20:47.852900",
       "sp_home": "Shonan Bellmare",
       "sp_away": "Yokohama FC"
     },
@@ -554,7 +684,7 @@
       "teams_slug": "tochigi-sc-blaublitz-akita",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.255218",
+      "cekme_zamani": "2026-05-11T07:20:47.857895",
       "sp_home": "Tochigi SC",
       "sp_away": "Blaublitz Akita"
     },
@@ -564,7 +694,7 @@
       "teams_slug": "tokushima-vortis-nara-club",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.260067",
+      "cekme_zamani": "2026-05-11T07:20:47.862583",
       "sp_home": "Tokushima Vortis",
       "sp_away": "Nara Club"
     },
@@ -574,7 +704,7 @@
       "teams_slug": "vanraure-hachinohe-vegalta-sendai",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.264224",
+      "cekme_zamani": "2026-05-11T07:20:47.867937",
       "sp_home": "Vanraure Hachinohe",
       "sp_away": "Vegalta Sendai"
     },
@@ -584,7 +714,7 @@
       "teams_slug": "ulsan-hyundai-bucheon-1995",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.269357",
+      "cekme_zamani": "2026-05-11T07:20:47.873183",
       "sp_home": "Ulsan Hyundai",
       "sp_away": "Bucheon 1995"
     },
@@ -594,7 +724,7 @@
       "teams_slug": "gangneung-city-daejeon-korail",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.274480",
+      "cekme_zamani": "2026-05-11T07:20:47.878298",
       "sp_home": "Gangneung City",
       "sp_away": "Daejeon Korail"
     },
@@ -604,7 +734,7 @@
       "teams_slug": "gyeongju-hnp-dangjin-citizen",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.278891",
+      "cekme_zamani": "2026-05-11T07:20:47.882919",
       "sp_home": "Gyeongju HNP",
       "sp_away": "Dangjin Citizen"
     },
@@ -614,7 +744,7 @@
       "teams_slug": "gamba-osaka-sanfrecce-hiroshima",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.283948",
+      "cekme_zamani": "2026-05-11T07:20:47.887894",
       "sp_home": "Gamba Osaka",
       "sp_away": "Sanfrecce Hiroshima"
     },
@@ -624,7 +754,7 @@
       "teams_slug": "fc-tokyo-tokyo-verdy",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.289113",
+      "cekme_zamani": "2026-05-11T07:20:47.892856",
       "sp_home": "FC Tokyo",
       "sp_away": "Tokyo Verdy"
     },
@@ -634,7 +764,7 @@
       "teams_slug": "ehime-fc-kataller-toyama",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.293987",
+      "cekme_zamani": "2026-05-11T07:20:47.897780",
       "sp_home": "Ehime FC",
       "sp_away": "Kataller Toyama"
     },
@@ -644,7 +774,7 @@
       "teams_slug": "nagoya-grampus-kyoto-sanga",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.298764",
+      "cekme_zamani": "2026-05-11T07:20:47.902575",
       "sp_home": "Nagoya Grampus",
       "sp_away": "Kyoto Sanga"
     },
@@ -654,7 +784,7 @@
       "teams_slug": "fk-ufa-rotor-volgograd",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.303535",
+      "cekme_zamani": "2026-05-11T07:20:47.907114",
       "sp_home": "FK Ufa",
       "sp_away": "Rotor Volgograd"
     },
@@ -664,7 +794,7 @@
       "teams_slug": "anyang-jeonbuk-motors",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.308162",
+      "cekme_zamani": "2026-05-11T07:20:47.911423",
       "sp_home": "Anyang",
       "sp_away": "Jeonbuk Motors"
     },
@@ -674,7 +804,7 @@
       "teams_slug": "busan-i-park-cheonan-city",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.313306",
+      "cekme_zamani": "2026-05-11T07:20:47.915903",
       "sp_home": "Busan I Park",
       "sp_away": "Cheonan City"
     },
@@ -684,7 +814,7 @@
       "teams_slug": "slavia-praha-ii-mas-taborsko",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.318207",
+      "cekme_zamani": "2026-05-11T07:20:47.920730",
       "sp_home": "Slavia Praha II",
       "sp_away": "MAS Taborsko"
     },
@@ -694,7 +824,7 @@
       "teams_slug": "viktoria-zizkov-sparta-praha-ii",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.323037",
+      "cekme_zamani": "2026-05-11T07:20:47.925293",
       "sp_home": "Viktoria Zizkov",
       "sp_away": "Sparta Praha II"
     },
@@ -704,7 +834,7 @@
       "teams_slug": "persija-jakarta-persib-bandung",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.327748",
+      "cekme_zamani": "2026-05-11T07:20:47.929877",
       "sp_home": "Persija Jakarta",
       "sp_away": "Persib Bandung"
     },
@@ -714,7 +844,7 @@
       "teams_slug": "fk-orenburg-krylya-sovetov",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.333930",
+      "cekme_zamani": "2026-05-11T07:20:47.934254",
       "sp_home": "FK Orenburg",
       "sp_away": "Krylya Sovetov"
     },
@@ -724,7 +854,7 @@
       "teams_slug": "qingdao-youth-island-wuhan-three-towns",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.339056",
+      "cekme_zamani": "2026-05-11T07:20:47.938608",
       "sp_home": "Qingdao Youth Island",
       "sp_away": "Wuhan Three Towns"
     },
@@ -734,7 +864,7 @@
       "teams_slug": "polonia-warszawa-gornik-leczna",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.344141",
+      "cekme_zamani": "2026-05-11T07:20:47.943011",
       "sp_home": "Polonia Warszawa",
       "sp_away": "Gornik Leczna"
     },
@@ -744,7 +874,7 @@
       "teams_slug": "hong-kong-fc-hong-kong-rangers",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.348495",
+      "cekme_zamani": "2026-05-11T07:20:47.947679",
       "sp_home": "Hong Kong FC",
       "sp_away": "Hong Kong Rangers"
     },
@@ -754,7 +884,7 @@
       "teams_slug": "gyeongnam-fc-gimhae-city",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.352692",
+      "cekme_zamani": "2026-05-11T07:20:47.952307",
       "sp_home": "Gyeongnam FC",
       "sp_away": "Gimhae City"
     },
@@ -764,7 +894,7 @@
       "teams_slug": "piast-gliwice-katowice",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.357005",
+      "cekme_zamani": "2026-05-11T07:20:47.956633",
       "sp_home": "Piast Gliwice",
       "sp_away": "Katowice"
     },
@@ -774,7 +904,7 @@
       "teams_slug": "warta-poznan-sandecja-nowy-sacz",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.361399",
+      "cekme_zamani": "2026-05-11T07:20:47.960920",
       "sp_home": "Warta Poznan",
       "sp_away": "Sandecja Nowy Sacz"
     },
@@ -784,7 +914,7 @@
       "teams_slug": "hellas-verona-como",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.365663",
+      "cekme_zamani": "2026-05-11T07:20:47.965584",
       "sp_home": "Hellas Verona",
       "sp_away": "Como"
     },
@@ -794,7 +924,7 @@
       "teams_slug": "celtic-rangers",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.369761",
+      "cekme_zamani": "2026-05-11T07:20:47.970022",
       "sp_home": "Celtic",
       "sp_away": "Rangers"
     },
@@ -804,7 +934,7 @@
       "teams_slug": "ho-chi-minh-song-lam-nghe-an",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.374268",
+      "cekme_zamani": "2026-05-11T07:20:47.974471",
       "sp_home": "Ho Chi Minh",
       "sp_away": "Song Lam Nghe An"
     },
@@ -814,7 +944,7 @@
       "teams_slug": "hong-linh-ha-tinh-the-cong-football-club",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.378600",
+      "cekme_zamani": "2026-05-11T07:20:47.979320",
       "sp_home": "Hong Linh Ha Tinh",
       "sp_away": "The Cong Football Club"
     },
@@ -824,7 +954,7 @@
       "teams_slug": "taipower-taichung-futuro",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.383129",
+      "cekme_zamani": "2026-05-11T07:20:47.983854",
       "sp_home": "Taipower",
       "sp_away": "Taichung Futuro"
     },
@@ -834,7 +964,7 @@
       "teams_slug": "spartak-varna-slavia-sofia",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.387312",
+      "cekme_zamani": "2026-05-11T07:20:47.988399",
       "sp_home": "Spartak Varna",
       "sp_away": "Slavia Sofia"
     },
@@ -844,7 +974,7 @@
       "teams_slug": "suduva-zalgiris-vilnius",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.391932",
+      "cekme_zamani": "2026-05-11T07:20:47.992885",
       "sp_home": "Suduva",
       "sp_away": "Zalgiris Vilnius"
     },
@@ -854,7 +984,7 @@
       "teams_slug": "gent-anderlecht",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.396346",
+      "cekme_zamani": "2026-05-11T07:20:47.997625",
       "sp_home": "Gent",
       "sp_away": "Anderlecht"
     },
@@ -864,7 +994,7 @@
       "teams_slug": "fortuna-dusseldorf-elversberg",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.400789",
+      "cekme_zamani": "2026-05-11T07:20:48.001906",
       "sp_home": "Fortuna Düsseldorf",
       "sp_away": "Elversberg"
     },
@@ -874,7 +1004,7 @@
       "teams_slug": "hertha-berlin-greuther-furth",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.405449",
+      "cekme_zamani": "2026-05-11T07:20:48.006148",
       "sp_home": "Hertha Berlin",
       "sp_away": "Greuther Fürth"
     },
@@ -884,7 +1014,7 @@
       "teams_slug": "preussen-munster-darmstadt-98",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.409686",
+      "cekme_zamani": "2026-05-11T07:20:48.010812",
       "sp_home": "Preussen Münster",
       "sp_away": "Darmstadt 98"
     },
@@ -894,7 +1024,7 @@
       "teams_slug": "nomme-jk-kalju-fc-flora-tallinn",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.413946",
+      "cekme_zamani": "2026-05-11T07:20:48.015325",
       "sp_home": "Nomme JK Kalju",
       "sp_away": "FC Flora Tallinn"
     },
@@ -904,7 +1034,7 @@
       "teams_slug": "dongguan-guanlian-suzhou-dongwu",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.418278",
+      "cekme_zamani": "2026-05-11T07:20:48.019759",
       "sp_home": "Dongguan Guanlian",
       "sp_away": "Suzhou Dongwu"
     },
@@ -914,7 +1044,7 @@
       "teams_slug": "nantong-zhiyun-wuxi-wugou",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.422924",
+      "cekme_zamani": "2026-05-11T07:20:48.024193",
       "sp_home": "Nantong Zhiyun",
       "sp_away": "Wuxi Wugou"
     },
@@ -924,7 +1054,7 @@
       "teams_slug": "hougang-united-tampines-rovers",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.427107",
+      "cekme_zamani": "2026-05-11T07:20:48.028609",
       "sp_home": "Hougang United",
       "sp_away": "Tampines Rovers"
     },
@@ -934,7 +1064,7 @@
       "teams_slug": "zhejiang-professional-fc-tianjin-jinmen-tiger",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.431353",
+      "cekme_zamani": "2026-05-11T07:20:48.032936",
       "sp_home": "Zhejiang Professional F.C",
       "sp_away": "Tianjin Jinmen Tiger"
     },
@@ -944,7 +1074,7 @@
       "teams_slug": "mallorca-villareal",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.436208",
+      "cekme_zamani": "2026-05-11T07:20:48.037216",
       "sp_home": "Mallorca",
       "sp_away": "Villareal"
     },
@@ -954,7 +1084,7 @@
       "teams_slug": "fc-nordsjaelland-midtjylland",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.440653",
+      "cekme_zamani": "2026-05-11T07:20:48.042007",
       "sp_home": "FC Nordsjaelland",
       "sp_away": "Midtjylland"
     },
@@ -964,7 +1094,7 @@
       "teams_slug": "lugano-st-gallen",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.445034",
+      "cekme_zamani": "2026-05-11T07:20:48.046651",
       "sp_home": "Lugano",
       "sp_away": "St. Gallen"
     },
@@ -974,7 +1104,7 @@
       "teams_slug": "fc-lahti-ifk-mariehamn",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.449475",
+      "cekme_zamani": "2026-05-11T07:20:48.051027",
       "sp_home": "FC Lahti",
       "sp_away": "IFK Mariehamn"
     },
@@ -984,7 +1114,7 @@
       "teams_slug": "aik-djurgarden",
       "skor1": 2,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:20:49.453962",
+      "cekme_zamani": "2026-05-11T07:20:48.055516",
       "sp_home": "İSÇ1",
       "sp_away": "Djurgarden"
     },
@@ -994,7 +1124,7 @@
       "teams_slug": "zenit-st-petersburg-fc-sochi",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.458345",
+      "cekme_zamani": "2026-05-11T07:20:48.060932",
       "sp_home": "Zenit St. Petersburg",
       "sp_away": "FC Sochi"
     },
@@ -1004,7 +1134,7 @@
       "teams_slug": "fc-andorra-las-palmas",
       "skor1": 5,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.462812",
+      "cekme_zamani": "2026-05-11T07:20:48.065552",
       "sp_home": "FC Andorra",
       "sp_away": "Las Palmas"
     },
@@ -1014,7 +1144,7 @@
       "teams_slug": "aktobe-kaisar",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.467397",
+      "cekme_zamani": "2026-05-11T07:20:48.070161",
       "sp_home": "Aktobe",
       "sp_away": "Kaisar"
     },
@@ -1024,7 +1154,7 @@
       "teams_slug": "cong-an-nhan-dan-nam-dinh-fc",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.471592",
+      "cekme_zamani": "2026-05-11T07:20:48.074892",
       "sp_home": "Cong An Nhan Dan",
       "sp_away": "Nam Dinh FC"
     },
@@ -1034,7 +1164,7 @@
       "teams_slug": "rosenborg-lillestrom",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.475886",
+      "cekme_zamani": "2026-05-11T07:20:48.079425",
       "sp_home": "Rosenborg",
       "sp_away": "Lilleström"
     },
@@ -1044,7 +1174,7 @@
       "teams_slug": "tychy-71-ruch-chorzow",
       "skor1": 0,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:20:49.480100",
+      "cekme_zamani": "2026-05-11T07:20:48.084107",
       "sp_home": "Tychy 71",
       "sp_away": "Ruch Chorzow"
     },
@@ -1054,7 +1184,7 @@
       "teams_slug": "banik-ostrava-ii-usti-nad-labem",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.485030",
+      "cekme_zamani": "2026-05-11T07:20:48.088802",
       "sp_home": "Banik Ostrava II",
       "sp_away": "Usti nad Labem"
     },
@@ -1064,7 +1194,7 @@
       "teams_slug": "wisla-plock-motor-lublin",
       "skor1": 0,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:20:49.489609",
+      "cekme_zamani": "2026-05-11T07:20:48.093353",
       "sp_home": "Wisla Plock",
       "sp_away": "Motor Lublin"
     },
@@ -1074,7 +1204,7 @@
       "teams_slug": "burnley-aston-villa",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.494028",
+      "cekme_zamani": "2026-05-11T07:20:48.097595",
       "sp_home": "Burnley",
       "sp_away": "Aston Villa"
     },
@@ -1084,7 +1214,7 @@
       "teams_slug": "crystal-palace-everton",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.498648",
+      "cekme_zamani": "2026-05-11T07:20:48.101979",
       "sp_home": "Crystal Palace",
       "sp_away": "Everton"
     },
@@ -1094,7 +1224,7 @@
       "teams_slug": "nottingham-forest-newcastle-united",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.502921",
+      "cekme_zamani": "2026-05-11T07:20:48.106403",
       "sp_home": "Nottingham Forest",
       "sp_away": "Newcastle United"
     },
@@ -1104,7 +1234,7 @@
       "teams_slug": "cremonese-pisa",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.507514",
+      "cekme_zamani": "2026-05-11T07:20:48.110711",
       "sp_home": "Cremonese",
       "sp_away": "Pisa"
     },
@@ -1114,7 +1244,7 @@
       "teams_slug": "fiorentina-genoa",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.512170",
+      "cekme_zamani": "2026-05-11T07:20:48.115354",
       "sp_home": "Fiorentina",
       "sp_away": "Genoa"
     },
@@ -1124,7 +1254,7 @@
       "teams_slug": "naftan-novopolotsk-bate-borisov",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.516694",
+      "cekme_zamani": "2026-05-11T07:20:48.119850",
       "sp_home": "Naftan Novopolotsk",
       "sp_away": "BATE Borisov"
     },
@@ -1134,7 +1264,7 @@
       "teams_slug": "primorje-mura",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.521060",
+      "cekme_zamani": "2026-05-11T07:20:48.124304",
       "sp_home": "Primorje",
       "sp_away": "Mura"
     },
@@ -1144,7 +1274,7 @@
       "teams_slug": "hamburg-freiburg",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.525365",
+      "cekme_zamani": "2026-05-11T07:20:48.128750",
       "sp_home": "Hamburg",
       "sp_away": "Freiburg"
     },
@@ -1154,7 +1284,7 @@
       "teams_slug": "botev-vratsa-septemvri-sofia",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.530156",
+      "cekme_zamani": "2026-05-11T07:20:48.133399",
       "sp_home": "Botev Vratsa",
       "sp_away": "Septemvri Sofia"
     },
@@ -1164,7 +1294,7 @@
       "teams_slug": "volos-nfc-levadiakos",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.538844",
+      "cekme_zamani": "2026-05-11T07:20:48.142001",
       "sp_home": "Volos NFC",
       "sp_away": "Levadiakos"
     },
@@ -1174,7 +1304,7 @@
       "teams_slug": "royal-antwerp-sporting-charleroi",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.543475",
+      "cekme_zamani": "2026-05-11T07:20:48.146320",
       "sp_home": "Royal Antwerp",
       "sp_away": "Sporting Charleroi"
     },
@@ -1184,7 +1314,7 @@
       "teams_slug": "grimsby-town-salford-city",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.547953",
+      "cekme_zamani": "2026-05-11T07:20:48.150940",
       "sp_home": "Grimsby Town",
       "sp_away": "Salford City"
     },
@@ -1194,7 +1324,7 @@
       "teams_slug": "boreham-wood-rochdale",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.552411",
+      "cekme_zamani": "2026-05-11T07:20:48.155521",
       "sp_home": "Boreham Wood",
       "sp_away": "Rochdale"
     },
@@ -1204,7 +1334,7 @@
       "teams_slug": "osijek-istra-1961",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.556889",
+      "cekme_zamani": "2026-05-11T07:20:48.159993",
       "sp_home": "Osijek",
       "sp_away": "Istra 1961"
     },
@@ -1214,7 +1344,7 @@
       "teams_slug": "eb-streymur-vikingur-gota",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.561982",
+      "cekme_zamani": "2026-05-11T07:20:48.165218",
       "sp_home": "EB Streymur",
       "sp_away": "Vikingur Gota"
     },
@@ -1224,7 +1354,7 @@
       "teams_slug": "banga-gargzdai-transinvest-vilnius",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.566279",
+      "cekme_zamani": "2026-05-11T07:20:48.170114",
       "sp_home": "Banga Gargzdai",
       "sp_away": "Transinvest Vilnius"
     },
@@ -1234,7 +1364,7 @@
       "teams_slug": "budapest-honved-budapest-vasas",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.570896",
+      "cekme_zamani": "2026-05-11T07:20:48.174663",
       "sp_home": "Budapest Honved",
       "sp_away": "Budapest Vasas"
     },
@@ -1244,7 +1374,7 @@
       "teams_slug": "nomme-united-paide-linnameeskond",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.575774",
+      "cekme_zamani": "2026-05-11T07:20:48.179117",
       "sp_home": "Nomme United",
       "sp_away": "Paide Linnameeskond"
     },
@@ -1254,7 +1384,7 @@
       "teams_slug": "silkeborg-fc-copenhagen",
       "skor1": 0,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:20:49.580316",
+      "cekme_zamani": "2026-05-11T07:20:48.183711",
       "sp_home": "Silkeborg",
       "sp_away": "FC Copenhagen"
     },
@@ -1264,7 +1394,7 @@
       "teams_slug": "athletic-bilbao-valencia",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.584711",
+      "cekme_zamani": "2026-05-11T07:20:48.188223",
       "sp_home": "Athletic Bilbao",
       "sp_away": "Valencia"
     },
@@ -1274,7 +1404,7 @@
       "teams_slug": "fc-akhmat-grozny-dinamo-makhachkala",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.589390",
+      "cekme_zamani": "2026-05-11T07:20:48.192674",
       "sp_home": "FC Akhmat Grozny",
       "sp_away": "Dinamo Makhachkala"
     },
@@ -1284,7 +1414,7 @@
       "teams_slug": "leganes-racing-santander",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.594056",
+      "cekme_zamani": "2026-05-11T07:20:48.197166",
       "sp_home": "Leganes",
       "sp_away": "Racing Santander"
     },
@@ -1294,7 +1424,7 @@
       "teams_slug": "sion-thun",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.598458",
+      "cekme_zamani": "2026-05-11T07:20:48.201547",
       "sp_home": "Sion",
       "sp_away": "Thun"
     },
@@ -1304,7 +1434,7 @@
       "teams_slug": "young-boys-basel",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.602838",
+      "cekme_zamani": "2026-05-11T07:20:48.206307",
       "sp_home": "Young Boys",
       "sp_away": "Basel"
     },
@@ -1314,7 +1444,7 @@
       "teams_slug": "viktoria-koln-alemannia-aachen",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.607563",
+      "cekme_zamani": "2026-05-11T07:20:48.211531",
       "sp_home": "Viktoria Köln",
       "sp_away": "Alemannia Aachen"
     },
@@ -1324,7 +1454,7 @@
       "teams_slug": "ajax-utrecht",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.612207",
+      "cekme_zamani": "2026-05-11T07:20:48.216013",
       "sp_home": "Ajax",
       "sp_away": "Utrecht"
     },
@@ -1334,7 +1464,7 @@
       "teams_slug": "excelsior-volendam",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.616489",
+      "cekme_zamani": "2026-05-11T07:20:48.220378",
       "sp_home": "Excelsior",
       "sp_away": "Volendam"
     },
@@ -1344,7 +1474,7 @@
       "teams_slug": "feyenoord-az-alkmaar",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.621094",
+      "cekme_zamani": "2026-05-11T07:20:48.225105",
       "sp_home": "Feyenoord",
       "sp_away": "AZ Alkmaar"
     },
@@ -1354,7 +1484,7 @@
       "teams_slug": "groningen-nec-nijmegen",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.625421",
+      "cekme_zamani": "2026-05-11T07:20:48.230008",
       "sp_home": "Groningen",
       "sp_away": "NEC Nijmegen"
     },
@@ -1364,7 +1494,7 @@
       "teams_slug": "nac-breda-heerenveen",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.629721",
+      "cekme_zamani": "2026-05-11T07:20:48.234443",
       "sp_home": "NAC Breda",
       "sp_away": "Heerenveen"
     },
@@ -1374,7 +1504,7 @@
       "teams_slug": "fortuna-sittard-pec-zwolle",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.634004",
+      "cekme_zamani": "2026-05-11T07:20:48.238983",
       "sp_home": "Fortuna Sittard",
       "sp_away": "PEC Zwolle"
     },
@@ -1384,7 +1514,7 @@
       "teams_slug": "twente-sparta-rotterdam",
       "skor1": 4,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.638847",
+      "cekme_zamani": "2026-05-11T07:20:48.243521",
       "sp_home": "Twente",
       "sp_away": "Sparta Rotterdam"
     },
@@ -1394,7 +1524,7 @@
       "teams_slug": "kfum-oslo-viking",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.643245",
+      "cekme_zamani": "2026-05-11T07:20:48.247905",
       "sp_home": "KFUM Oslo",
       "sp_away": "Viking"
     },
@@ -1404,7 +1534,7 @@
       "teams_slug": "sandefjord-kristiansund-bk",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.647643",
+      "cekme_zamani": "2026-05-11T07:20:48.252287",
       "sp_home": "Sandefjord",
       "sp_away": "Kristiansund BK"
     },
@@ -1414,7 +1544,7 @@
       "teams_slug": "tromso-molde",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.652262",
+      "cekme_zamani": "2026-05-11T07:20:48.257053",
       "sp_home": "Tromsö",
       "sp_away": "Molde"
     },
@@ -1424,7 +1554,7 @@
       "teams_slug": "hartberg-sturm-graz",
       "skor1": 2,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:20:49.656707",
+      "cekme_zamani": "2026-05-11T07:20:48.262215",
       "sp_home": "Hartberg",
       "sp_away": "Sturm Graz"
     },
@@ -1434,7 +1564,7 @@
       "teams_slug": "lask-linz-salzburg",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.661176",
+      "cekme_zamani": "2026-05-11T07:20:48.266755",
       "sp_home": "LASK Linz",
       "sp_away": "Salzburg"
     },
@@ -1444,7 +1574,7 @@
       "teams_slug": "rapid-wien-austria-wien",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.665528",
+      "cekme_zamani": "2026-05-11T07:20:48.271470",
       "sp_home": "Rapid Wien",
       "sp_away": "Austria Wien"
     },
@@ -1454,7 +1584,7 @@
       "teams_slug": "asane-stromsgodset",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.671136",
+      "cekme_zamani": "2026-05-11T07:20:48.279411",
       "sp_home": "Asane",
       "sp_away": "Stromsgodset"
     },
@@ -1464,7 +1594,7 @@
       "teams_slug": "moss-bryne-fk",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.676131",
+      "cekme_zamani": "2026-05-11T07:20:48.285060",
       "sp_home": "Moss",
       "sp_away": "Bryne FK"
     },
@@ -1474,7 +1604,7 @@
       "teams_slug": "raufoss-lyn-oslo",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.680753",
+      "cekme_zamani": "2026-05-11T07:20:48.290926",
       "sp_home": "Raufoss",
       "sp_away": "Lyn Oslo"
     },
@@ -1484,7 +1614,7 @@
       "teams_slug": "sandnes-ulf-stabaek",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.685693",
+      "cekme_zamani": "2026-05-11T07:20:48.296767",
       "sp_home": "Sandnes Ulf",
       "sp_away": "Stabaek"
     },
@@ -1494,7 +1624,7 @@
       "teams_slug": "sogndal-haugesund",
       "skor1": 5,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.690423",
+      "cekme_zamani": "2026-05-11T07:20:48.301855",
       "sp_home": "Sogndal",
       "sp_away": "Haugesund"
     },
@@ -1504,7 +1634,7 @@
       "teams_slug": "strommen-hodd",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.695244",
+      "cekme_zamani": "2026-05-11T07:20:48.307881",
       "sp_home": "Strommen",
       "sp_away": "Hodd"
     },
@@ -1514,7 +1644,7 @@
       "teams_slug": "pogon-siedlce-stal-rzeszow",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.699869",
+      "cekme_zamani": "2026-05-11T07:20:48.313972",
       "sp_home": "Pogon Siedlce",
       "sp_away": "Stal Rzeszow"
     },
@@ -1524,7 +1654,7 @@
       "teams_slug": "iberia-1999-torpedo-kutaisi",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.704147",
+      "cekme_zamani": "2026-05-11T07:20:48.319741",
       "sp_home": "Iberia 1999",
       "sp_away": "Torpedo Kutaisi"
     },
@@ -1534,7 +1664,7 @@
       "teams_slug": "petrocub-csf-balti",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.708542",
+      "cekme_zamani": "2026-05-11T07:20:48.325615",
       "sp_home": "Petrocub",
       "sp_away": "CSF Balti"
     },
@@ -1544,7 +1674,7 @@
       "teams_slug": "zbrojovka-brno-graffin-vlasim",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.713016",
+      "cekme_zamani": "2026-05-11T07:20:48.331236",
       "sp_home": "Zbrojovka Brno",
       "sp_away": "Graffin Vlasim"
     },
@@ -1554,7 +1684,7 @@
       "teams_slug": "zaglebie-sosnowiec-hutnik-krakow",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.717392",
+      "cekme_zamani": "2026-05-11T07:20:48.336313",
       "sp_home": "Zaglebie Sosnowiec",
       "sp_away": "Hutnik Krakow"
     },
@@ -1564,7 +1694,7 @@
       "teams_slug": "ajka-szeged-csanad-ga",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.721818",
+      "cekme_zamani": "2026-05-11T07:20:48.342127",
       "sp_home": "Ajka",
       "sp_away": "Szeged-Csanad GA"
     },
@@ -1574,7 +1704,7 @@
       "teams_slug": "kecskemeti-te-mezokovesd-zsory",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.726163",
+      "cekme_zamani": "2026-05-11T07:20:48.348259",
       "sp_home": "Kecskemeti TE",
       "sp_away": "Mezokövesd-Zsory"
     },
@@ -1584,7 +1714,7 @@
       "teams_slug": "fk-kosice-komarno",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.730758",
+      "cekme_zamani": "2026-05-11T07:20:48.354251",
       "sp_home": "FK Kosice",
       "sp_away": "Komarno"
     },
@@ -1594,7 +1724,7 @@
       "teams_slug": "krsko-krka",
       "skor1": 0,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:20:49.735301",
+      "cekme_zamani": "2026-05-11T07:20:48.360178",
       "sp_home": "Krsko",
       "sp_away": "Krka"
     },
@@ -1604,7 +1734,7 @@
       "teams_slug": "es-tunis-club-africain",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.739659",
+      "cekme_zamani": "2026-05-11T07:20:48.365903",
       "sp_home": "ES Tunis",
       "sp_away": "Club Africain"
     },
@@ -1614,7 +1744,7 @@
       "teams_slug": "al-ain-al-dhafra",
       "skor1": 5,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.743952",
+      "cekme_zamani": "2026-05-11T07:20:48.371471",
       "sp_home": "Al Ain",
       "sp_away": "Al Dhafra"
     },
@@ -1624,7 +1754,7 @@
       "teams_slug": "al-bataeh-al-sharjah",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.748296",
+      "cekme_zamani": "2026-05-11T07:20:48.376547",
       "sp_home": "Al Bataeh",
       "sp_away": "Al Sharjah"
     },
@@ -1634,7 +1764,7 @@
       "teams_slug": "banni-yas-al-ahli-fc-dubai",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.752550",
+      "cekme_zamani": "2026-05-11T07:20:48.381601",
       "sp_home": "Banni Yas",
       "sp_away": "Al Ahli FC Dubai"
     },
@@ -1644,7 +1774,7 @@
       "teams_slug": "dibba-al-fujairah-ajman",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.756676",
+      "cekme_zamani": "2026-05-11T07:20:48.387008",
       "sp_home": "Dibba Al Fujairah",
       "sp_away": "Ajman"
     },
@@ -1654,7 +1784,7 @@
       "teams_slug": "west-ham-united-arsenal",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.761438",
+      "cekme_zamani": "2026-05-11T07:20:48.392640",
       "sp_home": "West Ham United",
       "sp_away": "Arsenal"
     },
@@ -1664,7 +1794,7 @@
       "teams_slug": "koln-heidenheim",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.765911",
+      "cekme_zamani": "2026-05-11T07:20:48.397742",
       "sp_home": "Köln",
       "sp_away": "Heidenheim"
     },
@@ -1674,7 +1804,7 @@
       "teams_slug": "zeljeznicar-sloga-doboj",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.770727",
+      "cekme_zamani": "2026-05-11T07:20:48.402867",
       "sp_home": "Zeljeznicar",
       "sp_away": "Sloga Doboj"
     },
@@ -1684,7 +1814,7 @@
       "teams_slug": "sekhukhune-united-kaizer-chiefs",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.775748",
+      "cekme_zamani": "2026-05-11T07:20:48.408279",
       "sp_home": "Sekhukhune United",
       "sp_away": "Kaizer Chiefs"
     },
@@ -1694,7 +1824,7 @@
       "teams_slug": "jadran-dekani-nd-slovan",
       "skor1": 5,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.780169",
+      "cekme_zamani": "2026-05-11T07:20:48.413692",
       "sp_home": "Jadran Dekani",
       "sp_away": "ND Slovan"
     },
@@ -1704,7 +1834,7 @@
       "teams_slug": "nafta-beltinci",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.784760",
+      "cekme_zamani": "2026-05-11T07:20:48.418631",
       "sp_home": "Nafta",
       "sp_away": "Beltinci"
     },
@@ -1714,7 +1844,7 @@
       "teams_slug": "brondby-agf-aarhus",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.789537",
+      "cekme_zamani": "2026-05-11T07:20:48.423920",
       "sp_home": "Brondby",
       "sp_away": "AGF Aarhus"
     },
@@ -1724,7 +1854,7 @@
       "teams_slug": "parma-as-roma",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.794748",
+      "cekme_zamani": "2026-05-11T07:20:48.429955",
       "sp_home": "Parma",
       "sp_away": "AS Roma"
     },
@@ -1734,7 +1864,7 @@
       "teams_slug": "dinamo-bucuresti-fc-arges",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.800412",
+      "cekme_zamani": "2026-05-11T07:20:48.436011",
       "sp_home": "Dinamo Bucuresti",
       "sp_away": "FC-Arges"
     },
@@ -1744,7 +1874,7 @@
       "teams_slug": "fk-panevezys-kauno-zalgiris",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.805318",
+      "cekme_zamani": "2026-05-11T07:20:48.441898",
       "sp_home": "FK Panevezys",
       "sp_away": "Kauno Zalgiris"
     },
@@ -1754,7 +1884,7 @@
       "teams_slug": "mnd-tabor-sezana-triglav-kranj",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.810392",
+      "cekme_zamani": "2026-05-11T07:20:48.448420",
       "sp_home": "MND Tabor Sezana",
       "sp_away": "Triglav Kranj"
     },
@@ -1764,7 +1894,7 @@
       "teams_slug": "ittihad-tanger-difaa-el-jadida",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.815316",
+      "cekme_zamani": "2026-05-11T07:20:48.453713",
       "sp_home": "Ittihad Tanger",
       "sp_away": "Difaa El Jadida"
     },
@@ -1774,7 +1904,7 @@
       "teams_slug": "al-riyadh-al-fateh",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.820329",
+      "cekme_zamani": "2026-05-11T07:20:48.458943",
       "sp_home": "Al Riyadh",
       "sp_away": "Al Fateh"
     },
@@ -1784,7 +1914,7 @@
       "teams_slug": "slaven-belupo-gorica",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.825428",
+      "cekme_zamani": "2026-05-11T07:20:48.466133",
       "sp_home": "Slaven Belupo",
       "sp_away": "Gorica"
     },
@@ -1794,7 +1924,7 @@
       "teams_slug": "07-vestur-sorvagur-b68-toftir",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.830506",
+      "cekme_zamani": "2026-05-11T07:20:48.472908",
       "sp_home": "07 Vestur Sorvagur",
       "sp_away": "B68 Toftir"
     },
@@ -1804,7 +1934,7 @@
       "teams_slug": "skala-ab-argir",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.835261",
+      "cekme_zamani": "2026-05-11T07:20:48.478065",
       "sp_home": "Skala",
       "sp_away": "AB Argir"
     },
@@ -1814,7 +1944,7 @@
       "teams_slug": "real-oviedo-getafe",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.840339",
+      "cekme_zamani": "2026-05-11T07:20:48.483131",
       "sp_home": "Real Oviedo",
       "sp_away": "Getafe"
     },
@@ -1824,7 +1954,7 @@
       "teams_slug": "union-saint-gilloise-mechelen",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.845622",
+      "cekme_zamani": "2026-05-11T07:20:48.488037",
       "sp_home": "Union Saint-Gilloise",
       "sp_away": "Mechelen"
     },
@@ -1834,7 +1964,7 @@
       "teams_slug": "aek-atina-panathinaikos",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.850739",
+      "cekme_zamani": "2026-05-11T07:20:48.494323",
       "sp_home": "AEK Atina",
       "sp_away": "Panathinaikos"
     },
@@ -1844,7 +1974,7 @@
       "teams_slug": "lokomotiv-moscow-baltika-kaliningrad",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.860774",
+      "cekme_zamani": "2026-05-11T07:20:48.505010",
       "sp_home": "Lokomotiv Moscow",
       "sp_away": "Baltika Kaliningrad"
     },
@@ -1854,7 +1984,7 @@
       "teams_slug": "cordoba-granada",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.865822",
+      "cekme_zamani": "2026-05-11T07:20:48.511194",
       "sp_home": "Cordoba",
       "sp_away": "Granada"
     },
@@ -1864,7 +1994,7 @@
       "teams_slug": "mirandes-eibar",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.871032",
+      "cekme_zamani": "2026-05-11T07:20:48.517080",
       "sp_home": "Mirandes",
       "sp_away": "Eibar"
     },
@@ -1874,7 +2004,7 @@
       "teams_slug": "jablonec-hradec-kralove",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.875456",
+      "cekme_zamani": "2026-05-11T07:20:48.523861",
       "sp_home": "Jablonec",
       "sp_away": "Hradec Kralove"
     },
@@ -1884,7 +2014,7 @@
       "teams_slug": "ka-akureyri-ib-vestmannaeyjar",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.879824",
+      "cekme_zamani": "2026-05-11T07:20:48.530656",
       "sp_home": "KA Akureyri",
       "sp_away": "İB Vestmannaeyjar"
     },
@@ -1894,7 +2024,7 @@
       "teams_slug": "imt-novi-beograd-radnicki-1923-kragujevac",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.885446",
+      "cekme_zamani": "2026-05-11T07:20:48.536591",
       "sp_home": "IMT Novi Beograd",
       "sp_away": "Radnicki 1923 Kragujevac"
     },
@@ -1904,7 +2034,7 @@
       "teams_slug": "radnicki-nis-mladost-lucani",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.890437",
+      "cekme_zamani": "2026-05-11T07:20:48.542439",
       "sp_home": "Radnicki Nis",
       "sp_away": "Mladost Lucani"
     },
@@ -1914,7 +2044,7 @@
       "teams_slug": "backa-topola-javor-ivanjica",
       "skor1": 6,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.894845",
+      "cekme_zamani": "2026-05-11T07:20:48.547806",
       "sp_home": "Backa Topola",
       "sp_away": "Javor Ivanjica"
     },
@@ -1924,7 +2054,7 @@
       "teams_slug": "afs-vila-das-aves-porto",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.899344",
+      "cekme_zamani": "2026-05-11T07:20:48.553969",
       "sp_home": "AFS Vila das Aves",
       "sp_away": "Porto"
     },
@@ -1934,7 +2064,7 @@
       "teams_slug": "chesterfield-notts-county",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.903893",
+      "cekme_zamani": "2026-05-11T07:20:48.560100",
       "sp_home": "Chesterfield",
       "sp_away": "Notts County"
     },
@@ -1944,7 +2074,7 @@
       "teams_slug": "dinamo-batumi-samgurali",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.908274",
+      "cekme_zamani": "2026-05-11T07:20:48.565877",
       "sp_home": "Dinamo Batumi",
       "sp_away": "Samgurali"
     },
@@ -1954,7 +2084,7 @@
       "teams_slug": "sheriff-tiraspol-zimbru",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.912839",
+      "cekme_zamani": "2026-05-11T07:20:48.572608",
       "sp_home": "Sheriff Tiraspol",
       "sp_away": "Zimbru"
     },
@@ -1964,7 +2094,7 @@
       "teams_slug": "dinamo-brest-dinamo-minsk",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.917775",
+      "cekme_zamani": "2026-05-11T07:20:48.577792",
       "sp_home": "Dinamo Brest",
       "sp_away": "Dinamo Minsk"
     },
@@ -1974,7 +2104,7 @@
       "teams_slug": "csakvari-tk-soroksar",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.922616",
+      "cekme_zamani": "2026-05-11T07:20:48.583290",
       "sp_home": "Csakvari TK",
       "sp_away": "Soroksar"
     },
@@ -1984,7 +2114,7 @@
       "teams_slug": "spartak-trnava-zilina",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.927610",
+      "cekme_zamani": "2026-05-11T07:20:48.588284",
       "sp_home": "Spartak Trnava",
       "sp_away": "Zilina"
     },
@@ -1994,7 +2124,7 @@
       "teams_slug": "mainz-05-union-berlin",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.932422",
+      "cekme_zamani": "2026-05-11T07:20:48.593628",
       "sp_home": "Mainz 05",
       "sp_away": "Union Berlin"
     },
@@ -2004,7 +2134,7 @@
       "teams_slug": "hoffenheim-ii-saarbrucken",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:20:49.937192",
+      "cekme_zamani": "2026-05-11T07:20:48.599756",
       "sp_home": "Hoffenheim II",
       "sp_away": "Saarbrücken"
     },
@@ -2014,7 +2144,7 @@
       "teams_slug": "unia-skierniewice-resovia-rzeszow",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.942321",
+      "cekme_zamani": "2026-05-11T07:20:48.605236",
       "sp_home": "Unia Skierniewice",
       "sp_away": "Resovia Rzeszow"
     },
@@ -2024,7 +2154,7 @@
       "teams_slug": "rosario-central-independiente",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.947317",
+      "cekme_zamani": "2026-05-11T07:20:48.610088",
       "sp_home": "Rosario Central",
       "sp_away": "Independiente"
     },
@@ -2034,7 +2164,7 @@
       "teams_slug": "al-ittihad-jeddah-damak",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.952120",
+      "cekme_zamani": "2026-05-11T07:20:48.615232",
       "sp_home": "Al Ittihad-Jeddah",
       "sp_away": "Damak"
     },
@@ -2044,7 +2174,7 @@
       "teams_slug": "codm-meknes-rsb-berkane",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.956720",
+      "cekme_zamani": "2026-05-11T07:20:48.621004",
       "sp_home": "CODM Meknes",
       "sp_away": "RSB Berkane"
     },
@@ -2054,7 +2184,7 @@
       "teams_slug": "union-touarga-maghreb-fes",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.961377",
+      "cekme_zamani": "2026-05-11T07:20:48.625959",
       "sp_home": "Union Touarga",
       "sp_away": "Maghreb Fes"
     },
@@ -2064,7 +2194,7 @@
       "teams_slug": "ac-milan-atalanta",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:49.966037",
+      "cekme_zamani": "2026-05-11T07:20:48.631327",
       "sp_home": "AC Milan",
       "sp_away": "Atalanta"
     },
@@ -2074,7 +2204,7 @@
       "teams_slug": "barcelona-real-madrid",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.970607",
+      "cekme_zamani": "2026-05-11T07:20:48.636898",
       "sp_home": "Barcelona",
       "sp_away": "Real Madrid"
     },
@@ -2084,7 +2214,7 @@
       "teams_slug": "angers-rc-strasbourg",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.975478",
+      "cekme_zamani": "2026-05-11T07:20:48.642420",
       "sp_home": "Angers",
       "sp_away": "RC Strasbourg"
     },
@@ -2094,7 +2224,7 @@
       "teams_slug": "auxerre-nice",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.979830",
+      "cekme_zamani": "2026-05-11T07:20:48.648298",
       "sp_home": "Auxerre",
       "sp_away": "Nice"
     },
@@ -2104,7 +2234,7 @@
       "teams_slug": "le-havre-marsilya",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.984291",
+      "cekme_zamani": "2026-05-11T07:20:48.653543",
       "sp_home": "Le Havre",
       "sp_away": "Marsilya"
     },
@@ -2114,7 +2244,7 @@
       "teams_slug": "metz-lorient",
       "skor1": 0,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:20:49.988931",
+      "cekme_zamani": "2026-05-11T07:20:48.658443",
       "sp_home": "Metz",
       "sp_away": "Lorient"
     },
@@ -2124,7 +2254,7 @@
       "teams_slug": "monaco-lille",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:49.993830",
+      "cekme_zamani": "2026-05-11T07:20:48.663109",
       "sp_home": "Monaco",
       "sp_away": "Lille"
     },
@@ -2134,7 +2264,7 @@
       "teams_slug": "paris-sg-brest",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:49.997995",
+      "cekme_zamani": "2026-05-11T07:20:48.668302",
       "sp_home": "Paris SG",
       "sp_away": "Brest"
     },
@@ -2144,7 +2274,7 @@
       "teams_slug": "rennes-paris-fc",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.002276",
+      "cekme_zamani": "2026-05-11T07:20:48.673386",
       "sp_home": "Rennes",
       "sp_away": "Paris FC"
     },
@@ -2154,7 +2284,7 @@
       "teams_slug": "toulouse-lyon",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.006943",
+      "cekme_zamani": "2026-05-11T07:20:48.678159",
       "sp_home": "Toulouse",
       "sp_away": "Lyon"
     },
@@ -2164,7 +2294,7 @@
       "teams_slug": "atletico-mineiro-botafogo",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.011155",
+      "cekme_zamani": "2026-05-11T07:20:48.683095",
       "sp_home": "Atletico Mineiro",
       "sp_away": "Botafogo"
     },
@@ -2174,7 +2304,7 @@
       "teams_slug": "nautico-america-mineiro",
       "skor1": 4,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:50.015515",
+      "cekme_zamani": "2026-05-11T07:20:48.687695",
       "sp_home": "Nautico",
       "sp_away": "America Mineiro"
     },
@@ -2184,7 +2314,7 @@
       "teams_slug": "independiente-petroleros-always-ready",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:50.020030",
+      "cekme_zamani": "2026-05-11T07:20:48.692978",
       "sp_home": "Independiente Petroleros",
       "sp_away": "Always Ready"
     },
@@ -2194,7 +2324,7 @@
       "teams_slug": "ca-torque-progreso",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.024390",
+      "cekme_zamani": "2026-05-11T07:20:48.697940",
       "sp_home": "CA Torque",
       "sp_away": "Progreso"
     },
@@ -2204,7 +2334,7 @@
       "teams_slug": "alverca-estoril-praia",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.028384",
+      "cekme_zamani": "2026-05-11T07:20:48.702874",
       "sp_home": "Alverca",
       "sp_away": "Estoril Praia"
     },
@@ -2214,7 +2344,7 @@
       "teams_slug": "estudiantes-racing-club",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.032681",
+      "cekme_zamani": "2026-05-11T07:20:48.708161",
       "sp_home": "Estudiantes",
       "sp_away": "Racing Club"
     },
@@ -2224,7 +2354,7 @@
       "teams_slug": "hassania-agadir-far-rabat",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:20:50.037424",
+      "cekme_zamani": "2026-05-11T07:20:48.712740",
       "sp_home": "Hassania Agadir",
       "sp_away": "FAR Rabat"
     },
@@ -2234,7 +2364,7 @@
       "teams_slug": "comerciantes-unidos-melgar",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.041736",
+      "cekme_zamani": "2026-05-11T07:20:48.717481",
       "sp_home": "Comerciantes Unidos",
       "sp_away": "Melgar"
     },
@@ -2244,7 +2374,7 @@
       "teams_slug": "new-york-city-fc-columbus-crew",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:50.046020",
+      "cekme_zamani": "2026-05-11T07:20:48.722195",
       "sp_home": "New York City FC",
       "sp_away": "Columbus Crew"
     },
@@ -2254,7 +2384,7 @@
       "teams_slug": "emelec-libertad",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:20:50.050372",
+      "cekme_zamani": "2026-05-11T07:20:48.727081",
       "sp_home": "Emelec",
       "sp_away": "Libertad"
     },
@@ -2264,7 +2394,7 @@
       "teams_slug": "aguilas-doradas-jaguares-de-cordoba",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:50.055160",
+      "cekme_zamani": "2026-05-11T07:20:48.731872",
       "sp_home": "Aguilas Doradas",
       "sp_away": "Jaguares De Cordoba"
     },
@@ -2272,9 +2402,9 @@
       "spordb_match_id": "4055435",
       "tarih": "2026-05-10",
       "teams_slug": "sportivo-san-lorenzo-club-olimpia",
-      "skor1": 0,
+      "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:20:50.059327",
+      "cekme_zamani": "2026-05-11T07:20:48.736683",
       "sp_home": "Sportivo San Lorenzo",
       "sp_away": "Club Olimpia"
     },
@@ -2284,7 +2414,7 @@
       "teams_slug": "montevideo-wanderers-liverpool-montevideo",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.474412",
+      "cekme_zamani": "2026-05-11T07:21:02.161653",
       "sp_home": "Montevideo Wanderers",
       "sp_away": "Liverpool (Montevideo)"
     },
@@ -2294,7 +2424,7 @@
       "teams_slug": "lexington-sporting-monterey-bay",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.479082",
+      "cekme_zamani": "2026-05-11T07:21:02.167888",
       "sp_home": "Lexington Sporting",
       "sp_away": "Monterey Bay"
     },
@@ -2304,7 +2434,7 @@
       "teams_slug": "colorado-springs-orange-county-sc",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.484006",
+      "cekme_zamani": "2026-05-11T07:21:02.172576",
       "sp_home": "Colorado Springs",
       "sp_away": "Orange County SC"
     },
@@ -2314,7 +2444,7 @@
       "teams_slug": "mito-hollyhock-urawa-red-diamonds",
       "skor1": 1,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:21:03.488507",
+      "cekme_zamani": "2026-05-11T07:21:02.177422",
       "sp_home": "Mito Hollyhock",
       "sp_away": "Urawa Red Diamonds"
     },
@@ -2324,7 +2454,7 @@
       "teams_slug": "osaka-imabari",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.492793",
+      "cekme_zamani": "2026-05-11T07:21:02.182025",
       "sp_home": "Osaka",
       "sp_away": "Imabari"
     },
@@ -2334,7 +2464,7 @@
       "teams_slug": "consadole-sapporo-omiya-ardija",
       "skor1": 4,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.497223",
+      "cekme_zamani": "2026-05-11T07:21:02.186547",
       "sp_home": "Consadole Sapporo",
       "sp_away": "Omiya Ardija"
     },
@@ -2344,7 +2474,7 @@
       "teams_slug": "iwaki-ventforet-kofu",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.501482",
+      "cekme_zamani": "2026-05-11T07:21:02.191071",
       "sp_home": "Iwaki",
       "sp_away": "Ventforet Kofu"
     },
@@ -2354,7 +2484,7 @@
       "teams_slug": "renofa-yamaguchi-tegevajaro-miyazaki",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.505731",
+      "cekme_zamani": "2026-05-11T07:21:02.196098",
       "sp_home": "Renofa Yamaguchi",
       "sp_away": "Tegevajaro Miyazaki"
     },
@@ -2364,7 +2494,7 @@
       "teams_slug": "thespa-kusatsu-tochigi-city",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.509857",
+      "cekme_zamani": "2026-05-11T07:21:02.200479",
       "sp_home": "Thespa Kusatsu",
       "sp_away": "Tochigi City"
     },
@@ -2374,7 +2504,7 @@
       "teams_slug": "jeju-united-fc-seoul",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.514337",
+      "cekme_zamani": "2026-05-11T07:21:02.205092",
       "sp_home": "Jeju United",
       "sp_away": "FC Seoul"
     },
@@ -2384,7 +2514,7 @@
       "teams_slug": "busan-transportation-mokpo-city",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.518604",
+      "cekme_zamani": "2026-05-11T07:21:02.210135",
       "sp_home": "Busan Transportation",
       "sp_away": "Mokpo City"
     },
@@ -2394,7 +2524,7 @@
       "teams_slug": "chuncheon-citizen-pocheon",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.522881",
+      "cekme_zamani": "2026-05-11T07:21:02.214572",
       "sp_home": "Chuncheon Citizen",
       "sp_away": "Pocheon"
     },
@@ -2404,7 +2534,7 @@
       "teams_slug": "asan-mugunghwa-seoul-e-land",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.527351",
+      "cekme_zamani": "2026-05-11T07:21:02.218902",
       "sp_home": "Asan Mugunghwa",
       "sp_away": "Seoul E-Land"
     },
@@ -2414,7 +2544,7 @@
       "teams_slug": "hwaseong-suwon-fc",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.531433",
+      "cekme_zamani": "2026-05-11T07:21:02.223440",
       "sp_home": "Hwaseong",
       "sp_away": "Suwon FC"
     },
@@ -2424,7 +2554,7 @@
       "teams_slug": "cerezo-osaka-v-varen-nagasaki",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.535385",
+      "cekme_zamani": "2026-05-11T07:21:02.228219",
       "sp_home": "Cerezo Osaka",
       "sp_away": "V-Varen Nagasaki"
     },
@@ -2434,7 +2564,7 @@
       "teams_slug": "yangpyeong-changwon-city",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.539503",
+      "cekme_zamani": "2026-05-11T07:21:02.232472",
       "sp_home": "Yangpyeong",
       "sp_away": "Changwon City"
     },
@@ -2444,7 +2574,7 @@
       "teams_slug": "gimcheon-sangju-sangmu-incheon-united",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.543893",
+      "cekme_zamani": "2026-05-11T07:21:02.236682",
       "sp_home": "Gimcheon Sangju Sangmu",
       "sp_away": "Incheon United"
     },
@@ -2454,7 +2584,7 @@
       "teams_slug": "gwangju-gangwon",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.548110",
+      "cekme_zamani": "2026-05-11T07:21:02.241564",
       "sp_home": "Gwangju",
       "sp_away": "Gangwon"
     },
@@ -2464,7 +2594,7 @@
       "teams_slug": "suwon-bluewings-daegu",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.552345",
+      "cekme_zamani": "2026-05-11T07:21:02.246022",
       "sp_home": "Suwon Bluewings",
       "sp_away": "Daegu"
     },
@@ -2474,7 +2604,7 @@
       "teams_slug": "ulsan-citizen-siheung-citizen",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.556581",
+      "cekme_zamani": "2026-05-11T07:21:02.250650",
       "sp_home": "Ulsan Citizen",
       "sp_away": "Siheung Citizen"
     },
@@ -2484,7 +2614,7 @@
       "teams_slug": "arema-malang-psm-makassar",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.561063",
+      "cekme_zamani": "2026-05-11T07:21:02.255128",
       "sp_home": "Arema Malang",
       "sp_away": "PSM Makassar"
     },
@@ -2494,7 +2624,7 @@
       "teams_slug": "parceiro-nagano-fc-gifu",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.565402",
+      "cekme_zamani": "2026-05-11T07:21:02.259989",
       "sp_home": "Parceiro Nagano",
       "sp_away": "FC Gifu"
     },
@@ -2504,7 +2634,7 @@
       "teams_slug": "rukh-lviv-veres",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.569711",
+      "cekme_zamani": "2026-05-11T07:21:02.264560",
       "sp_home": "Rukh Lviv",
       "sp_away": "Veres"
     },
@@ -2514,7 +2644,7 @@
       "teams_slug": "okzhetpes-atyrau",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.574296",
+      "cekme_zamani": "2026-05-11T07:21:02.269121",
       "sp_home": "Okzhetpes",
       "sp_away": "Atyrau"
     },
@@ -2524,7 +2654,7 @@
       "teams_slug": "eastern-tai-po",
       "skor1": 2,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:21:03.578849",
+      "cekme_zamani": "2026-05-11T07:21:02.275172",
       "sp_home": "Eastern",
       "sp_away": "Tai Po"
     },
@@ -2534,7 +2664,7 @@
       "teams_slug": "bochum-hannover-96",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.583304",
+      "cekme_zamani": "2026-05-11T07:21:02.279810",
       "sp_home": "Bochum",
       "sp_away": "Hannover 96"
     },
@@ -2544,7 +2674,7 @@
       "teams_slug": "braunschweig-dynamo-dresden",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.587628",
+      "cekme_zamani": "2026-05-11T07:21:02.284280",
       "sp_home": "Braunschweig",
       "sp_away": "Dynamo Dresden"
     },
@@ -2554,7 +2684,7 @@
       "teams_slug": "holstein-kiel-magdeburg",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.592493",
+      "cekme_zamani": "2026-05-11T07:21:02.289052",
       "sp_home": "Holstein Kiel",
       "sp_away": "Magdeburg"
     },
@@ -2564,7 +2694,7 @@
       "teams_slug": "united-nordic-osters",
       "skor1": 4,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.596761",
+      "cekme_zamani": "2026-05-11T07:21:02.293587",
       "sp_home": "United Nordic",
       "sp_away": "Östers"
     },
@@ -2574,7 +2704,7 @@
       "teams_slug": "ik-oddevold-landskrona",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.601142",
+      "cekme_zamani": "2026-05-11T07:21:02.298050",
       "sp_home": "IK Oddevold",
       "sp_away": "Landskrona"
     },
@@ -2584,7 +2714,7 @@
       "teams_slug": "hvidovre-lyngby",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.605674",
+      "cekme_zamani": "2026-05-11T07:21:02.302650",
       "sp_home": "Hvidovre",
       "sp_away": "Lyngby"
     },
@@ -2594,7 +2724,7 @@
       "teams_slug": "naestved-vendsyssel-ff",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.610092",
+      "cekme_zamani": "2026-05-11T07:21:02.307220",
       "sp_home": "Naestved",
       "sp_away": "Vendsyssel FF"
     },
@@ -2604,7 +2734,7 @@
       "teams_slug": "zhetysu-zhenis",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.614402",
+      "cekme_zamani": "2026-05-11T07:21:02.311478",
       "sp_home": "Zhetysu",
       "sp_away": "Zhenis"
     },
@@ -2614,7 +2744,7 @@
       "teams_slug": "slavia-mozyr-fc-minsk",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.618546",
+      "cekme_zamani": "2026-05-11T07:21:02.315718",
       "sp_home": "Slavia Mozyr",
       "sp_away": "FC Minsk"
     },
@@ -2624,7 +2754,7 @@
       "teams_slug": "slask-wroclaw-ii-kalisz",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.623247",
+      "cekme_zamani": "2026-05-11T07:21:02.320530",
       "sp_home": "Slask Wroclaw II",
       "sp_away": "Kalisz"
     },
@@ -2634,7 +2764,7 @@
       "teams_slug": "ttbd-phu-dong-xi-mang-hai-phong",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.627522",
+      "cekme_zamani": "2026-05-11T07:21:02.325036",
       "sp_home": "TTBD Phu Dong",
       "sp_away": "Xi Mang Hai Phong"
     },
@@ -2644,7 +2774,7 @@
       "teams_slug": "thanh-hoa-hoa-phat-hanoi",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.631739",
+      "cekme_zamani": "2026-05-11T07:21:02.329439",
       "sp_home": "Thanh Hoa",
       "sp_away": "Hoa Phat Hanoi"
     },
@@ -2654,7 +2784,7 @@
       "teams_slug": "liverpool-chelsea",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.636089",
+      "cekme_zamani": "2026-05-11T07:21:02.333982",
       "sp_home": "Liverpool",
       "sp_away": "Chelsea"
     },
@@ -2664,7 +2794,7 @@
       "teams_slug": "middlesbrough-southampton",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.640147",
+      "cekme_zamani": "2026-05-11T07:21:02.338609",
       "sp_home": "Middlesbrough",
       "sp_away": "Southampton"
     },
@@ -2674,7 +2804,7 @@
       "teams_slug": "fc-levadia-tallinn-harju-jalgpallikool",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.644449",
+      "cekme_zamani": "2026-05-11T07:21:02.343125",
       "sp_home": "FC Levadia Tallinn",
       "sp_away": "Harju Jalgpallikool"
     },
@@ -2684,7 +2814,7 @@
       "teams_slug": "nanjing-city-meizhou-hakka",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.648617",
+      "cekme_zamani": "2026-05-11T07:21:02.347634",
       "sp_home": "Nanjing City",
       "sp_away": "Meizhou Hakka"
     },
@@ -2694,7 +2824,7 @@
       "teams_slug": "balestier-khalsa-tanjong-pagar-united",
       "skor1": 6,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.653022",
+      "cekme_zamani": "2026-05-11T07:21:02.352330",
       "sp_home": "Balestier Khalsa",
       "sp_away": "Tanjong Pagar United"
     },
@@ -2704,7 +2834,7 @@
       "teams_slug": "young-lions-geylang-international",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.657099",
+      "cekme_zamani": "2026-05-11T07:21:02.357076",
       "sp_home": "Young Lions",
       "sp_away": "Geylang International"
     },
@@ -2714,7 +2844,7 @@
       "teams_slug": "elche-deportivo-alaves",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.661372",
+      "cekme_zamani": "2026-05-11T07:21:02.361513",
       "sp_home": "Elche",
       "sp_away": "Deportivo Alaves"
     },
@@ -2724,7 +2854,7 @@
       "teams_slug": "sarpsborg-08-fredrikstad",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.665608",
+      "cekme_zamani": "2026-05-11T07:21:02.366256",
       "sp_home": "Sarpsborg 08",
       "sp_away": "Fredrikstad"
     },
@@ -2734,7 +2864,7 @@
       "teams_slug": "inter-turku-jaro",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.670300",
+      "cekme_zamani": "2026-05-11T07:21:02.370728",
       "sp_home": "Inter Turku",
       "sp_away": "Jaro"
     },
@@ -2744,7 +2874,7 @@
       "teams_slug": "ceuta-cd-castellon",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.674733",
+      "cekme_zamani": "2026-05-11T07:21:02.375351",
       "sp_home": "Ceuta",
       "sp_away": "CD Castellon"
     },
@@ -2754,7 +2884,7 @@
       "teams_slug": "ac-horsens-hillerod",
       "skor1": 4,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.678961",
+      "cekme_zamani": "2026-05-11T07:21:02.380095",
       "sp_home": "AC Horsens",
       "sp_away": "Hillerod"
     },
@@ -2764,7 +2894,7 @@
       "teams_slug": "dukla-prag-slovacko",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.683621",
+      "cekme_zamani": "2026-05-11T07:21:02.384544",
       "sp_home": "Dukla Prag",
       "sp_away": "Slovacko"
     },
@@ -2774,7 +2904,7 @@
       "teams_slug": "mlada-boleslav-fastav-zlin",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.688206",
+      "cekme_zamani": "2026-05-11T07:21:02.388870",
       "sp_home": "Mlada Boleslav",
       "sp_away": "FASTAV Zlin"
     },
@@ -2784,7 +2914,7 @@
       "teams_slug": "teplice-banik-ostrava",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.692372",
+      "cekme_zamani": "2026-05-11T07:21:02.393486",
       "sp_home": "Teplice",
       "sp_away": "Banik Ostrava"
     },
@@ -2794,7 +2924,7 @@
       "teams_slug": "aarhus-fremad-hb-koge",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.696754",
+      "cekme_zamani": "2026-05-11T07:21:02.398494",
       "sp_home": "Aarhus Fremad",
       "sp_away": "HB Koge"
     },
@@ -2804,7 +2934,7 @@
       "teams_slug": "energie-cottbus-wehen-wiesbaden",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.701226",
+      "cekme_zamani": "2026-05-11T07:21:02.403120",
       "sp_home": "Energie Cottbus",
       "sp_away": "Wehen Wiesbaden"
     },
@@ -2814,7 +2944,7 @@
       "teams_slug": "hansa-rostock-stuttgart-ii",
       "skor1": 5,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.705477",
+      "cekme_zamani": "2026-05-11T07:21:02.407530",
       "sp_home": "Hansa Rostock",
       "sp_away": "Stuttgart II"
     },
@@ -2824,7 +2954,7 @@
       "teams_slug": "1860-munchen-ingolstadt",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.709739",
+      "cekme_zamani": "2026-05-11T07:21:02.412312",
       "sp_home": "1860 München",
       "sp_away": "Ingolstadt"
     },
@@ -2834,7 +2964,7 @@
       "teams_slug": "rot-weiss-essen-verl",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.714219",
+      "cekme_zamani": "2026-05-11T07:21:02.416720",
       "sp_home": "Rot-Weiss Essen",
       "sp_away": "Verl"
     },
@@ -2844,7 +2974,7 @@
       "teams_slug": "osnabruck-ulm-1846",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.718484",
+      "cekme_zamani": "2026-05-11T07:21:02.421222",
       "sp_home": "Osnabrück",
       "sp_away": "Ulm 1846"
     },
@@ -2854,7 +2984,7 @@
       "teams_slug": "jippo-klubi-04",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.722657",
+      "cekme_zamani": "2026-05-11T07:21:02.426092",
       "sp_home": "FİN2",
       "sp_away": "Klubi 04"
     },
@@ -2864,7 +2994,7 @@
       "teams_slug": "chengdu-rongcheng-henan-songshan-longmen",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.726790",
+      "cekme_zamani": "2026-05-11T07:21:02.430529",
       "sp_home": "Chengdu Rongcheng",
       "sp_away": "Henan Songshan Longmen"
     },
@@ -2874,7 +3004,7 @@
       "teams_slug": "lnz-cherkasy-dynamo-kiev",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.731204",
+      "cekme_zamani": "2026-05-11T07:21:02.435148",
       "sp_home": "LNZ Cherkasy",
       "sp_away": "Dynamo Kiev"
     },
@@ -2884,7 +3014,7 @@
       "teams_slug": "widzew-lodz-lechia-gdansk",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.735482",
+      "cekme_zamani": "2026-05-11T07:21:02.439643",
       "sp_home": "Widzew Lodz",
       "sp_away": "Lechia Gdansk"
     },
@@ -2894,7 +3024,7 @@
       "teams_slug": "cagliari-udinese",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.739862",
+      "cekme_zamani": "2026-05-11T07:21:02.444360",
       "sp_home": "Cagliari",
       "sp_away": "Udinese"
     },
@@ -2904,7 +3034,7 @@
       "teams_slug": "degerfors-mjallby",
       "skor1": 1,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:21:03.744396",
+      "cekme_zamani": "2026-05-11T07:21:02.448619",
       "sp_home": "Degerfors",
       "sp_away": "Mjallby"
     },
@@ -2914,7 +3044,7 @@
       "teams_slug": "panserraikos-kifisia",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.752794",
+      "cekme_zamani": "2026-05-11T07:21:02.457094",
       "sp_home": "Panserraikos",
       "sp_away": "Kifisia"
     },
@@ -2924,7 +3054,7 @@
       "teams_slug": "norrby-if-helsingborgs-if",
       "skor1": 3,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.757032",
+      "cekme_zamani": "2026-05-11T07:21:02.461883",
       "sp_home": "Norrby IF",
       "sp_away": "Helsingborgs IF"
     },
@@ -2934,7 +3064,7 @@
       "teams_slug": "fremad-amager-brabrand",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.761524",
+      "cekme_zamani": "2026-05-11T07:21:02.466230",
       "sp_home": "Fremad Amager",
       "sp_away": "Brabrand"
     },
@@ -2944,7 +3074,7 @@
       "teams_slug": "qabala-qarabag-agdam",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.765820",
+      "cekme_zamani": "2026-05-11T07:21:02.470571",
       "sp_home": "Qabala",
       "sp_away": "Qarabağ Ağdam"
     },
@@ -2954,7 +3084,7 @@
       "teams_slug": "belshina-vitebsk",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.770197",
+      "cekme_zamani": "2026-05-11T07:21:02.475410",
       "sp_home": "Belshina",
       "sp_away": "Vitebsk"
     },
@@ -2964,7 +3094,7 @@
       "teams_slug": "marumo-gallants-richards-bay",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.774593",
+      "cekme_zamani": "2026-05-11T07:21:02.479759",
       "sp_home": "Marumo Gallants",
       "sp_away": "Richards Bay"
     },
@@ -2974,7 +3104,7 @@
       "teams_slug": "golden-arrows-polokwane-city",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.779283",
+      "cekme_zamani": "2026-05-11T07:21:02.484268",
       "sp_home": "Golden Arrows",
       "sp_away": "Polokwane City"
     },
@@ -2984,7 +3114,7 @@
       "teams_slug": "ts-galaxy-chippa-united",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.783763",
+      "cekme_zamani": "2026-05-11T07:21:02.488891",
       "sp_home": "TS Galaxy",
       "sp_away": "Chippa United"
     },
@@ -2994,7 +3124,7 @@
       "teams_slug": "nk-bravo-radomlje",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.788073",
+      "cekme_zamani": "2026-05-11T07:21:02.493267",
       "sp_home": "NK Bravo",
       "sp_away": "Radomlje"
     },
@@ -3004,7 +3134,7 @@
       "teams_slug": "cherno-more-varna-botev-plovdiv",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.792720",
+      "cekme_zamani": "2026-05-11T07:21:02.497520",
       "sp_home": "Cherno More Varna",
       "sp_away": "Botev Plovdiv"
     },
@@ -3014,7 +3144,7 @@
       "teams_slug": "augsburg-monchengladbach",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.797019",
+      "cekme_zamani": "2026-05-11T07:21:02.502230",
       "sp_home": "Augsburg",
       "sp_away": "Mönchengladbach"
     },
@@ -3024,7 +3154,7 @@
       "teams_slug": "hoffenheim-werder-bremen",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.801192",
+      "cekme_zamani": "2026-05-11T07:21:02.507107",
       "sp_home": "Hoffenheim",
       "sp_away": "Werder Bremen"
     },
@@ -3034,7 +3164,7 @@
       "teams_slug": "rb-leipzig-st-pauli",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.805811",
+      "cekme_zamani": "2026-05-11T07:21:02.511617",
       "sp_home": "RB Leipzig",
       "sp_away": "St. Pauli"
     },
@@ -3044,7 +3174,7 @@
       "teams_slug": "stuttgart-bayer-leverkusen",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.810065",
+      "cekme_zamani": "2026-05-11T07:21:02.515935",
       "sp_home": "Stuttgart",
       "sp_away": "Bayer Leverkusen"
     },
@@ -3054,7 +3184,7 @@
       "teams_slug": "brighton-and-hove-albion-wolverhampton",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.814200",
+      "cekme_zamani": "2026-05-11T07:21:02.520825",
       "sp_home": "Brighton & Hove Albion",
       "sp_away": "Wolverhampton"
     },
@@ -3064,7 +3194,7 @@
       "teams_slug": "fulham-bournemouth",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.818535",
+      "cekme_zamani": "2026-05-11T07:21:02.525363",
       "sp_home": "Fulham",
       "sp_away": "Bournemouth"
     },
@@ -3074,7 +3204,7 @@
       "teams_slug": "sunderland-manchester-united",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.822999",
+      "cekme_zamani": "2026-05-11T07:21:02.530007",
       "sp_home": "Sunderland",
       "sp_away": "Manchester United"
     },
@@ -3084,7 +3214,7 @@
       "teams_slug": "vps-gnistan",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.827220",
+      "cekme_zamani": "2026-05-11T07:21:02.534792",
       "sp_home": "FİN1",
       "sp_away": "Gnistan"
     },
@@ -3094,7 +3224,7 @@
       "teams_slug": "ae-larisa-asteras-tripolis",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.831341",
+      "cekme_zamani": "2026-05-11T07:21:02.539284",
       "sp_home": "AE Larisa",
       "sp_away": "Asteras Tripolis"
     },
@@ -3104,7 +3234,7 @@
       "teams_slug": "la-louviere-cercle-brugge",
       "skor1": 4,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.835640",
+      "cekme_zamani": "2026-05-11T07:21:02.543709",
       "sp_home": "La Louviere",
       "sp_away": "Cercle Brugge"
     },
@@ -3114,7 +3244,7 @@
       "teams_slug": "zulte-waregem-dender-eh",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.840055",
+      "cekme_zamani": "2026-05-11T07:21:02.548220",
       "sp_home": "Zulte Waregem",
       "sp_away": "Dender EH"
     },
@@ -3124,7 +3254,7 @@
       "teams_slug": "falkirk-hibernian",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.844336",
+      "cekme_zamani": "2026-05-11T07:21:02.552958",
       "sp_home": "Falkirk",
       "sp_away": "Hibernian"
     },
@@ -3134,7 +3264,7 @@
       "teams_slug": "aberdeen-dundee-united",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.848441",
+      "cekme_zamani": "2026-05-11T07:21:02.557347",
       "sp_home": "Aberdeen",
       "sp_away": "Dundee United"
     },
@@ -3144,7 +3274,7 @@
       "teams_slug": "st-mirren-kilmarnock",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.852904",
+      "cekme_zamani": "2026-05-11T07:21:02.561950",
       "sp_home": "St. Mirren",
       "sp_away": "Kilmarnock"
     },
@@ -3154,7 +3284,7 @@
       "teams_slug": "viktoria-plzen-slovan-liberec",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.857453",
+      "cekme_zamani": "2026-05-11T07:21:02.567576",
       "sp_home": "Viktoria Plzen",
       "sp_away": "Slovan Liberec"
     },
@@ -3164,7 +3294,7 @@
       "teams_slug": "stevenage-stockport-county",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.861962",
+      "cekme_zamani": "2026-05-11T07:21:02.573018",
       "sp_home": "Stevenage",
       "sp_away": "Stockport County"
     },
@@ -3174,7 +3304,7 @@
       "teams_slug": "aegir-grotta",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.866257",
+      "cekme_zamani": "2026-05-11T07:21:02.577572",
       "sp_home": "AEgir",
       "sp_away": "Grotta"
     },
@@ -3184,7 +3314,7 @@
       "teams_slug": "vestri-hk-kopavogur",
       "skor1": 4,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.871000",
+      "cekme_zamani": "2026-05-11T07:21:02.582553",
       "sp_home": "Vestri",
       "sp_away": "HK Kopavogur"
     },
@@ -3194,7 +3324,7 @@
       "teams_slug": "volsungur-husavik-throttur-reykjavik",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.875237",
+      "cekme_zamani": "2026-05-11T07:21:02.587091",
       "sp_home": "Volsungur Husavik",
       "sp_away": "Throttur Reykjavik"
     },
@@ -3204,7 +3334,7 @@
       "teams_slug": "dinamo-zagreb-hajduk-split",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.879310",
+      "cekme_zamani": "2026-05-11T07:21:02.591652",
       "sp_home": "Dinamo Zagreb",
       "sp_away": "Hajduk Split"
     },
@@ -3214,7 +3344,7 @@
       "teams_slug": "ktp-kotka-kapa",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.883749",
+      "cekme_zamani": "2026-05-11T07:21:02.596398",
       "sp_home": "KTP Kotka",
       "sp_away": "KaPa"
     },
@@ -3224,7 +3354,7 @@
       "teams_slug": "airdrieonians-alloa-athletic",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.888557",
+      "cekme_zamani": "2026-05-11T07:21:02.600826",
       "sp_home": "Airdrieonians",
       "sp_away": "Alloa Athletic"
     },
@@ -3234,7 +3364,7 @@
       "teams_slug": "brora-rangers-edinburgh-city",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.893335",
+      "cekme_zamani": "2026-05-11T07:21:02.605335",
       "sp_home": "Brora Rangers",
       "sp_away": "Edinburgh City"
     },
@@ -3244,7 +3374,7 @@
       "teams_slug": "hamilton-forfar-athletic",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.897509",
+      "cekme_zamani": "2026-05-11T07:21:02.609972",
       "sp_home": "Hamilton",
       "sp_away": "Forfar Athletic"
     },
@@ -3254,7 +3384,7 @@
       "teams_slug": "spartans-clyde",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.902568",
+      "cekme_zamani": "2026-05-11T07:21:02.617259",
       "sp_home": "Spartans",
       "sp_away": "Clyde"
     },
@@ -3264,7 +3394,7 @@
       "teams_slug": "fc-astana-kyzyl-zhar",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.907188",
+      "cekme_zamani": "2026-05-11T07:21:02.624654",
       "sp_home": "FC Astana",
       "sp_away": "Kyzyl-Zhar"
     },
@@ -3274,7 +3404,7 @@
       "teams_slug": "nkp-podhale-chojniczanka-chojnice",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.911458",
+      "cekme_zamani": "2026-05-11T07:21:02.629909",
       "sp_home": "NKP Podhale",
       "sp_away": "Chojniczanka Chojnice"
     },
@@ -3284,7 +3414,7 @@
       "teams_slug": "vaprus-narva-trans",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.916123",
+      "cekme_zamani": "2026-05-11T07:21:02.637939",
       "sp_home": "Vaprus",
       "sp_away": "Narva Trans"
     },
@@ -3294,7 +3424,7 @@
       "teams_slug": "sevilla-espanyol",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.920273",
+      "cekme_zamani": "2026-05-11T07:21:02.643263",
       "sp_home": "Sevilla",
       "sp_away": "Espanyol"
     },
@@ -3304,7 +3434,7 @@
       "teams_slug": "albacete-cultural-leonesa",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.924638",
+      "cekme_zamani": "2026-05-11T07:21:02.648028",
       "sp_home": "Albacete",
       "sp_away": "Cultural Leonesa"
     },
@@ -3314,7 +3444,7 @@
       "teams_slug": "burgos-almeria",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.929432",
+      "cekme_zamani": "2026-05-11T07:21:02.652963",
       "sp_home": "Burgos",
       "sp_away": "Almeria"
     },
@@ -3324,7 +3454,7 @@
       "teams_slug": "chaves-leixoes",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.933862",
+      "cekme_zamani": "2026-05-11T07:21:02.658273",
       "sp_home": "Chaves",
       "sp_away": "Leixoes"
     },
@@ -3334,7 +3464,7 @@
       "teams_slug": "felgueiras-1932-portimonense",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.938180",
+      "cekme_zamani": "2026-05-11T07:21:02.663241",
       "sp_home": "Felgueiras 1932",
       "sp_away": "Portimonense"
     },
@@ -3344,7 +3474,7 @@
       "teams_slug": "cd-feirense-ud-oliveirense",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.942586",
+      "cekme_zamani": "2026-05-11T07:21:02.668186",
       "sp_home": "CD Feirense",
       "sp_away": "UD Oliveirense"
     },
@@ -3354,7 +3484,7 @@
       "teams_slug": "penafiel-maritimo",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.947214",
+      "cekme_zamani": "2026-05-11T07:21:02.673429",
       "sp_home": "Penafiel",
       "sp_away": "Maritimo"
     },
@@ -3364,7 +3494,7 @@
       "teams_slug": "farense-pacos-de-ferreira",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.951469",
+      "cekme_zamani": "2026-05-11T07:21:02.678965",
       "sp_home": "Farense",
       "sp_away": "Paços de Ferreira"
     },
@@ -3374,7 +3504,7 @@
       "teams_slug": "willem-ii-rkc-waalwijk",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.955929",
+      "cekme_zamani": "2026-05-11T07:21:02.683739",
       "sp_home": "Willem II",
       "sp_away": "RKC Waalwijk"
     },
@@ -3384,7 +3514,7 @@
       "teams_slug": "waldhof-mannheim-07-jahn-regensburg",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.960394",
+      "cekme_zamani": "2026-05-11T07:21:02.688612",
       "sp_home": "Waldhof Mannheim 07",
       "sp_away": "Jahn Regensburg"
     },
@@ -3394,7 +3524,7 @@
       "teams_slug": "grazer-ak-rheindorf-altach",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.964688",
+      "cekme_zamani": "2026-05-11T07:21:02.693672",
       "sp_home": "Grazer AK",
       "sp_away": "Rheindorf Altach"
     },
@@ -3404,7 +3534,7 @@
       "teams_slug": "ried-wolfsberger-ac",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.968873",
+      "cekme_zamani": "2026-05-11T07:21:02.698376",
       "sp_home": "Ried",
       "sp_away": "Wolfsberger AC"
     },
@@ -3414,7 +3544,7 @@
       "teams_slug": "swarovski-tirol-blau-weiss-linz",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.972855",
+      "cekme_zamani": "2026-05-11T07:21:02.702782",
       "sp_home": "Swarovski Tirol",
       "sp_away": "Blau-Weiss Linz"
     },
@@ -3424,7 +3554,7 @@
       "teams_slug": "fk-obolon-kyiv-epitsentr-kamianets-podilskyi",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.977687",
+      "cekme_zamani": "2026-05-11T07:21:02.707756",
       "sp_home": "FK Obolon Kyiv",
       "sp_away": "Epitsentr Kamianets-Podilskyi"
     },
@@ -3434,7 +3564,7 @@
       "teams_slug": "zorya-luhansk-metalist-1925-kharkiv",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:03.982327",
+      "cekme_zamani": "2026-05-11T07:21:02.712431",
       "sp_home": "Zorya Luhansk",
       "sp_away": "Metalist 1925 Kharkiv"
     },
@@ -3444,7 +3574,7 @@
       "teams_slug": "otelul-galati-farul-constanta",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:03.986663",
+      "cekme_zamani": "2026-05-11T07:21:02.717311",
       "sp_home": "Otelul Galati",
       "sp_away": "Farul Constanta"
     },
@@ -3454,7 +3584,7 @@
       "teams_slug": "sandvikens-if-ljungskile",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:03.991404",
+      "cekme_zamani": "2026-05-11T07:21:02.721992",
       "sp_home": "Sandvikens IF",
       "sp_away": "Ljungskile"
     },
@@ -3464,7 +3594,7 @@
       "teams_slug": "gif-sundsvall-norrkoping",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:03.996022",
+      "cekme_zamani": "2026-05-11T07:21:02.726540",
       "sp_home": "GIF Sundsvall",
       "sp_away": "Norrköping"
     },
@@ -3474,7 +3604,7 @@
       "teams_slug": "sjk-akatemia-japs",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.000488",
+      "cekme_zamani": "2026-05-11T07:21:02.731063",
       "sp_home": "SJK Akatemia",
       "sp_away": "JaPS"
     },
@@ -3484,7 +3614,7 @@
       "teams_slug": "tobol-irtysh-pavlodar",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.004798",
+      "cekme_zamani": "2026-05-11T07:21:02.735490",
       "sp_home": "Tobol",
       "sp_away": "Irtysh Pavlodar"
     },
@@ -3494,7 +3624,7 @@
       "teams_slug": "dziugas-telsiai-fk-riteriai",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.009380",
+      "cekme_zamani": "2026-05-11T07:21:02.740205",
       "sp_home": "Dziugas Telsiai",
       "sp_away": "FK Riteriai"
     },
@@ -3504,7 +3634,7 @@
       "teams_slug": "torpedo-zhodino-neman-grodno",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.013710",
+      "cekme_zamani": "2026-05-11T07:21:02.744685",
       "sp_home": "Torpedo Zhodino",
       "sp_away": "Neman Grodno"
     },
@@ -3514,7 +3644,7 @@
       "teams_slug": "virs-bistrica-nk-brinje",
       "skor1": 0,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:21:04.018096",
+      "cekme_zamani": "2026-05-11T07:21:02.749002",
       "sp_home": "Virs Bistrica",
       "sp_away": "NK Brinje"
     },
@@ -3524,7 +3654,7 @@
       "teams_slug": "ilirija-bilje",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.023142",
+      "cekme_zamani": "2026-05-11T07:21:02.753677",
       "sp_home": "Ilirija",
       "sp_away": "Bilje"
     },
@@ -3534,7 +3664,7 @@
       "teams_slug": "as-marsa-cs-sfaxien",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.027397",
+      "cekme_zamani": "2026-05-11T07:21:02.758320",
       "sp_home": "AS Marsa",
       "sp_away": "CS Sfaxien"
     },
@@ -3544,7 +3674,7 @@
       "teams_slug": "etoile-du-sahel-bizertin",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.031834",
+      "cekme_zamani": "2026-05-11T07:21:02.762729",
       "sp_home": "Etoile Du Sahel",
       "sp_away": "Bizertin"
     },
@@ -3554,7 +3684,7 @@
       "teams_slug": "zarzis-metlaoui",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.036123",
+      "cekme_zamani": "2026-05-11T07:21:02.767972",
       "sp_home": "Zarzis",
       "sp_away": "Metlaoui"
     },
@@ -3564,7 +3694,7 @@
       "teams_slug": "jagiellonia-bialystok-pogon-szczecin",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.040926",
+      "cekme_zamani": "2026-05-11T07:21:02.773600",
       "sp_home": "Jagiellonia Bialystok",
       "sp_away": "Pogon Szczecin"
     },
@@ -3574,7 +3704,7 @@
       "teams_slug": "koper-aluminij",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.045254",
+      "cekme_zamani": "2026-05-11T07:21:02.778899",
       "sp_home": "Koper",
       "sp_away": "Aluminij"
     },
@@ -3584,7 +3714,7 @@
       "teams_slug": "zeleznicar-pancevo-radnik-surdulica",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.049644",
+      "cekme_zamani": "2026-05-11T07:21:02.783602",
       "sp_home": "Zeleznicar Pancevo",
       "sp_away": "Radnik Surdulica"
     },
@@ -3594,7 +3724,7 @@
       "teams_slug": "levski-sofia-ludogorets-razgrad",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.054124",
+      "cekme_zamani": "2026-05-11T07:21:02.788018",
       "sp_home": "Levski Sofia",
       "sp_away": "Ludogorets Razgrad"
     },
@@ -3604,7 +3734,7 @@
       "teams_slug": "al-khaleej-al-ittifaq",
       "skor1": 0,
       "skor2": 5,
-      "cekme_zamani": "2026-05-11T01:21:04.058439",
+      "cekme_zamani": "2026-05-11T07:21:02.792298",
       "sp_home": "Al Khaleej",
       "sp_away": "Al Ittifaq"
     },
@@ -3614,7 +3744,7 @@
       "teams_slug": "winterthur-lausanne-sports",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.062866",
+      "cekme_zamani": "2026-05-11T07:21:02.796875",
       "sp_home": "Winterthur",
       "sp_away": "Lausanne Sports"
     },
@@ -3624,7 +3754,7 @@
       "teams_slug": "zurich-grasshoppers",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.067475",
+      "cekme_zamani": "2026-05-11T07:21:02.801480",
       "sp_home": "Zürich",
       "sp_away": "Grasshoppers"
     },
@@ -3634,7 +3764,7 @@
       "teams_slug": "lazio-inter",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.073355",
+      "cekme_zamani": "2026-05-11T07:21:02.806304",
       "sp_home": "Lazio",
       "sp_away": "Inter"
     },
@@ -3644,7 +3774,7 @@
       "teams_slug": "b36-torshavn-ki-klaksvik",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.080157",
+      "cekme_zamani": "2026-05-11T07:21:02.810936",
       "sp_home": "B36 Torshavn",
       "sp_away": "KI Klaksvik"
     },
@@ -3654,7 +3784,7 @@
       "teams_slug": "ferencvaros-zalaegerszegi-te",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.086039",
+      "cekme_zamani": "2026-05-11T07:21:02.815877",
       "sp_home": "Ferencvaros",
       "sp_away": "Zalaegerszegi TE"
     },
@@ -3664,7 +3794,7 @@
       "teams_slug": "prostejov-ceske-budejovice",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.090882",
+      "cekme_zamani": "2026-05-11T07:21:02.820319",
       "sp_home": "Prostejov",
       "sp_away": "Ceske Budejovice"
     },
@@ -3674,7 +3804,7 @@
       "teams_slug": "olimpia-grudziadz-rekord-bielsko-biala",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.095435",
+      "cekme_zamani": "2026-05-11T07:21:02.824682",
       "sp_home": "Olimpia Grudziadz",
       "sp_away": "Rekord Bielsko-Biala"
     },
@@ -3684,7 +3814,7 @@
       "teams_slug": "zemplin-michalovce-dunajska-streda",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.100176",
+      "cekme_zamani": "2026-05-11T07:21:02.829905",
       "sp_home": "Zemplin Michalovce",
       "sp_away": "Dunajska Streda"
     },
@@ -3694,7 +3824,7 @@
       "teams_slug": "podbrezova-slovan-bratislava",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.104654",
+      "cekme_zamani": "2026-05-11T07:21:02.834560",
       "sp_home": "Podbrezova",
       "sp_away": "Slovan Bratislava"
     },
@@ -3704,7 +3834,7 @@
       "teams_slug": "ruzomberok-trencin",
       "skor1": 4,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.109026",
+      "cekme_zamani": "2026-05-11T07:21:02.839679",
       "sp_home": "Ruzomberok",
       "sp_away": "Trencin"
     },
@@ -3714,7 +3844,7 @@
       "teams_slug": "crvena-zvezda-novi-pazar",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.113474",
+      "cekme_zamani": "2026-05-11T07:21:02.844677",
       "sp_home": "Crvena Zvezda",
       "sp_away": "Novi Pazar"
     },
@@ -3724,7 +3854,7 @@
       "teams_slug": "beerschot-wilrijk-lommel-united",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.117988",
+      "cekme_zamani": "2026-05-11T07:21:02.849579",
       "sp_home": "Beerschot-Wilrijk",
       "sp_away": "Lommel United"
     },
@@ -3734,7 +3864,7 @@
       "teams_slug": "al-najma-onayzah-al-hazm",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.122485",
+      "cekme_zamani": "2026-05-11T07:21:02.854302",
       "sp_home": "Al Najma Onayzah",
       "sp_away": "Al Hazm"
     },
@@ -3744,7 +3874,7 @@
       "teams_slug": "atletico-madrid-celta-vigo",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.126795",
+      "cekme_zamani": "2026-05-11T07:21:02.859852",
       "sp_home": "Atletico Madrid",
       "sp_away": "Celta Vigo"
     },
@@ -3754,7 +3884,7 @@
       "teams_slug": "manchester-city-brentford",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.131328",
+      "cekme_zamani": "2026-05-11T07:21:02.864474",
       "sp_home": "Manchester City",
       "sp_away": "Brentford"
     },
@@ -3764,7 +3894,7 @@
       "teams_slug": "wolfsburg-bayern-munchen",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.135626",
+      "cekme_zamani": "2026-05-11T07:21:02.869021",
       "sp_home": "Wolfsburg",
       "sp_away": "Bayern München"
     },
@@ -3774,7 +3904,7 @@
       "teams_slug": "atromitos-panaitolikos",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.139830",
+      "cekme_zamani": "2026-05-11T07:21:02.874100",
       "sp_home": "Atromitos",
       "sp_away": "Panaitolikos"
     },
@@ -3784,7 +3914,7 @@
       "teams_slug": "valladolid-real-zaragoza",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.144251",
+      "cekme_zamani": "2026-05-11T07:21:02.878506",
       "sp_home": "Valladolid",
       "sp_away": "Real Zaragoza"
     },
@@ -3794,7 +3924,7 @@
       "teams_slug": "radnik-bijeljina-zrinjski-mostar",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.148689",
+      "cekme_zamani": "2026-05-11T07:21:02.883115",
       "sp_home": "Radnik Bijeljina",
       "sp_away": "Zrinjski Mostar"
     },
@@ -3804,7 +3934,7 @@
       "teams_slug": "rudar-prijedor-fk-sarajevo",
       "skor1": 2,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:21:04.153025",
+      "cekme_zamani": "2026-05-11T07:21:02.888084",
       "sp_home": "Rudar Prijedor",
       "sp_away": "FK Sarajevo"
     },
@@ -3814,7 +3944,7 @@
       "teams_slug": "nk-varazdin-lokomotiva-zagreb",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.157446",
+      "cekme_zamani": "2026-05-11T07:21:02.892969",
       "sp_home": "NK Varazdin",
       "sp_away": "Lokomotiva Zagreb"
     },
@@ -3824,7 +3954,7 @@
       "teams_slug": "alanyaspor-kayserispor",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.162073",
+      "cekme_zamani": "2026-05-11T07:21:02.897974",
       "sp_home": "Alanyaspor",
       "sp_away": "Kayserispor"
     },
@@ -3834,7 +3964,7 @@
       "teams_slug": "basaksehir-samsunspor",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.166292",
+      "cekme_zamani": "2026-05-11T07:21:02.902913",
       "sp_home": "Başakşehir",
       "sp_away": "Samsunspor"
     },
@@ -3844,7 +3974,7 @@
       "teams_slug": "besiktas-trabzonspor",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.170652",
+      "cekme_zamani": "2026-05-11T07:21:02.907961",
       "sp_home": "Beşiktaş",
       "sp_away": "Trabzonspor"
     },
@@ -3854,7 +3984,7 @@
       "teams_slug": "eyupspor-caykur-rizespor",
       "skor1": 4,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.175042",
+      "cekme_zamani": "2026-05-11T07:21:02.912653",
       "sp_home": "Eyüpspor",
       "sp_away": "Çaykur Rizespor"
     },
@@ -3864,7 +3994,7 @@
       "teams_slug": "galatasaray-antalyaspor",
       "skor1": 4,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.180525",
+      "cekme_zamani": "2026-05-11T07:21:02.917065",
       "sp_home": "Galatasaray",
       "sp_away": "Antalyaspor"
     },
@@ -3874,7 +4004,7 @@
       "teams_slug": "genclerbirligi-kasimpasa",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.185230",
+      "cekme_zamani": "2026-05-11T07:21:02.921717",
       "sp_home": "Gençlerbirliği",
       "sp_away": "Kasımpaşa"
     },
@@ -3884,7 +4014,7 @@
       "teams_slug": "goztepe-gaziantep-fk",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.189527",
+      "cekme_zamani": "2026-05-11T07:21:02.926668",
       "sp_home": "Göztepe",
       "sp_away": "Gaziantep FK"
     },
@@ -3894,7 +4024,7 @@
       "teams_slug": "kocaelispor-fatih-karagumruk",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.194038",
+      "cekme_zamani": "2026-05-11T07:21:02.931719",
       "sp_home": "Kocaelispor",
       "sp_away": "Fatih Karagümrük"
     },
@@ -3904,7 +4034,7 @@
       "teams_slug": "konyaspor-fenerbahce",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.198093",
+      "cekme_zamani": "2026-05-11T07:21:02.936612",
       "sp_home": "Konyaspor",
       "sp_away": "Fenerbahçe"
     },
@@ -3914,7 +4044,7 @@
       "teams_slug": "esbjerg-kolding-if",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.202181",
+      "cekme_zamani": "2026-05-11T07:21:02.941263",
       "sp_home": "Esbjerg",
       "sp_away": "Kolding IF"
     },
@@ -3924,7 +4054,7 @@
       "teams_slug": "toronto-fc-inter-miami",
       "skor1": 2,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:21:04.206469",
+      "cekme_zamani": "2026-05-11T07:21:02.945981",
       "sp_home": "Toronto FC",
       "sp_away": "Inter Miami"
     },
@@ -3934,7 +4064,7 @@
       "teams_slug": "ks-wieczysta-krakow-miedz-legnica",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.210933",
+      "cekme_zamani": "2026-05-11T07:21:02.950963",
       "sp_home": "KS Wieczysta Krakow",
       "sp_away": "Miedz Legnica"
     },
@@ -3944,7 +4074,7 @@
       "teams_slug": "znicz-pruszkow-polonia-bytom",
       "skor1": 1,
       "skor2": 4,
-      "cekme_zamani": "2026-05-11T01:21:04.215091",
+      "cekme_zamani": "2026-05-11T07:21:02.956134",
       "sp_home": "Znicz Pruszkow",
       "sp_away": "Polonia Bytom"
     },
@@ -3954,7 +4084,7 @@
       "teams_slug": "stal-mielec-puszcza-niepolomice",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.219314",
+      "cekme_zamani": "2026-05-11T07:21:02.960934",
       "sp_home": "Stal Mielec",
       "sp_away": "Puszcza Niepolomice"
     },
@@ -3964,7 +4094,7 @@
       "teams_slug": "caen-concarneau",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.224002",
+      "cekme_zamani": "2026-05-11T07:21:02.965852",
       "sp_home": "Caen",
       "sp_away": "Concarneau"
     },
@@ -3974,7 +4104,7 @@
       "teams_slug": "chateauroux-sochaux",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.228416",
+      "cekme_zamani": "2026-05-11T07:21:02.970263",
       "sp_home": "Chateauroux",
       "sp_away": "Sochaux"
     },
@@ -3984,7 +4114,7 @@
       "teams_slug": "paris-13-aubagne",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.232607",
+      "cekme_zamani": "2026-05-11T07:21:02.974774",
       "sp_home": "Paris 13",
       "sp_away": "Aubagne"
     },
@@ -3994,7 +4124,7 @@
       "teams_slug": "rouen-versailles",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.236853",
+      "cekme_zamani": "2026-05-11T07:21:02.979431",
       "sp_home": "Rouen",
       "sp_away": "Versailles"
     },
@@ -4004,7 +4134,7 @@
       "teams_slug": "hamrun-spartans-marsaxlokk-fc",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.241361",
+      "cekme_zamani": "2026-05-11T07:21:02.984559",
       "sp_home": "Hamrun Spartans",
       "sp_away": "Marsaxlokk FC"
     },
@@ -4014,7 +4144,7 @@
       "teams_slug": "partizan-belgrade-ofk-beograd",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.245453",
+      "cekme_zamani": "2026-05-11T07:21:02.989226",
       "sp_home": "Partizan Belgrade",
       "sp_away": "OFK Beograd"
     },
@@ -4024,7 +4154,7 @@
       "teams_slug": "universitatea-cluj-rapid-bucuresti",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.249540",
+      "cekme_zamani": "2026-05-11T07:21:02.993678",
       "sp_home": "Universitatea Cluj",
       "sp_away": "Rapid Bucuresti"
     },
@@ -4034,7 +4164,7 @@
       "teams_slug": "clermont-guingamp",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.254080",
+      "cekme_zamani": "2026-05-11T07:21:02.999029",
       "sp_home": "Clermont",
       "sp_away": "Guingamp"
     },
@@ -4044,7 +4174,7 @@
       "teams_slug": "grenoble-troyes",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.258379",
+      "cekme_zamani": "2026-05-11T07:21:03.003650",
       "sp_home": "Grenoble",
       "sp_away": "Troyes"
     },
@@ -4054,7 +4184,7 @@
       "teams_slug": "laval-boulogne",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.262657",
+      "cekme_zamani": "2026-05-11T07:21:03.008081",
       "sp_home": "Laval",
       "sp_away": "Boulogne"
     },
@@ -4064,7 +4194,7 @@
       "teams_slug": "as-nancy-dunkerque",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.266746",
+      "cekme_zamani": "2026-05-11T07:21:03.012724",
       "sp_home": "AS Nancy",
       "sp_away": "Dunkerque"
     },
@@ -4074,7 +4204,7 @@
       "teams_slug": "red-star-fc-93-montpellier",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.272682",
+      "cekme_zamani": "2026-05-11T07:21:03.017480",
       "sp_home": "Red Star FC 93",
       "sp_away": "Montpellier"
     },
@@ -4084,7 +4214,7 @@
       "teams_slug": "reims-pau",
       "skor1": 5,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.277998",
+      "cekme_zamani": "2026-05-11T07:21:03.022104",
       "sp_home": "Reims",
       "sp_away": "Pau"
     },
@@ -4094,7 +4224,7 @@
       "teams_slug": "saint-etienne-amiens-sc",
       "skor1": 5,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.282722",
+      "cekme_zamani": "2026-05-11T07:21:03.026750",
       "sp_home": "Saint-Etienne",
       "sp_away": "Amiens SC"
     },
@@ -4104,7 +4234,7 @@
       "teams_slug": "de-graafschap-almere-city",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.287357",
+      "cekme_zamani": "2026-05-11T07:21:03.031707",
       "sp_home": "De Graafschap",
       "sp_away": "Almere City"
     },
@@ -4114,7 +4244,7 @@
       "teams_slug": "al-feiha-al-quadisiya",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.292196",
+      "cekme_zamani": "2026-05-11T07:21:03.036161",
       "sp_home": "Al Feiha",
       "sp_away": "Al Quadisiya"
     },
@@ -4124,7 +4254,7 @@
       "teams_slug": "gornik-zabrze-zaglebie-lubin",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.296617",
+      "cekme_zamani": "2026-05-11T07:21:03.041347",
       "sp_home": "Gornik Zabrze",
       "sp_away": "Zaglebie Lubin"
     },
@@ -4134,7 +4264,7 @@
       "teams_slug": "luzern-servette",
       "skor1": 3,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.300915",
+      "cekme_zamani": "2026-05-11T07:21:03.046332",
       "sp_home": "Luzern",
       "sp_away": "Servette"
     },
@@ -4144,7 +4274,7 @@
       "teams_slug": "nurnberg-schalke-04",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.305175",
+      "cekme_zamani": "2026-05-11T07:21:03.050717",
       "sp_home": "Nürnberg",
       "sp_away": "Schalke 04"
     },
@@ -4154,7 +4284,7 @@
       "teams_slug": "chicago-fire-new-york-red-bulls",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-11T01:21:04.309309",
+      "cekme_zamani": "2026-05-11T07:21:03.055295",
       "sp_home": "Chicago Fire",
       "sp_away": "New York Red Bulls"
     },
@@ -4164,7 +4294,7 @@
       "teams_slug": "danubio-albion-fc",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.313863",
+      "cekme_zamani": "2026-05-11T07:21:03.060529",
       "sp_home": "Danubio",
       "sp_away": "Albion FC"
     },
@@ -4174,7 +4304,7 @@
       "teams_slug": "tatran-presov-skalica",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.318184",
+      "cekme_zamani": "2026-05-11T07:21:03.065093",
       "sp_home": "Tatran Presov",
       "sp_away": "Skalica"
     },
@@ -4184,7 +4314,7 @@
       "teams_slug": "lecce-juventus",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.322436",
+      "cekme_zamani": "2026-05-11T07:21:03.069658",
       "sp_home": "Lecce",
       "sp_away": "Juventus"
     },
@@ -4194,7 +4324,7 @@
       "teams_slug": "club-brugge-sint-truiden",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.326675",
+      "cekme_zamani": "2026-05-11T07:21:03.074950",
       "sp_home": "Club Brugge",
       "sp_away": "Sint-Truiden"
     },
@@ -4204,7 +4334,7 @@
       "teams_slug": "posusje-velez-mostar",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.330952",
+      "cekme_zamani": "2026-05-11T07:21:03.079651",
       "sp_home": "Posusje",
       "sp_away": "Velez Mostar"
     },
@@ -4214,7 +4344,7 @@
       "teams_slug": "real-sociedad-real-betis",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.335642",
+      "cekme_zamani": "2026-05-11T07:21:03.084365",
       "sp_home": "Real Sociedad",
       "sp_away": "Real Betis"
     },
@@ -4224,7 +4354,7 @@
       "teams_slug": "motherwell-hearts",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.340310",
+      "cekme_zamani": "2026-05-11T07:21:03.089148",
       "sp_home": "Motherwell",
       "sp_away": "Hearts"
     },
@@ -4234,7 +4364,7 @@
       "teams_slug": "malaga-sporting-gijon",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.345130",
+      "cekme_zamani": "2026-05-11T07:21:03.094293",
       "sp_home": "Malaga",
       "sp_away": "Sporting Gijon"
     },
@@ -4244,7 +4374,7 @@
       "teams_slug": "bolton-wanderers-bradford-city",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.349881",
+      "cekme_zamani": "2026-05-11T07:21:03.098933",
       "sp_home": "Bolton Wanderers",
       "sp_away": "Bradford City"
     },
@@ -4254,7 +4384,7 @@
       "teams_slug": "coritiba-internacional",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.354533",
+      "cekme_zamani": "2026-05-11T07:21:03.103507",
       "sp_home": "Coritiba",
       "sp_away": "Internacional"
     },
@@ -4264,7 +4394,7 @@
       "teams_slug": "goias-vila-nova",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.359262",
+      "cekme_zamani": "2026-05-11T07:21:03.108604",
       "sp_home": "Goias",
       "sp_away": "Vila Nova"
     },
@@ -4274,7 +4404,7 @@
       "teams_slug": "raja-casablanca-wydad-casablanca",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.363920",
+      "cekme_zamani": "2026-05-11T07:21:03.113181",
       "sp_home": "Raja Casablanca",
       "sp_away": "Wydad Casablanca"
     },
@@ -4284,7 +4414,7 @@
       "teams_slug": "benfica-ii-academico-viseu",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.368720",
+      "cekme_zamani": "2026-05-11T07:21:03.117694",
       "sp_home": "Benfica II",
       "sp_away": "Academico Viseu"
     },
@@ -4294,7 +4424,7 @@
       "teams_slug": "vizela-uniao-de-leiria",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.373542",
+      "cekme_zamani": "2026-05-11T07:21:03.122463",
       "sp_home": "Vizela",
       "sp_away": "Uniao De Leiria"
     },
@@ -4304,7 +4434,7 @@
       "teams_slug": "talleres-cordoba-belgrano-cordoba",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-11T01:21:04.378335",
+      "cekme_zamani": "2026-05-11T07:21:03.127279",
       "sp_home": "Talleres Cordoba",
       "sp_away": "Belgrano Cordoba"
     },
@@ -4314,7 +4444,7 @@
       "teams_slug": "atletico-grau-cienciano",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-11T01:21:04.382801",
+      "cekme_zamani": "2026-05-11T07:21:03.131972",
       "sp_home": "Atletico Grau",
       "sp_away": "Cienciano"
     },
@@ -4324,7 +4454,7 @@
       "teams_slug": "montreal-impact-orlando-city",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-11T01:21:04.386917",
+      "cekme_zamani": "2026-05-11T07:21:03.136902",
       "sp_home": "Montreal Impact",
       "sp_away": "Orlando City"
     }

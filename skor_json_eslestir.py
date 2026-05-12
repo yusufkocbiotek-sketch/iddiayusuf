@@ -364,20 +364,21 @@ def update_db(db_data: dict, scores: list, today_iso: str):
                 # MS Skorlarını belirle
                 skor_ev, skor_dep = (sp["skor2"], sp["skor1"]) if s_swap > s_direct else (sp["skor1"], sp["skor2"])
 
-                # --- YENİ EKLEME: İY SKORLARINI GÜNCELLE ---
-                # NOT: sp sözlüğünde İY skorunun anahtar ismini kontrol et (iy_skor1, iy_skor2 vb.)
+                # --- İY SKORLARINI GÜNCELLE (Varsa) ---
                 iy_ev = sp.get("iy_skor1") 
                 iy_dep = sp.get("iy_skor2")
                 
                 if iy_ev is not None and iy_dep is not None:
                     best["skor_1y_ev"] = int(iy_ev)
                     best["skor_1y_dep"] = int(iy_dep)
-                # -------------------------------------------
+                # -------------------------------------
 
-                # Değişiklik olup olmadığını kontrol et
+                # --- KRİTİK EKLEME: 'changed' DEĞİŞKENİNİ TANIMLA ---
+                # Mevcut değerlerle yeni gelen değerleri karşılaştır
                 changed = (best.get("skor_ev") != skor_ev or 
                            best.get("skor_dep") != skor_dep or 
                            best.get("spordb_match_id") != sp["spordb_match_id"])
+                # ----------------------------------------------------
                 
                 # Veritabanını güncelle
                 best["skor_ev"] = skor_ev
@@ -394,7 +395,34 @@ def update_db(db_data: dict, scores: list, today_iso: str):
                 continue
             
             skipped += 1
-            continue
+            continue        
+        # ==========================================
+        # YENİ EKLENECEK KISIM BURADA (DEBUG)
+        # ==========================================
+        if not best or best_sc < THRESH_MAYBE:
+            # EŞLEŞME BAŞARISIZ - DEBUG BİLGİSİ
+            print(f"⚠️ EŞLEŞMEDİ: SPORDB='{sp['sp_home']} vs {sp['sp_away']}' | Tarih={sp['tarih']} | Skor={sp['skor1']}-{sp['skor2']}")
+            
+            # Mac.json'da buna benzeyen bir şey var mı diye bakalım:
+            cands = by_date.get(sp["tarih"], [])
+            if cands:
+                # İlk 3 adayı göster (f-string içinde tırnak hatası olmamasına dikkat et)
+                aday_listesi = [f"{m['ev_sahibi']} vs {m['deplasman']}" for m in cands[:3]]
+                print(f"   -> Adaylar: {aday_listesi}") 
+            else:
+                print(f"   -> O tarihte hiç maç yok!")
+        # ==========================================
+
+        # Buradan sonrası eski kodun devamı
+        if ADD_MISSING_MATCHES:
+            uid = match_uid(sp["tarih"], sp["sp_home"], sp["sp_away"])
+            if uid not in uid_set:
+                # ... (yeni maç ekleme kodları) ...
+                added += 1
+            else: 
+                not_matched += 1
+        else: 
+            not_matched += 1
         
         # Eğer eşleşen maç bulunamadıysa ve ADD_MISSING_MATCHES açıksa ekle
         if ADD_MISSING_MATCHES:

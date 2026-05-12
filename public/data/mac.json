@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-12T06:01:48.500084",
+  "updated": "2026-05-12T07:20:35.354121",
   "matches": [
     {
       "index": 1,
@@ -259574,13 +259574,13 @@
       "saat": "",
       "lig": "",
       "tarih": "2026-05-12",
-      "cekme_zamani": "2026-05-12T02:02:57.389030",
-      "durum": "2",
-      "skor_ev": 0,
-      "skor_dep": 0,
+      "cekme_zamani": "2026-05-12T07:20:35.062239",
+      "durum": "bitti",
+      "skor_ev": 2,
+      "skor_dep": 3,
       "skor_1y_ev": 0,
       "skor_1y_dep": 0,
-      "kaynak": "iddaa.com",
+      "kaynak": "spordb.com",
       "oranlar": {
         "Maç Sonucu_1": 3.54,
         "Maç Sonucu_0": 3.0,
@@ -259592,7 +259592,8 @@
         "İlk Yarı Alt/Üst 0.5_Üst": 1.31,
         "Karşılıklı Gol_Var": 1.79,
         "Karşılıklı Gol_Yok": 1.57
-      }
+      },
+      "spordb_match_id": "4068036"
     },
     {
       "index": 1859,
@@ -268119,13 +268120,13 @@
       "saat": "",
       "lig": "",
       "tarih": "2026-05-12",
-      "cekme_zamani": "2026-05-12T02:03:38.205423",
-      "durum": "baslamadi",
-      "skor_ev": 0,
+      "cekme_zamani": "2026-05-12T07:20:35.070549",
+      "durum": "bitti",
+      "skor_ev": 1,
       "skor_dep": 0,
       "skor_1y_ev": 0,
       "skor_1y_dep": 0,
-      "kaynak": "iddaa.com",
+      "kaynak": "spordb.com",
       "oranlar": {
         "Maç Sonucu_1": 1.33,
         "Maç Sonucu_0": 3.59,
@@ -268161,7 +268162,8 @@
         "Tek / Çift_Tek": 1.7,
         "Tek / Çift_Çift": 1.66,
         "İkinci Yarı Karşılıklı Gol_Var": 4.28
-      }
+      },
+      "spordb_match_id": "4067993"
     },
     {
       "index": 1916,
@@ -269764,13 +269766,13 @@
       "saat": "",
       "lig": "",
       "tarih": "2026-05-12",
-      "cekme_zamani": "2026-05-12T02:03:10.783431",
-      "durum": "1",
-      "skor_ev": 0,
-      "skor_dep": 0,
+      "cekme_zamani": "2026-05-12T07:20:35.066327",
+      "durum": "bitti",
+      "skor_ev": 1,
+      "skor_dep": 3,
       "skor_1y_ev": 0,
       "skor_1y_dep": 0,
-      "kaynak": "iddaa.com",
+      "kaynak": "spordb.com",
       "oranlar": {
         "Maç Sonucu_1": 2.64,
         "Maç Sonucu_0": 2.96,
@@ -269810,7 +269812,8 @@
         "Tek / Çift_Çift": 1.63,
         "İkinci Yarı Karşılıklı Gol_Var": 3.21,
         "İkinci Yarı Karşılıklı Gol_Yok": 1.14
-      }
+      },
+      "spordb_match_id": "4059486"
     },
     {
       "index": 1924,

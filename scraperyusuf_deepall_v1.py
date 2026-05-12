@@ -133,7 +133,7 @@ def build_driver():
 
 def wait_initial(driver, timeout=40):
     try:
-        WebDriverWait(driver, timeout).until(
+        WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, MATCH_CARD_SEL))
         )
         return True
@@ -316,7 +316,7 @@ def click_match(driver, ev, dep):
     # arama yoksa ya da bulamadıysa: üstten aşağı tarama
     init_scroll_target(driver)
     reset_scroll_top(driver)
-    for _ in range(18):
+    for _ in range(20):
         cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
         for c in cards:
             try:
@@ -328,8 +328,8 @@ def click_match(driver, ev, dep):
                     return True
             except Exception:
                 continue
-        scroll_step(driver, 1200)
-        time.sleep(0.9)
+        scroll_step(driver, 800)
+        time.sleep(1.0)
 
     return False
 

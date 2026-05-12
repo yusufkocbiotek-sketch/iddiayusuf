@@ -255,9 +255,65 @@ def collect_scores_for_date(driver, iso_date: str):
         seen.add(k)
         res = split_row_cells(driver, a)
         if res and res.get("idx") is not None:
-            h, aw = pick_home_away(res.get("texts", []), res["idx"])
+            texts = res.get("texts", [])
+            h, aw = pick_home_away(texts, res["idx"])
             item["sp_home"], item["sp_away"] = h, aw
-        if item["sp_home"] and item["sp_away"]: out.append(item)
+            
+  # ... (href ve item oluşturma kısmı aynı) ...
+        
+        # --- YENİ YÖNTEM: DOĞRUDAN HTML ELEMENTİNDEN ÇEKME ---
+        # Satırın kendisini (tr) bulmaya çalışalım ki içinde arama yapabilelim
+        try:
+            # Önce satırı (tr) bulalım (a etiketinin atası)
+            row_element = a.find_element(By.XPATH, "./ancestor::tr")
+            
+            # Strateji A: 'hide-on-mobile' class'ına sahip hücreleri al
+            # Genelde İY skoru buradadır
+            iy_cells = row_element.find_elements(By.CSS_SELECTOR, "td.hide-on-mobile")
+            
+            iy_found = False
+            if iy_cells:
+                for cell in iy_cells:
+                    txt = cell.text.strip()
+                    # Skor formatını kontrol et (örn: 1-0)
+                    if re.match(r"^\d+[-:]\d+$", txt):
+                        parts = txt.replace(":", "-").split("-")
+                        s1, s2 = int(parts[0]), int(parts[1])
+                        
+                        # Son bir mantık kontrolü (futbol skoru olmalı)
+                        if s1 < 10 and s2 < 10 and (s1+s2) < 10:
+                            item["iy_skor1"] = s1
+                            item["iy_skor2"] = s2
+                            iy_found = True
+                            break
+            
+            # Strateji B: Eğer hide-on-mobile yoksa, MS skorundan sonraki ilk skor hücresini dene
+            if not iy_found:
+                all_score_cells = row_element.find_elements(By.XPATH, ".//td[contains(text(), '-')]")
+                ms_str = f"{item['skor1']}-{item['skor2']}"
+                
+                found_ms = False
+                for cell in all_score_cells:
+                    txt = cell.text.strip()
+                    if re.match(r"^\d+[-:]\d+$", txt):
+                        if txt == ms_str or txt == f"{item['skor1']}:{item['skor2']}":
+                            found_ms = True # MS skorunu bulduk, bir sonrakine geç
+                            continue
+                        
+                        if found_ms:
+                            # Bu MS'den sonraki ilk skor, muhtemelen İY'dir
+                            parts = txt.replace(":", "-").split("-")
+                            s1, s2 = int(parts[0]), int(parts[1])
+                            if s1 < 10 and s2 < 10: # again safety check
+                                item["iy_skor1"] = s1
+                                item["iy_skor2"] = s2
+                                break
+        except Exception as e:
+            pass # Hata olursa sessizce geç, eski (0-0) kalsın
+        # -------------------------------------------------------
+
+        if item["sp_home"] and item["sp_away"]: 
+            out.append(item)    
     return out
 
 # =========================
@@ -265,43 +321,114 @@ def collect_scores_for_date(driver, iso_date: str):
 # =========================
 def update_db(db_data: dict, scores: list, today_iso: str):
     matches = db_data.get("matches", [])
-    if not isinstance(matches, list): matches = []; db_data["matches"] = matches
+    if not isinstance(matches, list): 
+        matches = []
+        db_data["matches"] = matches
+    
     uid_set = set()
     for m in matches:
         if m.get("tarih") and m.get("ev_sahibi") and m.get("deplasman"):
             uid_set.add(match_uid(m["tarih"], m["ev_sahibi"], m["deplasman"]))
+    
     by_date = {}
     for m in matches:
-        if m.get("tarih"): by_date.setdefault(m["tarih"], []).append(m)
+        if m.get("tarih"): 
+            by_date.setdefault(m["tarih"], []).append(m)
+    
     matched = updated = noop = added = skipped = not_matched = 0
+    
     for sp in scores:
         cands = by_date.get(sp["tarih"], [])
-        best = None; best_sc = -1.0; second_sc = -1.0
+        best = None
+        best_sc = -1.0
+        second_sc = -1.0
+        
         for m in cands:
             sc = match_score(m.get("ev_sahibi",""), m.get("deplasman",""), sp["sp_home"], sp["sp_away"])
-            if sc > best_sc: second_sc = best_sc; best_sc = sc; best = m
-            elif sc > second_sc: second_sc = sc
+            if sc > best_sc: 
+                second_sc = best_sc
+                best_sc = sc
+                best = m
+            elif sc > second_sc: 
+                second_sc = sc
+        
+        # DİKKAT: Burası 'for m in cands' döngüsünün DIŞINDA olmalı
         if best and best_sc >= THRESH_MAYBE and (best_sc - second_sc) >= MIN_GAP:
             if best_sc >= THRESH_OK:
                 matched += 1
+                
+                # Ev/Dep eşleşme kontrolü
                 s_direct = team_sim(best.get("ev_sahibi",""), sp["sp_home"]) + team_sim(best.get("deplasman",""), sp["sp_away"])
                 s_swap = team_sim(best.get("ev_sahibi",""), sp["sp_away"]) + team_sim(best.get("deplasman",""), sp["sp_home"])
+                
+                # MS Skorlarını belirle
                 skor_ev, skor_dep = (sp["skor2"], sp["skor1"]) if s_swap > s_direct else (sp["skor1"], sp["skor2"])
-                changed = (best.get("skor_ev") != skor_ev or best.get("skor_dep") != skor_dep or best.get("spordb_match_id") != sp["spordb_match_id"])
-                best["skor_ev"] = skor_ev; best["skor_dep"] = skor_dep; best["durum"] = "bitti"
-                best["spordb_match_id"] = sp["spordb_match_id"]; best["kaynak"] = "spordb.com"; best["cekme_zamani"] = sp["cekme_zamani"]
-                if changed: updated += 1
-                else: noop += 1
+
+                # --- YENİ EKLEME: İY SKORLARINI GÜNCELLE ---
+                # NOT: sp sözlüğünde İY skorunun anahtar ismini kontrol et (iy_skor1, iy_skor2 vb.)
+                iy_ev = sp.get("iy_skor1") 
+                iy_dep = sp.get("iy_skor2")
+                
+                if iy_ev is not None and iy_dep is not None:
+                    best["skor_1y_ev"] = int(iy_ev)
+                    best["skor_1y_dep"] = int(iy_dep)
+                # -------------------------------------------
+
+                # Değişiklik olup olmadığını kontrol et
+                changed = (best.get("skor_ev") != skor_ev or 
+                           best.get("skor_dep") != skor_dep or 
+                           best.get("spordb_match_id") != sp["spordb_match_id"])
+                
+                # Veritabanını güncelle
+                best["skor_ev"] = skor_ev
+                best["skor_dep"] = skor_dep
+                best["durum"] = "bitti"
+                best["spordb_match_id"] = sp["spordb_match_id"]
+                best["kaynak"] = "spordb.com"
+                best["cekme_zamani"] = sp["cekme_zamani"]
+                
+                if changed: 
+                    updated += 1
+                else: 
+                    noop += 1
                 continue
-            skipped += 1; continue
+            
+            skipped += 1
+            continue
+        
+        # Eğer eşleşen maç bulunamadıysa ve ADD_MISSING_MATCHES açıksa ekle
         if ADD_MISSING_MATCHES:
             uid = match_uid(sp["tarih"], sp["sp_home"], sp["sp_away"])
             if uid not in uid_set:
-                matches.append({"index": 0, "mac_kodu": "", "ev_sahibi": sp["sp_home"], "deplasman": sp["sp_away"], "saat": "", "lig": "", "tarih": sp["tarih"], "cekme_zamani": sp["cekme_zamani"], "durum": "bitti", "skor_ev": sp["skor1"], "skor_dep": sp["skor2"], "skor_1y_ev": 0, "skor_1y_dep": 0, "kaynak": "spordb.com", "spordb_match_id": sp["spordb_match_id"], "oranlar": {}})
-                by_date.setdefault(sp["tarih"], []).append(matches[-1]); uid_set.add(uid); added += 1
-            else: not_matched += 1
-        else: not_matched += 1
-    db_data["matches"] = matches; db_data["updated"] = datetime.datetime.now().isoformat()
+                matches.append({
+                    "index": 0, 
+                    "mac_kodu": "", 
+                    "ev_sahibi": sp["sp_home"], 
+                    "deplasman": sp["sp_away"], 
+                    "saat": "", 
+                    "lig": "", 
+                    "tarih": sp["tarih"], 
+                    "cekme_zamani": sp["cekme_zamani"], 
+                    "durum": "bitti", 
+                    "skor_ev": sp["skor1"], 
+                    "skor_dep": sp["skor2"], 
+                    # İY Skorları da burada eklendi
+                    "skor_1y_ev": sp.get("iy_skor1", 0), 
+                    "skor_1y_dep": sp.get("iy_skor2", 0), 
+                    "kaynak": "spordb.com", 
+                    "spordb_match_id": sp["spordb_match_id"], 
+                    "oranlar": {}
+                })
+                by_date.setdefault(sp["tarih"], []).append(matches[-1])
+                uid_set.add(uid)
+                added += 1
+            else: 
+                not_matched += 1
+        else: 
+            not_matched += 1
+            
+    db_data["matches"] = matches
+    db_data["updated"] = datetime.datetime.now().isoformat()
     return matched, updated, noop, added, skipped, not_matched
 
 # =========================

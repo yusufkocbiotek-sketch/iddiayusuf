@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-05-13T03:53:41.247725",
+  "created_at": "2026-05-13T04:11:21.777751",
   "source_url": "https://www.spordb.com/iddaa-programi",
   "days": [
     "2026-05-13",
@@ -14,9 +14,11 @@
       "teams_slug": "belgrano-cordoba-union-santa-fe",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:27.048955",
+      "cekme_zamani": "2026-05-13T04:08:23.185763",
       "sp_home": "Belgrano Cordoba",
-      "sp_away": "Union Santa Fe"
+      "sp_away": "Union Santa Fe",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4063928",
@@ -24,9 +26,11 @@
       "teams_slug": "londrina-sao-bernardo-fc",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-13T03:53:27.060123",
+      "cekme_zamani": "2026-05-13T04:08:28.403746",
       "sp_home": "Londrina",
-      "sp_away": "Sao Bernardo FC"
+      "sp_away": "Sao Bernardo FC",
+      "iy_skor1": 0,
+      "iy_skor2": 2
     },
     {
       "spordb_match_id": "4068129",
@@ -34,7 +38,7 @@
       "teams_slug": "argentinos-juniors-huracan",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:27.072143",
+      "cekme_zamani": "2026-05-13T04:08:28.466661",
       "sp_home": "Argentinos Juniors",
       "sp_away": "Huracan"
     },
@@ -42,9 +46,9 @@
       "spordb_match_id": "4066947",
       "tarih": "2026-05-13",
       "teams_slug": "cruzeiro-goias",
-      "skor1": 0,
+      "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:27.081424",
+      "cekme_zamani": "2026-05-13T04:08:33.819231",
       "sp_home": "Cruzeiro",
       "sp_away": "Goias"
     },
@@ -52,9 +56,9 @@
       "spordb_match_id": "4066948",
       "tarih": "2026-05-13",
       "teams_slug": "fluminense-operario-pr",
-      "skor1": 1,
+      "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:27.092457",
+      "cekme_zamani": "2026-05-13T04:08:39.157023",
       "sp_home": "Fluminense",
       "sp_away": "Operario PR"
     },
@@ -64,9 +68,11 @@
       "teams_slug": "deportivo-cali-atletico-bucaramanga",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.759216",
+      "cekme_zamani": "2026-05-13T04:08:58.076028",
       "sp_home": "Deportivo Cali",
-      "sp_away": "Atletico Bucaramanga"
+      "sp_away": "Atletico Bucaramanga",
+      "iy_skor1": 1,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4068002",
@@ -74,9 +80,11 @@
       "teams_slug": "medellin-fortaleza",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.767756",
+      "cekme_zamani": "2026-05-13T04:09:03.245339",
       "sp_home": "Medellin",
-      "sp_away": "Fortaleza"
+      "sp_away": "Fortaleza",
+      "iy_skor1": 2,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4055433",
@@ -84,9 +92,11 @@
       "teams_slug": "cerro-porteno-club-guarani",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.776846",
+      "cekme_zamani": "2026-05-13T04:09:03.268334",
       "sp_home": "Cerro Porteno",
-      "sp_away": "Club Guarani"
+      "sp_away": "Club Guarani",
+      "iy_skor1": 2,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4068036",
@@ -94,9 +104,11 @@
       "teams_slug": "cerro-largo-ca-penarol",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-13T03:53:40.786524",
+      "cekme_zamani": "2026-05-13T04:09:03.290060",
       "sp_home": "Cerro Largo",
-      "sp_away": "CA Penarol"
+      "sp_away": "CA Penarol",
+      "iy_skor1": 1,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4059486",
@@ -104,9 +116,11 @@
       "teams_slug": "mushuc-runa-ldu-quito",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-13T03:53:40.792715",
+      "cekme_zamani": "2026-05-13T04:09:03.345027",
       "sp_home": "Mushuc Runa",
-      "sp_away": "LDU Quito"
+      "sp_away": "LDU Quito",
+      "iy_skor1": 3,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067993",
@@ -114,9 +128,11 @@
       "teams_slug": "millonarios-llaneros",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.799228",
+      "cekme_zamani": "2026-05-13T04:09:03.366053",
       "sp_home": "Millonarios",
-      "sp_away": "Llaneros"
+      "sp_away": "Llaneros",
+      "iy_skor1": 4,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4056349",
@@ -124,9 +140,11 @@
       "teams_slug": "sport-boys-universitario",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.806422",
+      "cekme_zamani": "2026-05-13T04:09:03.398756",
       "sp_home": "Sport Boys",
-      "sp_away": "Universitario"
+      "sp_away": "Universitario",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4032359",
@@ -134,9 +152,11 @@
       "teams_slug": "oleksandria-zorya-luhansk",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:40.813973",
+      "cekme_zamani": "2026-05-13T04:09:08.704003",
       "sp_home": "Oleksandria",
-      "sp_away": "Zorya Luhansk"
+      "sp_away": "Zorya Luhansk",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4060306",
@@ -144,9 +164,11 @@
       "teams_slug": "gwangju-fc-seoul",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.820546",
+      "cekme_zamani": "2026-05-13T04:09:13.928922",
       "sp_home": "Gwangju",
-      "sp_away": "FC Seoul"
+      "sp_away": "FC Seoul",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4060307",
@@ -154,9 +176,11 @@
       "teams_slug": "incheon-united-pohang-steelers",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.827523",
+      "cekme_zamani": "2026-05-13T04:09:19.149716",
       "sp_home": "Incheon United",
-      "sp_away": "Pohang Steelers"
+      "sp_away": "Pohang Steelers",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4032355",
@@ -164,9 +188,11 @@
       "teams_slug": "epitsentr-kamianets-podilskyi-zhytychi-zhytomyr",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:40.834327",
+      "cekme_zamani": "2026-05-13T04:09:24.489813",
       "sp_home": "Epitsentr Kamianets-Podilskyi",
-      "sp_away": "Zhytychi Zhytomyr"
+      "sp_away": "Zhytychi Zhytomyr",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4068087",
@@ -174,9 +200,11 @@
       "teams_slug": "inter-turku-js-hercules",
       "skor1": 8,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.840351",
+      "cekme_zamani": "2026-05-13T04:09:29.758636",
       "sp_home": "Inter Turku",
-      "sp_away": "JS Hercules"
+      "sp_away": "JS Hercules",
+      "iy_skor1": 3,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067426",
@@ -184,9 +212,11 @@
       "teams_slug": "cherno-more-varna-lokomotiv-plovdiv",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.847840",
+      "cekme_zamani": "2026-05-13T04:09:29.826364",
       "sp_home": "Cherno More Varna",
-      "sp_away": "Lokomotiv Plovdiv"
+      "sp_away": "Lokomotiv Plovdiv",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4032358",
@@ -194,9 +224,11 @@
       "teams_slug": "metalist-1925-kharkiv-karpaty-lviv-2020",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:40.856150",
+      "cekme_zamani": "2026-05-13T04:09:35.052964",
       "sp_home": "Metalist 1925 Kharkiv",
-      "sp_away": "Karpaty Lviv 2020"
+      "sp_away": "Karpaty Lviv 2020",
+      "iy_skor1": 1,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4032361",
@@ -204,9 +236,11 @@
       "teams_slug": "veres-kryvbas-kryvyi-rih",
       "skor1": 1,
       "skor2": 3,
-      "cekme_zamani": "2026-05-13T03:53:40.863089",
+      "cekme_zamani": "2026-05-13T04:09:35.124905",
       "sp_home": "Veres",
-      "sp_away": "Kryvbas Kryvyi Rih"
+      "sp_away": "Kryvbas Kryvyi Rih",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4025614",
@@ -214,9 +248,11 @@
       "teams_slug": "chrudim-pribram",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.876716",
+      "cekme_zamani": "2026-05-13T04:09:35.236469",
       "sp_home": "Chrudim",
-      "sp_away": "Pribram"
+      "sp_away": "Pribram",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067976",
@@ -224,9 +260,11 @@
       "teams_slug": "jeunesse-sportive-omrane-as-marsa",
       "skor1": 2,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:40.881837",
+      "cekme_zamani": "2026-05-13T04:09:40.444024",
       "sp_home": "Jeunesse Sportive Omrane",
-      "sp_away": "AS Marsa"
+      "sp_away": "AS Marsa",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4068073",
@@ -234,9 +272,11 @@
       "teams_slug": "al-faisaly-al-ramtha",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.888309",
+      "cekme_zamani": "2026-05-13T04:09:40.499839",
       "sp_home": "Al Faisaly",
-      "sp_away": "Al Ramtha"
+      "sp_away": "Al Ramtha",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4067831",
@@ -244,9 +284,11 @@
       "teams_slug": "mlada-boleslav-dukla-prag",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:40.894021",
+      "cekme_zamani": "2026-05-13T04:09:45.792327",
       "sp_home": "Mlada Boleslav",
-      "sp_away": "Dukla Prag"
+      "sp_away": "Dukla Prag",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4067832",
@@ -254,9 +296,11 @@
       "teams_slug": "slovacko-banik-ostrava",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.899663",
+      "cekme_zamani": "2026-05-13T04:09:45.856387",
       "sp_home": "Slovacko",
-      "sp_away": "Banik Ostrava"
+      "sp_away": "Banik Ostrava",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067833",
@@ -264,9 +308,11 @@
       "teams_slug": "fastav-zlin-teplice",
       "skor1": 2,
       "skor2": 4,
-      "cekme_zamani": "2026-05-13T03:53:40.905214",
+      "cekme_zamani": "2026-05-13T04:09:51.075756",
       "sp_home": "FASTAV Zlin",
-      "sp_away": "Teplice"
+      "sp_away": "Teplice",
+      "iy_skor1": 2,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4066183",
@@ -274,9 +320,11 @@
       "teams_slug": "asteras-tripolis-panserraikos",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.911205",
+      "cekme_zamani": "2026-05-13T04:09:51.144492",
       "sp_home": "Asteras Tripolis",
-      "sp_away": "Panserraikos"
+      "sp_away": "Panserraikos",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4066184",
@@ -284,9 +332,11 @@
       "teams_slug": "kifisia-atromitos",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-13T03:53:40.916888",
+      "cekme_zamani": "2026-05-13T04:09:56.363379",
       "sp_home": "Kifisia",
-      "sp_away": "Atromitos"
+      "sp_away": "Atromitos",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4066185",
@@ -294,9 +344,11 @@
       "teams_slug": "panaitolikos-ae-larisa",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.923588",
+      "cekme_zamani": "2026-05-13T04:09:56.428358",
       "sp_home": "Panaitolikos",
-      "sp_away": "AE Larisa"
+      "sp_away": "AE Larisa",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4068089",
@@ -304,9 +356,11 @@
       "teams_slug": "pk-35-ry-kups-kuopio",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:40.932217",
+      "cekme_zamani": "2026-05-13T04:10:01.656251",
       "sp_home": "PK-35 ry",
-      "sp_away": "KuPS Kuopio"
+      "sp_away": "KuPS Kuopio",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4061877",
@@ -314,9 +368,11 @@
       "teams_slug": "fk-riga-auda",
       "skor1": 4,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.940309",
+      "cekme_zamani": "2026-05-13T04:10:06.879671",
       "sp_home": "FK Riga",
-      "sp_away": "Auda"
+      "sp_away": "Auda",
+      "iy_skor1": 2,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4041808",
@@ -324,9 +380,11 @@
       "teams_slug": "al-kholood-al-akhdoud",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:40.953662",
+      "cekme_zamani": "2026-05-13T04:10:06.956513",
       "sp_home": "Al Kholood",
-      "sp_away": "Al Akhdoud"
+      "sp_away": "Al Akhdoud",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4068083",
@@ -334,9 +392,11 @@
       "teams_slug": "modena-juve-stabia",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.968091",
+      "cekme_zamani": "2026-05-13T04:10:12.262438",
       "sp_home": "Modena",
-      "sp_away": "Juve Stabia"
+      "sp_away": "Juve Stabia",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4048357",
@@ -344,9 +404,11 @@
       "teams_slug": "celta-vigo-levante",
       "skor1": 2,
       "skor2": 3,
-      "cekme_zamani": "2026-05-13T03:53:40.977677",
+      "cekme_zamani": "2026-05-13T04:10:17.495846",
       "sp_home": "Celta Vigo",
-      "sp_away": "Levante"
+      "sp_away": "Levante",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4065703",
@@ -354,9 +416,11 @@
       "teams_slug": "landskrona-norrby-if",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.987857",
+      "cekme_zamani": "2026-05-13T04:10:17.554916",
       "sp_home": "Landskrona",
-      "sp_away": "Norrby IF"
+      "sp_away": "Norrby IF",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4065704",
@@ -364,9 +428,11 @@
       "teams_slug": "ifk-varnamo-orebro",
       "skor1": 0,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:40.996635",
+      "cekme_zamani": "2026-05-13T04:10:17.607987",
       "sp_home": "IFK Varnamo",
-      "sp_away": "Örebro"
+      "sp_away": "Örebro",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067427",
@@ -374,9 +440,11 @@
       "teams_slug": "botev-plovdiv-arda-kardzhali",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:41.004843",
+      "cekme_zamani": "2026-05-13T04:10:22.811620",
       "sp_home": "Botev Plovdiv",
-      "sp_away": "Arda Kardzhali"
+      "sp_away": "Arda Kardzhali",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4037562",
@@ -384,9 +452,11 @@
       "teams_slug": "ts-galaxy-mamelodi-sundowns",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:41.012921",
+      "cekme_zamani": "2026-05-13T04:10:28.054333",
       "sp_home": "TS Galaxy",
-      "sp_away": "Mamelodi Sundowns"
+      "sp_away": "Mamelodi Sundowns",
+      "iy_skor1": 2,
+      "iy_skor2": 2
     },
     {
       "spordb_match_id": "4068074",
@@ -394,9 +464,11 @@
       "teams_slug": "al-hussein-al-wehdat",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.021131",
+      "cekme_zamani": "2026-05-13T04:10:28.118252",
       "sp_home": "Al Hussein",
-      "sp_away": "Al Wehdat"
+      "sp_away": "Al Wehdat",
+      "iy_skor1": 2,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4048356",
@@ -404,9 +476,11 @@
       "teams_slug": "real-betis-elche",
       "skor1": 2,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.029662",
+      "cekme_zamani": "2026-05-13T04:10:28.177607",
       "sp_home": "Real Betis",
-      "sp_away": "Elche"
+      "sp_away": "Elche",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4067816",
@@ -414,9 +488,11 @@
       "teams_slug": "sparta-prag-viktoria-plzen",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:41.037864",
+      "cekme_zamani": "2026-05-13T04:10:28.225357",
       "sp_home": "Sparta Prag",
-      "sp_away": "Viktoria Plzen"
+      "sp_away": "Viktoria Plzen",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4055808",
@@ -424,9 +500,11 @@
       "teams_slug": "usm-alger-mostaganem",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.046598",
+      "cekme_zamani": "2026-05-13T04:10:33.518658",
       "sp_home": "USM Alger",
-      "sp_away": "Mostaganem"
+      "sp_away": "Mostaganem",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4041810",
@@ -434,9 +512,11 @@
       "teams_slug": "al-nassr-al-hilal-riyadh",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.052422",
+      "cekme_zamani": "2026-05-13T04:10:39.046973",
       "sp_home": "Al Nassr",
-      "sp_away": "Al Hilal Riyadh"
+      "sp_away": "Al Hilal Riyadh",
+      "iy_skor1": 1,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067629",
@@ -444,9 +524,11 @@
       "teams_slug": "grasshoppers-winterthur",
       "skor1": 3,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:41.057928",
+      "cekme_zamani": "2026-05-13T04:10:39.109469",
       "sp_home": "Grasshoppers",
-      "sp_away": "Winterthur"
+      "sp_away": "Winterthur",
+      "iy_skor1": 0,
+      "iy_skor2": 2
     },
     {
       "spordb_match_id": "4067630",
@@ -454,9 +536,11 @@
       "teams_slug": "luzern-zurich",
       "skor1": 1,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:41.063723",
+      "cekme_zamani": "2026-05-13T04:10:39.165073",
       "sp_home": "Luzern",
-      "sp_away": "Zürich"
+      "sp_away": "Zürich",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067631",
@@ -464,9 +548,11 @@
       "teams_slug": "servette-lausanne-sports",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:41.069221",
+      "cekme_zamani": "2026-05-13T04:10:44.410070",
       "sp_home": "Servette",
-      "sp_away": "Lausanne Sports"
+      "sp_away": "Lausanne Sports",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4067659",
@@ -474,9 +560,11 @@
       "teams_slug": "aberdeen-st-mirren",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:41.077829",
+      "cekme_zamani": "2026-05-13T04:10:49.625431",
       "sp_home": "Aberdeen",
-      "sp_away": "St. Mirren"
+      "sp_away": "St. Mirren",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4067661",
@@ -484,9 +572,11 @@
       "teams_slug": "kilmarnock-dundee-fc",
       "skor1": 3,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.086186",
+      "cekme_zamani": "2026-05-13T04:10:49.682617",
       "sp_home": "Kilmarnock",
-      "sp_away": "Dundee FC"
+      "sp_away": "Dundee FC",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4068076",
@@ -494,9 +584,11 @@
       "teams_slug": "dunfermline-athletic-partick-thistle",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.094470",
+      "cekme_zamani": "2026-05-13T04:10:54.926657",
       "sp_home": "Dunfermline Athletic",
-      "sp_away": "Partick Thistle"
+      "sp_away": "Partick Thistle",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4068081",
@@ -504,9 +596,11 @@
       "teams_slug": "clyde-hamilton",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.102697",
+      "cekme_zamani": "2026-05-13T04:11:00.262660",
       "sp_home": "Clyde",
-      "sp_away": "Hamilton"
+      "sp_away": "Hamilton",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4067962",
@@ -514,9 +608,11 @@
       "teams_slug": "southampton-middlesbrough",
       "skor1": 1,
       "skor2": 1,
-      "cekme_zamani": "2026-05-13T03:53:41.111449",
+      "cekme_zamani": "2026-05-13T04:11:05.577651",
       "sp_home": "Southampton",
-      "sp_away": "Middlesbrough"
+      "sp_away": "Middlesbrough",
+      "iy_skor1": 1,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4068084",
@@ -524,9 +620,11 @@
       "teams_slug": "catanzaro-avellino",
       "skor1": 3,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:41.120405",
+      "cekme_zamani": "2026-05-13T04:11:10.902873",
       "sp_home": "Catanzaro",
-      "sp_away": "Avellino"
+      "sp_away": "Avellino",
+      "iy_skor1": 1,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4065947",
@@ -534,9 +632,11 @@
       "teams_slug": "sa-bulo-bulo-club-universitario-de-vinto",
       "skor1": 0,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:41.128407",
+      "cekme_zamani": "2026-05-13T04:11:10.966998",
       "sp_home": "SA Bulo Bulo",
-      "sp_away": "Club Universitario de Vinto"
+      "sp_away": "Club Universitario de Vinto",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4068003",
@@ -544,9 +644,11 @@
       "teams_slug": "leones-fc-orsomarso",
       "skor1": 2,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:41.136954",
+      "cekme_zamani": "2026-05-13T04:11:11.026667",
       "sp_home": "Leones FC",
-      "sp_away": "Orsomarso"
+      "sp_away": "Orsomarso",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4055751",
@@ -554,9 +656,11 @@
       "teams_slug": "js-saoura-belouizdad",
       "skor1": 0,
       "skor2": 0,
-      "cekme_zamani": "2026-05-13T03:53:41.145460",
+      "cekme_zamani": "2026-05-13T04:11:16.228531",
       "sp_home": "JS Saoura",
-      "sp_away": "Belouizdad"
+      "sp_away": "Belouizdad",
+      "iy_skor1": 0,
+      "iy_skor2": 0
     },
     {
       "spordb_match_id": "4048361",
@@ -564,9 +668,11 @@
       "teams_slug": "osasuna-atletico-madrid",
       "skor1": 1,
       "skor2": 2,
-      "cekme_zamani": "2026-05-13T03:53:41.154469",
+      "cekme_zamani": "2026-05-13T04:11:21.616408",
       "sp_home": "Osasuna",
-      "sp_away": "Atletico Madrid"
+      "sp_away": "Atletico Madrid",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     },
     {
       "spordb_match_id": "4067983",
@@ -574,9 +680,11 @@
       "teams_slug": "real-santander-boca-juniors-de-cali",
       "skor1": 0,
       "skor2": 3,
-      "cekme_zamani": "2026-05-13T03:53:41.162840",
+      "cekme_zamani": "2026-05-13T04:11:21.674340",
       "sp_home": "Real Santander",
-      "sp_away": "Boca Juniors de Cali"
+      "sp_away": "Boca Juniors de Cali",
+      "iy_skor1": 0,
+      "iy_skor2": 1
     }
   ]
 }

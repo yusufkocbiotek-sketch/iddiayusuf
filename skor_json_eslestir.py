@@ -66,7 +66,7 @@ OUTPUT_SKOR_JSON = BASE_DIR / "public" / "data" / "skorlar_spordb.json"
 # =========================
 SPORDB_URL = "https://www.spordb.com/iddaa-programi"
 
-DAYS_BACK_FINISHED = 10     # Son 3 gün
+DAYS_BACK_FINISHED = 2     # Son 3 gün
 INCLUDE_TODAY = True       # Bugünün maçlarını da al
 
 UPDATE_MAC_JSON = True

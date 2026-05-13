@@ -103,112 +103,29 @@ def extract_matches_with_js(driver):
         time.sleep(1)
     except: pass
 
-    js_code = r"""
+    js_code = """
     let results = [];
     let currentLeague = "Bilinmeyen Lig";
     let processedRows = new Set();
-    
-    // Tüm olası elementleri seç (Lig başlıkları ve Skor alanları)
-    let elements = document.querySelectorAll('h3[data-testid="tournament-name-link"], .rounded-match__score, [class*="score"], [class*="match-info"]');
+    let elements = document.querySelectorAll('h3[data-testid="tournament-name-link"], .rounded-match__score');
 
     elements.forEach(el => {
-        // Lig Başlığı Yakalama
         if (el.tagName === 'H3' && el.getAttribute('data-testid') === 'tournament-name-link') {
             let text = el.innerText || el.textContent || "";
             currentLeague = text.replace(/\\n/g, ' ').replace(/\\s+/g, ' ').trim().replace(/Favorilere ekle|MS|İY|arrow/gi, '').replace(/\\|$/, '').trim();
         } 
-        // Skor Satırı Yakalama
         else if (el.classList && el.classList.contains('rounded-match__score')) {
             let row = el.parentElement;
-            // Üst satırlara doğru çıkarak tam satırı bul
             for (let i = 0; i < 6; i++) {
                 if (!row) break;
-                
-                // Satır içindeki tüm skor elementlerini al
-                let allScores = row.querySelectorAll('.rounded-match__score, [class*="half"], [class*="iy"]');
-                
-                // Takım isimlerini al
-                let truncates = Array.from(row.querySelectorAll('.truncate, [class*="team-name"], strong'))
+                let scores = row.querySelectorAll('.rounded-match__score');
+                let truncates = Array.from(row.querySelectorAll('.truncate'))
                     .map(e => (e.innerText || e.textContent || "").trim())
                     .filter(t => t.length > 1 && !/Favorilere|arrow|MS|İY/i.test(t));
                 
-                if (allScores.length >= 2 && truncates.length >= 2) {
+                if (scores.length >= 2 && truncates.length >= 2) {
                     if (!processedRows.has(row)) {
                         processedRows.add(row);
-                        
-                        // 1. MS Skoru (İlk iki skor elementi genelde budur)
-                        let msHome = (allScores[0].innerText || allScores[0].textContent || "").trim();
-                        let msAway = (allScores[1].innerText || allScores[1].textContent || "").trim();
-                        
-                        // 2. İY Skoru Arama Stratejisi
-                        let iyHome = "0";
-                        let iyAway = "0";
-                        let foundIY = false;
-
-                        // Strateji A: Eğer 4 skor elementi varsa (MS Ev, MS Dep, İY Ev, İY Dep)
-                        if (allScores.length >= 4) {
-                            iyHome = (allScores[2].innerText || allScores[2].textContent || "").trim();
-                            iyAway = (allScores[3].innerText || allScores[3].textContent || "").trim();
-                            foundIY = true;
-                        }
-                        // Strateji B: Satırın tamamını tara, sayı-sayı formatını bul ama MS skoruyla karıştırma
-else {
-    let rowText = row.innerText || row.textContent || "";
-    
-    // Önce tüm sayı-sayı çiftlerini bul (örn: ["2-1", "1-0"])
-    let allScoresInText = rowText.match(/(\d+)\s*[-:]\s*(\d+)/g);
-
-    if (allScoresInText && allScoresInText.length >= 2) {
-        // Genelde yapı: "Ev Dep 2-1 (1-0)" şeklindedir.
-        
-        // 1. Parantez içindeki skoru öncelikli ara (En güvenilir yöntem)
-        let parenMatch = rowText.match(/\((\d+)\s*[-:]\s*(\d+)\)/);
-        if (parenMatch) {
-            iyHome = parenMatch[1];
-            iyAway = parenMatch[2];
-            foundIY = true;
-        } 
-        // 2. Parantez yoksa, MS skorundan farklı olan diğer skoru dene
-        else {
-            // MS skoru zaten allScores[0] ve allScores[1]'den geldi (örn: 2 ve 1)
-            // Text içindeki diğer skorları tara
-            for (let scoreStr of allScoresInText) {
-                let parts = scoreStr.split(/[-:]/);
-                let h = parts[0].trim();
-                let a = parts[1].trim();
-                
-                // Eğer bu skor MS skorundan farklıysa, muhtemelen İY skorudur
-                // (h !== msHome || a !== msAway) kontrolü: Birebir aynıysa atla
-                if (h === msHome && a === msAway) continue; 
-                
-                // Bazen 0-0 olabilir ama MS skoru değilse yine de İY olabilir
-                // Sadece MS skoruyla tamamen aynı olanları eleyelim
-                iyHome = h;
-                iyAway = a;
-                foundIY = true;
-                break; // İlk farklı skoru bulunca dur
-                            } 
-                            // Strateji C: Küçük puntolu ayrı bir span/div varsa (bazen class'sız olur)
-                            else {
-                                // Satır içindeki tüm küçük metinleri tara
-                                let smallTexts = row.querySelectorAll('span, div, small');
-                                for (let s of smallTexts) {
-                                    let txt = s.innerText.trim();
-                                    if (/^\\d+-\\d+$/.test(txt) && txt !== (msHome+"-"+msAway)) {
-                                        // Bu muhtemelen İY skoru
-                                        let parts = txt.split('-');
-                                        if(parts.length === 2) {
-                                            iyHome = parts[0];
-                                            iyAway = parts[1];
-                                            foundIY = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        // Durum Bilgisi (Canlı, Bitti vb.)
                         let text = row.innerText || row.textContent || "";
                         let statusRegex = /^(\\d{1,3}['’\\.]?|\\d{1,2}:\\d{2}|MS|IY|İY|Bitti|Canlı|Başlamadı|İlk Yarı|İkinci Yarı|ERT|TAT)$/i;
                         let status = text.split('\\n').map(l=>l.trim()).find(l => statusRegex.test(l)) || "?";
@@ -217,9 +134,7 @@ else {
                             league: currentLeague,
                             home: truncates[0],
                             away: truncates[1],
-                            score: msHome + "-" + msAway,
-                            iy_home: iyHome,      // JS'den Python'a gidecek veri
-                            iy_away: iyAway,      // JS'den Python'a gidecek veri
+                            score: (scores[0].innerText || scores[0].textContent || "").trim() + "-" + (scores[1].innerText || scores[1].textContent || "").trim(),
                             status: status
                         });
                     }
@@ -254,61 +169,32 @@ def update_mac_json_safely(scraped_matches):
     def clean_name(name): return str(name).strip().lower()
 
     scraped_lookup = {}
-    
-    # Döngü değişkeni 'm' olduğu için içeride de 'm' kullanmalıyız
     for m in scraped_matches:
         h = clean_name(m.get('home') or m.get('ev_sahibi'))
         a = clean_name(m.get('away') or m.get('deplasman'))
-        
         if h and a and h != "?" and a != "?":
             key = f"{h}||{a}"
-            
-            # Sözlüğü oluştururken 'm' değişkenini kullan
-            scraped_lookup[key] = {
-                'score': m['score'],              # 'item' yerine 'm'
-                'status': m['status'],            # 'item' yerine 'm'
-                
-                # --- YENİ EKLEME: İY SKORLARI ---
-                'iy_home': m.get('iy_home', '0'), # 'item' yerine 'm'
-                'iy_away': m.get('iy_away', '0'), # 'item' yerine 'm'
-                # --------------------------------
-            }
+            scraped_lookup[key] = m
 
-    # Sayaç genellikle döngüden hemen önce veya en başta sıfırlanır
-    updated_count = 0 
+    updated_count = 0
 
-def update_match_obj(obj):
-    
-    if not isinstance(obj, dict): return
+    def update_match_obj(obj):
+        nonlocal updated_count
+        if not isinstance(obj, dict): return
 
-    h = clean_name(obj.get('home') or obj.get('ev_sahibi') or obj.get('ev') or obj.get('homeTeam') or "")
-    a = clean_name(obj.get('away') or obj.get('deplasman') or obj.get('dep') or obj.get('awayTeam') or "")
+        h = clean_name(obj.get('home') or obj.get('ev_sahibi') or obj.get('ev') or obj.get('homeTeam') or "")
+        a = clean_name(obj.get('away') or obj.get('deplasman') or obj.get('dep') or obj.get('awayTeam') or "")
 
-    if h and a and h != "?" and a != "?":
-        key = f"{h}||{a}"
-        if key in scraped_lookup:
-            new_data = scraped_lookup[key]
-            
-            # Mevcut Güncellemeler
-            if 'score' in obj: obj['score'] = new_data['score']
-            if 'skor' in obj: obj['skor'] = new_data['score']
-            if 'status' in obj: obj['status'] = new_data['status']
-            if 'durum' in obj: obj['durum'] = new_data['status']
-            if 'result' in obj: obj['result'] = new_data['score']
-            
-            # --- YENİ EKLEME: İY SKORLARINI GÜNCELLE ---
-            # new_data içinde 'iy_home' ve 'iy_away' varsa (JS'den gelen)
-            if 'iy_home' in new_data and 'iy_away' in new_data:
-                obj['skor_1y_ev'] = int(new_data['iy_home']) if new_data['iy_home'].isdigit() else 0
-                obj['skor_1y_dep'] = int(new_data['iy_away']) if new_data['iy_away'].isdigit() else 0
-            
-            # Alternatif: Eğer new_data doğrudan 'skor_1y_ev' anahtarıyla geliyorsa
-            elif 'skor_1y_ev' in new_data:
-                obj['skor_1y_ev'] = new_data['skor_1y_ev']
-                obj['skor_1y_dep'] = new_data['skor_1y_dep']
-            # -------------------------------------------
-            
-            updated_count += 1  # Sayaç artır (Eğer zaten artırmıyorsan)
+        if h and a and h != "?" and a != "?":
+            key = f"{h}||{a}"
+            if key in scraped_lookup:
+                new_data = scraped_lookup[key]
+                if 'score' in obj: obj['score'] = new_data['score']
+                if 'skor' in obj: obj['skor'] = new_data['score']
+                if 'status' in obj: obj['status'] = new_data['status']
+                if 'durum' in obj: obj['durum'] = new_data['status']
+                if 'result' in obj: obj['result'] = new_data['score']
+                updated_count += 1
 
     def traverse_and_update(data):
         if isinstance(data, dict):

@@ -66,7 +66,7 @@ OUTPUT_SKOR_JSON = BASE_DIR / "public" / "data" / "skorlar_spordb.json"
 # =========================
 SPORDB_URL = "https://www.spordb.com/iddaa-programi"
 
-DAYS_BACK_FINISHED = 3     # Son 3 gün
+DAYS_BACK_FINISHED = 10     # Son 3 gün
 INCLUDE_TODAY = True       # Bugünün maçlarını da al
 
 UPDATE_MAC_JSON = True
@@ -235,22 +235,79 @@ def deep_scroll_collect(driver, max_steps=70):
 # =========================
 # TARİH SEÇ (dropdown)
 # =========================
-def select_date_dropdown(driver, iso_date: str) -> bool:
+def select_date_dropdown(driver, target_iso_date):
+    """
+    Hedef tarihi içeren haftayı dropdown'dan bulur ve seçer.
+    target_iso_date: '2026-05-12' formatında
+    """
     try:
-        sel_el = driver.find_element(By.CSS_SELECTOR, DATESELECTOR_CSS)
-        sel = Select(sel_el)
-        values = [o.get_attribute("value") for o in sel.options]
-        if iso_date not in values: return False
-        before = len(driver.find_elements(By.CSS_SELECTOR, CANLI_LINK_SELECTOR))
-        sel.select_by_value(iso_date)
-        time.sleep(0.8)
-        for _ in range(25):
-            now = len(driver.find_elements(By.CSS_SELECTOR, CANLI_LINK_SELECTOR))
-            if now != before and now >= 0: break
-            time.sleep(0.3)
-        return True
-    except Exception: return False
+        # 1. Dropdown elementini bul
+        selects = driver.find_elements(By.TAG_NAME, "select")
+        date_select = None
+        
+        for sel in selects:
+            opts = sel.find_elements(By.TAG_NAME, "option")
+            if len(opts) > 5: # Tarih/Hafta dropdown'u genelde çok seçeneklidir
+                # İlk opsiyonun metninde tarih veya hafta ibaresi var mı kontrol et
+                first_text = opts[0].text.strip() if opts else ""
+                if "Hafta" in first_text or "202" in first_text or len(first_text) > 10:
+                    date_select = sel
+                    break
+        
+        if not date_select:
+            print(f"   ⚠️ Tarih/Hafta dropdown'u bulunamadı!")
+            return False
 
+        # 2. Dropdown içindeki tüm seçenekleri tara
+        options = date_select.find_elements(By.TAG_NAME, "option")
+        found_option = None
+        
+        # Hedef tarihimiz (örn: 2026-05-12)
+        target_dt = datetime.datetime.strptime(target_iso_date, "%Y-%m-%d").date()
+        
+        for opt in options:
+            opt_text = opt.text.strip()
+            opt_val = opt.get_attribute("value")
+            
+            # STRATEJİ A: Option metninde doğrudan tarih var mı? (örn: "12.05.2026 - 18.05.2026")
+            # Tarih aralıklarını parse edip hedef tarihin içinde olup olmadığını kontrol et
+            # Basit regex ile tarihleri ayıkla
+            dates_in_text = re.findall(r'\d{2}\.\d{2}\.\d{4}', opt_text)
+            if len(dates_in_text) >= 2:
+                start_str, end_str = dates_in_text[0], dates_in_text[1]
+                start_dt = datetime.datetime.strptime(start_str, "%d.%m.%Y").date()
+                end_dt = datetime.datetime.strptime(end_str, "%d.%m.%Y").date()
+                
+                if start_dt <= target_dt <= end_dt:
+                    found_option = opt
+                    break
+            
+            # STRATEJİ B: Option value'sunda tarih var mı? (Bazen value='2026-05-12' olur)
+            elif target_iso_date in opt_val:
+                found_option = opt
+                break
+                
+            # STRATEJİ C: Option metninde "Hafta X" yazıyorsa ve biz manuel moddaysak, 
+            # en son opsiyonu (genelde current week) seçebiliriz ama bu riskli. 
+            # En iyisi tarih aralığına bakmak.
+
+        if found_option:
+            # Seçeneği seç
+            select_obj = Select(date_select)
+            select_obj.select_by_value(found_option.get_attribute("value"))
+            print(f"   ✅ Dropdown'dan doğru hafta seçildi: {found_option.text.strip()}")
+            
+            # Sayfanın yüklenmesi ve tablonun gelmesi için bekle
+            time.sleep(3) 
+            return True
+        else:
+            print(f"   ⚠️ Hedef tarih ({target_iso_date}) için uygun hafta dropdown'da bulunamadı.")
+            # Fallback: Belki en son haftadır? Deneyebiliriz ama genelde bulunamazsa tarih yanlıştır.
+            return False
+
+    except Exception as e:
+        print(f"   ❌ Dropdown seçim hatası: {e}")
+        return False
 # =========================
 # SPORDB PARSE
 # =========================

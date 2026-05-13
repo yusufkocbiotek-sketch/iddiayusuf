@@ -2,6 +2,49 @@ import json, os, re, time, datetime, traceback, shutil, unicodedata, subprocess
 from pathlib import Path
 from difflib import SequenceMatcher
 
+def clean_team_name(name):
+    """Takım isimlerini standartlaştırarak eşleşme şansını artırır."""
+    if not name:
+        return ""
+    
+    # Küçük harfe çevir
+    n = name.lower().strip()
+    
+    # Yaygın kısaltmaları ve ön ekleri kaldır
+    # Örnek: "Deportivo" -> "deport", "Atletico" -> "atletico" (kalsın), "CA" -> ""
+    replacements = {
+        "deportivo": "deport",
+        "athletic": "athletic",
+        "atletico": "atletico",
+        "club": "",
+        "ca ": "", " ca": "", # CA (Club Atletico) gibi kısaltmaları sil
+        "fc ": "", " fc": "",
+        "ac ": "", " ac": "",
+        "sc ": "", " sc": "",
+        "us ": "", " us": "",
+        "fk ": "", " fk": "",
+        "sk ": "", " sk": "",
+        "real ": "real",
+        "sporting ": "sporting"
+    }
+    
+    for key, val in replacements.items():
+        # Kelimenin başında veya sonunda geçiyorsa değiştir
+        if n.startswith(key + " "):
+            n = val + n[len(key):]
+        elif n.endswith(" " + key):
+            n = n[:-len(key)-1] + (" " + val if val else "")
+        elif n == key:
+            n = val
+            
+    # Fazla boşlukları temizle
+    n = " ".join(n.split())
+    
+    # Nokta ve tireleri kaldır
+    n = n.replace(".", "").replace("-", " ")
+    
+    return n.strip()
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -82,9 +125,28 @@ def team_sim(a: str, b: str) -> float:
     return max(token_dice(a, b), seq_ratio(a, b))
 
 def match_score(local_home, local_away, sp_home, sp_away):
-    d1 = (team_sim(local_home, sp_home) + team_sim(local_away, sp_away)) / 2
-    d2 = (team_sim(local_home, sp_away) + team_sim(local_away, sp_home)) / 2
-    return max(d1, d2)
+    # 1. İsimleri temizle (Yeni eklenen fonksiyonu kullan)
+    l_home = clean_team_name(local_home)
+    l_away = clean_team_name(local_away)
+    s_home = clean_team_name(sp_home)
+    s_away = clean_team_name(sp_away)
+    
+    # 2. Puanlama yap
+    score = 0
+    
+    # Ev sahibi kontrolü
+    if l_home == s_home: 
+        score += 50
+    elif l_home in s_home or s_home in l_home: 
+        score += 25 # Kısmi eşleşme
+        
+    # Deplasman kontrolü
+    if l_away == s_away: 
+        score += 50
+    elif l_away in s_away or s_away in l_away: 
+        score += 25
+        
+    return score
 
 def match_uid(tarih: str, ev: str, dep: str) -> str:
     a = norm_team(ev); b = norm_team(dep)
@@ -262,58 +324,116 @@ def collect_scores_for_date(driver, iso_date: str):
   # ... (href ve item oluşturma kısmı aynı) ...
         
         # --- YENİ YÖNTEM: DOĞRUDAN HTML ELEMENTİNDEN ÇEKME ---
-        # Satırın kendisini (tr) bulmaya çalışalım ki içinde arama yapabilelim
+        iy_bulundu = False
+        
         try:
-            # Önce satırı (tr) bulalım (a etiketinin atası)
+            # 1. Önce satırı (tr) bulalım (a etiketinin atası)
             row_element = a.find_element(By.XPATH, "./ancestor::tr")
             
-            # Strateji A: 'hide-on-mobile' class'ına sahip hücreleri al
-            # Genelde İY skoru buradadır
-            iy_cells = row_element.find_elements(By.CSS_SELECTOR, "td.hide-on-mobile")
+            # 2. Satır içindeki TÜM td hücrelerini al
+            all_cells = row_element.find_elements(By.TAG_NAME, "td")
             
-            iy_found = False
-            if iy_cells:
-                for cell in iy_cells:
-                    txt = cell.text.strip()
-                    # Skor formatını kontrol et (örn: 1-0)
-                    if re.match(r"^\d+[-:]\d+$", txt):
-                        parts = txt.replace(":", "-").split("-")
-                        s1, s2 = int(parts[0]), int(parts[1])
-                        
-                        # Son bir mantık kontrolü (futbol skoru olmalı)
-                        if s1 < 10 and s2 < 10 and (s1+s2) < 10:
-                            item["iy_skor1"] = s1
-                            item["iy_skor2"] = s2
-                            iy_found = True
-                            break
+            # MS Skorumuz biliniyor (URL'den geldi)
+            ms_skor_str = f"{item['skor1']}-{item['skor2']}"
+            ms_skor_str_alt = f"{item['skor1']}:{item['skor2']}" # Noktalı versiyon
             
-            # Strateji B: Eğer hide-on-mobile yoksa, MS skorundan sonraki ilk skor hücresini dene
-            if not iy_found:
-                all_score_cells = row_element.find_elements(By.XPATH, ".//td[contains(text(), '-')]")
-                ms_str = f"{item['skor1']}-{item['skor2']}"
+            for cell in all_cells:
+                txt = cell.text.strip()
                 
-                found_ms = False
-                for cell in all_score_cells:
-                    txt = cell.text.strip()
-                    if re.match(r"^\d+[-:]\d+$", txt):
-                        if txt == ms_str or txt == f"{item['skor1']}:{item['skor2']}":
-                            found_ms = True # MS skorunu bulduk, bir sonrakine geç
-                            continue
+                # Sadece "Sayı-Sayı" veya "Sayı:Sayı" formatındakileri işleme al
+                if not re.match(r"^\d+[-:]\d+$", txt):
+                    continue
+                
+                # Bu skor MS skoru mu? (Eşleşiyorsa atla)
+                if txt == ms_skor_str or txt == ms_skor_str_alt:
+                    continue
+                
+                # Parçala ve kontrol et
+                parts = txt.replace(":", "-").split("-")
+                if len(parts) != 2:
+                    continue
+                    
+                try:
+                    s1 = int(parts[0])
+                    s2 = int(parts[1])
+                    
+                    # Makul bir futbol skoru mu? (Toplam 12'den az olsun)
+                    if s1 < 10 and s2 < 10 and (s1 + s2) < 12:
+                        item["iy_skor1"] = s1
+                        item["iy_skor2"] = s2
+                        iy_bulundu = True
+                        break # Bulunca dur
                         
-                        if found_ms:
-                            # Bu MS'den sonraki ilk skor, muhtemelen İY'dir
-                            parts = txt.replace(":", "-").split("-")
-                            s1, s2 = int(parts[0]), int(parts[1])
-                            if s1 < 10 and s2 < 10: # again safety check
-                                item["iy_skor1"] = s1
-                                item["iy_skor2"] = s2
-                                break
-        except Exception as e:
-            pass # Hata olursa sessizce geç, eski (0-0) kalsın
-        # -------------------------------------------------------
+                except ValueError:
+                    continue
 
+        except Exception as e:
+            pass 
+	# Satır bulunamazsa veya hata olursa sessiz geç
+        # -------------------------------------------------------
+        # ==========================================
+        # DETAY SAYFASINDAN İY SKORU ÇEK (KESİN ÇÖZÜM)
+        # ==========================================
+        # Sadece İY skoru 0-0 ise ve maç bitmişse detaya gir (Zaman kaybetmemek için)
+        # Not: Ana listeden bulunamadıysa burası çalışacak.
+        
+        if item.get("iy_skor1") in [None, 0, ""] or item.get("iy_skor2") in [None, 0, ""]:
+            try:
+                # Terminalde hangi maça girdiğimizi görelim
+                # print(f"🔍 Detay sayfasına giriliyor: {item['sp_home']} vs {item['sp_away']}")
+                
+                # 1. Yeni sekmede maç detayını aç
+                driver.execute_script("window.open(arguments[0], '_blank');", href)
+                
+                # 2. Yeni sekmeye geç
+                driver.switch_to.window(driver.window_handles[-1])
+                
+                # 3. Sayfanın yüklenmesini bekle (SPORDB yavaş olabilir)
+                time.sleep(5) 
+                
+                # 4. Sayfa metnini tara
+                page_body = driver.find_element(By.TAG_NAME, "body")
+                full_text = page_body.text
+                
+                import re
+                # SPORDB'de İY skoru genellikle "İY:", "Ilk Yari", "First Half" yanında yazar
+                pattern = r"(?:İY|Ilk Yari|First Half|Half Time|HT|Devre Arası)[:\s]*(\d+)\s*[-:]\s*(\d+)"
+                match = re.search(pattern, full_text, re.IGNORECASE)
+                
+                if match:
+                    s1 = int(match.group(1))
+                    s2 = int(match.group(2))
+                    
+                    # Güvenlik: Futbol skoru olmalı
+                    if s1 < 10 and s2 < 10:
+                        item["iy_skor1"] = s1
+                        item["iy_skor2"] = s2
+                        print(f"✅ DETAYDAN BULUNDU: {item['sp_home']} -> İY: {s1}-{s2}")
+                    else:
+                        # print(f"⚠️ Geçersiz skor: {s1}-{s2}")
+                        pass
+                else:
+                    # print(f"❌ Detayda da bulunamadı: {item['sp_home']}")
+                    pass
+
+                # 5. Sekmeyi kapat ve ana sayfaya dön
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
+                
+            except Exception as e:
+                # Hata durumunda sekmenin kapandığından emin ol
+                try:
+                    if len(driver.window_handles) > 1:
+                        driver.close()
+                        driver.switch_to.window(driver.window_handles[0])
+                except:
+                    pass
+                # print(f"⚠️ Hata: {e}")
+        # ==========================================
+
+        # Maç listesine ekle
         if item["sp_home"] and item["sp_away"]: 
-            out.append(item)    
+            out.append(item)
     return out
 
 # =========================

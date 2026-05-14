@@ -178,33 +178,99 @@ def update_mac_json_safely(scraped_matches):
 
     updated_count = 0
 
+def update_mac_json_safely(scraped_matches):
+    print(f"\n🔄 {MAC_JSON_PATH.name} dosyası GÜVENLİ şekilde güncelleniyor...")
+    
+    if not MAC_JSON_PATH.exists():
+        print("⚠️ mac.json bulunamadı. İşlem iptal edildi.")
+        return 0
+
+    # Yedek Al
+    backup_path = MAC_JSON_PATH.with_name("mac_backup.json")
+    shutil.copy2(MAC_JSON_PATH, backup_path)
+    print(f"💾 Güvenlik yedeği alındı: {backup_path.name}")
+
+    # Mevcut Veriyi Oku
+    with open(MAC_JSON_PATH, 'r', encoding='utf-8') as f:
+        original_data = json.load(f)
+
+    # İsim Temizleme Fonksiyonu (Yerel tanımlama)
+    def clean_name(name): 
+        return str(name).strip().lower()
+
+    # Eşleştirme Sözlüğü Oluştur
+    scraped_lookup = {}
+    for m in scraped_matches:
+        h = clean_name(m.get('home') or m.get('ev_sahibi'))
+        a = clean_name(m.get('away') or m.get('deplasman'))
+        
+        if h and a and h != "?" and a != "?":
+            key = f"{h}||{a}"
+            scraped_lookup[key] = {
+                'score': m['score'],
+                'status': m['status'],
+                'iy_home': m.get('iy_home', '0'),
+                'iy_away': m.get('iy_away', '0'),
+            }
+
+    updated_count = 0  # Sayacı başlat
+
+    # --- İÇ FONKSİYON: MAÇ GÜNCELLEME ---
     def update_match_obj(obj):
-        nonlocal updated_count
-        if not isinstance(obj, dict): return
+        nonlocal updated_count  # Üst fonksiyondaki sayacı kullan
+        
+        if not isinstance(obj, dict): 
+            return
 
         h = clean_name(obj.get('home') or obj.get('ev_sahibi') or obj.get('ev') or obj.get('homeTeam') or "")
         a = clean_name(obj.get('away') or obj.get('deplasman') or obj.get('dep') or obj.get('awayTeam') or "")
 
         if h and a and h != "?" and a != "?":
             key = f"{h}||{a}"
+            
             if key in scraped_lookup:
                 new_data = scraped_lookup[key]
-                if 'score' in obj: obj['score'] = new_data['score']
-                if 'skor' in obj: obj['skor'] = new_data['score']
-                if 'status' in obj: obj['status'] = new_data['status']
-                if 'durum' in obj: obj['durum'] = new_data['status']
-                if 'result' in obj: obj['result'] = new_data['score']
-                updated_count += 1
+                
+                # Skorları Güncelle
+                if 'score' in obj: 
+                    obj['score'] = new_data['score']
+                if 'skor' in obj: 
+                    obj['skor'] = new_data['score']
+                
+                # Durumu Güncelle
+                if 'status' in obj: 
+                    obj['status'] = new_data['status']
+                if 'durum' in obj: 
+                    obj['durum'] = new_data['status']
+                if 'result' in obj: 
+                    obj['result'] = new_data['score']
+                
+                # İY Skorlarını Güncelle
+                if 'iy_home' in new_data and 'iy_away' in new_data:
+                    try:
+                        obj['skor_1y_ev'] = int(new_data['iy_home']) if new_data['iy_home'].isdigit() else 0
+                        obj['skor_1y_dep'] = int(new_data['iy_away']) if new_data['iy_away'].isdigit() else 0
+                    except:
+                        pass
+                
+                # Eğer değişiklik olduysa sayacı artır
+                # (Basitlik adına her eşleşmede artırıyoruz, daha hassas kontrol istersenif ekleyebilirsin)
+                updated_count += 1 
 
+    # --- İÇ FONKSİYON: AĞAÇTA GEZİNME ---
     def traverse_and_update(data):
         if isinstance(data, dict):
             update_match_obj(data)
-            for v in data.values(): traverse_and_update(v)
+            for v in data.values(): 
+                traverse_and_update(v)
         elif isinstance(data, list):
-            for item in data: traverse_and_update(item)
+            for item in data: 
+                traverse_and_update(item)
 
+    # --- İŞLEMİ BAŞLAT ---
     traverse_and_update(original_data)
 
+    # --- KAYDET ---
     with open(MAC_JSON_PATH, 'w', encoding='utf-8') as f:
         json.dump(original_data, f, ensure_ascii=False, indent=2)
 

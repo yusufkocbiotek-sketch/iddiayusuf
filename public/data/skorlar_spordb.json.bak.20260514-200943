@@ -1,0 +1,179 @@
+{
+  "created_at": "2026-05-14T06:21:28.146833",
+  "source_url": "https://www.spordb.com/iddaa-programi",
+  "days": [
+    "2026-05-14",
+    "2026-05-13"
+  ],
+  "count": 15,
+  "matches": [
+    {
+      "spordb_match_id": "4068130",
+      "tarih": "2026-05-14",
+      "teams_slug": "rosario-central-racing-club",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:19:51.901495",
+      "sp_home": "Rosario Central",
+      "sp_away": "Racing Club",
+      "iy_skor1": 0,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4065951",
+      "tarih": "2026-05-14",
+      "teams_slug": "independiente-petroleros-blooming",
+      "skor1": 3,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:19:57.157741",
+      "sp_home": "Independiente Petroleros",
+      "sp_away": "Blooming",
+      "iy_skor1": 0,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4066949",
+      "tarih": "2026-05-14",
+      "teams_slug": "juventude-sao-paulo",
+      "skor1": 3,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:20:02.373599",
+      "sp_home": "Juventude",
+      "sp_away": "Sao Paulo",
+      "iy_skor1": 0,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4066950",
+      "tarih": "2026-05-14",
+      "teams_slug": "vasco-da-gama-paysandu",
+      "skor1": 2,
+      "skor2": 2,
+      "cekme_zamani": "2026-05-14T06:20:07.579031",
+      "sp_home": "Vasco da Gama",
+      "sp_away": "Paysandu",
+      "iy_skor1": 2,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4066951",
+      "tarih": "2026-05-14",
+      "teams_slug": "coritiba-santos",
+      "skor1": 0,
+      "skor2": 2,
+      "cekme_zamani": "2026-05-14T06:20:12.962036",
+      "sp_home": "Coritiba",
+      "sp_away": "Santos",
+      "iy_skor1": 0,
+      "iy_skor2": 2
+    },
+    {
+      "spordb_match_id": "4064463",
+      "tarih": "2026-05-14",
+      "teams_slug": "one-knoxville-union-omaha",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:20:18.370373",
+      "sp_home": "One Knoxville",
+      "sp_away": "Union Omaha",
+      "iy_skor1": 1,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4058677",
+      "tarih": "2026-05-14",
+      "teams_slug": "charlotte-fc-new-york-city-fc",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:20:23.576487",
+      "sp_home": "Charlotte FC",
+      "sp_away": "New York City FC",
+      "iy_skor1": 0,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4058678",
+      "tarih": "2026-05-14",
+      "teams_slug": "montreal-impact-portland-timbers",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:20:29.105194",
+      "sp_home": "Montreal Impact",
+      "sp_away": "Portland Timbers"
+    },
+    {
+      "spordb_match_id": "4058679",
+      "tarih": "2026-05-14",
+      "teams_slug": "dc-united-chicago-fire",
+      "skor1": 0,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-14T06:20:34.738500",
+      "sp_home": "DC United",
+      "sp_away": "Chicago Fire"
+    },
+    {
+      "spordb_match_id": "4058680",
+      "tarih": "2026-05-14",
+      "teams_slug": "fc-cincinnati-inter-miami",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:20:40.162923",
+      "sp_home": "FC Cincinnati",
+      "sp_away": "Inter Miami"
+    },
+    {
+      "spordb_match_id": "4058681",
+      "tarih": "2026-05-14",
+      "teams_slug": "new-england-revolution-nashville",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:20:45.565525",
+      "sp_home": "New England Revolution",
+      "sp_away": "Nashville"
+    },
+    {
+      "spordb_match_id": "4058682",
+      "tarih": "2026-05-14",
+      "teams_slug": "new-york-red-bulls-columbus-crew",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:20:50.956059",
+      "sp_home": "New York Red Bulls",
+      "sp_away": "Columbus Crew"
+    },
+    {
+      "spordb_match_id": "4058683",
+      "tarih": "2026-05-14",
+      "teams_slug": "orlando-city-philadelphia-union",
+      "skor1": 2,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-14T06:20:56.315179",
+      "sp_home": "Orlando City",
+      "sp_away": "Philadelphia Union"
+    },
+    {
+      "spordb_match_id": "4066952",
+      "tarih": "2026-05-14",
+      "teams_slug": "mirassol-fc-bragantino",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:21:01.725552",
+      "sp_home": "Mirassol FC",
+      "sp_away": "Bragantino",
+      "iy_skor1": 1,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4065952",
+      "tarih": "2026-05-14",
+      "teams_slug": "bolivar-nacional-potosi",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-14T06:21:07.223798",
+      "sp_home": "Bolivar",
+      "sp_away": "Nacional Potosi",
+      "iy_skor1": 3,
+      "iy_skor2": 0
+    }
+  ]
+}

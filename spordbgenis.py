@@ -235,80 +235,64 @@ def deep_scroll_collect(driver, max_steps=70):
 # =========================
 # TARİH SEÇ (dropdown)
 # =========================
-def select_date_dropdown(driver, target_iso_date):
+def load_all_matches_via_dropdown(driver):
     """
-    Hedef tarihi içeren haftayı dropdown'dan bulur ve seçer.
-    target_iso_date: '2026-05-12' formatında
+    Dropdown menüsünden 'Hepsi' veya 'Tüm Maçlar' seçeneğini seçer
+    ve sayfanın tüm maçları yüklemesini sağlar.
     """
     try:
+        print("   📂 Dropdown'dan 'Hepsi' seçeneği aranıyor...")
+        
         # 1. Dropdown elementini bul
         selects = driver.find_elements(By.TAG_NAME, "select")
-        date_select = None
+        target_select = None
         
         for sel in selects:
             opts = sel.find_elements(By.TAG_NAME, "option")
-            if len(opts) > 5: # Tarih/Hafta dropdown'u genelde çok seçeneklidir
-                # İlk opsiyonun metninde tarih veya hafta ibaresi var mı kontrol et
-                first_text = opts[0].text.strip() if opts else ""
-                if "Hafta" in first_text or "202" in first_text or len(first_text) > 10:
-                    date_select = sel
+            # İçinde 'Hepsi', 'All', 'Tümü' geçen veya çok fazla seçeneği olan dropdown
+            for opt in opts:
+                txt = opt.text.lower()
+                if "hepsi" in txt or "tümü" in txt or "all" in txt or len(opts) > 50:
+                    target_select = sel
                     break
-        
-        if not date_select:
-            print(f"   ⚠️ Tarih/Hafta dropdown'u bulunamadı!")
+            if target_select: break
+            
+        if not target_select:
+            print("   ⚠️ 'Hepsi' seçeneği bulunan dropdown bulunamadı, varsayılan liste kullanılıyor.")
             return False
 
-        # 2. Dropdown içindeki tüm seçenekleri tara
-        options = date_select.find_elements(By.TAG_NAME, "option")
-        found_option = None
-        
-        # Hedef tarihimiz (örn: 2026-05-12)
-        target_dt = datetime.datetime.strptime(target_iso_date, "%Y-%m-%d").date()
+        # 2. 'Hepsi' seçeneğini bul ve seç
+        options = target_select.find_elements(By.TAG_NAME, "option")
+        selected = False
         
         for opt in options:
-            opt_text = opt.text.strip()
-            opt_val = opt.get_attribute("value")
+            txt = opt.text.lower()
+            val = opt.get_attribute("value")
             
-            # STRATEJİ A: Option metninde doğrudan tarih var mı? (örn: "12.05.2026 - 18.05.2026")
-            # Tarih aralıklarını parse edip hedef tarihin içinde olup olmadığını kontrol et
-            # Basit regex ile tarihleri ayıkla
-            dates_in_text = re.findall(r'\d{2}\.\d{2}\.\d{4}', opt_text)
-            if len(dates_in_text) >= 2:
-                start_str, end_str = dates_in_text[0], dates_in_text[1]
-                start_dt = datetime.datetime.strptime(start_str, "%d.%m.%Y").date()
-                end_dt = datetime.datetime.strptime(end_str, "%d.%m.%Y").date()
-                
-                if start_dt <= target_dt <= end_dt:
-                    found_option = opt
-                    break
+            # Mantık: Ya metninde 'hepsi' geçecek ya da value'su boş/'all' olacak
+            if "hepsi" in txt or "tümü" in txt or "all" in txt or val == "" or val == "all":
+                Select(target_select).select_by_value(val)
+                print(f"   ✅ Dropdown'dan doğru hafta seçildi: {found_option.text.strip()}")
             
-            # STRATEJİ B: Option value'sunda tarih var mı? (Bazen value='2026-05-12' olur)
-            elif target_iso_date in opt_val:
-                found_option = opt
-                break
-                
-            # STRATEJİ C: Option metninde "Hafta X" yazıyorsa ve biz manuel moddaysak, 
-            # en son opsiyonu (genelde current week) seçebiliriz ama bu riskli. 
-            # En iyisi tarih aralığına bakmak.
-
-        if found_option:
-            # Seçeneği seç
-            select_obj = Select(date_select)
-            select_obj.select_by_value(found_option.get_attribute("value"))
-            print(f"   ✅ Dropdown'dan doğru hafta seçildi: {found_option.text.strip()}")
+            # --- YENİ EKLEME: SAYFA YENİLENMESİNİ BEKLE ---
+            # Sayfanın tamamen yenilenmesi ve maçların gelmesi için bekle
+            time.sleep(5) 
             
-            # Sayfanın yüklenmesi ve tablonun gelmesi için bekle
-            time.sleep(3) 
+            # Maç linklerinin gelmesini bekle (Spinner kaybolana kadar)
+            try:
+                WebDriverWait(driver, 15).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, CANLI_LINK_SELECTOR))
+                )
+                print("   ℹ️ Maç listesi yüklendi.")
+            except:
+                print("   ⚠️ Maç listesi yüklenmedi, devam ediliyor.")
+            # ---------------------------------------------
+            
             return True
-        else:
-            print(f"   ⚠️ Hedef tarih ({target_iso_date}) için uygun hafta dropdown'da bulunamadı.")
-            # Fallback: Belki en son haftadır? Deneyebiliriz ama genelde bulunamazsa tarih yanlıştır.
-            return False
 
     except Exception as e:
-        print(f"   ❌ Dropdown seçim hatası: {e}")
-        return False
-# =========================
+        print(f"   ❌ Dropdown hatası: {e}")
+        return False# =========================
 # SPORDB PARSE
 # =========================
 _ODDS_RE = re.compile(r"^\d+([.,]\d+)?$")
@@ -616,37 +600,242 @@ def update_db(db_data: dict, scores: list, today_iso: str):
     return matched, updated, noop, added, skipped, not_matched
 
 # =========================
-# MAIN
+# TARİH SEÇ (dropdown) - BURAYA YAPIŞTIR!
+# =========================
+def select_date_dropdown(driver, target_iso_date):
+    """
+    Hedef tarihi içeren haftayı dropdown'dan bulur ve seçer.
+    target_iso_date: '2026-05-12' formatında
+    """
+    try:
+        # 1. Dropdown elementini bul
+        selects = driver.find_elements(By.TAG_NAME, "select")
+        date_select = None
+        
+        for sel in selects:
+            opts = sel.find_elements(By.TAG_NAME, "option")
+            if len(opts) > 5: # Tarih/Hafta dropdown'u genelde çok seçeneklidir
+                first_text = opts[0].text.strip() if opts else ""
+                if "Hafta" in first_text or "202" in first_text or len(first_text) > 10:
+                    date_select = sel
+                    break
+        
+        if not date_select:
+            print(f"   ⚠️ Tarih/Hafta dropdown'u bulunamadı!")
+            return False
+
+        # 2. Dropdown içindeki tüm seçenekleri tara
+        options = date_select.find_elements(By.TAG_NAME, "option")
+        found_option = None
+        
+        target_dt = datetime.datetime.strptime(target_iso_date, "%Y-%m-%d").date()
+        
+        for opt in options:
+            opt_text = opt.text.strip()
+            opt_val = opt.get_attribute("value")
+            
+            # STRATEJİ A: Option metninde tarih aralığı var mı? (örn: "12.05.2026 - 18.05.2026")
+            dates_in_text = re.findall(r'\d{2}\.\d{2}\.\d{4}', opt_text)
+            if len(dates_in_text) >= 2:
+                start_str, end_str = dates_in_text[0], dates_in_text[1]
+                start_dt = datetime.datetime.strptime(start_str, "%d.%m.%Y").date()
+                end_dt = datetime.datetime.strptime(end_str, "%d.%m.%Y").date()
+                
+                if start_dt <= target_dt <= end_dt:
+                    found_option = opt
+                    break
+            
+            # STRATEJİ B: Value'da tarih var mı?
+            elif target_iso_date in opt_val:
+                found_option = opt
+                break
+
+        if found_option:
+            select_obj = Select(date_select)
+            select_obj.select_by_value(found_option.get_attribute("value"))
+            print(f"   ✅ Dropdown'dan doğru hafta seçildi: {found_option.text.strip()}")
+            
+            time.sleep(3) 
+            return True
+        else:
+            print(f"   ⚠️ Hedef tarih ({target_iso_date}) için uygun hafta dropdown'da bulunamadı.")
+            return False
+
+    except Exception as e:
+        print(f"   ❌ Dropdown seçim hatası: {e}")
+        return False
+
+# =========================
+# HİBRİT MAIN FONKSİYONU (V6.2 - TEK SEFERDE TÜMÜNÜ ÇEK & FİLTRELE)
 # =========================
 def main():
     print("=" * 70)
-    print("⚽ SPORDB SKOR ÇEKİCİ (V5.5) - Dropdown ile SON 3 GÜN (BUGÜN DAHİL)")
+    print("⚽ SPORDB SKOR ÇEKİCİ (V6.2) - TEK YÜKLEME & AKILLI FİLTRELEME")
     print("=" * 70)
 
     today = datetime.date.today()
     today_iso = today.isoformat()
 
+    # Hedef günleri belirle
     if INCLUDE_TODAY:
         dates = [(today - datetime.timedelta(days=i)).isoformat() for i in range(DAYS_BACK_FINISHED)]
     else:
         dates = [(today - datetime.timedelta(days=i)).isoformat() for i in range(1, DAYS_BACK_FINISHED + 1)]
 
-    print("📅 Taranacak günler:", dates)
+    print("📅 Hedeflenen günler:", dates)
 
     driver = None
     all_scores = [] 
+    
     try:
         driver = build_driver()
         driver.get(SPORDB_URL)
+        time.sleep(3)
 
+        # --- ADIM 1: DROPDOWN'DAN EN GENİŞ ARALIĞI SEÇ (HEPSİ) ---
+        print("\n📂 ADIM 1: Mümkün olan en geniş liste yükleniyor...")
+        
+        selects = driver.find_elements(By.TAG_NAME, "select")
+        target_select = None
+        
+        for sel in selects:
+            opts = sel.find_elements(By.TAG_NAME, "option")
+            # 'Hepsi', 'All', 'Tümü' veya çok fazla seçeneği olanı bul
+            for opt in opts:
+                txt = opt.text.lower()
+                if "hepsi" in txt or "tümü" in txt or "all" in txt or len(opts) > 100:
+                    target_select = sel
+                    break
+            if target_select: break
+            
+        if target_select:
+            options = target_select.find_elements(By.TAG_NAME, "option")
+            selected_val = None
+            
+            # Önce 'Hepsi'ni ara
+            for opt in options:
+                txt = opt.text.lower()
+                val = opt.get_attribute("value")
+                if "hepsi" in txt or "tümü" in txt or "all" in txt or val == "" or val == "all":
+                    selected_val = val
+                    print(f"   ✅ '{opt.text}' seçildi.")
+                    break
+            
+            # 'Hepsi' yoksa, ilk opsiyonu (genelde en geniş hafta) seç
+            if not selected_val:
+                Select(target_select).select_by_index(0)
+                print("   ℹ️ 'Hepsi' bulunamadı, varsayılan geniş aralık seçildi.")
+            else:
+                Select(target_select).select_by_value(selected_val)
+            
+            time.sleep(3)
+        else:
+            print("   ⚠️ Dropdown bulunamadı, mevcut liste kullanılıyor.")
+
+        # --- ADIM 2: SAYFAYI SONUNA KADAR KAYDIR (TÜM MAÇLARI YÜKLE) ---
+        print("📜 Sayfa sonuna kadar kaydırılıyor (Binlerce maç yükleniyor)...")
+        deep_scroll_collect(driver)
+        time.sleep(2)
+        
+        # TÜM LİNKLERİ BİR DEFA TOPLA
+        all_links = driver.find_elements(By.CSS_SELECTOR, CANLI_LINK_SELECTOR)
+        print(f"✅ Hafızaya {len(all_links)} adet maç linki alındı.")
+
+        # --- ADIM 3: TARİHLERE GÖRE FİLTRELE VE İŞLE ---
+        print("\n🔍 ADIM 3: Maçlar tarihlerine göre filtrelenip işleniyor...")
+        
         for d in dates:
-            print(f"\n🔎 Gün: {d}")
-            day_scores = collect_scores_for_date(driver, d)
-            print(f"   ✅ {d} skor kaydı: {len(day_scores)}")
+            print(f"\n🔎 Gün: {d} işleniyor...")
+            day_scores = []
+            seen = set()
+            
+            for a in all_links:
+                href = a.get_attribute("href") or ""
+                item = parse_spordb_canli(href)
+                
+                # SADECE HEDEF GÜNÜ AL
+                if not item or item["tarih"] != d: 
+                    continue
+                
+                k = (item["spordb_match_id"], item["tarih"], item["skor1"], item["skor2"])
+                if k in seen: continue
+                seen.add(k)
+                
+                # SKOR ÇEKME İŞLEMİ (AYNI GÜÇLÜ KOD)
+                res = split_row_cells(driver, a)
+                if res and res.get("idx") is not None:
+                    texts = res.get("texts", [])
+                    h, aw = pick_home_away(texts, res["idx"])
+                    item["sp_home"], item["sp_away"] = h, aw
+                    
+                    # --- MS VE İY SKORU GÜVENLİK KONTROLÜ ---
+                    current_ms_h = item.get('skor1', 0)
+                    current_ms_a = item.get('skor2', 0)
+                    need_ms_check = (current_ms_h == 0 and current_ms_a == 0)
+                    iy_bulundu = False
+                    
+                    try:
+                        row_element = a.find_element(By.XPATH, "./ancestor::tr")
+                        all_cells = row_element.find_elements(By.TAG_NAME, "td")
+                        found_scores = []
+                        
+                        for cell in all_cells:
+                            txt = cell.text.strip()
+                            if re.match(r"^\d+[-:]\d+$", txt):
+                                parts = txt.replace(":", "-").split("-")
+                                if len(parts) == 2:
+                                    try:
+                                        s1, s2 = int(parts[0]), int(parts[1])
+                                        if s1 < 10 and s2 < 10 and (s1+s2) < 12:
+                                            found_scores.append((s1, s2))
+                                    except: pass
+                        
+                        if need_ms_check and len(found_scores) > 0:
+                            item['skor1'], item['skor2'] = found_scores[0]
+                            found_scores.pop(0) 
+                        
+                        if len(found_scores) > 0:
+                            item["iy_skor1"], item["iy_skor2"] = found_scores[0]
+                            iy_bulundu = True
+                    except: pass
+
+                    # Detaydan İY Çek (Gerekirse)
+                    if item.get("iy_skor1", 0) == 0 and item.get("iy_skor2", 0) == 0:
+                        try:
+                            driver.execute_script("window.open(arguments[0], '_blank');", href)
+                            driver.switch_to.window(driver.window_handles[-1])
+                            time.sleep(4)
+                            full_text = driver.find_element(By.TAG_NAME, "body").text
+                            pattern = r"(?:İY|Ilk Yari|First Half|Half Time|HT|Devre Arası)[:\s]*(\d+)\s*[-:]\s*(\d+)"
+                            match = re.search(pattern, full_text, re.IGNORECASE)
+                            if match:
+                                s1, s2 = int(match.group(1)), int(match.group(2))
+                                if s1 < 10 and s2 < 10:
+                                    item["iy_skor1"], item["iy_skor2"] = s1
+                                    iy_bulundu = True
+                            driver.close()
+                            driver.switch_to.window(driver.window_handles[0])
+                        except:
+                            try:
+                                if len(driver.window_handles) > 1:
+                                    driver.close()
+                                    driver.switch_to.window(driver.window_handles[0])
+                            except: pass
+
+                    ms_h, ms_a = item['skor1'], item['skor2']
+                    iy_h, iy_a = item.get('iy_skor1', 0), item.get('iy_skor2', 0)
+                    if (ms_h + ms_a) > 0 or iy_bulundu:
+                        print(f"✅ {item['sp_home']} vs {item['sp_away']} -> MS: {ms_h}-{ms_a} | İY: {iy_h}-{iy_a}")
+                        
+                if item["sp_home"] and item["sp_away"]: 
+                    day_scores.append(item)
+            
+            print(f"   ✅ {d} için {len(day_scores)} maç bulundu.")
             all_scores.extend(day_scores)
 
-        print(f"\n✅ Toplam skor kaydı (son {DAYS_BACK_FINISHED} gün): {len(all_scores)}")
+        print(f"\n✅ TOPLAM SKOR KAYDI (SON {DAYS_BACK_FINISHED} GÜN): {len(all_scores)}")
 
+        # --- JSON KAYIT VE GÜNCELLEME (AYNI) ---
         save_json_atomic({
             "created_at": datetime.datetime.now().isoformat(), "source_url": SPORDB_URL,
             "days": dates, "count": len(all_scores), "matches": all_scores
@@ -675,7 +864,7 @@ def main():
             try: driver.quit()
             except WebDriverException: pass
         
-        # === GİT OTOMASYONU (PULL EKLENMİŞ) ===
+        # === GİT OTOMASYONU ===
         try:
             if len(all_scores) > 0:
                 print("\n🚀 Git otomasyonu başlatılıyor...")
@@ -689,18 +878,16 @@ def main():
                 status_result = subprocess.run(["git", "status", "--porcelain"], cwd=repo_dir, capture_output=True, text=True)
                 if status_result.stdout.strip():
                     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    msg = f"🤖 Spordb Otomatik Skor Güncellemesi (Son 3 Gün) - {now_str}"
+                    msg = f"🤖 Spordb Otomatik Skor Güncellemesi (Son {DAYS_BACK_FINISHED} Gün) - {now_str}"
                     subprocess.run(["git", "commit", "-m", msg], cwd=repo_dir, capture_output=True)
                     
-                    # --- ÇAKIŞMA ÖNLEME: GIT PULL ---
                     print("🔄 Git pull yapılıyor (Çakışma önleme)...")
                     pull_res = subprocess.run(["git", "pull", "--rebase"], cwd=repo_dir, capture_output=True, text=True)
                     if pull_res.returncode != 0:
-                        print(f"⚠️ Git pull hatası (Çakışma olabilir): {pull_res.stderr}")
+                        print(f"⚠️ Git pull hatası: {pull_res.stderr}")
                         subprocess.run(["git", "rebase", "--abort"], cwd=repo_dir, capture_output=True)
                     else:
                         print("✅ Git pull başarılı.")
-                    # --------------------------------
                     
                     push_res = subprocess.run(["git", "push"], cwd=repo_dir, capture_output=True, text=True)
                     if push_res.returncode == 0:

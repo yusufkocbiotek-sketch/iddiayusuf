@@ -228,34 +228,63 @@ def update_mac_json_safely(scraped_matches):
         if h and a and h != "?" and a != "?":
             key = f"{h}||{a}"
             
-            if key in scraped_lookup:
-                new_data = scraped_lookup[key]
+        if key in scraped_lookup:
+            new_data = scraped_lookup[key]
+            
+            # SPORDB'den gelen veriler
+            sp_status = new_data.get('status', '')
+            sp_score = new_data.get('score', '') # Örn: "2-3"
+            
+            # Skoru parçala (Sayıya çevir)
+            new_ev, new_dep = 0, 0
+            if '-' in sp_score:
+                try:
+                    new_ev, new_dep = map(int, sp_score.split('-'))
+                except: 
+                    pass
+            
+            # İY Skorlarını Hazırla
+            new_iy_ev = 0
+            new_iy_dep = 0
+            if 'iy_home' in new_data:
+                iy_h = new_data['iy_home']
+                iy_d = new_data['iy_away']
+                if isinstance(iy_h, str) and iy_h.isdigit(): new_iy_ev = int(iy_h)
+                if isinstance(iy_d, str) and iy_d.isdigit(): new_iy_dep = int(iy_d)
+
+            # ==========================================
+            # 🚨 KRİTİK MANTIK: ZORLA GÜNCELLEME 🚨
+            # ==========================================
+            # Eğer SPORDB maçın "Bittiğini" söylüyorsa VE skor 0-0 değilse (veya gol varsa)
+            # JSON'daki mevcut durum NE OLURSA OLSUN (başlamadi bile olsa) güncelle!
+            
+            is_finished_in_spordb = 'Bitti' in sp_status or 'Finished' in sp_status
+            has_goals = (new_ev + new_dep) > 0
+            
+            if is_finished_in_spordb or has_goals:
+                # Maç bitmiş kabul edilir, verileri zorla yaz
+                obj['durum'] = 'bitti'
+                obj['skor_ev'] = new_ev
+                obj['skor_dep'] = new_dep
                 
-                # Skorları Güncelle
-                if 'score' in obj: 
-                    obj['score'] = new_data['score']
-                if 'skor' in obj: 
-                    obj['skor'] = new_data['score']
+                # İY Skorlarını da yaz
+                obj['skor_1y_ev'] = new_iy_ev
+                obj['skor_1y_dep'] = new_iy_dep
                 
-                # Durumu Güncelle
-                if 'status' in obj: 
-                    obj['status'] = new_data['status']
-                if 'durum' in obj: 
-                    obj['durum'] = new_data['status']
-                if 'result' in obj: 
-                    obj['result'] = new_data['score']
+                # Kaynağı güncelle
+                obj['kaynak'] = 'spordb.com'
                 
-                # İY Skorlarını Güncelle
-                if 'iy_home' in new_data and 'iy_away' in new_data:
-                    try:
-                        obj['skor_1y_ev'] = int(new_data['iy_home']) if new_data['iy_home'].isdigit() else 0
-                        obj['skor_1y_dep'] = int(new_data['iy_away']) if new_data['iy_away'].isdigit() else 0
-                    except:
-                        pass
-                
-                # Eğer değişiklik olduysa sayacı artır
-                # (Basitlik adına her eşleşmede artırıyoruz, daha hassas kontrol istersenif ekleyebilirsin)
-                updated_count += 1 
+                updated_count += 1
+                print(f"✅ ZORLA GÜNCELLENDİ: {obj.get('ev_sahibi')} vs {obj.get('deplasman')} -> MS: {new_ev}-{new_dep} | İY: {new_iy_ev}-{new_iy_dep}")
+            else:
+                # Maç henüz bitmemişse, eski usül (sadece farklıysa) güncelle
+                if obj.get('skor_ev') != new_ev or obj.get('skor_dep') != new_dep:
+                    obj['skor_ev'] = new_ev
+                    obj['skor_dep'] = new_dep
+                    # Durumu da güncellemeye çalış (Canlı vs)
+                    if 'Canlı' in sp_status: obj['durum'] = 'canli'
+                    updated_count += 1
+            # ==========================================
 
     # --- İÇ FONKSİYON: AĞAÇTA GEZİNME ---
     def traverse_and_update(data):

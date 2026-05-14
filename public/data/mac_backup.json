@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-05-13T19:23:55.940306",
+  "updated": "2026-05-14T06:21:28.343976",
   "matches": [
     {
       "index": 1,
@@ -256342,7 +256342,7 @@
       "skor_ev": 0,
       "skor_dep": 2,
       "skor_1y_ev": 0,
-      "skor_1y_dep": 1,
+      "skor_1y_dep": 0,
       "kaynak": "spordb.com",
       "oranlar": {
         "Maç Sonucu_1": 2.02,
@@ -288617,8 +288617,8 @@
       "durum": "1",
       "skor_ev": 1,
       "skor_dep": 1,
-      "skor_1y_ev": 1,
-      "skor_1y_dep": 1,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
       "kaynak": "spordb.com",
       "oranlar": {
         "Maç Sonucu_1": 2.21,
@@ -291088,8 +291088,8 @@
       "durum": "1",
       "skor_ev": 1,
       "skor_dep": 1,
-      "skor_1y_ev": 1,
-      "skor_1y_dep": 1,
+      "skor_1y_ev": 0,
+      "skor_1y_dep": 0,
       "kaynak": "spordb.com",
       "oranlar": {
         "-_0": 6.77,

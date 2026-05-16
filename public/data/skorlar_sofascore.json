@@ -1,69 +1,8 @@
 {
-  "olusturulma_tarihi": "2026-05-16T19:04:29.895601",
+  "olusturulma_tarihi": "2026-05-16T22:31:59.805261",
   "kaynak": "https://www.sofascore.com/tr",
-  "gun_geriye_donuk": 7,
+  "gun_geriye_donuk": 3,
   "bugun_dahil": true,
-  "adet": 5,
-  "veriler": [
-    {
-      "sofascore_id": "1925",
-      "tarih": "2026-05-16",
-      "saat": "",
-      "sp_home": "Ferencváros",
-      "sp_away": "ZTE",
-      "skor1": 0,
-      "skor2": 0,
-      "iy_skor1": 0,
-      "iy_skor2": 0,
-      "cekme_zamani": "2026-05-16T19:04:29.742570"
-    },
-    {
-      "sofascore_id": "656",
-      "tarih": "2026-05-16",
-      "saat": "",
-      "sp_home": "Bodø/Glimt",
-      "sp_away": "Tromsø",
-      "skor1": 0,
-      "skor2": 0,
-      "iy_skor1": 0,
-      "iy_skor2": 0,
-      "cekme_zamani": "2026-05-16T19:04:29.780873"
-    },
-    {
-      "sofascore_id": "21895",
-      "tarih": "2026-05-16",
-      "saat": "",
-      "sp_home": "Al-Hilal",
-      "sp_away": "Neom SC",
-      "skor1": 0,
-      "skor2": 0,
-      "iy_skor1": 0,
-      "iy_skor2": 0,
-      "cekme_zamani": "2026-05-16T19:04:29.817804"
-    },
-    {
-      "sofascore_id": "2901",
-      "tarih": "2026-05-16",
-      "saat": "",
-      "sp_home": "Standard Liège",
-      "sp_away": "Genk",
-      "skor1": 0,
-      "skor2": 0,
-      "iy_skor1": 0,
-      "iy_skor2": 0,
-      "cekme_zamani": "2026-05-16T19:04:29.855433"
-    },
-    {
-      "sofascore_id": "2999",
-      "tarih": "2026-05-16",
-      "saat": "",
-      "sp_home": "Braga",
-      "sp_away": "Estrela Amadora",
-      "skor1": 0,
-      "skor2": 0,
-      "iy_skor1": 0,
-      "iy_skor2": 0,
-      "cekme_zamani": "2026-05-16T19:04:29.895445"
-    }
-  ]
+  "adet": 0,
+  "veriler": []
 }

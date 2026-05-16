@@ -31,7 +31,7 @@ for mac in maclar:
         "Kod": mac.get("mac_kodu", "")
     }
     
-    # Tüm oranları sütun olarak ekle
+    # Tüm oranları satır olarak ekle
     if "oranlar" in mac:
         for oran_key, oran_value in mac["oranlar"].items():
             # Sütun adını daha okunaklı yapalım

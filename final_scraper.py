@@ -222,13 +222,19 @@ def update_mac_json_safely(scraped_matches):
         if not isinstance(obj, dict): 
             return
 
+        # Ev ve deplasman isimlerini temizle ve çek
         h = clean_name(obj.get('home') or obj.get('ev_sahibi') or obj.get('ev') or obj.get('homeTeam') or "")
         a = clean_name(obj.get('away') or obj.get('deplasman') or obj.get('dep') or obj.get('awayTeam') or "")
 
+        # Anahtarı başlangıçta TANIMLA (boş bir değer ver), bu hatayı önler
+        key = ""  
+
+        # Eğer isimler geçerliyse anahtarı oluştur
         if h and a and h != "?" and a != "?":
             key = f"{h}||{a}"
             
-        if key in scraped_lookup:
+        # ARTIK KONTROL: Sadece key DOLUYSA ve kayıtta VARSA işlem yap
+        if key and key in scraped_lookup:
             new_data = scraped_lookup[key]
             
             # SPORDB'den gelen veriler

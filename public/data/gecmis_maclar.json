@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-05-16T19:04:30.704147",
+  "updated": "2026-05-16T20:04:03.184149",
   "kaynak": "spordb.com",
   "toplam_mac": 14327,
   "biten_mac": 14196,
@@ -374684,15 +374684,16 @@
       "saat": "",
       "lig": "",
       "tarih": "2026-05-16",
-      "cekme_zamani": "2026-05-16T19:04:29.855433",
-      "durum": "bekliyor",
+      "cekme_zamani": "2026-05-16T20:01:58.903955",
+      "durum": "bitti",
       "skor_ev": 0,
       "skor_dep": 0,
       "skor_1y_ev": 0,
       "skor_1y_dep": 0,
-      "kaynak": "sofascore.com",
+      "kaynak": "spordb.com",
       "sofascore_id": "2901",
-      "oranlar": {}
+      "oranlar": {},
+      "spordb_match_id": "4066104"
     }
   ]
 }

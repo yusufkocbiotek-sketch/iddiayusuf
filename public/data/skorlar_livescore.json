@@ -1,10 +1,10 @@
 {
-  "olusturulma_tarihi": "2026-05-17T22:43:09.522383",
+  "olusturulma_tarihi": "2026-05-18T06:49:42.312649",
   "kaynak": "https://www.livescore.bz/tr/yesterday/",
   "veri": [
     {
       "sofascore_id": "2401729",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Corluspor",
       "sp_away": "Yeilyurt Belediyespor",
@@ -13,11 +13,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:57.772928"
+      "cekme_zamani": "2026-05-18T06:49:22.048295"
     },
     {
       "sofascore_id": "2402184",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:00",
       "sp_home": "Juve Stabia",
       "sp_away": "AC Monza",
@@ -26,11 +26,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:57.817034"
+      "cekme_zamani": "2026-05-18T06:49:22.190546"
     },
     {
       "sofascore_id": "2400485",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:30",
       "sp_home": "Sassari Torres",
       "sp_away": "A.S.D. Bra",
@@ -39,11 +39,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:57.859840"
+      "cekme_zamani": "2026-05-18T06:49:22.323631"
     },
     {
       "sofascore_id": "2400052",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "Bayern Munich",
       "sp_away": "Koln",
@@ -52,11 +52,11 @@
       "iy_skor1": 3,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:57.902237"
+      "cekme_zamani": "2026-05-18T06:49:22.503767"
     },
     {
       "sofascore_id": "2400054",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "Eintracht Frankfurt",
       "sp_away": "Stuttgart",
@@ -65,11 +65,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:57.944448"
+      "cekme_zamani": "2026-05-18T06:49:22.606606"
     },
     {
       "sofascore_id": "2400056",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "Heidenheim",
       "sp_away": "Mainz",
@@ -78,11 +78,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:57.986873"
+      "cekme_zamani": "2026-05-18T06:49:22.722327"
     },
     {
       "sofascore_id": "2400058",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "Union Berlin",
       "sp_away": "Augsburg",
@@ -91,11 +91,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.028786"
+      "cekme_zamani": "2026-05-18T06:49:22.838102"
     },
     {
       "sofascore_id": "2399811",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:30",
       "sp_home": "Aachen",
       "sp_away": "Havelse",
@@ -104,11 +104,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.077089"
+      "cekme_zamani": "2026-05-18T06:49:22.931267"
     },
     {
       "sofascore_id": "2399813",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:30",
       "sp_home": "Ingolstadt",
       "sp_away": "SV Waldhof Mannheim",
@@ -117,11 +117,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.127366"
+      "cekme_zamani": "2026-05-18T06:49:23.045379"
     },
     {
       "sofascore_id": "2399815",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:30",
       "sp_home": "Stuttgart (Amt.)",
       "sp_away": "Osnabruck",
@@ -130,11 +130,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.176848"
+      "cekme_zamani": "2026-05-18T06:49:23.146244"
     },
     {
       "sofascore_id": "2399817",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:30",
       "sp_home": "Schweinfurt",
       "sp_away": "Aue",
@@ -143,11 +143,11 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.229962"
+      "cekme_zamani": "2026-05-18T06:49:23.252260"
     },
     {
       "sofascore_id": "2399819",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:30",
       "sp_home": "SSV Ulm 1846",
       "sp_away": "RW Essen",
@@ -156,11 +156,11 @@
       "iy_skor1": 2,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.288559"
+      "cekme_zamani": "2026-05-18T06:49:23.387924"
     },
     {
       "sofascore_id": "2399851",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Sportfreunde Lotte",
       "sp_away": "Fortuna Koln",
@@ -169,11 +169,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.335310"
+      "cekme_zamani": "2026-05-18T06:49:23.482289"
     },
     {
       "sofascore_id": "2399853",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Siegen",
       "sp_away": "SSVg Velbert",
@@ -182,11 +182,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.383150"
+      "cekme_zamani": "2026-05-18T06:49:23.571187"
     },
     {
       "sofascore_id": "2399855",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Wuppertaler SV",
       "sp_away": "Bonner sc",
@@ -195,11 +195,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.431014"
+      "cekme_zamani": "2026-05-18T06:49:23.661700"
     },
     {
       "sofascore_id": "2399857",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Bocholt FC",
       "sp_away": "RW Oberhausen",
@@ -208,11 +208,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.482166"
+      "cekme_zamani": "2026-05-18T06:49:23.754402"
     },
     {
       "sofascore_id": "2399859",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Koln Am.",
       "sp_away": "Schalke II",
@@ -221,11 +221,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.564676"
+      "cekme_zamani": "2026-05-18T06:49:23.853015"
     },
     {
       "sofascore_id": "2400341",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Hamburger SV II",
       "sp_away": "TUS BW Lohne",
@@ -234,11 +234,11 @@
       "iy_skor1": 4,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.628188"
+      "cekme_zamani": "2026-05-18T06:49:23.941506"
     },
     {
       "sofascore_id": "2400346",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "SV Meppen",
       "sp_away": "St Pauli II",
@@ -247,11 +247,11 @@
       "iy_skor1": 3,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.683716"
+      "cekme_zamani": "2026-05-18T06:49:24.030222"
     },
     {
       "sofascore_id": "2400348",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Eintracht Norderstedt",
       "sp_away": "HSC Hannover",
@@ -260,11 +260,11 @@
       "iy_skor1": 0,
       "iy_skor2": 5,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.841513"
+      "cekme_zamani": "2026-05-18T06:49:24.119974"
     },
     {
       "sofascore_id": "2400350",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "FC Schoningen 08",
       "sp_away": "Phonix Lubeck",
@@ -273,11 +273,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.922408"
+      "cekme_zamani": "2026-05-18T06:49:24.212940"
     },
     {
       "sofascore_id": "2399883",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Babelsberg",
       "sp_away": "Hertha BSC Berlin Am",
@@ -286,11 +286,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:58.987532"
+      "cekme_zamani": "2026-05-18T06:49:24.305077"
     },
     {
       "sofascore_id": "2399888",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Berliner Dynamo",
       "sp_away": "Chemnitzer",
@@ -299,11 +299,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.055381"
+      "cekme_zamani": "2026-05-18T06:49:24.399720"
     },
     {
       "sofascore_id": "2399891",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Eilenburg",
       "sp_away": "Hallescher",
@@ -312,11 +312,11 @@
       "iy_skor1": 0,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.139387"
+      "cekme_zamani": "2026-05-18T06:49:24.490647"
     },
     {
       "sofascore_id": "2399893",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "FSV Zwickau",
       "sp_away": "Chemie Leipzig",
@@ -325,11 +325,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.218535"
+      "cekme_zamani": "2026-05-18T06:49:24.583070"
     },
     {
       "sofascore_id": "2399896",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "ZFC Meuselwitz",
       "sp_away": "FSV Luckenwalde",
@@ -338,11 +338,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.285021"
+      "cekme_zamani": "2026-05-18T06:49:24.676375"
     },
     {
       "sofascore_id": "2399832",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "TSG Balingen",
       "sp_away": "Astoria Walldorf",
@@ -351,11 +351,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.361981"
+      "cekme_zamani": "2026-05-18T06:49:24.766764"
     },
     {
       "sofascore_id": "2399834",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "SG Barockstadt Fulda Lehnerz",
       "sp_away": "Fsv Frankfurt",
@@ -364,11 +364,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.413650"
+      "cekme_zamani": "2026-05-18T06:49:24.858132"
     },
     {
       "sofascore_id": "2399837",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Offenbach",
       "sp_away": "KSV Hessen Kassel",
@@ -377,11 +377,11 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.459207"
+      "cekme_zamani": "2026-05-18T06:49:24.950279"
     },
     {
       "sofascore_id": "2399839",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Steinbach",
       "sp_away": "Bahlinger SC",
@@ -390,11 +390,11 @@
       "iy_skor1": 3,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.530793"
+      "cekme_zamani": "2026-05-18T06:49:25.041399"
     },
     {
       "sofascore_id": "2399877",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "SpVgg Ansbach",
       "sp_away": "Wurzburger Kickers",
@@ -403,11 +403,11 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.575376"
+      "cekme_zamani": "2026-05-18T06:49:25.130375"
     },
     {
       "sofascore_id": "2399879",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "VfB Eichstatt",
       "sp_away": "TSV Buchbach",
@@ -416,11 +416,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.620793"
+      "cekme_zamani": "2026-05-18T06:49:25.218873"
     },
     {
       "sofascore_id": "2399881",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "TSV Aubstadt",
       "sp_away": "SpVgg Bayreuth",
@@ -429,11 +429,11 @@
       "iy_skor1": 3,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.665281"
+      "cekme_zamani": "2026-05-18T06:49:25.307791"
     },
     {
       "sofascore_id": "2399885",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Nurnberg Am",
       "sp_away": "SpVgg Hankofen-Hailing",
@@ -442,11 +442,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.708044"
+      "cekme_zamani": "2026-05-18T06:49:25.398412"
     },
     {
       "sofascore_id": "2399890",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "DJK Teutonia Schalke",
       "sp_away": "Greuther Furth II",
@@ -455,11 +455,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.751800"
+      "cekme_zamani": "2026-05-18T06:49:25.488523"
     },
     {
       "sofascore_id": "2400368",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Aviron Bayonnais",
       "sp_away": "Saumur OL.",
@@ -468,11 +468,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.808175"
+      "cekme_zamani": "2026-05-18T06:49:25.585990"
     },
     {
       "sofascore_id": "2400371",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Chauray Fc",
       "sp_away": "Granville",
@@ -481,11 +481,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.864881"
+      "cekme_zamani": "2026-05-18T06:49:25.685724"
     },
     {
       "sofascore_id": "2400373",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Lorient B",
       "sp_away": "Poitiers",
@@ -494,11 +494,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:42:59.940918"
+      "cekme_zamani": "2026-05-18T06:49:25.784543"
     },
     {
       "sofascore_id": "2400375",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "LA Saint-Colomban Locmine",
       "sp_away": "La Roche-sur-Yon",
@@ -507,11 +507,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.007513"
+      "cekme_zamani": "2026-05-18T06:49:25.882795"
     },
     {
       "sofascore_id": "2400377",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Dieppe",
       "sp_away": "Blois F.41",
@@ -520,11 +520,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.080782"
+      "cekme_zamani": "2026-05-18T06:49:25.979245"
     },
     {
       "sofascore_id": "2400379",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Colmar",
       "sp_away": "ES Wasquehal",
@@ -533,11 +533,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.141922"
+      "cekme_zamani": "2026-05-18T06:49:26.072530"
     },
     {
       "sofascore_id": "2400381",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Feignies",
       "sp_away": "Haguenau",
@@ -546,11 +546,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.194097"
+      "cekme_zamani": "2026-05-18T06:49:26.174758"
     },
     {
       "sofascore_id": "2400383",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Thionville",
       "sp_away": "Chambly",
@@ -559,11 +559,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.242329"
+      "cekme_zamani": "2026-05-18T06:49:26.275325"
     },
     {
       "sofascore_id": "2400385",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Cannes AS",
       "sp_away": "ST Maur Lusitanos",
@@ -572,11 +572,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.294462"
+      "cekme_zamani": "2026-05-18T06:49:26.364055"
     },
     {
       "sofascore_id": "2400387",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "GFA Rumilly Vallieres",
       "sp_away": "Creteil",
@@ -585,11 +585,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.340447"
+      "cekme_zamani": "2026-05-18T06:49:26.449315"
     },
     {
       "sofascore_id": "2400389",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Istres",
       "sp_away": "Chasselay M.D. Azergues",
@@ -598,11 +598,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.396064"
+      "cekme_zamani": "2026-05-18T06:49:26.539519"
     },
     {
       "sofascore_id": "2400391",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Toulon",
       "sp_away": "Bobigny A.C.",
@@ -611,11 +611,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.447122"
+      "cekme_zamani": "2026-05-18T06:49:26.639235"
     },
     {
       "sofascore_id": "2400061",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "ACV Assen",
       "sp_away": "Koninklijke HFC",
@@ -624,11 +624,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.499318"
+      "cekme_zamani": "2026-05-18T06:49:26.727727"
     },
     {
       "sofascore_id": "2400063",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "Gelders Veenendaalse VV",
       "sp_away": "AFC Amsterdam",
@@ -637,11 +637,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.571116"
+      "cekme_zamani": "2026-05-18T06:49:26.824663"
     },
     {
       "sofascore_id": "2400065",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "HSV Hoek",
       "sp_away": "Rijnsburgse Boys",
@@ -650,11 +650,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.630441"
+      "cekme_zamani": "2026-05-18T06:49:26.915545"
     },
     {
       "sofascore_id": "2400068",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "RKAV Volendam",
       "sp_away": "Barendrecht",
@@ -663,11 +663,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.675446"
+      "cekme_zamani": "2026-05-18T06:49:27.003947"
     },
     {
       "sofascore_id": "2400070",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "Spakenburg",
       "sp_away": "Katwijk",
@@ -676,11 +676,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.721449"
+      "cekme_zamani": "2026-05-18T06:49:27.094847"
     },
     {
       "sofascore_id": "2399808",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:30",
       "sp_home": "Falkirk",
       "sp_away": "Rangers",
@@ -689,11 +689,11 @@
       "iy_skor1": 2,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.768249"
+      "cekme_zamani": "2026-05-18T06:49:27.183793"
     },
     {
       "sofascore_id": "2401497",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:30",
       "sp_home": "Stenhousemuir",
       "sp_away": "Alloa",
@@ -702,11 +702,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.813302"
+      "cekme_zamani": "2026-05-18T06:49:27.281111"
     },
     {
       "sofascore_id": "2400331",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:30",
       "sp_home": "Academica",
       "sp_away": "CD Trofense",
@@ -715,11 +715,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.858902"
+      "cekme_zamani": "2026-05-18T06:49:27.371335"
     },
     {
       "sofascore_id": "2400333",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:30",
       "sp_home": "Vitoria Guimaraes B",
       "sp_away": "Amarante",
@@ -728,11 +728,11 @@
       "iy_skor1": 0,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.902657"
+      "cekme_zamani": "2026-05-18T06:49:27.457184"
     },
     {
       "sofascore_id": "2399728",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "13:00",
       "sp_home": "FC Chelyabinsk",
       "sp_away": "Shinnik",
@@ -741,11 +741,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:00.945418"
+      "cekme_zamani": "2026-05-18T06:49:27.545349"
     },
     {
       "sofascore_id": "2399730",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "13:00",
       "sp_home": "FC KAMAZ",
       "sp_away": "FC Sokol Saratov",
@@ -754,11 +754,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.013787"
+      "cekme_zamani": "2026-05-18T06:49:27.642896"
     },
     {
       "sofascore_id": "2399732",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "13:00",
       "sp_home": "SKA-Energiya Khabarovsk",
       "sp_away": "Neftekhimik",
@@ -767,11 +767,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.063193"
+      "cekme_zamani": "2026-05-18T06:49:27.733909"
     },
     {
       "sofascore_id": "2399737",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "13:00",
       "sp_home": "Volga Ulyanovsk",
       "sp_away": "Fakel Voronezh",
@@ -780,11 +780,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.117412"
+      "cekme_zamani": "2026-05-18T06:49:27.823720"
     },
     {
       "sofascore_id": "2400578",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:30",
       "sp_home": "Internacional",
       "sp_away": "Vasco Da Gama",
@@ -793,11 +793,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.175328"
+      "cekme_zamani": "2026-05-18T06:49:27.914353"
     },
     {
       "sofascore_id": "2400622",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "02:30",
       "sp_home": "Fluminense",
       "sp_away": "Sao Paulo",
@@ -806,11 +806,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.234299"
+      "cekme_zamani": "2026-05-18T06:49:28.002714"
     },
     {
       "sofascore_id": "2400492",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Operario Ferroviario PR",
       "sp_away": "Nautico",
@@ -819,11 +819,11 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.296779"
+      "cekme_zamani": "2026-05-18T06:49:28.090642"
     },
     {
       "sofascore_id": "2400579",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:30",
       "sp_home": "Goias",
       "sp_away": "Botafogo SP",
@@ -832,11 +832,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.351774"
+      "cekme_zamani": "2026-05-18T06:49:28.181119"
     },
     {
       "sofascore_id": "2400559",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Santa Cruz (PE)",
       "sp_away": "Volta Redonda",
@@ -845,11 +845,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.396097"
+      "cekme_zamani": "2026-05-18T06:49:28.268101"
     },
     {
       "sofascore_id": "2400596",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "01:30",
       "sp_home": "Floresta/CE",
       "sp_away": "Amazonas AM",
@@ -858,11 +858,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.440601"
+      "cekme_zamani": "2026-05-18T06:49:28.358569"
     },
     {
       "sofascore_id": "2400460",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:00",
       "sp_home": "America-RJ",
       "sp_away": "Madureira",
@@ -871,11 +871,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.484920"
+      "cekme_zamani": "2026-05-18T06:49:28.450554"
     },
     {
       "sofascore_id": "2400504",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "ABC Natal",
       "sp_away": "Sousa PB",
@@ -884,11 +884,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.530662"
+      "cekme_zamani": "2026-05-18T06:49:28.541392"
     },
     {
       "sofascore_id": "2400506",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Lagarto",
       "sp_away": "Sergipe (SE)",
@@ -897,11 +897,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.575138"
+      "cekme_zamani": "2026-05-18T06:49:28.634423"
     },
     {
       "sofascore_id": "2400508",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Sao Luiz(RS)",
       "sp_away": "Guarany de Bage",
@@ -910,11 +910,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.616913"
+      "cekme_zamani": "2026-05-18T06:49:28.729388"
     },
     {
       "sofascore_id": "2400512",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Pouso Alegre/MG",
       "sp_away": "Portuguesa RJ",
@@ -923,11 +923,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.659206"
+      "cekme_zamani": "2026-05-18T06:49:28.823893"
     },
     {
       "sofascore_id": "2400514",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Pague Menos",
       "sp_away": "Fluminense/PI",
@@ -936,11 +936,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.702760"
+      "cekme_zamani": "2026-05-18T06:49:28.921569"
     },
     {
       "sofascore_id": "2400558",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Asa",
       "sp_away": "Juazeirense BA",
@@ -949,11 +949,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.745565"
+      "cekme_zamani": "2026-05-18T06:49:29.020854"
     },
     {
       "sofascore_id": "2400562",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Moto Clube(MA)",
       "sp_away": "Iape",
@@ -962,11 +962,11 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.793436"
+      "cekme_zamani": "2026-05-18T06:49:29.113393"
     },
     {
       "sofascore_id": "2400564",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Nacional AM",
       "sp_away": "Manauara",
@@ -975,11 +975,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.838472"
+      "cekme_zamani": "2026-05-18T06:49:29.205839"
     },
     {
       "sofascore_id": "2400566",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Real Noroeste",
       "sp_away": "Rio Branco ES",
@@ -988,11 +988,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.882391"
+      "cekme_zamani": "2026-05-18T06:49:29.307167"
     },
     {
       "sofascore_id": "2400725",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Noroeste",
       "sp_away": "Velo Clube SP",
@@ -1001,11 +1001,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.925754"
+      "cekme_zamani": "2026-05-18T06:49:29.391728"
     },
     {
       "sofascore_id": "2400577",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:00",
       "sp_home": "Tombense",
       "sp_away": "Democrata",
@@ -1014,11 +1014,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:01.968738"
+      "cekme_zamani": "2026-05-18T06:49:29.483104"
     },
     {
       "sofascore_id": "2400586",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:30",
       "sp_home": "Maracana CE",
       "sp_away": "Iguatu CE",
@@ -1027,11 +1027,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.010626"
+      "cekme_zamani": "2026-05-18T06:49:29.581814"
     },
     {
       "sofascore_id": "2400598",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "01:30",
       "sp_home": "SE do Gama (DF)",
       "sp_away": "Brasiliense (DF)",
@@ -1040,11 +1040,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.054705"
+      "cekme_zamani": "2026-05-18T06:49:29.683986"
     },
     {
       "sofascore_id": "2402440",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "01:30",
       "sp_home": "River Plate",
       "sp_away": "Rosario Central",
@@ -1053,11 +1053,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.098034"
+      "cekme_zamani": "2026-05-18T06:49:29.774150"
     },
     {
       "sofascore_id": "2400487",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:30",
       "sp_home": "Los Andes",
       "sp_away": "Godoy Cruz",
@@ -1066,11 +1066,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.149166"
+      "cekme_zamani": "2026-05-18T06:49:29.861508"
     },
     {
       "sofascore_id": "2400499",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Club Atletico Colegiales",
       "sp_away": "Club Atletico Guemes",
@@ -1079,11 +1079,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.194196"
+      "cekme_zamani": "2026-05-18T06:49:29.957320"
     },
     {
       "sofascore_id": "2400526",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Atletico Atlanta",
       "sp_away": "Rafaela",
@@ -1092,11 +1092,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.238214"
+      "cekme_zamani": "2026-05-18T06:49:30.052166"
     },
     {
       "sofascore_id": "2400199",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Blau-Weiss Linz",
       "sp_away": "Grazer AK",
@@ -1105,11 +1105,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.279895"
+      "cekme_zamani": "2026-05-18T06:49:30.139511"
     },
     {
       "sofascore_id": "2400226",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Athletiki Enosi Kition",
       "sp_away": "AEP Paphos",
@@ -1118,11 +1118,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.321888"
+      "cekme_zamani": "2026-05-18T06:49:30.222013"
     },
     {
       "sofascore_id": "2400230",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Apoel",
       "sp_away": "Omonia Nicosia",
@@ -1131,11 +1131,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.365542"
+      "cekme_zamani": "2026-05-18T06:49:30.302832"
     },
     {
       "sofascore_id": "2400616",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "02:30",
       "sp_home": "Charlotte FC",
       "sp_away": "Toronto",
@@ -1144,11 +1144,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.409503"
+      "cekme_zamani": "2026-05-18T06:49:30.389796"
     },
     {
       "sofascore_id": "2400618",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "02:30",
       "sp_home": "New York",
       "sp_away": "New York City Football Club",
@@ -1157,11 +1157,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.450906"
+      "cekme_zamani": "2026-05-18T06:49:30.479562"
     },
     {
       "sofascore_id": "2400620",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "02:30",
       "sp_home": "Orlando City",
       "sp_away": "Atlanta United",
@@ -1170,11 +1170,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.492647"
+      "cekme_zamani": "2026-05-18T06:49:30.568439"
     },
     {
       "sofascore_id": "2400638",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "03:30",
       "sp_home": "Austin FC",
       "sp_away": "Kansas",
@@ -1183,11 +1183,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.535017"
+      "cekme_zamani": "2026-05-18T06:49:30.651982"
     },
     {
       "sofascore_id": "2400645",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "04:00",
       "sp_home": "Seattle",
       "sp_away": "Los Angeles",
@@ -1196,11 +1196,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.578348"
+      "cekme_zamani": "2026-05-18T06:49:30.738523"
     },
     {
       "sofascore_id": "2400652",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "04:30",
       "sp_home": "San Diego FC",
       "sp_away": "FC Cincinnati",
@@ -1209,11 +1209,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.622298"
+      "cekme_zamani": "2026-05-18T06:49:30.827732"
     },
     {
       "sofascore_id": "2400484",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:30",
       "sp_home": "Longford",
       "sp_away": "Cork City Foras",
@@ -1222,11 +1222,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.663006"
+      "cekme_zamani": "2026-05-18T06:49:30.913342"
     },
     {
       "sofascore_id": "2400418",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:15",
       "sp_home": "Standard Liege",
       "sp_away": "Genk",
@@ -1235,11 +1235,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.704285"
+      "cekme_zamani": "2026-05-18T06:49:30.998890"
     },
     {
       "sofascore_id": "2400338",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Winterthur",
       "sp_away": "Luzern",
@@ -1248,11 +1248,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.745535"
+      "cekme_zamani": "2026-05-18T06:49:31.082096"
     },
     {
       "sofascore_id": "2400344",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Lausanne",
       "sp_away": "Grasshoppers",
@@ -1261,11 +1261,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.786680"
+      "cekme_zamani": "2026-05-18T06:49:31.171012"
     },
     {
       "sofascore_id": "2400167",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Bruhl SG",
       "sp_away": "Zurich B",
@@ -1274,11 +1274,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.829237"
+      "cekme_zamani": "2026-05-18T06:49:31.250735"
     },
     {
       "sofascore_id": "2400174",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "SC Cham",
       "sp_away": "Young Boys(U21)",
@@ -1287,11 +1287,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.870220"
+      "cekme_zamani": "2026-05-18T06:49:31.334966"
     },
     {
       "sofascore_id": "2400329",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:30",
       "sp_home": "SC Kriens",
       "sp_away": "FC Paradiso",
@@ -1300,11 +1300,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.910982"
+      "cekme_zamani": "2026-05-18T06:49:31.421279"
     },
     {
       "sofascore_id": "2399767",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Hillerod Fodbold",
       "sp_away": "Esbjerg",
@@ -1313,11 +1313,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.953075"
+      "cekme_zamani": "2026-05-18T06:49:31.506514"
     },
     {
       "sofascore_id": "2399937",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Horsens",
       "sp_away": "Hvidovre IF",
@@ -1326,11 +1326,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:02.996769"
+      "cekme_zamani": "2026-05-18T06:49:31.598174"
     },
     {
       "sofascore_id": "2399794",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Holbaek",
       "sp_away": "Odder IGF",
@@ -1339,11 +1339,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.041150"
+      "cekme_zamani": "2026-05-18T06:49:31.683792"
     },
     {
       "sofascore_id": "2399897",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "FA 2000",
       "sp_away": "Vanlose IF",
@@ -1352,11 +1352,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.085136"
+      "cekme_zamani": "2026-05-18T06:49:31.772793"
     },
     {
       "sofascore_id": "2402242",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "13:00",
       "sp_home": "Glostrup FK",
       "sp_away": "Allerod",
@@ -1365,11 +1365,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.129547"
+      "cekme_zamani": "2026-05-18T06:49:31.855521"
     },
     {
       "sofascore_id": "2402245",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Ostre BK Odense",
       "sp_away": "Fuglebakken KFUM",
@@ -1378,11 +1378,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.181384"
+      "cekme_zamani": "2026-05-18T06:49:31.937017"
     },
     {
       "sofascore_id": "2402247",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Hedensted BK",
       "sp_away": "Vinder Vatanspor-VRI",
@@ -1391,11 +1391,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.230898"
+      "cekme_zamani": "2026-05-18T06:49:32.020793"
     },
     {
       "sofascore_id": "2402249",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Espergaerde IF",
       "sp_away": "Ringsted",
@@ -1404,11 +1404,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.281555"
+      "cekme_zamani": "2026-05-18T06:49:32.106732"
     },
     {
       "sofascore_id": "2402251",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Hobro B",
       "sp_away": "Marienlyst",
@@ -1417,11 +1417,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.323335"
+      "cekme_zamani": "2026-05-18T06:49:32.194915"
     },
     {
       "sofascore_id": "2400107",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Csikszereda",
       "sp_away": "Botosani",
@@ -1430,11 +1430,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.365622"
+      "cekme_zamani": "2026-05-18T06:49:32.407518"
     },
     {
       "sofascore_id": "2400214",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "SCM Argesul Pitesti",
       "sp_away": "Rapid Bucuresti",
@@ -1443,11 +1443,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.410014"
+      "cekme_zamani": "2026-05-18T06:49:32.487835"
     },
     {
       "sofascore_id": "2399656",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "11:00",
       "sp_home": "Corvinul Hunedoara",
       "sp_away": "FC Bihor Oradea",
@@ -1456,11 +1456,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.451847"
+      "cekme_zamani": "2026-05-18T06:49:32.604901"
     },
     {
       "sofascore_id": "2399661",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "11:00",
       "sp_home": "CSA Steaua Bucureti",
       "sp_away": "CS Voluntari",
@@ -1469,11 +1469,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.494695"
+      "cekme_zamani": "2026-05-18T06:49:32.699084"
     },
     {
       "sofascore_id": "2399761",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Helsinki",
       "sp_away": "Ilves T.",
@@ -1482,11 +1482,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.538486"
+      "cekme_zamani": "2026-05-18T06:49:32.784696"
     },
     {
       "sofascore_id": "2400105",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Mariehamn",
       "sp_away": "Kuopion",
@@ -1495,11 +1495,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.585140"
+      "cekme_zamani": "2026-05-18T06:49:32.871269"
     },
     {
       "sofascore_id": "2400343",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Gnistan",
       "sp_away": "Jaro",
@@ -1508,11 +1508,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.629994"
+      "cekme_zamani": "2026-05-18T06:49:32.963017"
     },
     {
       "sofascore_id": "2399959",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Union Plaani",
       "sp_away": "PPJ Akatemia",
@@ -1521,11 +1521,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.675340"
+      "cekme_zamani": "2026-05-18T06:49:33.147098"
     },
     {
       "sofascore_id": "2400128",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Myllykoski",
       "sp_away": "Lahden Reipas",
@@ -1534,11 +1534,11 @@
       "iy_skor1": 0,
       "iy_skor2": 4,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.721494"
+      "cekme_zamani": "2026-05-18T06:49:33.234436"
     },
     {
       "sofascore_id": "2399964",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Grankulla IFK",
       "sp_away": "Honka",
@@ -1547,11 +1547,11 @@
       "iy_skor1": 1,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.770936"
+      "cekme_zamani": "2026-05-18T06:49:33.315542"
     },
     {
       "sofascore_id": "2399960",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Huima / Urho",
       "sp_away": "Vaajakoski",
@@ -1560,11 +1560,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.815207"
+      "cekme_zamani": "2026-05-18T06:49:33.391222"
     },
     {
       "sofascore_id": "2400133",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "TP-47",
       "sp_away": "Jaro B",
@@ -1573,11 +1573,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.869766"
+      "cekme_zamani": "2026-05-18T06:49:33.469114"
     },
     {
       "sofascore_id": "2400099",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Fredrikstad",
       "sp_away": "Ham Kam",
@@ -1586,11 +1586,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.915825"
+      "cekme_zamani": "2026-05-18T06:49:33.559741"
     },
     {
       "sofascore_id": "2400101",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Molde",
       "sp_away": "Kristiansund",
@@ -1599,11 +1599,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:03.961032"
+      "cekme_zamani": "2026-05-18T06:49:33.658459"
     },
     {
       "sofascore_id": "2400104",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Viking",
       "sp_away": "Start",
@@ -1612,11 +1612,11 @@
       "iy_skor1": 1,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.006469"
+      "cekme_zamani": "2026-05-18T06:49:33.746198"
     },
     {
       "sofascore_id": "2400452",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:00",
       "sp_home": "Valerenga",
       "sp_away": "Sarpsborg 08 FF",
@@ -1625,11 +1625,11 @@
       "iy_skor1": 2,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.048627"
+      "cekme_zamani": "2026-05-18T06:49:33.894566"
     },
     {
       "sofascore_id": "2400112",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Haugesund",
       "sp_away": "Asane Fotball",
@@ -1638,11 +1638,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.093812"
+      "cekme_zamani": "2026-05-18T06:49:33.983861"
     },
     {
       "sofascore_id": "2400115",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Lyn Oslo",
       "sp_away": "Kongsvinger",
@@ -1651,11 +1651,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.135267"
+      "cekme_zamani": "2026-05-18T06:49:34.080493"
     },
     {
       "sofascore_id": "2400120",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Stabaek",
       "sp_away": "Raufoss",
@@ -1664,11 +1664,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.178883"
+      "cekme_zamani": "2026-05-18T06:49:34.162021"
     },
     {
       "sofascore_id": "2399768",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Kvik Halden",
       "sp_away": "Sandvikens",
@@ -1677,11 +1677,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.222465"
+      "cekme_zamani": "2026-05-18T06:49:34.223873"
     },
     {
       "sofascore_id": "2400117",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "FK Arendal",
       "sp_away": "Jerv",
@@ -1690,11 +1690,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.267941"
+      "cekme_zamani": "2026-05-18T06:49:34.313281"
     },
     {
       "sofascore_id": "2399846",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Follo",
       "sp_away": "Lorenskog",
@@ -1703,11 +1703,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.310849"
+      "cekme_zamani": "2026-05-18T06:49:34.366878"
     },
     {
       "sofascore_id": "2399948",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Levanger FK",
       "sp_away": "SK Trygg Lade",
@@ -1716,11 +1716,11 @@
       "iy_skor1": 3,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.354186"
+      "cekme_zamani": "2026-05-18T06:49:34.429689"
     },
     {
       "sofascore_id": "2399795",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Ullern",
       "sp_away": "Frigg FK",
@@ -1729,11 +1729,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.396554"
+      "cekme_zamani": "2026-05-18T06:49:34.485227"
     },
     {
       "sofascore_id": "2399799",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Nordstrand",
       "sp_away": "Konnerud",
@@ -1742,11 +1742,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.440270"
+      "cekme_zamani": "2026-05-18T06:49:34.547120"
     },
     {
       "sofascore_id": "2400173",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Volda",
       "sp_away": "Herd",
@@ -1755,11 +1755,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.483131"
+      "cekme_zamani": "2026-05-18T06:49:34.617211"
     },
     {
       "sofascore_id": "2400030",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Fana",
       "sp_away": "Askoy FK",
@@ -1768,11 +1768,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.526782"
+      "cekme_zamani": "2026-05-18T06:49:34.682695"
     },
     {
       "sofascore_id": "2400033",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Mandalskameratene",
       "sp_away": "Vindbjart",
@@ -1781,11 +1781,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.571461"
+      "cekme_zamani": "2026-05-18T06:49:34.743204"
     },
     {
       "sofascore_id": "2400353",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Asteras Tripolis",
       "sp_away": "Kifisia",
@@ -1794,11 +1794,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.615901"
+      "cekme_zamani": "2026-05-18T06:49:34.796013"
     },
     {
       "sofascore_id": "2400395",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Umf Selfoss",
       "sp_away": "Kormakur",
@@ -1807,11 +1807,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.666668"
+      "cekme_zamani": "2026-05-18T06:49:34.851128"
     },
     {
       "sofascore_id": "2400170",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Reynir Sandgerdi",
       "sp_away": "KF Fjallabyggdar",
@@ -1820,11 +1820,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.713452"
+      "cekme_zamani": "2026-05-18T06:49:34.901352"
     },
     {
       "sofascore_id": "2400406",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Tindastoll Sauda",
       "sp_away": "FC Arbaer",
@@ -1833,11 +1833,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.759595"
+      "cekme_zamani": "2026-05-18T06:49:34.957247"
     },
     {
       "sofascore_id": "2399940",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Gais",
       "sp_away": "Degerfors",
@@ -1846,11 +1846,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.805157"
+      "cekme_zamani": "2026-05-18T06:49:35.025405"
     },
     {
       "sofascore_id": "2399769",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Karlbergs BK",
       "sp_away": "Jarfalla",
@@ -1859,11 +1859,11 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.852280"
+      "cekme_zamani": "2026-05-18T06:49:35.088331"
     },
     {
       "sofascore_id": "2400264",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Bumprom Gomel",
       "sp_away": "Niva Dolbizno",
@@ -1872,11 +1872,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:04.977642"
+      "cekme_zamani": "2026-05-18T06:49:35.148401"
     },
     {
       "sofascore_id": "2400266",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "FK Minsk B",
       "sp_away": "FK Lida",
@@ -1885,11 +1885,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.047399"
+      "cekme_zamani": "2026-05-18T06:49:35.214411"
     },
     {
       "sofascore_id": "2400270",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Smorgon",
       "sp_away": "FK Zorka-BDU Minsk",
@@ -1898,11 +1898,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.090334"
+      "cekme_zamani": "2026-05-18T06:49:35.277410"
     },
     {
       "sofascore_id": "2400272",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Uni X-Labs Minsk",
       "sp_away": "BATE-2 Borisov",
@@ -1911,11 +1911,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.135653"
+      "cekme_zamani": "2026-05-18T06:49:35.338054"
     },
     {
       "sofascore_id": "2400454",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:00",
       "sp_home": "El Zamalek",
       "sp_away": "USM Alger",
@@ -1924,11 +1924,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.181563"
+      "cekme_zamani": "2026-05-18T06:49:35.399633"
     },
     {
       "sofascore_id": "2399943",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "CSKA 1948 Sofia",
       "sp_away": "Ludogorets",
@@ -1937,11 +1937,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.231767"
+      "cekme_zamani": "2026-05-18T06:49:35.462300"
     },
     {
       "sofascore_id": "2400358",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "Botev Plovdiv",
       "sp_away": "Cherno More Varna",
@@ -1950,11 +1950,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.277111"
+      "cekme_zamani": "2026-05-18T06:49:35.528489"
     },
     {
       "sofascore_id": "2400122",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Harju JK Laagri",
       "sp_away": "Parnu Linnameeskond",
@@ -1963,11 +1963,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.322006"
+      "cekme_zamani": "2026-05-18T06:49:35.593150"
     },
     {
       "sofascore_id": "2400398",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "FC Nomme United(U21)",
       "sp_away": "FC Elva",
@@ -1976,11 +1976,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.364732"
+      "cekme_zamani": "2026-05-18T06:49:35.661618"
     },
     {
       "sofascore_id": "2400106",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "HNK Gorica",
       "sp_away": "NK Osijek",
@@ -1989,11 +1989,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.407717"
+      "cekme_zamani": "2026-05-18T06:49:35.729823"
     },
     {
       "sofascore_id": "2399827",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:45",
       "sp_home": "Radnik Sesvete",
       "sp_away": "NK Dugopolje",
@@ -2002,11 +2002,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.451404"
+      "cekme_zamani": "2026-05-18T06:49:35.790166"
     },
     {
       "sofascore_id": "2400327",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:30",
       "sp_home": "NK Orijent Rijeka",
       "sp_away": "Karlovac",
@@ -2015,11 +2015,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.494506"
+      "cekme_zamani": "2026-05-18T06:49:35.848904"
     },
     {
       "sofascore_id": "2400201",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Slovacko",
       "sp_away": "Boleslav",
@@ -2028,11 +2028,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.536365"
+      "cekme_zamani": "2026-05-18T06:49:35.912080"
     },
     {
       "sofascore_id": "2400203",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Teplice",
       "sp_away": "Dukla Prague",
@@ -2041,11 +2041,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.578233"
+      "cekme_zamani": "2026-05-18T06:49:35.985916"
     },
     {
       "sofascore_id": "2400232",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Lisen",
       "sp_away": "FC Viktoria Žižkov",
@@ -2054,11 +2054,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.621468"
+      "cekme_zamani": "2026-05-18T06:49:36.049650"
     },
     {
       "sofascore_id": "2400234",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Slavia Kromeriz",
       "sp_away": "Brno",
@@ -2067,11 +2067,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.666178"
+      "cekme_zamani": "2026-05-18T06:49:36.102516"
     },
     {
       "sofascore_id": "2400236",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Táborsko",
       "sp_away": "Opava",
@@ -2080,11 +2080,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.709314"
+      "cekme_zamani": "2026-05-18T06:49:36.162589"
     },
     {
       "sofascore_id": "2400238",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Budejovice",
       "sp_away": "Chrudim",
@@ -2093,11 +2093,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.752865"
+      "cekme_zamani": "2026-05-18T06:49:36.220212"
     },
     {
       "sofascore_id": "2399766",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Wuhan three town",
       "sp_away": "Shenyang City",
@@ -2106,11 +2106,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.794736"
+      "cekme_zamani": "2026-05-18T06:49:36.273436"
     },
     {
       "sofascore_id": "2399829",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "YunNan YuKun",
       "sp_away": "ShenHua SVA",
@@ -2119,11 +2119,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.836431"
+      "cekme_zamani": "2026-05-18T06:49:36.329525"
     },
     {
       "sofascore_id": "2400223",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Debreceni",
       "sp_away": "Ujpesti TE",
@@ -2132,11 +2132,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.879627"
+      "cekme_zamani": "2026-05-18T06:49:36.391779"
     },
     {
       "sofascore_id": "2400225",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Varda SE",
       "sp_away": "ETO Gyori",
@@ -2145,11 +2145,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.921539"
+      "cekme_zamani": "2026-05-18T06:49:36.450123"
     },
     {
       "sofascore_id": "2400228",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Nyiregyhaza",
       "sp_away": "Kazincbarcika",
@@ -2158,11 +2158,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:05.963731"
+      "cekme_zamani": "2026-05-18T06:49:36.506908"
     },
     {
       "sofascore_id": "2400436",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "20:00",
       "sp_home": "Maccabi Haifa",
       "sp_away": "Hapoel Petah Tikva",
@@ -2171,11 +2171,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.007785"
+      "cekme_zamani": "2026-05-18T06:49:36.601909"
     },
     {
       "sofascore_id": "2399945",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Super Nova",
       "sp_away": "Ogre United",
@@ -2184,11 +2184,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.053223"
+      "cekme_zamani": "2026-05-18T06:49:36.693435"
     },
     {
       "sofascore_id": "2400022",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Rezekne / BJSS",
       "sp_away": "Tukums-2000 II",
@@ -2197,11 +2197,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.100737"
+      "cekme_zamani": "2026-05-18T06:49:36.782329"
     },
     {
       "sofascore_id": "2400281",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "FS Metta LU",
       "sp_away": "JDFS Alberts",
@@ -2210,11 +2210,11 @@
       "iy_skor1": 3,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.157887"
+      "cekme_zamani": "2026-05-18T06:49:36.873787"
     },
     {
       "sofascore_id": "2399806",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:15",
       "sp_home": "Spyris Kaunas",
       "sp_away": "Siauliai",
@@ -2223,11 +2223,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.214170"
+      "cekme_zamani": "2026-05-18T06:49:36.966144"
     },
     {
       "sofascore_id": "2399785",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "14:00",
       "sp_home": "Neptunas Klaipeda",
       "sp_away": "FK Minija",
@@ -2236,11 +2236,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.270629"
+      "cekme_zamani": "2026-05-18T06:49:37.062732"
     },
     {
       "sofascore_id": "2400157",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "BFA",
       "sp_away": "Atmosfera Mazeikiai",
@@ -2249,11 +2249,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.321127"
+      "cekme_zamani": "2026-05-18T06:49:37.155266"
     },
     {
       "sofascore_id": "2400273",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "GKS Jastrzebie",
       "sp_away": "Rekord Bielsko",
@@ -2262,11 +2262,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.371250"
+      "cekme_zamani": "2026-05-18T06:49:37.245040"
     },
     {
       "sofascore_id": "2399938",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:45",
       "sp_home": "Motor Lublin",
       "sp_away": "Cracovia Krakow",
@@ -2275,11 +2275,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.422378"
+      "cekme_zamani": "2026-05-18T06:49:37.337039"
     },
     {
       "sofascore_id": "2400447",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "20:30",
       "sp_home": "Chrobry Glogow",
       "sp_away": "Znicz Pruszkow",
@@ -2288,11 +2288,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.465252"
+      "cekme_zamani": "2026-05-18T06:49:37.610442"
     },
     {
       "sofascore_id": "2400449",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "20:30",
       "sp_home": "Stal Rzeszow",
       "sp_away": "KS Wieczysta Krakow",
@@ -2301,11 +2301,11 @@
       "iy_skor1": 1,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.508027"
+      "cekme_zamani": "2026-05-18T06:49:37.703981"
     },
     {
       "sofascore_id": "2401874",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Teuta Durres",
       "sp_away": "Pogradeci",
@@ -2314,11 +2314,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.551115"
+      "cekme_zamani": "2026-05-18T06:49:37.806272"
     },
     {
       "sofascore_id": "2399842",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Putra Jombang",
       "sp_away": "Persita Tangerang",
@@ -2327,11 +2327,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.594732"
+      "cekme_zamani": "2026-05-18T06:49:37.886283"
     },
     {
       "sofascore_id": "2400215",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "DAC Dunajska Streda",
       "sp_away": "Spartak Trnava",
@@ -2340,11 +2340,11 @@
       "iy_skor1": 3,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.638696"
+      "cekme_zamani": "2026-05-18T06:49:37.967467"
     },
     {
       "sofascore_id": "2400218",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Zilina",
       "sp_away": "Sport Podbrezova",
@@ -2353,11 +2353,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.681672"
+      "cekme_zamani": "2026-05-18T06:49:38.046024"
     },
     {
       "sofascore_id": "2400220",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "KFC Komarno",
       "sp_away": "1. Tatran Presov",
@@ -2366,11 +2366,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.726215"
+      "cekme_zamani": "2026-05-18T06:49:38.162633"
     },
     {
       "sofascore_id": "2400257",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Galanta",
       "sp_away": "FK Belusa",
@@ -2379,11 +2379,11 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.770101"
+      "cekme_zamani": "2026-05-18T06:49:38.249904"
     },
     {
       "sofascore_id": "2400259",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "OK castkovce",
       "sp_away": "TJ Spartak Myjava",
@@ -2392,11 +2392,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.813778"
+      "cekme_zamani": "2026-05-18T06:49:38.341995"
     },
     {
       "sofascore_id": "2400480",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:15",
       "sp_home": "NK Aluminij",
       "sp_away": "NK Primorje",
@@ -2405,11 +2405,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.855908"
+      "cekme_zamani": "2026-05-18T06:49:38.431943"
     },
     {
       "sofascore_id": "2400243",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "ND Beltinci",
       "sp_away": "NK Bilje",
@@ -2418,11 +2418,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.899684"
+      "cekme_zamani": "2026-05-18T06:49:38.504998"
     },
     {
       "sofascore_id": "2400207",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Kolos Kovalyovka",
       "sp_away": "Obolon Kiev",
@@ -2431,11 +2431,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.943275"
+      "cekme_zamani": "2026-05-18T06:49:38.583064"
     },
     {
       "sofascore_id": "2400211",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "SC Poltava",
       "sp_away": "Dynamo Kiev",
@@ -2444,11 +2444,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:06.987299"
+      "cekme_zamani": "2026-05-18T06:49:38.670669"
     },
     {
       "sofascore_id": "2400138",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Ahrobiznes Volochysk",
       "sp_away": "Viktoriya Mykolaivka",
@@ -2457,11 +2457,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.034502"
+      "cekme_zamani": "2026-05-18T06:49:38.791320"
     },
     {
       "sofascore_id": "2400140",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "FC Inhulets Petrove",
       "sp_away": "Prykarpattya Ivano Frankivsk",
@@ -2470,11 +2470,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.084631"
+      "cekme_zamani": "2026-05-18T06:49:38.859910"
     },
     {
       "sofascore_id": "2400494",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Univ de Vinto",
       "sp_away": "Bolivar",
@@ -2483,11 +2483,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.134502"
+      "cekme_zamani": "2026-05-18T06:49:38.932117"
     },
     {
       "sofascore_id": "2400628",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "03:00",
       "sp_home": "Deportes Limache",
       "sp_away": "Univ. Catolica",
@@ -2496,11 +2496,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.188572"
+      "cekme_zamani": "2026-05-18T06:49:39.010013"
     },
     {
       "sofascore_id": "2400501",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:00",
       "sp_home": "Cobreloa",
       "sp_away": "CD Copiapo S.A.",
@@ -2509,11 +2509,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.242390"
+      "cekme_zamani": "2026-05-18T06:49:39.070931"
     },
     {
       "sofascore_id": "2400585",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:30",
       "sp_home": "Curico Unido",
       "sp_away": "Santiago Wanderers",
@@ -2522,11 +2522,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.288936"
+      "cekme_zamani": "2026-05-18T06:49:39.142833"
     },
     {
       "sofascore_id": "2402451",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "04:30",
       "sp_home": "Independiente Santa Fe",
       "sp_away": "Atletico Junior Barranquilla",
@@ -2535,11 +2535,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.333930"
+      "cekme_zamani": "2026-05-18T06:49:39.206300"
     },
     {
       "sofascore_id": "2400528",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Universitario de Popayan",
       "sp_away": "Dep. Cali",
@@ -2548,11 +2548,37 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.387589"
+      "cekme_zamani": "2026-05-18T06:49:39.262604"
+    },
+    {
+      "sofascore_id": "2400530",
+      "tarih": "2026-05-17",
+      "saat": "23:00",
+      "sp_home": "Atletico Huila",
+      "sp_away": "Aguilas Doradas",
+      "skor1": 1,
+      "skor2": 4,
+      "iy_skor1": 1,
+      "iy_skor2": 1,
+      "durum": "MS",
+      "cekme_zamani": "2026-05-18T06:49:39.313972"
+    },
+    {
+      "sofascore_id": "2400533",
+      "tarih": "2026-05-17",
+      "saat": "23:00",
+      "sp_home": "Dep. Pereira",
+      "sp_away": "Real Soacha",
+      "skor1": 1,
+      "skor2": 0,
+      "iy_skor1": 0,
+      "iy_skor2": 0,
+      "durum": "MS",
+      "cekme_zamani": "2026-05-18T06:49:39.367831"
     },
     {
       "sofascore_id": "2400584",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:30",
       "sp_home": "Universidad Catolica",
       "sp_away": "Delfin SC",
@@ -2561,11 +2587,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.433650"
+      "cekme_zamani": "2026-05-18T06:49:39.419230"
     },
     {
       "sofascore_id": "2400573",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:30",
       "sp_home": "22 de Julio",
       "sp_away": "Independiente Juniors",
@@ -2574,11 +2600,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.475460"
+      "cekme_zamani": "2026-05-18T06:49:39.479613"
     },
     {
       "sofascore_id": "2401665",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Encarnacion FC",
       "sp_away": "Atletico Tembetary",
@@ -2587,11 +2613,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.516902"
+      "cekme_zamani": "2026-05-18T06:49:39.542256"
     },
     {
       "sofascore_id": "2400416",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:05",
       "sp_home": "Al Hilal",
       "sp_away": "Al-Suqoor",
@@ -2600,11 +2626,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.558710"
+      "cekme_zamani": "2026-05-18T06:49:39.594566"
     },
     {
       "sofascore_id": "2400455",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "21:00",
       "sp_home": "Al Ahli Jeddah",
       "sp_away": "Al Kholood",
@@ -2613,11 +2639,11 @@
       "iy_skor1": 3,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.601049"
+      "cekme_zamani": "2026-05-18T06:49:39.648701"
     },
     {
       "sofascore_id": "2400570",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:15",
       "sp_home": "Juan Pablo II",
       "sp_away": "Alianza Atletico",
@@ -2626,11 +2652,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.645117"
+      "cekme_zamani": "2026-05-18T06:49:39.710925"
     },
     {
       "sofascore_id": "2400653",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "04:30",
       "sp_home": "Sport Boys",
       "sp_away": "Real Atletico Garcilaso",
@@ -2639,11 +2665,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.688251"
+      "cekme_zamani": "2026-05-18T06:49:39.774597"
     },
     {
       "sofascore_id": "2401919",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "AD Comerciantes FC",
       "sp_away": "EM Deportivo Binacional",
@@ -2652,11 +2678,11 @@
       "iy_skor1": 3,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.731353"
+      "cekme_zamani": "2026-05-18T06:49:39.831069"
     },
     {
       "sofascore_id": "2401911",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Boston River",
       "sp_away": "Cerro Montevideo",
@@ -2665,11 +2691,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.775552"
+      "cekme_zamani": "2026-05-18T06:49:39.883318"
     },
     {
       "sofascore_id": "2401913",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:30",
       "sp_home": "CA Penarol",
       "sp_away": "Liverpool P.",
@@ -2678,11 +2704,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.819524"
+      "cekme_zamani": "2026-05-18T06:49:39.934983"
     },
     {
       "sofascore_id": "2402191",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "CA River Plate",
       "sp_away": "Paysandu",
@@ -2691,11 +2717,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.862266"
+      "cekme_zamani": "2026-05-18T06:49:39.985684"
     },
     {
       "sofascore_id": "2401892",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:30",
       "sp_home": "Atletico Barinas",
       "sp_away": "Fundacion Lara Deportiva",
@@ -2704,11 +2730,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.905193"
+      "cekme_zamani": "2026-05-18T06:49:40.035758"
     },
     {
       "sofascore_id": "2401900",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "22:30",
       "sp_home": "Yaracuyanos",
       "sp_away": "Academia Puerto Cabello B",
@@ -2717,11 +2743,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.948783"
+      "cekme_zamani": "2026-05-18T06:49:40.089541"
     },
     {
       "sofascore_id": "2401901",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "00:00",
       "sp_home": "Dep. Lara",
       "sp_away": "Real Frontera",
@@ -2730,11 +2756,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:07.992268"
+      "cekme_zamani": "2026-05-18T06:49:40.149554"
     },
     {
       "sofascore_id": "2401611",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "23:00",
       "sp_home": "Guadalajara",
       "sp_away": "Cruz Azul",
@@ -2743,11 +2769,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.035636"
+      "cekme_zamani": "2026-05-18T06:49:40.212266"
     },
     {
       "sofascore_id": "2400646",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "04:00",
       "sp_home": "Tepatitlan De Morelos",
       "sp_away": "Tampico Madero",
@@ -2756,11 +2782,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.078377"
+      "cekme_zamani": "2026-05-18T06:49:40.273395"
     },
     {
       "sofascore_id": "2399622",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "10:00",
       "sp_home": "Urawa",
       "sp_away": "Fc Tokyo",
@@ -2769,11 +2795,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.122129"
+      "cekme_zamani": "2026-05-18T06:49:40.335831"
     },
     {
       "sofascore_id": "2400735",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "07:00",
       "sp_home": "V-Varen Nagasaki",
       "sp_away": "Kobe",
@@ -2782,11 +2808,11 @@
       "iy_skor1": 2,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.171061"
+      "cekme_zamani": "2026-05-18T06:49:40.395780"
     },
     {
       "sofascore_id": "2400743",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Okayama",
       "sp_away": "Shimizu",
@@ -2795,11 +2821,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.220941"
+      "cekme_zamani": "2026-05-18T06:49:40.461693"
     },
     {
       "sofascore_id": "2400741",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Blaublitz Akita",
       "sp_away": "Thespa Kusatsu Gunma",
@@ -2808,11 +2834,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.264980"
+      "cekme_zamani": "2026-05-18T06:49:40.523957"
     },
     {
       "sofascore_id": "2400745",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Bandits Iwaki",
       "sp_away": "Matsumoto Yamaga",
@@ -2821,11 +2847,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.306739"
+      "cekme_zamani": "2026-05-18T06:49:40.585897"
     },
     {
       "sofascore_id": "2400748",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Imabari",
       "sp_away": "Kamatamare Sanuki",
@@ -2834,11 +2860,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.350103"
+      "cekme_zamani": "2026-05-18T06:49:40.651456"
     },
     {
       "sofascore_id": "2400750",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Kataller Toyama",
       "sp_away": "Tokushima Vortis",
@@ -2847,11 +2873,11 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.394756"
+      "cekme_zamani": "2026-05-18T06:49:40.716474"
     },
     {
       "sofascore_id": "2400752",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Kagoshima United",
       "sp_away": "Roasso Kumamoto",
@@ -2860,11 +2886,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.439262"
+      "cekme_zamani": "2026-05-18T06:49:40.780596"
     },
     {
       "sofascore_id": "2399642",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "10:30",
       "sp_home": "Daejeon Citizen",
       "sp_away": "FC Seoul",
@@ -2873,11 +2899,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.487284"
+      "cekme_zamani": "2026-05-18T06:49:40.842567"
     },
     {
       "sofascore_id": "2399662",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "11:00",
       "sp_home": "Yeoju Sejong",
       "sp_away": "Busan Transpor Tation",
@@ -2886,11 +2912,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.536817"
+      "cekme_zamani": "2026-05-18T06:49:40.907594"
     },
     {
       "sofascore_id": "2400747",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Mokpo City",
       "sp_away": "Gyeongju KHNP",
@@ -2899,11 +2925,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.585873"
+      "cekme_zamani": "2026-05-18T06:49:40.968338"
     },
     {
       "sofascore_id": "2399972",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Araz Nakhchivan",
       "sp_away": "Kapaz",
@@ -2912,11 +2938,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.632020"
+      "cekme_zamani": "2026-05-18T06:49:41.039268"
     },
     {
       "sofascore_id": "2399974",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Zira FK",
       "sp_away": "Sumqayit",
@@ -2925,11 +2951,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.678500"
+      "cekme_zamani": "2026-05-18T06:49:41.117050"
     },
     {
       "sofascore_id": "2399978",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Karabağ",
       "sp_away": "FK Mughan",
@@ -2938,11 +2964,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.726175"
+      "cekme_zamani": "2026-05-18T06:49:41.189601"
     },
     {
       "sofascore_id": "2399971",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "FC Gagra",
       "sp_away": "Metalurgi Rustavi",
@@ -2951,11 +2977,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.780308"
+      "cekme_zamani": "2026-05-18T06:49:41.260116"
     },
     {
       "sofascore_id": "2400438",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "20:00",
       "sp_home": "Dinamo Batumi",
       "sp_away": "Fc Meshakhte Tkibuli",
@@ -2964,11 +2990,11 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.826189"
+      "cekme_zamani": "2026-05-18T06:49:41.331229"
     },
     {
       "sofascore_id": "2399868",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "15:00",
       "sp_home": "Merani Martvili",
       "sp_away": "FC Telavi",
@@ -2977,11 +3003,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.868895"
+      "cekme_zamani": "2026-05-18T06:49:41.398615"
     },
     {
       "sofascore_id": "2400018",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Kolkheti Poti",
       "sp_away": "Gyeonggi",
@@ -2990,11 +3016,11 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.912818"
+      "cekme_zamani": "2026-05-18T06:49:41.462252"
     },
     {
       "sofascore_id": "2399725",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "12:40",
       "sp_home": "Newcastle Jets",
       "sp_away": "Sydney",
@@ -3003,11 +3029,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.953554"
+      "cekme_zamani": "2026-05-18T06:49:41.518297"
     },
     {
       "sofascore_id": "2402395",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Kingborough Lions",
       "sp_away": "South Hobart",
@@ -3016,11 +3042,11 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:08.998677"
+      "cekme_zamani": "2026-05-18T06:49:41.588404"
     },
     {
       "sofascore_id": "2399667",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "11:00",
       "sp_home": "Yeronga Eagles",
       "sp_away": "Newmarket SFC",
@@ -3029,11 +3055,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.042812"
+      "cekme_zamani": "2026-05-18T06:49:41.651098"
     },
     {
       "sofascore_id": "2400754",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "08:00",
       "sp_home": "Logan Roos",
       "sp_away": "Redcliffe PCYC",
@@ -3042,11 +3068,11 @@
       "iy_skor1": 2,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.084396"
+      "cekme_zamani": "2026-05-18T06:49:41.713238"
     },
     {
       "sofascore_id": "2401708",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "19:00",
       "sp_home": "CA Batna",
       "sp_away": "CRB Temouchent",
@@ -3055,11 +3081,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.126622"
+      "cekme_zamani": "2026-05-18T06:49:41.776627"
     },
     {
       "sofascore_id": "2402222",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "RB Rachad Bernoussi",
       "sp_away": "FUS Rabat",
@@ -3068,11 +3094,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.171367"
+      "cekme_zamani": "2026-05-18T06:49:41.837416"
     },
     {
       "sofascore_id": "2402224",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "Olympique de Safi",
       "sp_away": "Olympique Dcheira",
@@ -3081,11 +3107,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.214201"
+      "cekme_zamani": "2026-05-18T06:49:41.891240"
     },
     {
       "sofascore_id": "2402226",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "18:00",
       "sp_home": "UTS Union Touarga Sport Rabat",
       "sp_away": "FRN Fath Riadi Nador",
@@ -3094,11 +3120,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.260611"
+      "cekme_zamani": "2026-05-18T06:49:41.942662"
     },
     {
       "sofascore_id": "2399949",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Chippa Utd",
       "sp_away": "Lamontville Golden Arrows",
@@ -3107,11 +3133,11 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.303954"
+      "cekme_zamani": "2026-05-18T06:49:42.007405"
     },
     {
       "sofascore_id": "2399952",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "Orlando Pirates",
       "sp_away": "Maritzburg Utd",
@@ -3120,11 +3146,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.346684"
+      "cekme_zamani": "2026-05-18T06:49:42.068528"
     },
     {
       "sofascore_id": "2399955",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:00",
       "sp_home": "TS Galaxy",
       "sp_away": "Mamelodi Sundowns",
@@ -3133,11 +3159,11 @@
       "iy_skor1": 2,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.391161"
+      "cekme_zamani": "2026-05-18T06:49:42.131787"
     },
     {
       "sofascore_id": "2400060",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "16:30",
       "sp_home": "Polokwane City",
       "sp_away": "Milano Utd",
@@ -3146,11 +3172,11 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.435404"
+      "cekme_zamani": "2026-05-18T06:49:42.192923"
     },
     {
       "sofascore_id": "2402814",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "12:00",
       "sp_home": "Porvenir Asuka",
       "sp_away": "Moriyama Samurai",
@@ -3159,11 +3185,11 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.479279"
+      "cekme_zamani": "2026-05-18T06:49:42.249602"
     },
     {
       "sofascore_id": "2402843",
-      "tarih": "2026-05-16",
+      "tarih": "2026-05-17",
       "saat": "17:00",
       "sp_home": "Sokol Ostroda",
       "sp_away": "Olsztyn OKS 1945",
@@ -3172,7 +3198,7 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-17T22:43:09.522164"
+      "cekme_zamani": "2026-05-18T06:49:42.311151"
     }
   ]
 }

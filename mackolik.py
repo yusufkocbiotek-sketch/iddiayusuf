@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
 # gecmis_maclar.json -> HİÇ DOKUNULMAZ
 BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
-HEDEF_TARIH = "12/05"
+HEDEF_TARIH = "15/05"
 ESLESME_SEVIYESI = 0.35  # ✅ DÜŞÜRÜLDÜ: %35 benzerlik bile yeterli, daha fazla eşleşme olsun
 TAM_ESLESME_SEVIYESI = 0.70 # %70 ve üstü kesin aynı maç
 GIT_BRANCH_NAME = "main"

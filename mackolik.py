@@ -1,5 +1,5 @@
 import json, os, re, time
-import datetime
+from datetime import datetime, timedelta
 import subprocess
 from pathlib import Path
 from difflib import SequenceMatcher
@@ -18,46 +18,54 @@ MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
 BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 
 # ---------------------------
-# TARİH ARALIĞI AYARLA
+# 🚨 TARİH AYARI: DÜNDEN GERİYE, BUGÜN HARİÇ
 # ---------------------------
-BASLANGIC_TARIHI = "16/05"   
-BITIS_TARIHI = "19/05"       
+BUGUN = datetime.now()
+DUN = BUGUN - timedelta(days=1)
+BASLANGIC_TARIHI = "2026-05-01" # YIL-AY-GÜN formatı
+BITIS_TARIHI = DUN.strftime("%Y-%m-%d") # ← KESİNLİKLE DÜN VE ÖNCESİ
 # ---------------------------
 
 ESLESME_SEVIYESI = 0.50       
 TAM_ESLESME_SEVIYESI = 0.80   
 GIT_BRANCH_NAME = "main"
 
-# 🚨 KESİN KURALLAR - DÜZELTİLDİ
+# 🚨 KESİN KURALLAR
 KURAL_SKOR_KONTROL = True     
 KURAL_SIFIR_KONTROL = False   # ✅ 0-0 sonuçları geçerli kabul et
 KURAL_TARIH_KESIN = True      
 
-# ⚙️ PERFORMANS AYARLARI - OPTİMİZE EDİLDİ
+# ⚙️ PERFORMANS AYARLARI
 SAYFA_YUKLEME_BEKLEME = 30     
 TEKRAR_OKUMA_SAYISI = 5        
 TEKRARLAR_ARASI_BEKLEME = 1.2  
 MANTIK_HATASI_DUZELT = True    
 
 # =============================================================================
-# 📅 TARİH İŞLEMLERİ
+# 📅 TARİH İŞLEMLERİ - YIL-AY-GÜN FORMATI (data-date)
 # =============================================================================
 def tarihleri_olustur(baslangic_str, bitis_str):
     def str_to_tarih(t):
-        gun, ay = map(int, t.split('/'))
-        return datetime.date(2026, ay, gun)
+        yil, ay, gun = map(int, t.split('-'))
+        return datetime(yil, ay, gun)
+    
     baslangic = str_to_tarih(baslangic_str)
     bitis = str_to_tarih(bitis_str)
     tarihler = []
+    
     while baslangic <= bitis:
-        tarihler.append(f"{baslangic.day:02d}/{baslangic.month:02d}")
-        baslangic += datetime.timedelta(days=1)
+        # Bugünün tarihini asla ekleme
+        if baslangic.date() != BUGUN.date():
+            # Direkt data-date formatında sakla: YYYY-AA-GG
+            tarihler.append(baslangic.strftime("%Y-%m-%d"))
+        baslangic += timedelta(days=1)
     return tarihler
 
 def tarihi_esit_kabul_et(t1, t2):
     if not t1 or not t2: return False
     def duzelt(t):
         t = str(t).strip()
+        # Gelen veriyi standart formata çevir
         if '/' in t:
             parca = t.split('/')
             if len(parca) == 3: return f"{parca[2]}-{parca[1]}-{parca[0]}"
@@ -95,7 +103,7 @@ def benzerlik_orani(a, b):
     return round(SequenceMatcher(None, a_temiz, b_temiz).ratio(), 2)
 
 # =============================================================================
-# 🚨 SKOR MANTIK KONTROLÜ - GELİŞTİRİLDİ
+# 🚨 SKOR MANTIK KONTROLÜ - HEPSİ BİTTİ
 # =============================================================================
 def skor_mantikli_mi(ev, dep, iy_ev, iy_dep, durum, ev_isim="", dep_isim=""):
     if not KURAL_SKOR_KONTROL:
@@ -103,16 +111,13 @@ def skor_mantikli_mi(ev, dep, iy_ev, iy_dep, durum, ev_isim="", dep_isim=""):
 
     if iy_ev > ev or iy_dep > dep:
         if MANTIK_HATASI_DUZELT:
-            return True, f"⚠️ UYARI | {ev_isim}-{dep_isim} | İY:{iy_ev}-{iy_dep} > MS:{ev}-{dep} | MS henüz yüklenmemiş, kısmi veri alındı", False
+            return True, f"⚠️ UYARI | {ev_isim}-{dep_isim} | İY:{iy_ev}-{iy_dep} > MS:{ev}-{dep} | Kısmi veri", False
         else:
-            return False, f"❌ MANTIK HATASI | {ev_isim}-{dep_isim} | İY:{iy_ev}-{iy_dep} > MS:{ev}-{dep} | İmkansız Skor", False
+            return False, f"❌ MANTIK HATASI | {ev_isim}-{dep_isim} | İmkansız Skor", False
 
-    if durum == "bitti":
-        if ev == 0 and dep == 0 and iy_ev == 0 and iy_dep == 0:
-            return True, f"✅ BİTEN MAÇ | {ev_isim}-{dep_isim} | Tümü 0-0 | Geçerli Sonuç", True
-
-    if durum == "baslamadi" and (ev > 0 or dep > 0 or iy_ev > 0 or iy_dep > 0):
-        return False, f"❌ DURUM HATASI | Başlamayan maça skor var", False
+    # ✅ TÜM MAÇLAR BİTTİ KABUL EDİLDİĞİ İÇİN 0-0 GEÇERLİ
+    if ev == 0 and dep == 0 and iy_ev == 0 and iy_dep == 0:
+        return True, f"✅ BİTEN MAÇ | {ev_isim}-{dep_isim} | 0-0 | Geçerli", True
 
     return True, "✅ Mantık Hatası Yok", True
 
@@ -154,13 +159,13 @@ def git_islemlerini_yap():
     print("="*70)
     try:
         os.chdir(BASE_DIR)
-        durum_cikisi = subprocess.run(["git","status"], capture_output=True, text=True).stdout
+        durum_cikisi = subprocess.run(["git", "status"], capture_output=True, text=True).stdout
         if "nothing to commit" in durum_cikisi:
             print("ℹ️ Değişiklik yok.")
             return False
-        subprocess.run(["git","add","."], check=True)
-        subprocess.run(["git","commit","-m",f"[OTOMATİK] {BASLANGIC_TARIHI}-{BITIS_TARIHI} | Gelişmiş Veri"], check=True)
-        subprocess.run(["git","push","origin",GIT_BRANCH_NAME], check=True)
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", f"[OTOMATİK] {BASLANGIC_TARIHI} - {BITIS_TARIHI} | Kesin Tarih Seçimi"], check=True)
+        subprocess.run(["git", "push", "origin", GIT_BRANCH_NAME], check=True)
         print("✅ GİT BAŞARILI!")
         return True
     except Exception as e:
@@ -168,14 +173,13 @@ def git_islemlerini_yap():
         return False
 
 # =============================================================================
-# 🌐 MAÇKOLİK VERİ ÇEKİMİ - ✅ DOĞRU SEÇİCİLERLE GÜNCELLENDİ
+# 🌐 VERİ ÇEKİMİ - ✅ DATA-DATE ÖZELLİĞİ İLE KESİN SEÇİM
 # =============================================================================
-def get_skorlar_tek_gun(hedef_tarih):
-    print(f"\n📅 İŞLENİYOR: {hedef_tarih}")
+def get_skorlar_tek_gun(hedef_tarih_iso):
+    print(f"\n📅 İŞLENİYOR: {hedef_tarih_iso}")
     skor_listesi = []
     gorulen = set()
     
-    # ✅ Değişkenleri en başta TANIMLA - Hatanın Çözümü
     atlanan_sayisi = 0
     kismi_veri_sayisi = 0
     gecerli_sayisi = 0
@@ -198,58 +202,60 @@ def get_skorlar_tek_gun(hedef_tarih):
         driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         driver.get(BASE_LINK)
         
-        # ✅ widget-dateslider__day-date sınıfı yüklenene kadar bekle
         WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "span.widget-dateslider__day-date"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, "button.widget-dateslider__datepicker-toggle"))
         )
 
+        # ✅ ADIM 1: Takvim butonuna bas
         try:
-            # ✅ SADECE hedef tarihe eşit olan span'ı seç
-            tarihler = driver.find_elements(By.CSS_SELECTOR, "span.widget-dateslider__day-date")
-            bulundu = False
-            for el in tarihler:
-                metin = el.text.strip()
-                print(f"🔍 Bulunan Tarih: {metin}")
-                if metin == hedef_tarih:
-                    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", el)
-                    time.sleep(1)
-                    driver.execute_script("arguments[0].click();", el)
-                    print(f"✅ Tarih Seçildi: {hedef_tarih}")
-                    bulundu = True
-                    print(f"⌛ {hedef_tarih} verileri yükleniyor... Lütfen bekleyin... ({SAYFA_YUKLEME_BEKLEME} sn)")
-                    time.sleep(SAYFA_YUKLEME_BEKLEME)
-                    break
-            if not bulundu:
-                print(f"⚠️ {hedef_tarih} sayfada yok, atlanıyor.")
-                return []
+            takvim_buton = driver.find_element(By.CSS_SELECTOR, "button.widget-dateslider__datepicker-toggle")
+            driver.execute_script("arguments[0].click();", takvim_buton)
+            time.sleep(1)
         except Exception as e:
-            print(f"⚠️ Tarih hatası: {e}")
+            print(f"⚠️ Takvim butonu hatası: {e}")
             return []
 
-        print("📜 Sayfa içeriği tamamen yüklenene kadar indiriliyor...")
+        # ✅ ADIM 2: TARİHİ KESİN OLARAK BUL (data-date özelliği ile)
+        try:
+            # Tam olarak <td data-date="2026-05-20"> olan yeri bul
+            secici = f'td.widget-datepicker__calendar-body-cell[data-date="{hedef_tarih_iso}"]'
+            tarih_elemani = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, secici))
+            )
+            
+            # Bulduysa tıkla
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", tarih_elemani)
+            time.sleep(0.5)
+            driver.execute_script("arguments[0].click();", tarih_elemani)
+            print(f"✅ Tarih Seçildi: {hedef_tarih_iso}")
+            print(f"⌛ Yükleniyor... ({SAYFA_YUKLEME_BEKLEME} sn)")
+            time.sleep(SAYFA_YUKLEME_BEKLEME)
+            
+        except Exception as e:
+            print(f"⚠️ {hedef_tarih_iso} takvimde bulunamadı veya tıklanamıyor: {e}")
+            return []
+
+        # ✅ ADIM 3: Sayfayı en alta kadar kaydır ve tüm maçları yükle
+        print("📜 Sayfa kaydırılıyor...")
         son_yukseklik = driver.execute_script("return document.body.scrollHeight")
         for _ in range(10):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
+            time.sleep(1.5) # Biraz daha uzun bekleme, içerik yüklensin
             yeni_yukseklik = driver.execute_script("return document.body.scrollHeight")
             if yeni_yukseklik == son_yukseklik:
                 break
             son_yukseklik = yeni_yukseklik
-        time.sleep(3)
+        time.sleep(2)
 
-        # ✅ Ana satır seçicisi doğru
+        # ✅ ADIM 4: Maç satırlarını çek
         mac_satirlari = driver.find_elements(By.CSS_SELECTOR, "div.match-row")
-        print(f"🔍 Sayfada bulunan toplam satır: {len(mac_satirlari)}")
-
-        gun, ay = hedef_tarih.split('/')
-        hedef_tarih_iso = f"2026-{ay}-{gun}"
+        print(f"🔍 Toplam Satır: {len(mac_satirlari)}")
 
         for satir_index, satir in enumerate(mac_satirlari):
             try:
-                # ✅ Takım İsimleri
+                # Takım İsimleri
                 isimler = satir.find_elements(By.CSS_SELECTOR, "span.match-row__team-name-text")
-                if len(isimler) < 2: 
-                    continue
+                if len(isimler) < 2: continue
 
                 ev_isim = isimler[0].text.strip()
                 dep_isim = isimler[1].text.strip()
@@ -262,68 +268,38 @@ def get_skorlar_tek_gun(hedef_tarih):
                     atlanan_sayisi +=1
                     continue
 
-                en_iyi_sonuc = {"s_ev":0, "s_dep":0, "iy_ev":0, "iy_dep":0, "durum":"baslamadi"}
+                en_iyi_sonuc = {"s_ev":0, "s_dep":0, "iy_ev":0, "iy_dep":0}
 
-                for tekrar in range(TEKRAR_OKUMA_SAYISI):
-                    # ✅ SKORLAR - SENİN VERDİĞİN SINIFLAR
-                    try:
-                        ev_skor_el = satir.find_element(By.CSS_SELECTOR, "span.match-row__score-home")
-                        dep_skor_el = satir.find_element(By.CSS_SELECTOR, "span.match-row__score-away")
-                        
-                        s1_tmp = ev_skor_el.text.strip()
-                        s2_tmp = dep_skor_el.text.strip()
-                        
-                        if s1_tmp.isdigit(): en_iyi_sonuc["s_ev"] = int(s1_tmp)
-                        if s2_tmp.isdigit(): en_iyi_sonuc["s_dep"] = int(s2_tmp)
+                # ✅ SKORLAR - DOĞRU SINIFLARDAN OKUMA
+                try:
+                    ev_skor_el = satir.find_element(By.CSS_SELECTOR, "span.match-row__score-home")
+                    dep_skor_el = satir.find_element(By.CSS_SELECTOR, "span.match-row__score-away")
+                    s1_tmp = ev_skor_el.text.strip()
+                    s2_tmp = dep_skor_el.text.strip()
+                    if s1_tmp.isdigit(): en_iyi_sonuc["s_ev"] = int(s1_tmp)
+                    if s2_tmp.isdigit(): en_iyi_sonuc["s_dep"] = int(s2_tmp)
+                except: pass
 
-                    except Exception as skor_hata:
-                        pass
+                # ✅ İLK YARI - DOĞRU SINIFTAN OKUMA
+                try:
+                    iy_el = satir.find_element(By.CSS_SELECTOR, "div.match-row__half-time-score")
+                    iy_metin = iy_el.text.strip()
+                    rakamlar_tmp = re.findall(r'\d+', iy_metin)
+                    if len(rakamlar_tmp) == 2:
+                        en_iyi_sonuc["iy_ev"] = int(rakamlar_tmp[0])
+                        en_iyi_sonuc["iy_dep"] = int(rakamlar_tmp[1])
+                except: pass
 
-                    # ✅ İLK YARI - SENİN VERDİĞİN SINIF
-                    try:
-                        iy_el = satir.find_element(By.CSS_SELECTOR, "div.match-row__half-time-score")
-                        iy_metin = iy_el.text.strip() # Örn: "İY 1-0"
-                        rakamlar_tmp = re.findall(r'\d+', iy_metin) # Sadece sayıları al [1,0]
-                        
-                        if len(rakamlar_tmp) == 2:
-                            en_iyi_sonuc["iy_ev"] = int(rakamlar_tmp[0])
-                            en_iyi_sonuc["iy_dep"] = int(rakamlar_tmp[1])
-
-                    except Exception as iy_hata:
-                        pass
-
-                    # ✅ DURUM
-                    try:
-                        st_el_duzeltme = satir.find_element(By.CSS_SELECTOR, "div.match-row__status")
-                        st_yazi_tmp = st_el_duzeltme.text.strip().upper()
-                        if any(kelime in st_yazi_tmp for kelime in ["MS", "FİNAL", "BİTTİ", "SONUÇ", "MAC SONU", "OYNANDI"]):
-                            en_iyi_sonuc["durum"] = "bitti"
-                        elif any(kelime in st_yazi_tmp for kelime in ["CANLI", "DEVAM", "'", "DK", "İY", "UZ", "İNİŞTA"]):
-                            en_iyi_sonuc["durum"] = "devam ediyor"
-                        elif any(kelime in st_yazi_tmp for kelime in ["BAŞLAMADI", "BEKLİYOR", "ERTELEDİ"]):
-                            en_iyi_sonuc["durum"] = "baslamadi"
-                    except:
-                        # Durum bulunamazsa skor varlığına göre karar ver
-                        if en_iyi_sonuc["s_ev"] > 0 or en_iyi_sonuc["s_dep"] > 0 or en_iyi_sonuc["iy_ev"] > 0 or en_iyi_sonuc["iy_dep"] > 0:
-                            en_iyi_sonuc["durum"] = "devam ediyor"
-                        else:
-                            en_iyi_sonuc["durum"] = "baslamadi"
-
-                    # ✅ MANTIK KONTROLÜ: Eğer veriler artık tutarlıysa döngüyü kır, bekleme
-                    if not (en_iyi_sonuc["iy_ev"] > en_iyi_sonuc["s_ev"] or en_iyi_sonuc["iy_dep"] > en_iyi_sonuc["s_dep"]):
-                        break
-
-                    # Bir sonraki okuma için kısa süre bekle
-                    time.sleep(TEKRARLAR_ARASI_BEKLEME)
-
-                # Döngü bittikten sonra sonuçları değişkenlere ata
+                # Değerleri ata
                 s_ev = en_iyi_sonuc["s_ev"]
                 s_dep = en_iyi_sonuc["s_dep"]
                 iy_ev = en_iyi_sonuc["iy_ev"]
                 iy_dep = en_iyi_sonuc["iy_dep"]
-                durum = en_iyi_sonuc["durum"]
 
-                # 🚨 SON KONTROL: Mantık hatası var mı?
+                # ✅ KURAL: HEPSİNİ BİTTİ KABUL ET
+                durum = "bitti"
+
+                # Kontrol
                 mantikli, mesaj, tam_veri_mi = skor_mantikli_mi(s_ev, s_dep, iy_ev, iy_dep, durum, ev_isim, dep_isim)
 
                 if not mantikli:
@@ -347,7 +323,7 @@ def get_skorlar_tek_gun(hedef_tarih):
                     "skor_ev": s_ev,
                     "skor_dep": s_dep,
                     "skor_1y_ev": iy_ev,
-                    "skor_1y_dep": iy_ev,
+                    "skor_1y_dep": iy_dep,
                     "durum": durum
                 })
                 gecerli_sayisi += 1
@@ -364,8 +340,8 @@ def get_skorlar_tek_gun(hedef_tarih):
         if driver:
             driver.quit()
 
-    # ✅ Değişkenler artık her durumda TANIMLI olduğu için hata vermeyecek
-    print(f"📅 {hedef_tarih} Özeti: Toplam Geçerli: {gecerli_sayisi} | Kısmi Veri: {kismi_veri_sayisi} | Tamamen Atlanan: {atlanan_sayisi}")
+    # ✅ Özet Bilgisi
+    print(f"📅 {hedef_tarih_iso} Özeti: Toplam Geçerli: {gecerli_sayisi} | Kısmi Veri: {kismi_veri_sayisi} | Tamamen Atlanan: {atlanan_sayisi}")
     return skor_listesi
 
 # =============================================================================
@@ -447,9 +423,9 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 mac["skor_1y_dep"] = iy_dep
                 degisiklik_var = True
 
-            # Durum Güncelleme
-            if mac.get("durum") != y_veri["durum"]:
-                mac["durum"] = y_veri["durum"]
+            # ✅ Durumu KESİNLİKLE "bitti" olarak güncelle
+            if mac.get("durum") != "bitti":
+                mac["durum"] = "bitti"
                 degisiklik_var = True
 
             if degisiklik_var:
@@ -463,11 +439,13 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
 # =============================================================================
 if __name__ == "__main__":
     print("=" * 70)
-    print("⚽ KUSURSUZ VERİ ÇEKİCİ | AKILLI BEKLEME + VERİ KORUMA MODU 🛡️")
+    print("⚽ KUSURSUZ VERİ ÇEKİCİ | DATA-DATE İLE KESİN SEÇİM 🛡️")
     print("=" * 70)
     print("🔒 KORUMA: Oran, Lig, Saat, Kodlar -> DOKUNULMAZ")
-    print("🛡️ KURAL: Eski veri silinmez, sadece BOŞ olan yerler doldurulur")
-    print("🔄 SİSTEM: Her maç 5 kez okunur, en doğru veri alınır")
+    print("✅ KURAL: Tüm maçlar otomatik olarak 'bitti' sayılır")
+    print("✅ OKUMA: Skorlar ve İlk Yarı sadece belirlenen sınıflardan okunur")
+    print("✅ GÜVENLİK: Bugünün tarihi asla işlenmez, sadece geçmiş veriler çekilir")
+    print("✅ ÖZELLİK: Takvimde YIL-AY-GÜN formatı ile doğrudan seçim yapar")
     print("-" * 70)
 
     # 1. Dosyayı oku
@@ -483,8 +461,8 @@ if __name__ == "__main__":
 
     # 3. Tüm tarihler için döngü
     tum_veriler = []
-    for gun in tarihler:
-        gunluk_veri = get_skorlar_tek_gun(gun)
+    for gun_iso in tarihler:
+        gunluk_veri = get_skorlar_tek_gun(gun_iso)
         tum_veriler.extend(gunluk_veri)
 
     if not tum_veriler:

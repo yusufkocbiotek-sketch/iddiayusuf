@@ -357,7 +357,6 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, yeni_skorlar):
 # 🚀 ANA ÇALIŞTIRICI - TAMamen DÜZELTİLDİ, ARTIK HATA YOK
 # =============================================================================
 if __name__ == "__main__":
-   
     print("=" * 70)
     print("⚽ GÜVENLİ SKOR GÜNCELLEYİCİ | VERİ KORUMA MODU 🛡️")
     print("=" * 70)

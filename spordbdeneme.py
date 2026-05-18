@@ -326,396 +326,436 @@ def select_date_dropdown(driver, target_iso_date):
         print(f"   ❌ Dropdown seçim hatası: {e}")
         return False
 
-import json, os, re, time
-import datetime
-import subprocess
-from pathlib import Path
-from difflib import SequenceMatcher
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
+# =========================
+# SPORDB PARSE
+# =========================
+_ODDS_RE = re.compile(r"^\d+([.,]\d+)?$")
 
-# =============================================================================
-# AYARLAR
-# =============================================================================
-BASE_DIR = Path(__file__).resolve().parent
-MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
-# gecmis_maclar.json -> BU DOSYAYA HİÇBİR ŞEKİLDE DOKUNULMAZ
-BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
-# ===> ÇEKİLECEK TARİH <=== (Gün/Ay formatında yaz, örnek: "17/05", "16/05")
-HEDEF_TARIH = "17/05"
-ESLESME_SEVIYESI = 0.10 # Eşleştirmeyi çok daha esnek yaptım
-# ===> GİT AYARLARI <=== (Eğer senin dal ismin "master" ise "main" yerine "master" yaz)
-GIT_BRANCH_NAME = "main"
+def _is_noise_text(t: str) -> bool:
+    t = (t or "").strip()
+    if not t: return True
+    if re.fullmatch(r"\d{1,2}:\d{2}", t): return True  # Saat bilgisi
+    if re.fullmatch(r"\d+\s*-\s*\d+", t): return True  # Skor formatı
+    if re.fullmatch(r"[A-Z]{2,6}", t): return True     # Lig kısaltması
+    if _ODDS_RE.fullmatch(t):                           # Oran bilgisi
+        try:
+            v = float(t.replace(",", "."))
+            if 1.0 <= v <= 99.99: return True
+        except: pass
+    if t.isdigit(): return True                         # Saf sayı
+    return False                                        # Bunlar dışındakiler takım ismi adayıdır
 
-# =============================================================================
-# 🔐 İSİM TEMİZLEME - ARTIK ÇOK BASİT, HİÇBİR İSMİ ELEMİYOR
-# =============================================================================
-def akilli_isim_temizle(isim):
-    if not isim: return ""
-    isim = isim.lower().strip()
-    # Sadece gereksiz noktalama işaretlerini temizle, isimlerin kendisine DOKUNMA
-    isim = re.sub(r'[.\-_,:0-9]', '', isim)
-    isim = re.sub(r'\s+', ' ', isim).strip()
-    return isim
 
-def benzerlik_orani(a, b):
-    if not a or not b: return 0
-    a_temiz = akilli_isim_temizle(a)
-    b_temiz = akilli_isim_temizle(b)
-    if a_temiz == b_temiz: return 1.0
-    if a_temiz in b_temiz or b_temiz in a_temiz: return 0.8
-    return SequenceMatcher(None, a_temiz, b_temiz).ratio()
-
-# =============================================================================
-# 📖 DOSYANI OKU - Senin "matches" formatınla uyumlu
-# =============================================================================
-def load_mac_json():
+def parse_spordb_canli(href: str):
+    """
+    Canlı maç linkinin URL'sinden maç ID, tarih, takım adı ve skorları çıkarır.
+    Örnek URL: /canli/12345/18-05-2026-ad-ceuta-real-madrid-maci-1-0/
+    """
+    m = CANLI_HREF_RE.search(href or "")
+    if not m: return None
+    
+    sp_id = m.group("id")
+    ddmmyyyy = m.group("date")
+    skor1 = int(m.group("h"))
+    skor2 = int(m.group("a"))
+    teams_slug = m.group("teams")
+    
     try:
-        if not MAC_JSON_PATH.exists():
-            print(f"❌ HATA: {MAC_JSON_PATH} bulunamadı!")
-            return None
-        
-        with open(MAC_JSON_PATH, 'r', encoding='utf-8') as f:
-            veri = json.load(f)
-
-        if isinstance(veri, dict) and "matches" in veri:
-            print(f"📖 Dosyan Başarıyla Okundu | Toplam: {len(veri['matches'])} adet maç.")
-            return veri 
-        
-        else:
-            print("❌ HATA: Dosya formatın beklenenden farklı.")
-            return None
-
-    except Exception as e:
-        print(f"❌ OKUMA HATASI: {e} - Dosyan BOZULMADI.")
+        tarih_iso = datetime.datetime.strptime(ddmmyyyy, "%d-%m-%Y").date().isoformat()
+    except ValueError:
         return None
 
-# =============================================================================
-# 💾 KAYDETME - SADECE SKOR DEĞİŞİR, DİĞER HER ŞEY AYNI KALIR
-# =============================================================================
-def save_mac_json(veri):
-    try:
-        yedek_dosya = MAC_JSON_PATH.with_name("mac_json_yedek_guvenli.json")
-        with open(yedek_dosya, 'w', encoding='utf-8') as f_yedek:
-            json.dump(veri, f_yedek, ensure_ascii=False, indent=2)
+    return {
+        "spordb_match_id": sp_id, 
+        "tarih": tarih_iso, 
+        "teams_slug": teams_slug, 
+        "skor1": skor1, 
+        "skor2": skor2,
+        "cekme_zamani": datetime.datetime.now().isoformat(), 
+        "sp_home": None, 
+        "sp_away": None,
+        "iy_skor1": 0,
+        "iy_skor2": 0
+    }
+
+
+def split_row_cells(driver, a):
+    """
+    Maç linkinin bulunduğu satırdaki (tr) tüm hücreleri (td) ve metinleri alır.
+    Hangi hücrede link varsa onun indeksini de döner.
+    """
+    return driver.execute_script("""
+        const a = arguments[0]; 
+        const cell = a.closest('td,th'); 
+        const tr = a.closest('tr');
+        if(!cell || !tr) return null;
+        const cells = Array.from(tr.querySelectorAll('th,td,div'));
+        const idx = cells.indexOf(cell);
+        const texts = cells.map(x => (x.innerText || '').trim());
+        return { idx, texts };
+    """, a)
+
+
+def pick_home_away(texts, idx):
+    """
+    Satırdaki metin listesinden gürültüleri (saat, oran, skor) eleyerek
+    ev sahibi ve deplasman takım isimlerini bulur.
+    """
+    # Linkin solundaki hücreleri kontrol et
+    left = [t for t in texts[:idx] if t and t.strip()]
+    # Linkin sağındaki hücreleri kontrol et
+    right = [t for t in texts[idx+1:] if t and t.strip()]
+    
+    home = None
+    # Sağ taraftan geriye doğru, gürültü olmayan ilk değeri al (Ev Sahibi)
+    for t in reversed(right):
+        if not _is_noise_text(t): 
+            home = t.strip()
+            break
+            
+    away = None
+    # Sol taraftan ileriye doğru, gürültü olmayan ilk değeri al (Deplasman)
+    for t in left:
+        if not _is_noise_text(t): 
+            away = t.strip()
+            break
+
+    # Eğer tam tersi çıktıysa düzeltme denemesi
+    if not home and away:
+        home, away = away, None
+        for t in right:
+            if not _is_noise_text(t):
+                away = t.strip()
+                break
+
+    return home, away
+
+
+def collect_scores_for_date(driver, iso_date: str):
+    """
+    Belirtilen tarihe göre tüm maçları, skorları ve takım isimlerini toplayan ana fonksiyon.
+    İY ve MS skorlarını doğrular, eksikse detay sayfasından çeker.
+    """
+    ok = select_date_dropdown(driver, iso_date)
+    if not ok: 
+        print(f"   ⚠️ {iso_date} tarihi için liste yüklenemedi, atlanıyor.")
+        return []
+
+    wait_canli_links_stable(driver, timeout=WAIT_LONG, min_count=3)
+    deep_scroll_collect(driver)
+    
+    links = driver.find_elements(By.CSS_SELECTOR, CANLI_LINK_SELECTOR)
+    out = []
+    seen = set() # Aynı maçı birden fazla kez çekmeyi engellemek için
+
+    print(f"   🔍 {len(links)} adet link bulundu, analiz ediliyor...")
+
+    for a in links:
+        href = a.get_attribute("href") or ""
+        item = parse_spordb_canli(href)
         
-        with open(MAC_JSON_PATH, 'w', encoding='utf-8') as f:
-            json.dump(veri, f, ensure_ascii=False, indent=2, default=str)
+        # Filtre: Sadece hedef tarihteki maçları al
+        if not item or item["tarih"] != iso_date: 
+            continue
         
-        print(f"💾 Kayıt Başarılı | Yedek: {yedek_dosya.name}")
-        print("🔒 Korumalı: Oranlar, Lig, Saat, Index, Kodlar.")
-        print("🔒 gecmis_maclar.json -> HİÇ DOKUNULMADI!")
-    except Exception as e:
-        print(f"❌ KAYDETME HATASI: {e} - ESKİ HALİ KORUNDU!")
+        # Tekrar kontrolü
+        unique_key = (item["spordb_match_id"], item["tarih"], item["skor1"], item["skor2"])
+        if unique_key in seen: continue
+        seen.add(unique_key)
 
-# =============================================================================
-# 🚀 GİT İŞLEMLERİ - OTOMATİK GÖNDERİM
-# =============================================================================
-def git_islemlerini_yap():
-    print("\n" + "="*70)
-    print("🚀 GİT İŞLEMLERİ BAŞLATILDI | DEPOYA GÖNDERİLİYOR...")
-    print("="*70)
-    try:
-        os.chdir(BASE_DIR)
-        durum = subprocess.run(["git", "status"], capture_output=True, text=True, encoding='utf-8')
-        if "nothing to commit" in durum.stdout:
-            print("ℹ️ Değişiklik yok, Git işlemi yapılmasına gerek yok.")
-            return False
+        # Takım isimlerini satır içinden ayıkla
+        res = split_row_cells(driver, a)
+        if res and res.get("idx") is not None:
+            texts = res.get("texts", [])
+            h, aw = pick_home_away(texts, res["idx"])
+            item["sp_home"], item["sp_away"] = h, aw
 
-        subprocess.run(["git", "add", "."], check=True, capture_output=True, text=True)
-        mesaj = f"[OTOMATİK GÜNCELLEME] {HEDEF_TARIH} Maç verileri güncellendi | Skor + Durum + İlk Yarı"
-        subprocess.run(["git", "commit", "-m", mesaj], check=True, capture_output=True, text=True)
-        subprocess.run(["git", "push", "origin", GIT_BRANCH_NAME], check=True, capture_output=True, text=True)
-        
-        print("✅ GİT BAŞARILI! Tüm veriler GitHub'a yüklendi.")
-        return True
+            # ==========================================
+            # 🛡️ SKOR GÜVENLİK KONTROLÜ (MS ve İY)
+            # ==========================================
+            url_ms_h = item.get('skor1', 0)
+            url_ms_a = item.get('skor2', 0)
+            need_ms_check = (url_ms_h == 0 and url_ms_a == 0) # URL'den skor gelmemiş mi?
+            iy_bulundu = False
+            found_scores = []
 
-    except Exception as e:
-        print(f"❌ GİT HATASI: {str(e)}")
-        return False
-
-# =============================================================================
-# 🌐 MAÇKOLİK'TEN VERİ ÇEK - ARTIK 845'İN TAMAMINI ÇEKER, MS = BİTTİ
-# =============================================================================
-def get_skorlar():
-    print("🔎 Maçkolik'ten veriler çekiliyor...")
-    skor_listesi = []
-    gorulen_maclar = set()
-
-    chrome_options = Options()
-    # chrome_options.add_argument("--headless=new") # Gizli çalıştırmak istersen aç
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--log-level=3")
-    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
-    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    chrome_options.add_experimental_option("useAutomationExtension", False)
-
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-
-    try:
-        print(f"🌐 Siteye gidiliyor: {BASE_LINK}")
-        driver.get(BASE_LINK)
-        time.sleep(12) # Daha uzun bekle
-
-        print(f"📅 Hedef tarih aranıyor: {HEDEF_TARIH}")
-        try:
-            tarih_elemanlari = driver.find_elements(By.CSS_SELECTOR, "span.widget-dateslider__day-date")
-            for el in tarih_elemanlari:
-                if el.text.strip() == HEDEF_TARIH:
-                    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", el)
-                    time.sleep(2)
-                    driver.execute_script("arguments[0].click();", el)
-                    print(f"✅ Tarih seçildi: {HEDEF_TARIH}")
-                    time.sleep(20) # Verilerin yüklenmesi için ÇOK UZUN BEKLE
-                    break
-        except Exception as e:
-            print(f"⚠️ Tarih seçim hatası: {e}")
-
-        # Sayfayı SONUNA KADAR kaydır
-        print("📜 Sayfa sonuna kadar kaydırılıyor...")
-        for _ in range(60): # 60 kere kaydır, tüm maçlar gelsin
-            driver.execute_script("window.scrollBy(0, 1000);")
-            time.sleep(0.5)
-
-        # Tüm maç satırlarını bul - FARKLI SEÇİCİLER EKLENDİ
-        mac_satirlari = driver.find_elements(By.CSS_SELECTOR, "div.match-row, div.row-table__row")
-        print(f"🔍 Sayfada bulunan toplam satır: {len(mac_satirlari)}")
-
-        gun, ay = HEDEF_TARIH.split('/')
-        hedef_tarih_iso = f"2026-{ay}-{gun}"
-
-        gecerli_veri_sayisi = 0
-        biten_mac_sayisi = 0
-        ilk_yari_sayisi = 0
-
-        # Her bir satırı işle - ARTIK İSİM FİLTRESİ YOK
-        for satir in mac_satirlari:
             try:
-                # Takım İsimleri - TÜM OLASI SEÇİCİLER EKLENDİ
-                isim_elemanlari = satir.find_elements(By.CSS_SELECTOR, 
-                    "span.match-row__team-name-text, span.team-name, div.match-row__team-name, span.name")
+                row_element = a.find_element(By.XPATH, "./ancestor::tr")
+                all_cells = row_element.find_elements(By.TAG_NAME, "td")
+
+                # Tüm hücrelerde skor formatı ara (örn: "2-1", "1:0")
+                for cell in all_cells:
+                    txt = cell.text.strip()
+                    # Sadece makul skor aralıklarını kabul et
+                    if re.match(r"^\d+[-:]\d+$", txt):
+                        parts = txt.replace(":", "-").split("-")
+                        if len(parts) == 2:
+                            try:
+                                s1, s2 = int(parts[0]), int(parts[1])
+                                if s1 < 15 and s2 < 15: # Çok yüksek sayıları eler
+                                    found_scores.append((s1, s2))
+                            except: pass
+
+                # 1. Eğer URL'de skor yoksa, ilk bulunan skoru MS olarak kabul et
+                if need_ms_check and len(found_scores) > 0:
+                    item['skor1'], item['skor2'] = found_scores[0]
+                    found_scores.pop(0) # MS'yi listeden çıkar, kalanlar İY veya diğer detaylar olabilir
+
+                # 2. Kalanlardan ilkini İY olarak kabul et
+                if len(found_scores) > 0:
+                    item["iy_skor1"], item["iy_skor2"] = found_scores[0]
+                    iy_bulundu = True
+
+            except Exception as e:
+                pass # Satır okuma hatası olursa detaya inmeyi deneyeceğiz
+
+            # ==========================================
+            # 🕵️ DETAY SAYFASINDAN VERİ ÇEKME (Gerekirse)
+            # ==========================================
+            # Eğer hala İY skoru yoksa veya 0-0 ise detay sayfasını aç
+            if (item.get("iy_skor1", 0) == 0 and item.get("iy_skor2", 0) == 0) or not iy_bulundu:
+                try:
+                    driver.execute_script("window.open(arguments[0], '_blank');", href)
+                    driver.switch_to.window(driver.window_handles[-1])
+                    time.sleep(3) # Sayfanın yüklenmesini bekle
+
+                    full_text = driver.find_element(By.TAG_NAME, "body").text
+                    # Farklı dillerdeki İY ifadelerini ara
+                    pattern = r"(?:İY|Ilk Yari|First Half|Half Time|HT|Devre Arası|1\. Yarı)[:\s]*(\d+)\s*[-:]\s*(\d+)"
+                    match = re.search(pattern, full_text, re.IGNORECASE)
+
+                    if match:
+                        s1, s2 = int(match.group(1)), int(match.group(2))
+                        if s1 < 10 and s2 < 10:
+                            item["iy_skor1"], item["iy_skor2"] = s1, s2
+                            iy_bulundu = True
+
+                    driver.close()
+                    driver.switch_to.window(driver.window_handles[0])
+
+                except Exception:
+                    # Hata durumunda sekmeyi kapatmayı dene
+                    try:
+                        if len(driver.window_handles) > 1:
+                            driver.close()
+                            driver.switch_to.window(driver.window_handles[0])
+                    except: pass
+
+            # ==========================================
+            # 📢 TERMİNAL BİLGİLENDİRME
+            # ==========================================
+            ms_h, ms_a = item['skor1'], item['skor2']
+            iy_h, iy_a = item.get('iy_skor1', 0), item.get('iy_skor2', 0)
+            
+            # Özellikle eşleşme sorunu yaşadığın takımları burada takip edebilirsin
+            debug_name = f"{item['sp_home']} - {item['sp_away']}".lower()
+            if "ceuta" in debug_name or "al ain" in debug_name or "dibba" in debug_name:
+                print(f"🎯 HEDEF MAÇ: {item['sp_home']} vs {item['sp_away']} | MS: {ms_h}-{ms_a} | İY: {iy_h}-{iy_a}")
+            else:
+                print(f"✅ {item['sp_home']} vs {item['sp_away']} -> MS: {ms_h}-{ms_a} | İY: {iy_h}-{iy_a}")
+
+        # Geçerli takım ismi olanları listeye ekle
+        if item["sp_home"] and item["sp_away"]: 
+            out.append(item)
+
+    return out
+
+# =========================
+# UPDATE ENGINE
+# =========================
+def update_db(db_data: dict, scores: list, today_iso: str):
+    matches = db_data.get("matches", [])
+    if not isinstance(matches, list): 
+        matches = []
+        db_data["matches"] = matches
+    
+    uid_set = set()
+    for m in matches:
+        if m.get("tarih") and m.get("ev_sahibi") and m.get("deplasman"):
+            uid_set.add(match_uid(m["tarih"], m["ev_sahibi"], m["deplasman"]))
+    
+    by_date = {}
+    for m in matches:
+        if m.get("tarih"): 
+            by_date.setdefault(m["tarih"], []).append(m)
+    
+    matched = updated = noop = added = skipped = not_matched = 0
+    
+    for sp in scores:
+        cands = by_date.get(sp["tarih"], [])
+        best = None
+        best_sc = -1.0
+        second_sc = -1.0
+        
+        for m in cands:
+            sc = match_score(m.get("ev_sahibi",""), m.get("deplasman",""), sp["sp_home"], sp["sp_away"])
+            if sc > best_sc: 
+                second_sc = best_sc
+                best_sc = sc
+                best = m
+            elif sc > second_sc: 
+                second_sc = sc
+        
+        # Eşleşme kriteri: En yüksek puan yeterli ve ikinciden belirgin fark varsa
+        if best and best_sc >= THRESH_MAYBE and (best_sc - second_sc) >= MIN_GAP:
+            if best_sc >= THRESH_OK:
+                matched += 1
                 
-                if len(isim_elemanlari) < 2:
-                    continue
+                # Ev/Dep eşleşme kontrolü (Saha ters mi?)
+                s_direct = team_sim(best.get("ev_sahibi",""), sp["sp_home"]) + team_sim(best.get("deplasman",""), sp["sp_away"])
+                s_swap = team_sim(best.get("ev_sahibi",""), sp["sp_away"]) + team_sim(best.get("deplasman",""), sp["sp_home"])
+                
+                # MS Skorlarını belirle
+                skor_ev, skor_dep = (sp["skor2"], sp["skor1"]) if s_swap > s_direct else (sp["skor1"], sp["skor2"])
 
-                ev_isim = isim_elemanlari[0].text.strip()
-                dep_isim = isim_elemanlari[1].text.strip()
+                # --- İY SKORLARINI GÜNCELLE (Varsa) ---
+                iy_ev = sp.get("iy_skor1") 
+                iy_dep = sp.get("iy_skor2")
+                
+                if iy_ev is not None and iy_dep is not None:
+                    # Eğer saha tersse İY skorları da ters düşer
+                    if s_swap > s_direct:
+                        best["skor_1y_ev"] = int(iy_dep)
+                        best["skor_1y_dep"] = int(iy_ev)
+                    else:
+                        best["skor_1y_ev"] = int(iy_ev)
+                        best["skor_1y_dep"] = int(iy_dep)
 
-                # Tekrar edenleri engelle
-                mac_kimlik = f"{ev_isim}-{dep_isim}"
-                if mac_kimlik in gorulen_maclar:
-                    continue
-                gorulen_maclar.add(mac_kimlik)
-
-                # ===> ARTIK HİÇ FİLTRE YOK, 2 HARF OLSA BİLE AL <===
-                if len(ev_isim) < 2 or len(dep_isim) < 2:
-                    continue
-
-                # Maç Sonu Skorları - TÜM SEÇİCİLER
-                skor_ev = 0
-                skor_dep = 0
-                try:
-                    skor_elemanlari = satir.find_elements(By.CSS_SELECTOR, 
-                        "span.match-row__score-text, span.score, div.match-row__score")
-                    
-                    if len(skor_elemanlari) >= 2:
-                        s1 = skor_elemanlari[0].text.strip()
-                        s2 = skor_elemanlari[1].text.strip()
-                        if s1.isdigit(): skor_ev = int(s1)
-                        if s2.isdigit(): skor_dep = int(s2)
-                except:
-                    pass
-
-                # İlk Yarı Skorları - TÜM SEÇİCİLER
-                skor_1y_ev = 0
-                skor_1y_dep = 0
-                try:
-                    iy_elem = satir.find_element(By.CSS_SELECTOR, 
-                        "div.match-row__half-time-score, div.half-time, span.ht-score")
-                    
-                    iy_yazi = iy_elem.text.strip()
-                    rakamlar = re.findall(r'\d+', iy_yazi)
-                    if len(rakamlar) == 2:
-                        skor_1y_ev = int(rakamlar[0])
-                        skor_1y_dep = int(rakamlar[1])
-                        ilk_yari_sayisi += 1
-                except:
-                    pass
-
-                # ==============================================================
-                # 🔴 DURUM KONTROLÜ - MS YAZANLAR KESİN BİTTİ
-                # ==============================================================
-                durum = "baslamadi"
-                try:
-                    # Tam olarak senin verdiğin HTML yapısına uygun
-                    status_elem = satir.find_element(By.CSS_SELECTOR, 
-                        "a.match-row__status, div.match-row__status, span.status")
-                    
-                    durum_yazi = status_elem.text.strip().upper()
-
-                    # KESİN KURALLAR
-                    if "MS" in durum_yazi or "FİNAL" in durum_yazi or "BİTTİ" in durum_yazi:
-                        durum = "bitti"
-                        biten_mac_sayisi += 1
-                    elif "CANLI" in durum_yazi or "DEVAM" in durum_yazi or "'" in durum_yazi or "DK" in durum_yazi:
-                        durum = "devam ediyor"
-
-                except Exception as durum_hata:
-                    pass
-
-                # Veriyi listeye ekle
-                skor_listesi.append({
-                    "tarih": hedef_tarih_iso,
-                    "ev_sahibi": ev_isim,
-                    "deplasman": dep_isim,
-                    "skor_ev": skor_ev,
-                    "skor_dep": skor_dep,
-                    "skor_1y_ev": skor_1y_ev,
-                    "skor_1y_dep": skor_1y_dep,
-                    "durum": durum
-                })
-                gecerli_veri_sayisi += 1
-
-                print(f"✅ VERİ | {ev_isim} - {dep_isim} | Skor: {skor_ev}-{skor_dep} | İlk Yarı: {skor_1y_ev}-{skor_1y_dep} | {durum.upper()}")
-
-            except Exception as satir_hata:
+                # Değişiklik var mı?
+                changed = (best.get("skor_ev") != skor_ev or 
+                           best.get("skor_dep") != skor_dep or 
+                           best.get("spordb_match_id") != sp["spordb_match_id"])
+                
+                # Veritabanını güncelle
+                best["skor_ev"] = skor_ev
+                best["skor_dep"] = skor_dep
+                best["durum"] = "bitti"
+                best["spordb_match_id"] = sp["spordb_match_id"]
+                best["kaynak"] = "spordb.com"
+                best["cekme_zamani"] = sp["cekme_zamani"]
+                
+                if changed: 
+                    updated += 1
+                else: 
+                    noop += 1
                 continue
+            
+            skipped += 1
+            continue        
 
-    except Exception as ana_hata:
-        print(f"❌ Ana Hata: {ana_hata}")
+        # EŞLEŞME BAŞARISIZ - DEBUG BİLGİSİ
+        if not best or best_sc < THRESH_MAYBE:
+            print(f"⚠️ EŞLEŞMEDİ: SPORDB='{sp['sp_home']} vs {sp['sp_away']}' | Tarih={sp['tarih']} | Skor={sp['skor1']}-{sp['skor2']}")
+            cands = by_date.get(sp["tarih"], [])
+            if cands:
+                aday_listesi = [f"{m['ev_sahibi']} vs {m['deplasman']}" for m in cands[:3]]
+                print(f"   -> Adaylar: {aday_listesi}") 
+            else:
+                print(f"   -> O tarihte hiç maç yok!")
+
+        # Eğer eşleşen maç bulunamadıysa ve yeni maç ekleme özelliği açıksa ekle
+        if ADD_MISSING_MATCHES:
+            uid = match_uid(sp["tarih"], sp["sp_home"], sp["sp_away"])
+            if uid not in uid_set:
+                matches.append({
+                    "index": 0, 
+                    "mac_kodu": "", 
+                    "ev_sahibi": sp["sp_home"], 
+                    "deplasman": sp["sp_away"], 
+                    "saat": "", 
+                    "lig": "", 
+                    "tarih": sp["tarih"], 
+                    "cekme_zamani": sp["cekme_zamani"], 
+                    "durum": "bitti", 
+                    "skor_ev": sp["skor1"], 
+                    "skor_dep": sp["skor2"], 
+                    "skor_1y_ev": sp.get("iy_skor1", 0), 
+                    "skor_1y_dep": sp.get("iy_skor2", 0),
+                    "spordb_match_id": sp["spordb_match_id"],
+                    "kaynak": "spordb.com - eklendi"
+                })
+                uid_set.add(uid)
+                added += 1
+                print(f"➕ YENİ MAÇ EKLENDİ: {sp['sp_home']} - {sp['sp_away']} ({sp['tarih']})")
+            else:
+                skipped += 1
+        else:
+            not_matched += 1
+
+    # İstatistikleri yazdır
+    print(f"\n📊 ÖZET: Eşleşti={matched} | Güncellendi={updated} | Değişmedi={noop} | Eklendi={added} | Eşleşemedi={not_matched} | Atlandı={skipped}")
+    db_data["updated"] = datetime.datetime.now().isoformat()
+    return db_data
+
+
+# =========================
+# ANA ÇALIŞTIRMA FONKSİYONU
+# =========================
+def main():
+    print("="*60)
+    print("📢 SPORDB SKOR ÇEKME & GÜNCELLEME BAŞLADI")
+    print("="*60)
+
+    # Tarih hesaplamaları
+    today = datetime.date.today()
+    dates_to_process = []
+
+    if INCLUDE_TODAY:
+        dates_to_process.append(today.isoformat())
+
+    for bk in range(1, DAYS_BACK_FINISHED + 1):
+        dates_to_process.append((today - datetime.timedelta(days=bk)).isoformat())
+
+    print(f"📅 İşlenecek tarihler: {dates_to_process}")
+
+    # Driver başlat
+    driver = None
+    try:
+        driver = build_driver()
+        driver.get(SPORDB_URL)
+        WebDriverWait(driver, WAIT_LONG).until(EC.presence_of_element_located((By.CSS_SELECTOR, DATESELECTOR_CSS)))
+        print("✅ Sayfa yüklendi, işleme başlanıyor...")
+
+        all_scores = []
+        for iso_date in dates_to_process:
+            print(f"\n" + "-"*50)
+            print(f"⏳ Tarih işleniyor: {iso_date}")
+            print("-"*50)
+            scores = collect_scores_for_date(driver, iso_date)
+            all_scores.extend(scores)
+            # Her tarihten sonra ana sayfaya geri dön
+            driver.get(SPORDB_URL)
+            time.sleep(2)
+
+        # Ham skor verisini yedekle
+        save_json_atomic({"updated": datetime.datetime.now().isoformat(), "scores": all_scores}, OUTPUT_SKOR_JSON)
+        print(f"💾 Ham veriler kaydedildi: {OUTPUT_SKOR_JSON}")
+
+        # Ana JSON dosyasını güncelle
+        if UPDATE_MAC_JSON:
+            print("\n🔄 mac.json dosyası güncelleniyor...")
+            mac_data = load_json_safe(MAC_JSON_PATH)
+            updated_data = update_db(mac_data, all_scores, today.isoformat())
+            save_json_atomic(updated_data, MAC_JSON_PATH)
+            print(f"✅ Güncel mac.json kaydedildi: {MAC_JSON_PATH}")
+
+        # Geçmiş maçlar dosyasını güncelle
+        if UPDATE_GECMIS_JSON:
+            print("\n📁 gecmis_maclar.json güncelleniyor...")
+            gecmis_data = load_json_safe(GECMIS_JSON_PATH)
+            updated_gecmis = update_db(gecmis_data, all_scores, today.isoformat())
+            save_json_atomic(updated_gecmis, GECMIS_JSON_PATH)
+            print(f"✅ Güncel gecmis_maclar.json kaydedildi: {GECMIS_JSON_PATH}")
+
+    except Exception as e:
+        print(f"❌ KRİTİK HATA: {e}")
+        traceback.print_exc()
     finally:
         if driver:
             driver.quit()
-            print("🔒 Tarayıcı kapatıldı.")
+        print("\n✅ TÜM İŞLEMLER TAMAMLANDI.")
 
-    print(f"✅ İŞLEM TAMAMLANDI | Toplam {gecerli_veri_sayisi} adet GEÇERLİ maç verisi çekildi.")
-    print(f"📊 İstatistik: Biten = {biten_mac_sayisi}, İlk Yarı Skoru = {ilk_yari_sayisi}")
-    return skor_listesi
 
-# =============================================================================
-# 🧠 GÜNCELLEME MOTORU - ÇOK ESNEK EŞLEŞTİRME
-# =============================================================================
-def skorlari_eslestir_ve_guncelle(mevcut_yapi, yeni_skorlar):
-    mac_listesi = mevcut_yapi.get("matches", [])
-    if not mac_listesi or not yeni_skorlar:
-        return 0
-
-    guncelleme_sayisi = 0
-
-    for y_skor in yeni_skorlar:
-        y_tarih = y_skor["tarih"]
-        y_ev = y_skor["ev_sahibi"]
-        y_dep = y_skor["deplasman"]
-
-        en_uygun_index = -1
-        ters_mi = False
-
-        for i, mac in enumerate(mac_listesi):
-            m_tarih = mac.get("tarih", "")
-            m_ev = mac.get("ev_sahibi", "")
-            m_dep = mac.get("deplasman", "")
-
-            if m_tarih != y_tarih:
-                continue
-
-            # Normal eşleşme
-            oran1 = benzerlik_orani(m_ev, y_ev) + benzerlik_orani(m_dep, y_dep)
-            # Ters eşleşme
-            oran2 = benzerlik_orani(m_ev, y_dep) + benzerlik_orani(m_dep, y_ev)
-
-            if oran1 > 0.5:
-                en_uygun_index = i
-                ters_mi = False
-            elif oran2 > 0.5:
-                en_uygun_index = i
-                ters_mi = True
-
-        if en_uygun_index != -1:
-            mac = mac_listesi[en_uygun_index]
-            # Skorları doğru tarafa yerleştir
-            s_ev, s_dep = (y_skor["skor_ev"], y_skor["skor_dep"]) if not ters_mi else (y_skor["skor_dep"], y_skor["skor_ev"])
-            iy_ev, iy_dep = (y_skor["skor_1y_ev"], y_skor["skor_1y_dep"]) if not ters_mi else (y_skor["skor_1y_dep"], y_skor["skor_1y_ev"])
-
-            degisiklik_var = False
-
-            # Maç Sonu Skorları Güncelle
-            if s_ev != 0 and mac.get("skor_ev") != s_ev:
-                mac["skor_ev"] = s_ev
-                degisiklik_var = True
-            if s_dep != 0 and mac.get("skor_dep") != s_dep:
-                mac["skor_dep"] = s_dep
-                degisiklik_var = True
-
-            # İlk Yarı Skorları Güncelle
-            if iy_ev != 0 and mac.get("skor_1y_ev") != iy_ev:
-                mac["skor_1y_ev"] = iy_ev
-                degisiklik_var = True
-            if iy_dep != 0 and mac.get("skor_1y_dep") != iy_dep:
-                mac["skor_1y_dep"] = iy_dep
-                degisiklik_var = True
-
-            # Durum Güncelle - MS yazanlar kesin bitti olacak
-            if mac.get("durum") != y_skor["durum"]:
-                mac["durum"] = y_skor["durum"]
-                degisiklik_var = True
-
-            if degisiklik_var:
-                guncelleme_sayisi += 1
-                print(f"✅ GÜNCELLEME | {mac['ev_sahibi']} - {mac['deplasman']} | Skor: {mac['skor_ev']}-{mac['skor_dep']} | İlk Yarı: {mac['skor_1y_ev']}-{mac['skor_1y_dep']} | Durum: {mac['durum']}")
-
-    return guncelleme_sayisi
-
-# =============================================================================
-# 🚀 ANA ÇALIŞTIRICI - Tamamen Düzeltildi, Artık 0 Çekme Sorunu Yok
-# =============================================================================
+# Programı çalıştır - BU KISIM ÇOK ÖNEMLİ, OLMADAN TERMİNAL ÇALIŞMAZ!
 if __name__ == "__main__":
-    print("=" * 70)
-    print("⚽ GÜVENLİ SKOR GÜNCELLEYİCİ | VERİ KORUMA MODU 🛡️")
-    print("=" * 70)
-    print("🔒 KURAL 1: Oranlar, Lig, Saat, Index, Kodlar -> HİÇ DOKUNULMAZ!")
-    print("🔒 KURAL 2: gecmis_maclar.json -> KESİNLİKLE GÖRMEZ, DOKUNMAZ!")
-    print("🔒 KURAL 3: Sadece Skor ve Durum güncellenir. Yeni maç EKLENMEZ.")
-    print("-" * 70)
-
-    # 1. Mevcut dosyayı oku
-    mevcut_yapi = load_mac_json()
-    if not mevcut_yapi:
-        print("❌ İşlem iptal edildi.")
-        input("🔚 Çıkmak için Enter...")
-        exit()
-
-    # 2. Maçkolik'ten verileri çek - ARTIK 845'İN TAMAMI ÇEKİLİR
-    yeni_skorlar = get_skorlar()
-    if not yeni_skorlar:
-        print("❌ Maçkolik verisi alınamadı. İşlem iptal edildi.")
-        input("🔚 Çıkmak için Enter...")
-        exit()
-
-    # 3. Verileri eşleştir ve güncelle
-    guncellenen_sayi = skorlari_eslestir_ve_guncelle(mevcut_yapi, yeni_skorlar)
-
-    # 4. Kaydet ve Git gönderimi
-    if guncellenen_sayi > 0:
-        save_mac_json(mevcut_yapi)
-        print(f"\n📊 Toplam {guncellenen_sayi} adet maçın SKORU, İLK YARISI ve DURUMU güncellendi.")
-        
-        # 🔄 Otomatik Git Push
-        git_islemlerini_yap()
-        
-    else:
-        print("\nℹ️ Güncellenecek yeni veri bulunamadı. Dosya içeriği değiştirilmedi.")
-
-    print("\n" + "=" * 70)
-    print("✅ TÜM İŞLEMLER BİTTİ | HİÇBİR VERİN SİLİNMEDİ / BOZULMADI ✅")
-    print("🔒 Korumada olanlar: Oranlar, Lig, Saat, Index, Kodlar, Tüm Geçmiş Veriler")
-    print("🔒 gecmis_maclar.json -> Tamamen güvende, hiç dokunulmadı")
-    print("=" * 70)
-    input("🔚 Çıkmak için Enter tuşuna bas...")
+    main()

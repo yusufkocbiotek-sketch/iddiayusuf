@@ -95,11 +95,11 @@ OUTPUT_SKOR_JSON = BASE_DIR / "public" / "data" / "skorlar_livescore.json"
 
 # HANGİ TARİHİN VERİSİ ÇEKİLSİN?
 # SEÇENEK 1: DÜN -> "https://www.livescore.bz/tr/yesterday/"
-# SEÇENEK 2: BUGÜN -> "https://www.livescore.bz/tr/today/"
+# SEÇENEK 2: BUGÜN -> "https://www.livescore.bz/tr/"
 # SEÇENEK 3: TARİH -> "https://www.livescore.bz/tr/ended/?date=2026-05-16"
-# SEÇİMİ BURADAN YAP:
-CEKILECEK_LINK = "https://www.livescore.bz/tr/yesterday/"  # DÜN İÇİN
-# CEKILECEK_LINK = "https://www.livescore.bz/tr/today/"     # BUGÜN İÇİN
+# SEÇİMİ BURADAN YAP:  
+CEKILECEK_LINK = "https://www.livescore.bz/tr/" # DÜN İÇİN
+# CEKILECEK_LINK = "https://www.livescore.bz/tr/"     # BUGÜN İÇİN
 # CEKILECEK_LINK = "https://www.livescore.bz/tr/ended/?date=2026-05-16" # ÖZEL TARİH
 
 UPDATE_MAC_JSON = True

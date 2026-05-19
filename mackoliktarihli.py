@@ -22,7 +22,7 @@ BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 # ---------------------------
 BUGUN = datetime.now()
 DUN = BUGUN - timedelta(days=1)
-ONDEN_GUN = BUGUN - timedelta(days=5) # ⬅️ Son 5 gün: Dün ve Önceki gün
+ONDEN_GUN = BUGUN - timedelta(days=3) # ⬅️ Son 3 gün: Dün ve Önceki gün
 BASLANGIC_TARIHI = ONDEN_GUN.strftime("%Y-%m-%d")
 BITIS_TARIHI = DUN.strftime("%Y-%m-%d")
 # ---------------------------

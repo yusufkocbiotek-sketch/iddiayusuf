@@ -1,0 +1,4 @@
+Set-Location "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main"
+& "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\python.exe" .\scraperyusuf_deepall_v1.py
+
+set "SCRIPT=%PROJ%\scraperyusuf_soft30_v4.py"

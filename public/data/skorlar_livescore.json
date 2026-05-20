@@ -1,7 +1,20 @@
 {
-  "olusturulma_tarihi": "2026-05-20T22:50:50.244104",
+  "olusturulma_tarihi": "2026-05-20T22:55:13.207356",
   "kaynak": "https://www.livescore.bz/tr/",
   "veri": [
+    {
+      "sofascore_id": "2402471",
+      "tarih": "2026-05-20",
+      "saat": "20:00",
+      "sp_home": "Ascoli",
+      "sp_away": "AS Calcio Potenza",
+      "skor1": 1,
+      "skor2": 0,
+      "iy_skor1": 0,
+      "iy_skor2": 0,
+      "durum": "MS",
+      "cekme_zamani": "2026-05-20T22:55:11.952317"
+    },
     {
       "sofascore_id": "2404426",
       "tarih": "2026-05-20",
@@ -13,7 +26,7 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:48.944183"
+      "cekme_zamani": "2026-05-20T22:55:12.029081"
     },
     {
       "sofascore_id": "2404432",
@@ -26,7 +39,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.039016"
+      "cekme_zamani": "2026-05-20T22:55:12.111517"
     },
     {
       "sofascore_id": "2402008",
@@ -39,7 +52,7 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.093103"
+      "cekme_zamani": "2026-05-20T22:55:12.194257"
     },
     {
       "sofascore_id": "2402069",
@@ -52,7 +65,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.150866"
+      "cekme_zamani": "2026-05-20T22:55:12.274654"
     },
     {
       "sofascore_id": "2402071",
@@ -65,7 +78,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.247875"
+      "cekme_zamani": "2026-05-20T22:55:12.350225"
     },
     {
       "sofascore_id": "2402073",
@@ -78,7 +91,7 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.308521"
+      "cekme_zamani": "2026-05-20T22:55:12.395113"
     },
     {
       "sofascore_id": "2402077",
@@ -91,7 +104,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.380852"
+      "cekme_zamani": "2026-05-20T22:55:12.448338"
     },
     {
       "sofascore_id": "2402068",
@@ -104,7 +117,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.441954"
+      "cekme_zamani": "2026-05-20T22:55:12.494667"
     },
     {
       "sofascore_id": "2402047",
@@ -117,7 +130,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.505734"
+      "cekme_zamani": "2026-05-20T22:55:12.550025"
     },
     {
       "sofascore_id": "2402052",
@@ -130,7 +143,7 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.592673"
+      "cekme_zamani": "2026-05-20T22:55:12.607761"
     },
     {
       "sofascore_id": "2401971",
@@ -143,7 +156,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.656958"
+      "cekme_zamani": "2026-05-20T22:55:12.658186"
     },
     {
       "sofascore_id": "2401974",
@@ -156,7 +169,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.721015"
+      "cekme_zamani": "2026-05-20T22:55:12.711477"
     },
     {
       "sofascore_id": "2402007",
@@ -169,7 +182,20 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.782348"
+      "cekme_zamani": "2026-05-20T22:55:12.754826"
+    },
+    {
+      "sofascore_id": "2402084",
+      "tarih": "2026-05-20",
+      "saat": "21:00",
+      "sp_home": "Sileks",
+      "sp_away": "FK Shkendija 79",
+      "skor1": 1,
+      "skor2": 0,
+      "iy_skor1": 0,
+      "iy_skor2": 0,
+      "durum": "MS",
+      "cekme_zamani": "2026-05-20T22:55:12.822350"
     },
     {
       "sofascore_id": "2402081",
@@ -182,7 +208,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.843921"
+      "cekme_zamani": "2026-05-20T22:55:12.881293"
     },
     {
       "sofascore_id": "2401977",
@@ -195,7 +221,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.900423"
+      "cekme_zamani": "2026-05-20T22:55:12.929463"
     },
     {
       "sofascore_id": "2402080",
@@ -208,7 +234,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:49.953771"
+      "cekme_zamani": "2026-05-20T22:55:12.973957"
     },
     {
       "sofascore_id": "2402066",
@@ -221,7 +247,7 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:50.022131"
+      "cekme_zamani": "2026-05-20T22:55:13.029592"
     },
     {
       "sofascore_id": "2404791",
@@ -234,7 +260,7 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:50.081209"
+      "cekme_zamani": "2026-05-20T22:55:13.085263"
     },
     {
       "sofascore_id": "2404818",
@@ -247,7 +273,7 @@
       "iy_skor1": 1,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:50.159447"
+      "cekme_zamani": "2026-05-20T22:55:13.140530"
     },
     {
       "sofascore_id": "2404788",
@@ -260,7 +286,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:50:50.243917"
+      "cekme_zamani": "2026-05-20T22:55:13.207137"
     }
   ]
 }

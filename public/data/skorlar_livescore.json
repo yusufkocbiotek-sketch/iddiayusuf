@@ -1,5 +1,5 @@
 {
-  "olusturulma_tarihi": "2026-05-20T22:23:57.457838",
+  "olusturulma_tarihi": "2026-05-20T22:50:50.244104",
   "kaynak": "https://www.livescore.bz/tr/",
   "veri": [
     {
@@ -13,7 +13,7 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.093778"
+      "cekme_zamani": "2026-05-20T22:50:48.944183"
     },
     {
       "sofascore_id": "2404432",
@@ -26,7 +26,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.173573"
+      "cekme_zamani": "2026-05-20T22:50:49.039016"
     },
     {
       "sofascore_id": "2402008",
@@ -39,7 +39,7 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.247003"
+      "cekme_zamani": "2026-05-20T22:50:49.093103"
     },
     {
       "sofascore_id": "2402069",
@@ -52,7 +52,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.333431"
+      "cekme_zamani": "2026-05-20T22:50:49.150866"
     },
     {
       "sofascore_id": "2402071",
@@ -65,7 +65,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.404902"
+      "cekme_zamani": "2026-05-20T22:50:49.247875"
     },
     {
       "sofascore_id": "2402073",
@@ -78,7 +78,7 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.478430"
+      "cekme_zamani": "2026-05-20T22:50:49.308521"
     },
     {
       "sofascore_id": "2402077",
@@ -91,7 +91,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.546777"
+      "cekme_zamani": "2026-05-20T22:50:49.380852"
     },
     {
       "sofascore_id": "2402068",
@@ -104,7 +104,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.611696"
+      "cekme_zamani": "2026-05-20T22:50:49.441954"
     },
     {
       "sofascore_id": "2402047",
@@ -117,7 +117,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.681424"
+      "cekme_zamani": "2026-05-20T22:50:49.505734"
     },
     {
       "sofascore_id": "2402052",
@@ -130,7 +130,7 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.772255"
+      "cekme_zamani": "2026-05-20T22:50:49.592673"
     },
     {
       "sofascore_id": "2401971",
@@ -143,7 +143,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.836561"
+      "cekme_zamani": "2026-05-20T22:50:49.656958"
     },
     {
       "sofascore_id": "2401974",
@@ -156,7 +156,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.898982"
+      "cekme_zamani": "2026-05-20T22:50:49.721015"
     },
     {
       "sofascore_id": "2402007",
@@ -169,7 +169,7 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:56.966911"
+      "cekme_zamani": "2026-05-20T22:50:49.782348"
     },
     {
       "sofascore_id": "2402081",
@@ -182,85 +182,85 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:57.031043"
+      "cekme_zamani": "2026-05-20T22:50:49.843921"
     },
     {
-      "sofascore_id": "2402015",
+      "sofascore_id": "2401977",
       "tarih": "2026-05-20",
-      "saat": "18:00",
-      "sp_home": "FC Saburtalo Tbilisi",
-      "sp_away": "FC Gagra",
+      "saat": "15:00",
+      "sp_home": "Fc Meshakhte Tkibuli",
+      "sp_away": "Torpedo Kutaisi",
       "skor1": 1,
-      "skor2": 0,
+      "skor2": 4,
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:57.098884"
+      "cekme_zamani": "2026-05-20T22:50:49.900423"
     },
     {
-      "sofascore_id": "2402063",
+      "sofascore_id": "2402080",
       "tarih": "2026-05-20",
-      "saat": "19:45",
-      "sp_home": "ES Setif",
-      "sp_away": "MC Alger",
-      "skor1": 1,
-      "skor2": 0,
-      "iy_skor1": 1,
-      "iy_skor2": 0,
-      "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:57.164276"
-    },
-    {
-      "sofascore_id": "2402067",
-      "tarih": "2026-05-20",
-      "saat": "19:45",
-      "sp_home": "El Bayadh",
-      "sp_away": "JS Saoura",
+      "saat": "20:00",
+      "sp_home": "Dila Gori",
+      "sp_away": "Dinamo Tbilisi",
       "skor1": 0,
       "skor2": 0,
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:57.235608"
+      "cekme_zamani": "2026-05-20T22:50:49.953771"
     },
     {
-      "sofascore_id": "2404416",
+      "sofascore_id": "2402066",
       "tarih": "2026-05-20",
-      "saat": "19:00",
-      "sp_home": "CRB Temouchent",
-      "sp_away": "US Chaouia",
+      "saat": "19:45",
+      "sp_home": "ASO Chlef",
+      "sp_away": "JS Kabylie",
       "skor1": 1,
+      "skor2": 2,
+      "iy_skor1": 1,
+      "iy_skor2": 1,
+      "durum": "MS",
+      "cekme_zamani": "2026-05-20T22:50:50.022131"
+    },
+    {
+      "sofascore_id": "2404791",
+      "tarih": "2026-05-20",
+      "saat": "11:30",
+      "sp_home": "Mawlai SC",
+      "sp_away": "Rangdajied United",
+      "skor1": 4,
       "skor2": 0,
-      "iy_skor1": 0,
+      "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:57.305834"
+      "cekme_zamani": "2026-05-20T22:50:50.081209"
     },
     {
-      "sofascore_id": "2404794",
+      "sofascore_id": "2404818",
       "tarih": "2026-05-20",
-      "saat": "15:30",
-      "sp_home": "Nongkseh SCC",
-      "sp_away": "Lajong B",
-      "skor1": 1,
-      "skor2": 1,
+      "saat": "19:30",
+      "sp_home": "SC Spelle Venhaus",
+      "sp_away": "M. Gladbach",
+      "skor1": 2,
+      "skor2": 6,
       "iy_skor1": 1,
-      "iy_skor2": 1,
+      "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:57.372958"
+      "cekme_zamani": "2026-05-20T22:50:50.159447"
     },
     {
-      "sofascore_id": "2402796",
+      "sofascore_id": "2404788",
       "tarih": "2026-05-20",
       "saat": "20:00",
-      "sp_home": "Sandhausen",
-      "sp_away": "Eintracht Frankfurt",
-      "skor1": 3,
-      "skor2": 3,
-      "iy_skor1": 1,
+      "sp_home": "FC 1980 Wien",
+      "sp_away": "SV Wienerberger",
+      "skor1": 0,
+      "skor2": 1,
+      "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:23:57.457682"
+      "cekme_zamani": "2026-05-20T22:50:50.243917"
     }
   ]
 }

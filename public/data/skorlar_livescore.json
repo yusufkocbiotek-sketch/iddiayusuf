@@ -1,5 +1,5 @@
 {
-  "olusturulma_tarihi": "2026-05-20T22:58:19.734887",
+  "olusturulma_tarihi": "2026-05-20T23:00:52.240216",
   "kaynak": "https://www.livescore.bz/tr/",
   "veri": [
     {
@@ -13,7 +13,20 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:17.981376"
+      "cekme_zamani": "2026-05-20T23:00:50.816672"
+    },
+    {
+      "sofascore_id": "2402473",
+      "tarih": "2026-05-20",
+      "saat": "20:00",
+      "sp_home": "FeralpiSalo",
+      "sp_away": "Virtus Casarano",
+      "skor1": 0,
+      "skor2": 0,
+      "iy_skor1": 0,
+      "iy_skor2": 0,
+      "durum": "MS",
+      "cekme_zamani": "2026-05-20T23:00:50.870610"
     },
     {
       "sofascore_id": "2404426",
@@ -26,7 +39,7 @@
       "iy_skor1": 0,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.086658"
+      "cekme_zamani": "2026-05-20T23:00:50.933867"
     },
     {
       "sofascore_id": "2404432",
@@ -39,7 +52,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.178239"
+      "cekme_zamani": "2026-05-20T23:00:51.010623"
     },
     {
       "sofascore_id": "2402008",
@@ -52,7 +65,7 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.258357"
+      "cekme_zamani": "2026-05-20T23:00:51.063862"
     },
     {
       "sofascore_id": "2402069",
@@ -65,7 +78,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.336614"
+      "cekme_zamani": "2026-05-20T23:00:51.117675"
     },
     {
       "sofascore_id": "2402071",
@@ -78,7 +91,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.415214"
+      "cekme_zamani": "2026-05-20T23:00:51.174197"
     },
     {
       "sofascore_id": "2402073",
@@ -91,7 +104,7 @@
       "iy_skor1": 2,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.492061"
+      "cekme_zamani": "2026-05-20T23:00:51.227662"
     },
     {
       "sofascore_id": "2402077",
@@ -104,7 +117,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.584987"
+      "cekme_zamani": "2026-05-20T23:00:51.287112"
     },
     {
       "sofascore_id": "2402068",
@@ -117,7 +130,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.667542"
+      "cekme_zamani": "2026-05-20T23:00:51.344448"
     },
     {
       "sofascore_id": "2402047",
@@ -130,7 +143,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.753528"
+      "cekme_zamani": "2026-05-20T23:00:51.399751"
     },
     {
       "sofascore_id": "2402052",
@@ -143,7 +156,7 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.826587"
+      "cekme_zamani": "2026-05-20T23:00:51.450682"
     },
     {
       "sofascore_id": "2401971",
@@ -156,7 +169,7 @@
       "iy_skor1": 1,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:18.922452"
+      "cekme_zamani": "2026-05-20T23:00:51.502296"
     },
     {
       "sofascore_id": "2401974",
@@ -169,7 +182,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.011299"
+      "cekme_zamani": "2026-05-20T23:00:51.558115"
     },
     {
       "sofascore_id": "2402007",
@@ -182,7 +195,7 @@
       "iy_skor1": 1,
       "iy_skor2": 2,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.082913"
+      "cekme_zamani": "2026-05-20T23:00:51.614778"
     },
     {
       "sofascore_id": "2402084",
@@ -195,7 +208,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.161111"
+      "cekme_zamani": "2026-05-20T23:00:51.671757"
     },
     {
       "sofascore_id": "2402081",
@@ -208,7 +221,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.242316"
+      "cekme_zamani": "2026-05-20T23:00:51.752670"
     },
     {
       "sofascore_id": "2401977",
@@ -221,7 +234,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.337852"
+      "cekme_zamani": "2026-05-20T23:00:51.859531"
     },
     {
       "sofascore_id": "2402080",
@@ -234,7 +247,7 @@
       "iy_skor1": 0,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.419877"
+      "cekme_zamani": "2026-05-20T23:00:51.936953"
     },
     {
       "sofascore_id": "2402066",
@@ -247,7 +260,7 @@
       "iy_skor1": 1,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.501959"
+      "cekme_zamani": "2026-05-20T23:00:52.014060"
     },
     {
       "sofascore_id": "2404791",
@@ -260,7 +273,7 @@
       "iy_skor1": 2,
       "iy_skor2": 0,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.585010"
+      "cekme_zamani": "2026-05-20T23:00:52.084557"
     },
     {
       "sofascore_id": "2404818",
@@ -273,7 +286,7 @@
       "iy_skor1": 1,
       "iy_skor2": 3,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.656152"
+      "cekme_zamani": "2026-05-20T23:00:52.161643"
     },
     {
       "sofascore_id": "2404788",
@@ -286,7 +299,7 @@
       "iy_skor1": 0,
       "iy_skor2": 1,
       "durum": "MS",
-      "cekme_zamani": "2026-05-20T22:58:19.734706"
+      "cekme_zamani": "2026-05-20T23:00:52.239976"
     }
   ]
 }

@@ -448,22 +448,6 @@ def main():
             "veri": tum_veriler
         }, OUTPUT_SKOR_JSON)
 
-        # Ana dosyayı güncelle
-        if UPDATE_MAC_JSON:
-            print("\n🔄 Ana veri dosyası (mac.json) güncelleniyor...")
-            mac_veri = load_json_safe(MAC_JSON_PATH)
-            istatistik = update_db(mac_veri, tum_veriler, bugun_iso)
-            save_json_atomic(mac_veri, MAC_JSON_PATH)
-            print(f"""
-            📈 İŞLEM SONUÇLARI:
-            ✅ Eşleşen Maç:      {istatistik[0]}
-            ✏️ Güncellenen:      {istatistik[1]}
-            🟡 Değişmeyen:      {istatistik[2]}
-            ➕ Yeni Eklenen:     {istatistik[3]}
-            ⏭️ Atlanan:          {istatistik[4]}
-            ❌ Eşleşmeyen:       {istatistik[5]}
-            """)
-
         # Geçmiş dosyayı güncelle
         if UPDATE_GECMIS_JSON:
             print("\n🔄 Geçmiş veri dosyası (gecmis_maclar.json) güncelleniyor...")
@@ -514,6 +498,32 @@ def main():
                     subprocess.run(["git", "commit", "-m", mesaj], cwd=repo_yol, capture_output=True, text=True)
                     subprocess.run(["git", "pull", "--rebase", "origin", "main"], cwd=repo_yol, capture_output=True, text=True)
                     subprocess.run(["git", "push", "origin", "main"], cwd=repo_yol, capture_output=True, text=True)
+                    
+                    # 🔢 SAYACI KESİN ÇÖZÜM - DOSYA YOLU KESİN YAZILDI
+                    import json
+                    import os
+                    
+                    try:
+                        # Tam ve doğru yol yazıldı
+                        dosya_yolu = os.path.join(os.getcwd(), "public", "data", "mac.json")
+                        print("🔍 Okunacak Dosya Yolu:", dosya_yolu) # Kontrol için yazdırıyorum
+                        
+                        if os.path.exists(dosya_yolu):
+                            with open(dosya_yolu, "r", encoding="utf-8") as f:
+                                veri = json.load(f)
+                                tum_mac_sayisi = len(veri)
+                        else:
+                            tum_mac_sayisi = "DOSYA BULUNAMADI"
+                            
+                        # Sayacı yaz
+                        sayac_yol = os.path.join(os.getcwd(), "public", "data", "sayac.json")
+                        with open(sayac_yol, "w", encoding="utf-8") as f:
+                            json.dump({"toplam_biten_mac": tum_mac_sayisi}, f, ensure_ascii=False)
+                            
+                    except Exception as e:
+                        tum_mac_sayisi = f"HATA: {e}"
+                    
+                    print("✅ Sayaç güncellendi! Yeni Sayı:", tum_mac_sayisi)
                     print("✅ Git işlemi tamamlandı!")
                 else:
                     print("ℹ️ Değişiklik bulunamadı, Git'e gönderilmedi.")

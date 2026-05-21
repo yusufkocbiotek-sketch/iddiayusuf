@@ -53,7 +53,7 @@ OUTPUT_SKOR_JSON = BASE_DIR / "public" / "data" / "skorlar_spordb.json"
 
 SPORDB_URL = "https://www.spordb.com/iddaa-programi"
 
-DAYS_BACK_FINISHED = 0     
+DAYS_BACK_FINISHED = 2     
 INCLUDE_TODAY = True       
 
 UPDATE_MAC_JSON = True
@@ -104,7 +104,7 @@ BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 # ---------------------------
 BUGUN = datetime.now()
 DUN = BUGUN - timedelta(days=1)
-BASLANGIC_TARIHI = "2026-05-09"
+BASLANGIC_TARIHI = "2026-05-20"
 BITIS_TARIHI = DUN.strftime("%Y-%m-%d")
 # ---------------------------
 

@@ -104,7 +104,7 @@ BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 # ---------------------------
 BUGUN = datetime.now()
 DUN = BUGUN - timedelta(days=1)
-BASLANGIC_TARIHI = "2026-05-17"
+BASLANGIC_TARIHI = "2026-05-19"
 BITIS_TARIHI = DUN.strftime("%Y-%m-%d")
 # ---------------------------
 

@@ -25,6 +25,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .filters input:focus,.filters select:focus{border-color:#00c853}
 .filters input[type=text]{min-width:160px;flex:1;max-width:250px}
 .filters input[type=number]{width:70px}
+/* Yeni eklenen aralık girişi stili */
+.filters .aralik-grup{display:flex;gap:6px;align-items:center}
+.filters .aralik-ayrac{color:#888;font-size:11px}
 .fl{font-size:10px;color:#888;white-space:nowrap}
 .fb{font-size:10px;color:#00c853;font-weight:700}
 .btn-r{background:#21262d;color:#e6e6e6;border:1px solid #30363d;padding:6px 10px;border-radius:5px;cursor:pointer;font-size:11px}
@@ -33,6 +36,239 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .filtre-tag{background:#1a3a1a;border:1px solid #00c853;border-radius:4px;padding:3px 7px;font-size:10px;display:inline-flex;align-items:center;gap:5px;margin:2px}
 .filtre-tag .ft-text{color:#00c853}.filtre-tag .ft-sil{color:#e74c3c;cursor:pointer;font-weight:700}
 .filtre-listesi{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>İddaa Oranları</h1>
+    <div class="info">Son Güncelleme: <span id="sonGuncel">22.05.2026 06:50</span></div>
+</div>
+
+<div class="main-tabs">
+    <div class="main-tab aktif" data-tab="analiz">Analiz</div>
+    <div class="main-tab" data-tab="bulten">Güncel Bülten</div>
+    <div class="main-tab" data-tab="sonuclar">Sonuçlar</div>
+</div>
+
+<!-- ANALİZ SEKMESİ - YENİ ORAN FİLTRESİ BURADA -->
+<div class="tab-icerik aktif" id="analiz">
+    <div class="filters">
+        <div class="fr">
+            <span class="fl">Lig:</span>
+            <select id="ligSec">
+                <option value="">Tümü</option>
+                <option value="süperlig">Süper Lig</option>
+                <option value="premier">Premier Lig</option>
+                <option value="bundesliga">Bundesliga</option>
+                <option value="laliga">La Liga</option>
+            </select>
+        </div>
+
+        <!-- ✅ GELİŞMİŞ ORAN FİLTRESİ - EŞİTLİK + ARALIK -->
+        <div class="fr">
+            <span class="fl">Oran Kriteri:</span>
+            
+            <!-- Karşılaştırma Operatörü -->
+            <select id="oranOperator">
+                <option value="eq">Eşittir (=)</option>
+                <option value="neq">Eşit Değildir (≠)</option>
+                <option value="gt">Büyüktür (&gt;)</option>
+                <option value="gte">Büyük Eşittir (≥)</option>
+                <option value="lt">Küçüktür (&lt;)</option>
+                <option value="lte">Küçük Eşittir (≤)</option>
+                <option value="between">Aralık İçinde</option>
+                <option value="not_between">Aralık Dışında</option>
+            </select>
+
+            <!-- Tek Değer Girişi (Varsayılan) -->
+            <div id="tekDegerAlani">
+                <input type="number" id="oranDeger" step="0.01" min="1" placeholder="Örn: 1.85">
+            </div>
+
+            <!-- Aralık Girişi (Başlangıçta Gizli) -->
+            <div id="aralikAlani" style="display: none;" class="aralik-grup">
+                <input type="number" id="oranMin" step="0.01" min="1" placeholder="Min">
+                <span class="aralik-ayrac">-</span>
+                <input type="number" id="oranMax" step="0.01" min="1" placeholder="Max">
+            </div>
+
+            <button class="btn-a" id="filtreUygula">Uygula</button>
+            <button class="btn-r" id="filtreTemizle">Temizle</button>
+        </div>
+
+        <!-- Seçili Kriter Özeti -->
+        <div class="fr" id="kriterOzetiAlani" style="display: none;">
+            <span class="fl">Seçili:</span>
+            <div class="ofk" style="flex:1">
+                <span id="kriterMetin" class="fb"></span>
+            </div>
+        </div>
+
+        <div class="filtre-listesi" id="aktifFiltreler"></div>
+    </div>
+
+    <div class="stats-bar">
+        <div class="si"><div class="sv">124</div><div class="sl">Maç</div></div>
+        <div class="si"><div class="sv">86</div><div class="sl">Eşleşme</div></div>
+        <div class="si"><div class="sv">%69</div><div class="sl">Başarı</div></div>
+    </div>
+
+    <!-- SONUÇ TABLOSU -->
+    <div style="padding:15px;overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+                <tr style="background:#161b22;border-bottom:1px solid #21262d">
+                    <th style="padding:10px;text-align:left;color:#888;font-weight:600">Tarih / Saat</th>
+                    <th style="padding:10px;text-align:left;color:#888;font-weight:600">Ev Sahibi</th>
+                    <th style="padding:10px;text-align:left;color:#888;font-weight:600">Deplasman</th>
+                    <th style="padding:10px;text-align:center;color:#888;font-weight:600">Oran</th>
+                    <th style="padding:10px;text-align:center;color:#888;font-weight:600">Sonuç</th>
+                </tr>
+            </thead>
+            <tbody id="macListesi">
+                <tr>
+                    <td colspan="5" style="padding:20px;text-align:center;color:#888">Filtre kriteri seçip "Uygula" butonuna basın.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="tab-icerik" id="bulten">
+    <div style="padding:20px;color:#888">Güncel bülten yükleniyor...</div>
+</div>
+
+<div class="tab-icerik" id="sonuclar">
+    <div style="padding:20px;color:#888">Sonuç listesi yükleniyor...</div>
+</div>
+
+<!-- JAVASCRIPT KODLARI -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Sekme Yönetimi
+    const sekmeler = document.querySelectorAll('.main-tab');
+    sekmeler.forEach(sekme => {
+        sekme.addEventListener('click', function() {
+            // Tümünü kapat
+            document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('aktif'));
+            document.querySelectorAll('.tab-icerik').forEach(c => c.classList.remove('aktif'));
+            // Seçileni aç
+            this.classList.add('aktif');
+            document.getElementById(this.dataset.tab).classList.add('aktif');
+        });
+    });
+
+    // ✅ ORAN FİLTRELEME - GELİŞMİŞ KISIM
+    const operatorSelect = document.getElementById('oranOperator');
+    const tekDegerAlani = document.getElementById('tekDegerAlani');
+    const aralikAlani = document.getElementById('aralikAlani');
+    const kriterOzetiAlani = document.getElementById('kriterOzetiAlani');
+    const kriterMetin = document.getElementById('kriterMetin');
+
+    // 1. Operatör Değiştikçe Alanları Güncelle
+    operatorSelect.addEventListener('change', function() {
+        const secilen = this.value;
+        if(secilen === 'between' || secilen === 'not_between') {
+            tekDegerAlani.style.display = 'none';
+            aralikAlani.style.display = 'flex';
+        } else {
+            aralikAlani.style.display = 'none';
+            tekDegerAlani.style.display = 'block';
+        }
+        guncelleOzet();
+    });
+
+    // 2. Değerler Değiştikçe Özeti Güncelle
+    document.getElementById('oranDeger').addEventListener('input', guncelleOzet);
+    document.getElementById('oranMin').addEventListener('input', guncelleOzet);
+    document.getElementById('oranMax').addEventListener('input', guncelleOzet);
+
+    // 3. Uygula Butonu
+    document.getElementById('filtreUygula').addEventListener('click', function() {
+        const filtre = getFiltreVerisi();
+        if(!filtre) {
+            alert("Lütfen geçerli değerler girin!");
+            return;
+        }
+        console.log("Seçilen Filtre:", filtre);
+        // Burada sunucuya gönderme veya listeyi filtreleme işlemleri olacak
+        alert(`Filtre aktif: ${filtre.aciklama}`);
+    });
+
+    // 4. Temizle Butonu
+    document.getElementById('filtreTemizle').addEventListener('click', function() {
+        operatorSelect.value = 'eq';
+        document.getElementById('oranDeger').value = '';
+        document.getElementById('oranMin').value = '';
+        document.getElementById('oranMax').value = '';
+        
+        tekDegerAlani.style.display = 'block';
+        aralikAlani.style.display = 'none';
+        kriterOzetiAlani.style.display = 'none';
+    });
+
+    // Yardımcı: Özet Metnini Oluştur
+    function guncelleOzet() {
+        const tip = operatorSelect.value;
+        const deger = document.getElementById('oranDeger').value;
+        const min = document.getElementById('oranMin').value;
+        const max = document.getElementById('oranMax').value;
+
+        const tipler = {
+            eq: `Oran = ${deger || '?'}`,
+            neq: `Oran ≠ ${deger || '?'}`,
+            gt: `Oran > ${deger || '?'}`,
+            gte: `Oran ≥ ${deger || '?'}`,
+            lt: `Oran < ${deger || '?'}`,
+            lte: `Oran ≤ ${deger || '?'}`,
+            between: `Oran [${min || '?'} - ${max || '?'}] aralığında`,
+            not_between: `Oran [${min || '?'} - ${max || '?'}] dışında`
+        };
+
+        if(deger || (min && max)) {
+            kriterMetin.innerText = tipler[tip];
+            kriterOzetiAlani.style.display = 'flex';
+        } else {
+            kriterOzetiAlani.style.display = 'none';
+        }
+    }
+
+    // Ana Fonksiyon: Verileri Doğrula ve Getir
+    function getFiltreVerisi() {
+        const tip = operatorSelect.value;
+        let veri = { tip: tip, sql: "", deger:null, min:null, max:null, aciklama:"" };
+
+        // Tek Değer Kontrolü
+        if(['eq','neq','gt','gte','lt','lte'].includes(tip)) {
+            const val = parseFloat(document.getElementById('oranDeger').value);
+            if(isNaN(val) || val <= 0) return false;
+            
+            veri.deger = val;
+            veri.aciklama = tipler[tip];
+            // SQL sorgusu için hazır ifadeler (sonradan kullanmak istersin diye)
+            const opMap = {eq:'=', neq:'<>', gt:'>', gte:'>=', lt:'<', lte:'<='};
+            veri.sql = `oran ${opMap[tip]} ${val}`;
+        }
+        // Aralık Kontrolü
+        else {
+            const min = parseFloat(document.getElementById('oranMin').value);
+            const max = parseFloat(document.getElementById('oranMax').value);
+            if(isNaN(min) || isNaN(max) || min <=0 || max <=0 || min >= max) return false;
+
+            veri.min = min;
+            veri.max = max;
+            veri.aciklama = tipler[tip];
+            veri.sql = (tip === 'between') ? `oran BETWEEN ${min} AND ${max}` : `oran NOT BETWEEN ${min} AND ${max}`;
+        }
+
+        return veri;
+    }
+
+});
+</script>
+
+</body>
 
 /* TABLO GÖRÜNÜM */
 .tablo{width:100%;margin-top:10px}

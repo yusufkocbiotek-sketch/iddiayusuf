@@ -25,7 +25,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .filters input:focus,.filters select:focus{border-color:#00c853}
 .filters input[type=text]{min-width:160px;flex:1;max-width:250px}
 .filters input[type=number]{width:70px}
-/* Yeni eklenen */
 .aralik-grup{display:flex;gap:4px;align-items:center}
 .aralik-ayrac{color:#888;padding:0 4px;}
 .fl{font-size:10px;color:#888;white-space:nowrap}
@@ -45,6 +44,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .btn-ekle { background:#00c853; color:#000; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold; }
 .btn-analiz { background:#007bff; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; }
 .btn-temizle { background:#333; color:#eee; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; }
+
+/* TABLO GÖRÜNÜM */
+.tablo{width:100%;margin-top:10px}
+.gun-baslik{background:#161b22;border:1px solid #21262d;padding:8px 12px;font-size:12px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;border-radius:4px 4px 0 0;}
+.mac-satiri{background:#0d1117;border:1px solid #21262d;border-top:none;padding:8px 12px;font-size:11px;color:#e6e6e6;display:flex;justify-content:space-between;align-items:center;}
+.mac-satiri:hover{background:#1a1f2e;}
+.sonuc-basarisiz{color:#f53f3f;}
+.sonuc-basarili{color:#00c853;}
 </style>
 </head>
 <body>
@@ -96,9 +103,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 
             <!-- Aralık Girişi (Başlangıçta GİZLİ) -->
             <div id="aralikAlani" class="aralik-grup" style="display:none;">
-                <input type="number" class="kucuk-input" id="minInput" step="0.01" min="0" placeholder="Min">
+                <input type="number" class="kucuk-input" id="oranMin" step="0.01" min="0" placeholder="Min">
                 <span class="aralik-ayrac">-</span>
-                <input type="number" class="kucuk-input" id="maxInput" step="0.01" min="0" placeholder="Max">
+                <input type="number" class="kucuk-input" id="oranMax" step="0.01" min="0" placeholder="Max">
             </div>
 
             <button class="btn-ekle">+ Ekle</button>
@@ -106,7 +113,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
             <button class="btn-temizle">Temizle</button>
         </div>
 
-        <div id="ekliFiltreler" class="filtre-listesi" style="margin-top:10px;"></div>
+        <div id="ekliFiltreler" class="filtre-listesi"></div>
     </div>
 </div>
 
@@ -135,6 +142,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const kosulSelect = document.getElementById('kosulTipi');
     const tekDegerAlani = document.getElementById('tekDegerAlani');
     const aralikAlani = document.getElementById('aralikAlani');
+    const tipler = {
+        eq: `Oran = `,
+        neq: `Oran ≠ `,
+        gt: `Oran > `,
+        gte: `Oran ≥ `,
+        lt: `Oran < `,
+        lte: `Oran ≤ `,
+        between: `Oran aralığında: `,
+        not_between: `Oran aralığı dışında: `
+    };
 
     kosulSelect.addEventListener('change', function() {
         const secim = this.value;
@@ -147,17 +164,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Ekle butonu işlemi (Örnek)
+    // Ekle butonu işlemi
     document.querySelector('.btn-ekle').addEventListener('click', function() {
         const alan = document.getElementById('alanSec').value;
         const tip = document.getElementById('kosulTipi').value;
         let metin = "";
 
         if(tip === 'between' || tip === 'not_between') {
-            const min = document.getElementById('minInput').value;
-            const max = document.getElementById('maxInput').value;
+            const min = document.getElementById('oranMin').value;
+            const max = document.getElementById('oranMax').value;
             if(!min || !max) return alert("Min ve Max değerleri girin!");
-            metin = `${alan} ${tip == 'between' ? '➡️ Aralıkta' : '⛔ Aralık Dışı'} [${min} - ${max}]`;
+            metin = `${alan} ${tip == 'between' ? '➡️' : '⛔'} [${min} - ${max}]`;
         } else {
             const deger = document.getElementById('degerInput').value;
             if(!deger) return alert("Değer girin!");
@@ -173,8 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Inputları temizle
         document.getElementById('degerInput').value = '';
-        document.getElementById('minInput').value = '';
-        document.getElementById('maxInput').value = '';
+        document.getElementById('oranMin').value = '';
+        document.getElementById('oranMax').value = '';
     });
 
     // Temizle butonu
@@ -185,11 +202,40 @@ document.addEventListener('DOMContentLoaded', function() {
         aralikAlani.style.display = 'none';
     });
 
+    function getFiltreVerisi() {
+        const tip = kosulSelect.value;
+        let veri = { tip: tip, sql: "", deger:null, min:null, max:null, aciklama:"" };
+
+        // Tek Değer Kontrolü
+        if(['eq','neq','gt','gte','lt','lte'].includes(tip)) {
+            const val = parseFloat(document.getElementById('degerInput').value);
+            if(isNaN(val) || val <= 0) return false;
+            
+            veri.deger = val;
+            veri.aciklama = tipler[tip] + val;
+            const opMap = {eq:'=', neq:'<>', gt:'>', gte:'>=', lt:'<', lte:'<='};
+            veri.sql = `oran ${opMap[tip]} ${val}`;
+        }
+        // Aralık Kontrolü
+        else {
+            const min = parseFloat(document.getElementById('oranMin').value);
+            const max = parseFloat(document.getElementById('oranMax').value);
+            if(isNaN(min) || isNaN(max) || min <=0 || max <=0 || min >= max) return false;
+
+            veri.min = min;
+            veri.max = max;
+            veri.aciklama = tipler[tip] + `${min} - ${max}`;
+            veri.sql = (tip === 'between') ? `oran BETWEEN ${min} AND ${max}` : `oran NOT BETWEEN ${min} AND ${max}`;
+        }
+
+        return veri;
+    }
+
 });
 </script>
 
 </body>
-
+</html>
 /* TABLO GÖRÜNÜM */
 .tablo{width:100%;margin-top:10px}
 .gun-baslik{background:#161b22;border:1px solid #21262d;padding:8px 12px;font-size:12px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;border-radius:6px 6px 0 0;margin-top:10px}

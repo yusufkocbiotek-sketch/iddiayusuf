@@ -20,8 +20,8 @@ BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 # ---------------------------
 # TARİH ARALIĞI - GG/AA/YYYY
 # ---------------------------
-BASLANGIC_TARIHI = "14/05/2026"
-BITIS_TARIHI = "18/05/2026"
+BASLANGIC_TARIHI = "20/05/2026"
+BITIS_TARIHI = "22/05/2026"
 # ---------------------------
 
 ESLESME_SEVIYESI = 0.40       

@@ -1,0 +1,1659 @@
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Cmt 02.05.2026 17:33:08,88 
+========================================== 
+[1/4] Oranlar cekiliyor... 
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraper_full.py", line 411, in <module>
+    print("\u26bd �ddaa Oran �ekici - BUG�N�N T�M MA�LARI")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[2/4] Gecmis maclar guncelleniyor... 
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraper_gecmis.py", line 407, in <module>
+    print("\u26bd SporDB Ge�mi� Ma� �ekici")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[3/4] Skorlar eslestiriliyor... 
+============================================================
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\skor_json_eslestir.py", line 259, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\skor_json_eslestir.py", line 171, in main
+    print("\u26bd JSON Skor E�le�tirici")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[4/4] GitHub'a yukleniyor... 
+[main 3abc53d] Otomatik guncelleme Cmt 02.05.2026 17:33:09,30
+ 2 files changed, 76 insertions(+)
+ create mode 100644 logs/otomatik_guncelle.log
+ create mode 100644 otomatik_guncelle.bat
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   b0e0b21..3abc53d  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Cmt 02.05.2026 17:33:11,06 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Cmt 02.05.2026 17:33:27,98 
+========================================== 
+[1/4] Oranlar cekiliyor... 
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraper_full.py", line 411, in <module>
+    print("\u26bd �ddaa Oran �ekici - BUG�N�N T�M MA�LARI")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[2/4] Gecmis maclar guncelleniyor... 
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraper_gecmis.py", line 407, in <module>
+    print("\u26bd SporDB Ge�mi� Ma� �ekici")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[3/4] Skorlar eslestiriliyor... 
+============================================================
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\skor_json_eslestir.py", line 259, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\skor_json_eslestir.py", line 171, in main
+    print("\u26bd JSON Skor E�le�tirici")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[4/4] GitHub'a yukleniyor... 
+warning: in the working copy of 'logs/otomatik_guncelle.log', LF will be replaced by CRLF the next time Git touches it
+[main 5304e20] Otomatik guncelleme Cmt 02.05.2026 17:33:28,39
+ 1 file changed, 50 insertions(+)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   3abc53d..5304e20  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Cmt 02.05.2026 17:33:30,20 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Cmt 02.05.2026 17:34:36,88 
+========================================== 
+[1/4] Oranlar cekiliyor... 
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraper_full.py", line 411, in <module>
+    print("\u26bd �ddaa Oran �ekici - BUG�N�N T�M MA�LARI")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[2/4] Gecmis maclar guncelleniyor... 
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraper_gecmis.py", line 407, in <module>
+    print("\u26bd SporDB Ge�mi� Ma� �ekici")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[3/4] Skorlar eslestiriliyor... 
+============================================================
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\skor_json_eslestir.py", line 259, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\skor_json_eslestir.py", line 171, in main
+    print("\u26bd JSON Skor E�le�tirici")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+ 
+[4/4] GitHub'a yukleniyor... 
+warning: in the working copy of 'logs/otomatik_guncelle.log', LF will be replaced by CRLF the next time Git touches it
+[main dc0c5cc] Otomatik guncelleme Cmt 02.05.2026 17:34:37,29
+ 1 file changed, 49 insertions(+)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   5304e20..dc0c5cc  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Cmt 02.05.2026 17:34:39,42 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Cmt 02.05.2026 18:12:47,11 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+^C 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Cmt 02.05.2026 18:13:46,85 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+^C 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026  0:19:26,34 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 00:19
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   📜 Tüm maçlar yükleniyor...
+   📜 Tur 0: 9 maç
+   ✅ Toplam 9 maç yüklendi!
+
+🔍 Maç isimleri toplanıyor...
+   📋 9 maç bulundu:
+      1. Cuiaba vs Criciuma
+      2. Liverpool Montevideo vs Danubio FC
+      3. LDU Quito vs Guayaquil Ct
+      4. Palmeiras SP vs Santos SP
+      5. Vitoria BA vs Coritiba
+      6. San Lorenzo vs Independiente
+      7. Union De Santa Fe vs Talleres
+      8. ART Municipal Jalapa vs Real Esteli
+      9. Detroit City vs Louisville
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/9] Cuiaba vs Criciuma
+      📊 Toplam 0 oran
+   [2/9] Liverpool Montevideo vs Danubio FC
+      📊 Toplam 0 oran
+   [3/9] LDU Quito vs Guayaquil Ct
+      📊 Toplam 0 oran
+   [4/9] Palmeiras SP vs Santos SP
+      📊 Toplam 0 oran
+   [5/9] Vitoria BA vs Coritiba
+      📊 Toplam 0 oran
+   [6/9] San Lorenzo vs Independiente
+      📊 Toplam 0 oran
+   [7/9] Union De Santa Fe vs Talleres
+      📊 Toplam 0 oran
+   [8/9] ART Municipal Jalapa vs Real Esteli
+      📊 Toplam 0 oran
+   [9/9] Detroit City vs Louisville
+      📊 Toplam 0 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 9
+   📊 Toplam oran: 0
+   📊 Ortalama: 0 oran/maç
+   ✅ Detaylı: 0
+   ⏱️ Süre: 0:08:15.214685
+============================================================
+   💾 206 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 206
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 78
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 23
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main aa43ce2] Otomatik guncelleme Paz 03.05.2026  0:27:58,45
+ 1 file changed, 151 insertions(+), 94 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   10000ae..aa43ce2  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026  0:28:00,29 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 17:30:04,33 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 17:30
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 11 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 11 maç bulundu:
+      1. Feyenoord (K) vs FC Utrecht (K)
+      2. Twente (K) vs PEC Zwolle (K)
+      3. Sparta Rotterdam vs Go Ahead Eagles
+      4. AZ Alkmaar vs Twente
+      5. FC Ordabasy vs Aktobe Lento
+      6. C Glogow vs GKS Tychy
+      7. Schalke 04 II vs Borussia Dortmund II
+      8. Salzburg vs Sturm Graz
+      9. Sandefjord vs Aalesunds
+      10. IK Start vs Tromso IL
+      11. Kristiansund vs Hamkam
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/11] Feyenoord (K) vs FC Utrecht (K)
+      ✅ 36 detay oran çekildi
+      📊 Toplam 43 oran
+   [2/11] Twente (K) vs PEC Zwolle (K)
+      ✅ 36 detay oran çekildi
+      📊 Toplam 36 oran
+   [3/11] Sparta Rotterdam vs Go Ahead Eagles
+      ✅ 477 detay oran çekildi
+      📊 Toplam 484 oran
+   [4/11] AZ Alkmaar vs Twente
+      ✅ 729 detay oran çekildi
+      📊 Toplam 736 oran
+   [5/11] FC Ordabasy vs Aktobe Lento
+      ✅ 40 detay oran çekildi
+      📊 Toplam 47 oran
+   [6/11] C Glogow vs GKS Tychy
+      ✅ 96 detay oran çekildi
+      📊 Toplam 103 oran
+   [7/11] Schalke 04 II vs Borussia Dortmund II
+      ✅ 40 detay oran çekildi
+      📊 Toplam 40 oran
+   [8/11] Salzburg vs Sturm Graz
+      ✅ 270 detay oran çekildi
+      📊 Toplam 277 oran
+   [9/11] Sandefjord vs Aalesunds
+      ✅ 271 detay oran çekildi
+      📊 Toplam 278 oran
+   [10/11] IK Start vs Tromso IL
+      ✅ 266 detay oran çekildi
+      📊 Toplam 273 oran
+   💾 Toplam 255 maç kaydedildi
+   💾 10 maç kaydedildi (✅10 ❌0)
+   [11/11] Kristiansund vs Hamkam
+      ✅ 267 detay oran çekildi
+      📊 Toplam 274 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 11
+   📊 Toplam oran: 2591
+   📊 Ortalama: 235 oran/maç
+   ✅ Detaylı: 11
+   ⏱️ Süre: 0:04:39.890644
+============================================================
+   💾 Toplam 256 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 256
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 128
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 73
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main ac9326c] Otomatik guncelleme Paz 03.05.2026 17:34:57,11
+ 1 file changed, 2802 insertions(+), 13 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   7e5e284..ac9326c  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 17:34:59,06 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 17:45:04,83 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 17:45
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 10 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 10 maç bulundu:
+      1. FC Ordabasy vs Aktobe Lento
+      2. C Glogow vs GKS Tychy
+      3. Schalke 04 II vs Borussia Dortmund II
+      4. Salzburg vs Sturm Graz
+      5. Sandefjord vs Aalesunds
+      6. IK Start vs Tromso IL
+      7. Kristiansund vs Hamkam
+      8. Simba SC vs Young Africans SC
+      9. Chayka Pesch vs Torpedo Moskova
+      10. Fakel vs Y Krasnoyars
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/10] FC Ordabasy vs Aktobe Lento
+      ✅ 39 detay oran çekildi
+      📊 Toplam 46 oran
+   [2/10] C Glogow vs GKS Tychy
+      ✅ 95 detay oran çekildi
+      📊 Toplam 102 oran
+   [3/10] Schalke 04 II vs Borussia Dortmund II
+      ✅ 40 detay oran çekildi
+      📊 Toplam 40 oran
+   [4/10] Salzburg vs Sturm Graz
+      ✅ 270 detay oran çekildi
+      📊 Toplam 277 oran
+   [5/10] Sandefjord vs Aalesunds
+      ✅ 271 detay oran çekildi
+      📊 Toplam 278 oran
+   [6/10] IK Start vs Tromso IL
+      ✅ 266 detay oran çekildi
+      📊 Toplam 273 oran
+   [7/10] Kristiansund vs Hamkam
+      ✅ 267 detay oran çekildi
+      📊 Toplam 274 oran
+   [8/10] Simba SC vs Young Africans SC
+      ✅ 38 detay oran çekildi
+      📊 Toplam 38 oran
+   [9/10] Chayka Pesch vs Torpedo Moskova
+      ✅ 38 detay oran çekildi
+      📊 Toplam 45 oran
+   [10/10] Fakel vs Y Krasnoyars
+      ✅ 38 detay oran çekildi
+      📊 Toplam 45 oran
+   💾 Toplam 259 maç kaydedildi
+   💾 10 maç kaydedildi (✅10 ❌0)
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 10
+   📊 Toplam oran: 1418
+   📊 Ortalama: 141 oran/maç
+   ✅ Detaylı: 10
+   ⏱️ Süre: 0:04:14.937041
+============================================================
+   💾 Toplam 259 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 259
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 131
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 76
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main 419c825] Otomatik guncelleme Paz 03.05.2026 17:49:32,78
+ 1 file changed, 752 insertions(+), 572 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   ac9326c..419c825  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 17:49:34,56 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 18:00:04,88 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 18:00
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 9 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 9 maç bulundu:
+      1. Mezokovesd Z vs A Csakvar
+      2. Bvsc-Zuglo vs Fehervar
+      3. Bayelsa United FC vs Eng.Rangers
+      4. Petrolul Ploiesti vs Uta Arad
+      5. Paris vs Brest
+      6. AJ Auxerre vs Angers
+      7. Strasbourg vs Toulouse
+      8. NK Radomlje vs NK Maribor
+      9. Cittadella vs FC Arzignano Valchiampo
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/9] Mezokovesd Z vs A Csakvar
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 14 oran
+   [2/9] Bvsc-Zuglo vs Fehervar
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [3/9] Bayelsa United FC vs Eng.Rangers
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [4/9] Petrolul Ploiesti vs Uta Arad
+      ✅ 94 detay oran çekildi
+      📊 Toplam 101 oran
+   [5/9] Paris vs Brest
+      ✅ 650 detay oran çekildi
+      📊 Toplam 657 oran
+   [6/9] AJ Auxerre vs Angers
+      ✅ 657 detay oran çekildi
+      📊 Toplam 664 oran
+   [7/9] Strasbourg vs Toulouse
+      ✅ 457 detay oran çekildi
+      📊 Toplam 464 oran
+   [8/9] NK Radomlje vs NK Maribor
+      ✅ 93 detay oran çekildi
+      📊 Toplam 100 oran
+   [9/9] Cittadella vs FC Arzignano Valchiampo
+      ✅ 93 detay oran çekildi
+      📊 Toplam 100 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 9
+   📊 Toplam oran: 2100
+   📊 Ortalama: 233 oran/maç
+   ✅ Detaylı: 6
+   ⏱️ Süre: 0:07:26.727986
+============================================================
+   💾 Toplam 268 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 268
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 140
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 85
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main b104429] Otomatik guncelleme Paz 03.05.2026 18:07:44,61
+ 1 file changed, 2443 insertions(+), 183 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   419c825..b104429  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 18:07:46,52 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 18:15:04,78 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 18:15
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 8 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 8 maç bulundu:
+      1. NK Radomlje vs NK Maribor
+      2. Cittadella vs FC Arzignano Valchiampo
+      3. Pogon Szczecin vs Wisla Plock
+      4. SC Braga B vs AD Fafe
+      5. Uniao SC Paredes vs AD Marco 09
+      6. Monchengladbach vs B. Dortmund
+      7. I. Eivissa vs A.Sanluqueno
+      8. Dinamo Minsk vs Maxline Rogachev
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/8] NK Radomlje vs NK Maribor
+      ✅ 93 detay oran çekildi
+      📊 Toplam 100 oran
+   [2/8] Cittadella vs FC Arzignano Valchiampo
+      ✅ 94 detay oran çekildi
+      📊 Toplam 101 oran
+   [3/8] Pogon Szczecin vs Wisla Plock
+      ✅ 262 detay oran çekildi
+      📊 Toplam 269 oran
+   [4/8] SC Braga B vs AD Fafe
+      ✅ 40 detay oran çekildi
+      📊 Toplam 47 oran
+   [5/8] Uniao SC Paredes vs AD Marco 09
+      ✅ 39 detay oran çekildi
+      📊 Toplam 46 oran
+   [6/8] Monchengladbach vs B. Dortmund
+      ✅ 777 detay oran çekildi
+      📊 Toplam 784 oran
+   [7/8] I. Eivissa vs A.Sanluqueno
+      ✅ 90 detay oran çekildi
+      📊 Toplam 97 oran
+   [8/8] Dinamo Minsk vs Maxline Rogachev
+      ✅ 92 detay oran çekildi
+      📊 Toplam 99 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 8
+   📊 Toplam oran: 1543
+   📊 Ortalama: 192 oran/maç
+   ✅ Detaylı: 8
+   ⏱️ Süre: 0:03:25.959718
+============================================================
+   💾 Toplam 274 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 274
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 146
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 91
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main a9a21ac] Otomatik guncelleme Paz 03.05.2026 18:18:43,91
+ 1 file changed, 1671 insertions(+), 220 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   b104429..a9a21ac  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 18:18:45,79 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 18:30:04,79 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 18:30
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 8 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 8 maç bulundu:
+      1. I. Eivissa vs A.Sanluqueno
+      2. Dinamo Minsk vs Maxline Rogachev
+      3. AGF Aarhus vs Sonderjyske
+      4. AL Faisaly vs Ramtha SC
+      5. AL Salt vs Al Wehdat
+      6. CR Khemis Zemamra vs Wydad
+      7. Sporting Cristal vs Cusco FC
+      8. CA Atlanta vs T. Suarez
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/8] I. Eivissa vs A.Sanluqueno
+      ✅ 90 detay oran çekildi
+      📊 Toplam 97 oran
+   [2/8] Dinamo Minsk vs Maxline Rogachev
+      ✅ 92 detay oran çekildi
+      📊 Toplam 99 oran
+   [3/8] AGF Aarhus vs Sonderjyske
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [4/8] AL Faisaly vs Ramtha SC
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [5/8] AL Salt vs Al Wehdat
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [6/8] CR Khemis Zemamra vs Wydad
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [7/8] Sporting Cristal vs Cusco FC
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [8/8] CA Atlanta vs T. Suarez
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 8
+   📊 Toplam oran: 196
+   📊 Ortalama: 24 oran/maç
+   ✅ Detaylı: 2
+   ⏱️ Süre: 0:10:25.610341
+============================================================
+   💾 Toplam 280 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 280
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 152
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 97
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main 1f049dd] Otomatik guncelleme Paz 03.05.2026 18:40:44,03
+ 1 file changed, 241 insertions(+), 139 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   a9a21ac..1f049dd  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 18:40:45,82 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 18:45:04,83 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 18:45
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 8 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 8 maç bulundu:
+      1. Dinamo Minsk vs Maxline Rogachev
+      2. AGF Aarhus vs Sonderjyske
+      3. AL Faisaly vs Ramtha SC
+      4. AL Salt vs Al Wehdat
+      5. CR Khemis Zemamra vs Wydad
+      6. Sporting Cristal vs Cusco FC
+      7. CA Atlanta vs T. Suarez
+      8. CSKA Sofya vs Ludogorets
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/8] Dinamo Minsk vs Maxline Rogachev
+      ✅ 92 detay oran çekildi
+      📊 Toplam 99 oran
+   [2/8] AGF Aarhus vs Sonderjyske
+      ✅ 265 detay oran çekildi
+      📊 Toplam 272 oran
+   [3/8] AL Faisaly vs Ramtha SC
+      ✅ 35 detay oran çekildi
+      📊 Toplam 42 oran
+   [4/8] AL Salt vs Al Wehdat
+      ✅ 37 detay oran çekildi
+      📊 Toplam 44 oran
+   [5/8] CR Khemis Zemamra vs Wydad
+      ✅ 93 detay oran çekildi
+      📊 Toplam 100 oran
+   [6/8] Sporting Cristal vs Cusco FC
+      ✅ 40 detay oran çekildi
+      📊 Toplam 47 oran
+   [7/8] CA Atlanta vs T. Suarez
+      ✅ 37 detay oran çekildi
+      📊 Toplam 37 oran
+   [8/8] CSKA Sofya vs Ludogorets
+      ✅ 39 detay oran çekildi
+      📊 Toplam 46 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 8
+   📊 Toplam oran: 687
+   📊 Ortalama: 85 oran/maç
+   ✅ Detaylı: 8
+   ⏱️ Süre: 0:03:23.601859
+============================================================
+   💾 Toplam 281 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 281
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 153
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 98
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main 08821a1] Otomatik guncelleme Paz 03.05.2026 18:48:41,41
+ 1 file changed, 877 insertions(+), 265 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   1f049dd..08821a1  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 18:48:43,18 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 19:00:04,83 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 19:00
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 8 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 8 maç bulundu:
+      1. Tofta Itrottarfelag B68 vs EB/STREYMUR
+      2. CE Sabadell FC vs Murcia
+      3. AL Tai vs AL Jandal
+      4. Akhmat Grozny vs Nizhny Novgo
+      5. Real Sociedad B vs CF Burgos
+      6. Sparta Prag vs Jablonec
+      7. Real Betis vs Real Oviedo
+      8. CA Aldosivi vs Ind. Mendoza
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/8] Tofta Itrottarfelag B68 vs EB/STREYMUR
+      ✅ 40 detay oran çekildi
+      📊 Toplam 47 oran
+   [2/8] CE Sabadell FC vs Murcia
+      ✅ 94 detay oran çekildi
+      📊 Toplam 101 oran
+   [3/8] AL Tai vs AL Jandal
+      ✅ 39 detay oran çekildi
+      📊 Toplam 46 oran
+   [4/8] Akhmat Grozny vs Nizhny Novgo
+      ✅ 95 detay oran çekildi
+      📊 Toplam 102 oran
+   [5/8] Real Sociedad B vs CF Burgos
+      ✅ 394 detay oran çekildi
+      📊 Toplam 401 oran
+   [6/8] Sparta Prag vs Jablonec
+      ✅ 95 detay oran çekildi
+      📊 Toplam 102 oran
+   [7/8] Real Betis vs Real Oviedo
+      ✅ 786 detay oran çekildi
+      📊 Toplam 793 oran
+   [8/8] CA Aldosivi vs Ind. Mendoza
+      ✅ 374 detay oran çekildi
+      📊 Toplam 381 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 8
+   📊 Toplam oran: 1973
+   📊 Ortalama: 246 oran/maç
+   ✅ Detaylı: 8
+   ⏱️ Süre: 0:03:26.459276
+============================================================
+   💾 Toplam 289 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 289
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 161
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 106
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main 82f7a9c] Otomatik guncelleme Paz 03.05.2026 19:03:44,32
+ 1 file changed, 2130 insertions(+), 13 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   08821a1..82f7a9c  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 19:03:46,20 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 19:15:04,63 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 19:15
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 8 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 8 maç bulundu:
+      1. AL Tai vs AL Jandal
+      2. Akhmat Grozny vs Nizhny Novgo
+      3. Real Sociedad B vs CF Burgos
+      4. Sparta Prag vs Jablonec
+      5. Real Betis vs Real Oviedo
+      6. CA Aldosivi vs Ind. Mendoza
+      7. Anderlecht vs Club Brugge
+      8. Hajduk Split vs VSN Varazdin
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/8] AL Tai vs AL Jandal
+      ✅ 36 detay oran çekildi
+      📊 Toplam 43 oran
+   [2/8] Akhmat Grozny vs Nizhny Novgo
+      ✅ 95 detay oran çekildi
+      📊 Toplam 102 oran
+   [3/8] Real Sociedad B vs CF Burgos
+      ✅ 394 detay oran çekildi
+      📊 Toplam 401 oran
+   [4/8] Sparta Prag vs Jablonec
+      ✅ 95 detay oran çekildi
+      📊 Toplam 102 oran
+   [5/8] Real Betis vs Real Oviedo
+      ✅ 786 detay oran çekildi
+      📊 Toplam 793 oran
+   [6/8] CA Aldosivi vs Ind. Mendoza
+      ✅ 376 detay oran çekildi
+      📊 Toplam 383 oran
+   [7/8] Anderlecht vs Club Brugge
+      ✅ 398 detay oran çekildi
+      📊 Toplam 405 oran
+   [8/8] Hajduk Split vs VSN Varazdin
+      ✅ 36 detay oran çekildi
+      📊 Toplam 43 oran
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 8
+   📊 Toplam oran: 2272
+   📊 Ortalama: 284 oran/maç
+   ✅ Detaylı: 8
+   ⏱️ Süre: 0:03:26.658118
+============================================================
+   💾 Toplam 291 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 291
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 163
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 108
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main 17449fb] Otomatik guncelleme Paz 03.05.2026 19:18:44,22
+ 1 file changed, 1211 insertions(+), 728 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   82f7a9c..17449fb  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 19:18:46,57 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 19:30:04,63 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 19:30
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 10 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 10 maç bulundu:
+      1. Hajduk Split vs VSN Varazdin
+      2. Fatih Karagümrük vs Gençlerbirliği
+      3. Kasımpaşa vs Kocaelispor
+      4. Antalyaspor vs Alanyaspor
+      5. Kayserispor vs Eyüpspor
+      6. FK Zeleziarne Podbrezova vs Spartak Trnava
+      7. Soroksar SC vs FC Ajka
+      8. Dacia Buiucani vs Sheriff
+      9. Ghazl El Mahallah vs Ismaily Sc
+      10. National Bank of Egypt SC vs Modern Sport Club
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/10] Hajduk Split vs VSN Varazdin
+      ✅ 36 detay oran çekildi
+      📊 Toplam 43 oran
+   [2/10] Fatih Karagümrük vs Gençlerbirliği
+      ✅ 465 detay oran çekildi
+      📊 Toplam 472 oran
+   [3/10] Kasımpaşa vs Kocaelispor
+      ✅ 276 detay oran çekildi
+      📊 Toplam 285 oran
+   [4/10] Antalyaspor vs Alanyaspor
+      ✅ 356 detay oran çekildi
+      📊 Toplam 363 oran
+   [5/10] Kayserispor vs Eyüpspor
+      ✅ 504 detay oran çekildi
+      📊 Toplam 511 oran
+   [6/10] FK Zeleziarne Podbrezova vs Spartak Trnava
+      ✅ 97 detay oran çekildi
+      📊 Toplam 104 oran
+   [7/10] Soroksar SC vs FC Ajka
+      ✅ 39 detay oran çekildi
+      📊 Toplam 46 oran
+   [8/10] Dacia Buiucani vs Sheriff
+      ✅ 36 detay oran çekildi
+      📊 Toplam 43 oran
+   [9/10] Ghazl El Mahallah vs Ismaily Sc
+      ✅ 37 detay oran çekildi
+      📊 Toplam 37 oran
+   [10/10] National Bank of Egypt SC vs Modern Sport Club
+      ✅ 112 detay oran çekildi
+      📊 Toplam 119 oran
+   💾 Toplam 300 maç kaydedildi
+   💾 10 maç kaydedildi (✅10 ❌0)
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 10
+   📊 Toplam oran: 2023
+   📊 Ortalama: 202 oran/maç
+   ✅ Detaylı: 10
+   ⏱️ Süre: 0:04:16.898345
+============================================================
+   💾 Toplam 300 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 300
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 172
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 117
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main 967fb94] Otomatik guncelleme Paz 03.05.2026 19:34:34,68
+ 1 file changed, 2192 insertions(+), 50 deletions(-)
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   17449fb..967fb94  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 19:34:36,57 
+========================================== 
+ 
+========================================== 
+IDDAA OTOMATIK GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 19:45:04,61 
+========================================== 
+[1/3] Oranlar cekiliyor... 
+⚽ İddaa Oran Çekici - BUGÜNÜN TÜM MAÇLARI
+📅 03/05/2026 19:45
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.iddaa.com/program/futbol?date=03.05.2026
+   ⏳ Maçlar yükleniyor (max 30sn)...
+   ✅ 10 maç bulundu
+
+🔍 Maç isimleri toplanıyor...
+   📋 10 maç bulundu:
+      1. Fatih Karagümrük vs Gençlerbirliği
+      2. Kasımpaşa vs Kocaelispor
+      3. Antalyaspor vs Alanyaspor
+      4. Kayserispor vs Eyüpspor
+      5. FK Zeleziarne Podbrezova vs Spartak Trnava
+      6. Soroksar SC vs FC Ajka
+      7. Dacia Buiucani vs Sheriff
+      8. Ghazl El Mahallah vs Ismaily Sc
+      9. National Bank of Egypt SC vs Modern Sport Club
+      10. Braga vs Estoril Praia
+
+🔽 Maçlar tek tek açılıyor...
+
+   [1/10] Fatih Karagümrük vs Gençlerbirliği
+      ✅ 463 detay oran çekildi
+      📊 Toplam 470 oran
+   [2/10] Kasımpaşa vs Kocaelispor
+      ✅ 278 detay oran çekildi
+      📊 Toplam 287 oran
+   [3/10] Antalyaspor vs Alanyaspor
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [4/10] Kayserispor vs Eyüpspor
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [5/10] FK Zeleziarne Podbrezova vs Spartak Trnava
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [6/10] Soroksar SC vs FC Ajka
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [7/10] Dacia Buiucani vs Sheriff
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [8/10] Ghazl El Mahallah vs Ismaily Sc
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [9/10] National Bank of Egypt SC vs Modern Sport Club
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   [10/10] Braga vs Estoril Praia
+      ⏳ Deneme 1 başarısız, 30sn sonra tekrar...
+      ⏳ Deneme 2 başarısız, 30sn sonra tekrar...
+      ❌ 3 deneme de başarısız oldu
+      📊 Toplam 0 oran
+   💾 Toplam 301 maç kaydedildi
+   💾 10 maç kaydedildi (✅2 ❌8)
+
+============================================================
+📊 FİNAL SONUÇ
+   ⚽ Toplam maç: 10
+   📊 Toplam oran: 757
+   📊 Ortalama: 75 oran/maç
+   ✅ Detaylı: 2
+   ⏱️ Süre: 0:13:32.658191
+============================================================
+   💾 Toplam 301 maç kaydedildi
+
+🎉 İşlem tamamlandı!
+
+📌 GitHub'a yükleyin:
+   git add -A
+   git commit -m "Oranlar guncellendi"
+   git push
+ 
+[2/3] Skorlar eslestiriliyor... 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 301
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 173
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 118
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+ 
+[3/3] GitHub'a yukleniyor... 
+[main af7cd1a] Otomatik guncelleme Paz 03.05.2026 19:58:51,53
+ 3 files changed, 610 insertions(+), 1779 deletions(-)
+ create mode 100644 otomatik_oran.bat
+ create mode 100644 otomatik_skor.bat
+To https://github.com/yusufkocbiotek-sketch/iddiayusuf.git
+   967fb94..af7cd1a  main -> main
+ 
+TAMAMLANDI 
+Tarih Saat: Paz 03.05.2026 19:58:53,34 
+========================================== 

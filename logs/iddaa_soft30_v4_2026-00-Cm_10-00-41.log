@@ -1,0 +1,18 @@
+============================================================
+START: Cmt 09.05.2026 10:00:41,77
+============================================================
+======================================================================
+Traceback (most recent call last):
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraperyusuf_soft30_v4.py", line 507, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\YUSUF\OneDrive\Desktop\iddiayusuf-main\scraperyusuf_soft30_v4.py", line 413, in main
+    print("\u26bd IDDAA SOFT30 V4 (deneme) - ARAMA ile týklama fix")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YUSUF\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1254.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u26bd' in position 0: character maps to <undefined>
+============================================================
+END: Cmt 09.05.2026 10:00:41,95
+============================================================

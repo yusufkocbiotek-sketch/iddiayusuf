@@ -1,0 +1,596 @@
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 20:00:14,20 
+========================================== 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 301
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 173
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 118
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Paz 03.05.2026 23:00:15,62 
+========================================== 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 348
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 220
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 55
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 165
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Pzt 04.05.2026  2:00:15,63 
+========================================== 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 366
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 238
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 207
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 31
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Pzt 04.05.2026  5:00:15,64 
+========================================== 
+============================================================
+⚽ JSON Skor Eşleştirici
+============================================================
+📊 mac.json maç sayısı: 382
+📊 gecmis_maclar.json maç sayısı: 14327
+⏳ Başlamadı: 254
+✅ Bitti: 128
+
+============================================================
+📊 SONUÇ
+✅ Güncellenen maç: 0
+❌ Geçmiş tarihli ama eşleşmeyen: 207
+⏳ Gelecek/bugün henüz bitmemiş olabilir: 47
+============================================================
+
+⚠️ Geçmiş tarihli olup eşleşmeyen ilk 30 maç:
+- 2026-04-30 11:30 | Albirex Niigata S vs Tampines Rovers
+- 2026-04-30 11:30 | Guangdong Mingtu vs Jiangxi Liansheng
+- 2026-04-30 13:30 | Masar vs Proxy
+- 2026-04-30 13:55 | Smail vs Al-Nahda
+- 2026-04-30 15:45 | Hapoel Acre vs Hapoel Afula
+- 2026-04-30 15:45 | Hapoel Nazareth Illit vs Hapoel Hadera
+- 2026-04-30 15:45 | Hapoel Kfar Shalem vs Hapoel Kfar Saba
+- 2026-04-30 15:45 | Hapoel Ra'anana vs Maccabi Kabilio Jaffa
+- 2026-04-30 16:00 | Al Okhdood vs Al-Ettifaq
+- 2026-04-30 17:00 | Lilla Torg vs Österlen
+- 2026-04-30 19:00 | AL Akhdood vs AL Ettifaq FC
+- 2026-05-01 01:30 | CD Marquense vs Xelaju
+- 2026-05-01 03:15 | Velez Sarsfield vs Gimnasia Y Tiro de Salta
+- 2026-05-01 15:00 | OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava
+- 2026-05-01 15:00 | Muang Thong United vs BG Pathum United FC
+- 2026-05-01 15:00 | Shanghai Shenhua vs Chengdu Rongcheng
+- 2026-05-01 15:00 | Vanersborgs FK vs Vanersborgs IF
+- 2026-05-01 15:00 | Nosaby vs Oskarshmans
+- 2026-05-01 15:15 | Kuching FA vs Terengganu
+- 2026-05-01 15:30 | SC Poltava vs FC Kryvbas Kriviy Rih
+- 2026-05-01 16:00 | Sampdoria vs FC Sudtirol
+- 2026-05-01 16:00 | Dodoma FC vs Namungo FC
+- 2026-05-01 16:00 | Bahir Dar Kenema FC vs Shire Endaselassie FC
+- 2026-05-01 16:00 | Highbury FC vs Midlands Wanderers FC
+- 2026-05-01 16:00 | SSC Bari vs Virtus Entella
+- 2026-05-01 17:00 | Altach vs LASK
+- 2026-05-01 17:00 | Paide Flora vs Tartu JK Tam
+- 2026-05-01 17:00 | Throttur V vs Haukar Hafnarfjordur
+- 2026-05-01 17:00 | Jamshedpur FC vs FC Goa
+- 2026-05-01 17:00 | Ban Gargzdai vs Zalgiris Kaunas
+
+⚠️ Güncellenecek yeni eşleşme bulunamadı.
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Pzt 04.05.2026  8:00:15,63 
+========================================== 
+============================================================
+⚽ Skor Güncelleyici (Günlük Menü Düzeltmesi v7.1)...
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.spordb.com/iddaa-programi/ açılıyor...
+✅ Sayfa tamamen yüklendi
+   📅 Kontrol edilecek günler: 04.05.2026, 03.05.2026, 02.05.2026
+✅ Günlük tarih menüsü bulundu!
+ℹ️ Menüde toplam 8 adet gün var
+
+   📅 04.05.2026 tarihi aranıyor...
+      ✅ '04.05.2026' seçildi, yükleniyor...
+      ✅ 04.05.2026 tarihinden 16 maç skoru alındı
+
+   📅 03.05.2026 tarihi aranıyor...
+      ✅ '03.05.2026' seçildi, yükleniyor...
+      ✅ İçerik 1. saniyede güncellendi
+      ✅ 03.05.2026 tarihinden 239 maç skoru alındı
+
+   📅 02.05.2026 tarihi aranıyor...
+❌ Genel işlem hatası: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=147.0.7727.138); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0xe9b373+10553]
+	chromedriver!GetHandleVerifier [0xe9b4a4+10684]
+	chromedriver!(No symbol) [0xca1e10]
+	chromedriver!(No symbol) [0xca8a3d]
+	chromedriver!(No symbol) [0xcaad1a]
+	chromedriver!(No symbol) [0xcaada8]
+	chromedriver!(No symbol) [0xce6e3a]
+	chromedriver!(No symbol) [0xd0d86c]
+	chromedriver!(No symbol) [0xce14f4]
+	chromedriver!(No symbol) [0xd0da34]
+	chromedriver!(No symbol) [0xd2aa36]
+	chromedriver!(No symbol) [0xd0d606]
+	chromedriver!(No symbol) [0xce0039]
+	chromedriver!(No symbol) [0xce0df4]
+	chromedriver!GetHandleVerifier [0x111ddb4+292f94]
+	chromedriver!GetHandleVerifier [0x111937d+28e55d]
+	chromedriver!GetHandleVerifier [0x1138215+2ad3f5]
+	chromedriver!GetHandleVerifier [0xeb4c18+29df8]
+	chromedriver!GetHandleVerifier [0xebc6fd+318dd]
+	chromedriver!GetHandleVerifier [0xea3c78+18e58]
+	chromedriver!GetHandleVerifier [0xea3e42+19022]
+	chromedriver!GetHandleVerifier [0xe8d45f+263f]
+	KERNEL32!BaseThreadInitThunk [0x75c15d49+19]
+	ntdll!RtlInitializeExceptionChain [0x772cd83b+6b]
+	ntdll!RtlGetAppContainerNamedObjectPath [0x772cd7c1+231]
+
+
+   ✅ SporDB'den toplam 255 bitmiş maç skoru okundu.
+
+📝 Skorlar maçlarla eşleştiriliyor...
+
+============================================================
+📊 İŞLEM SONUCU
+   ✅ Güncellenen maç sayısı : 0
+   ❌ Eşleşmeyen maç sayısı : 254
+============================================================
+
+⚠️ Skoru bulunamayan geçmiş maçlar (ilk 15):
+   - Albirex Niigata S vs Tampines Rovers (2026-04-30)
+   - Guangdong Mingtu vs Jiangxi Liansheng (2026-04-30)
+   - Masar vs Proxy (2026-04-30)
+   - Smail vs Al-Nahda (2026-04-30)
+   - Hapoel Acre vs Hapoel Afula (2026-04-30)
+   - Hapoel Nazareth Illit vs Hapoel Hadera (2026-04-30)
+   - Hapoel Kfar Shalem vs Hapoel Kfar Saba (2026-04-30)
+   - Hapoel Ra'anana vs Maccabi Kabilio Jaffa (2026-04-30)
+   - Al Okhdood vs Al-Ettifaq (2026-04-30)
+   - Lilla Torg vs Österlen (2026-04-30)
+   - AL Akhdood vs AL Ettifaq FC (2026-04-30)
+   - CD Marquense vs Xelaju (2026-05-01)
+   - Velez Sarsfield vs Gimnasia Y Tiro de Salta (2026-05-01)
+   - OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava (2026-05-01)
+   - Muang Thong United vs BG Pathum United FC (2026-05-01)
+
+🔒 Tarayıcı kapatılıyor...
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Pzt 04.05.2026 11:00:15,63 
+========================================== 
+============================================================
+⚽ Skor Güncelleyici (Günlük Menü Düzeltmesi v7.1)...
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.spordb.com/iddaa-programi/ açılıyor...
+✅ Sayfa tamamen yüklendi
+   📅 Kontrol edilecek günler: 04.05.2026, 03.05.2026, 02.05.2026
+✅ Günlük tarih menüsü bulundu!
+ℹ️ Menüde toplam 8 adet gün var
+
+   📅 04.05.2026 tarihi aranıyor...
+      ✅ '04.05.2026' seçildi, yükleniyor...
+      ✅ 04.05.2026 tarihinden 16 maç skoru alındı
+
+   📅 03.05.2026 tarihi aranıyor...
+      ✅ '03.05.2026' seçildi, yükleniyor...
+      ✅ İçerik 1. saniyede güncellendi
+      ✅ 03.05.2026 tarihinden 239 maç skoru alındı
+
+   📅 02.05.2026 tarihi aranıyor...
+❌ Genel işlem hatası: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=147.0.7727.138); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0xe9b373+10553]
+	chromedriver!GetHandleVerifier [0xe9b4a4+10684]
+	chromedriver!(No symbol) [0xca1e10]
+	chromedriver!(No symbol) [0xca8a3d]
+	chromedriver!(No symbol) [0xcaad1a]
+	chromedriver!(No symbol) [0xcaada8]
+	chromedriver!(No symbol) [0xce6e3a]
+	chromedriver!(No symbol) [0xd0d86c]
+	chromedriver!(No symbol) [0xce14f4]
+	chromedriver!(No symbol) [0xd0da34]
+	chromedriver!(No symbol) [0xd2aa36]
+	chromedriver!(No symbol) [0xd0d606]
+	chromedriver!(No symbol) [0xce0039]
+	chromedriver!(No symbol) [0xce0df4]
+	chromedriver!GetHandleVerifier [0x111ddb4+292f94]
+	chromedriver!GetHandleVerifier [0x111937d+28e55d]
+	chromedriver!GetHandleVerifier [0x1138215+2ad3f5]
+	chromedriver!GetHandleVerifier [0xeb4c18+29df8]
+	chromedriver!GetHandleVerifier [0xebc6fd+318dd]
+	chromedriver!GetHandleVerifier [0xea3c78+18e58]
+	chromedriver!GetHandleVerifier [0xea3e42+19022]
+	chromedriver!GetHandleVerifier [0xe8d45f+263f]
+	KERNEL32!BaseThreadInitThunk [0x75c15d49+19]
+	ntdll!RtlInitializeExceptionChain [0x772cd83b+6b]
+	ntdll!RtlGetAppContainerNamedObjectPath [0x772cd7c1+231]
+
+
+   ✅ SporDB'den toplam 255 bitmiş maç skoru okundu.
+
+📝 Skorlar maçlarla eşleştiriliyor...
+
+============================================================
+📊 İŞLEM SONUCU
+   ✅ Güncellenen maç sayısı : 0
+   ❌ Eşleşmeyen maç sayısı : 257
+============================================================
+
+⚠️ Skoru bulunamayan geçmiş maçlar (ilk 15):
+   - Albirex Niigata S vs Tampines Rovers (2026-04-30)
+   - Guangdong Mingtu vs Jiangxi Liansheng (2026-04-30)
+   - Masar vs Proxy (2026-04-30)
+   - Smail vs Al-Nahda (2026-04-30)
+   - Hapoel Acre vs Hapoel Afula (2026-04-30)
+   - Hapoel Nazareth Illit vs Hapoel Hadera (2026-04-30)
+   - Hapoel Kfar Shalem vs Hapoel Kfar Saba (2026-04-30)
+   - Hapoel Ra'anana vs Maccabi Kabilio Jaffa (2026-04-30)
+   - Al Okhdood vs Al-Ettifaq (2026-04-30)
+   - Lilla Torg vs Österlen (2026-04-30)
+   - AL Akhdood vs AL Ettifaq FC (2026-04-30)
+   - CD Marquense vs Xelaju (2026-05-01)
+   - Velez Sarsfield vs Gimnasia Y Tiro de Salta (2026-05-01)
+   - OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava (2026-05-01)
+   - Muang Thong United vs BG Pathum United FC (2026-05-01)
+
+🔒 Tarayıcı kapatılıyor...
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Pzt 04.05.2026 14:00:15,62 
+========================================== 
+============================================================
+⚽ Skor Güncelleyici (Günlük Menü Düzeltmesi v7.1)...
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.spordb.com/iddaa-programi/ açılıyor...
+✅ Sayfa tamamen yüklendi
+   📅 Kontrol edilecek günler: 04.05.2026, 03.05.2026, 02.05.2026
+✅ Günlük tarih menüsü bulundu!
+ℹ️ Menüde toplam 8 adet gün var
+
+   📅 04.05.2026 tarihi aranıyor...
+      ✅ '04.05.2026' seçildi, yükleniyor...
+      ✅ 04.05.2026 tarihinden 17 maç skoru alındı
+
+   📅 03.05.2026 tarihi aranıyor...
+      ✅ '03.05.2026' seçildi, yükleniyor...
+      ✅ İçerik 1. saniyede güncellendi
+      ✅ 03.05.2026 tarihinden 239 maç skoru alındı
+
+   📅 02.05.2026 tarihi aranıyor...
+❌ Genel işlem hatası: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=147.0.7727.138); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0xe9b373+10553]
+	chromedriver!GetHandleVerifier [0xe9b4a4+10684]
+	chromedriver!(No symbol) [0xca1e10]
+	chromedriver!(No symbol) [0xca8a3d]
+	chromedriver!(No symbol) [0xcaad1a]
+	chromedriver!(No symbol) [0xcaada8]
+	chromedriver!(No symbol) [0xce6e3a]
+	chromedriver!(No symbol) [0xd0d86c]
+	chromedriver!(No symbol) [0xce14f4]
+	chromedriver!(No symbol) [0xd0da34]
+	chromedriver!(No symbol) [0xd2aa36]
+	chromedriver!(No symbol) [0xd0d606]
+	chromedriver!(No symbol) [0xce0039]
+	chromedriver!(No symbol) [0xce0df4]
+	chromedriver!GetHandleVerifier [0x111ddb4+292f94]
+	chromedriver!GetHandleVerifier [0x111937d+28e55d]
+	chromedriver!GetHandleVerifier [0x1138215+2ad3f5]
+	chromedriver!GetHandleVerifier [0xeb4c18+29df8]
+	chromedriver!GetHandleVerifier [0xebc6fd+318dd]
+	chromedriver!GetHandleVerifier [0xea3c78+18e58]
+	chromedriver!GetHandleVerifier [0xea3e42+19022]
+	chromedriver!GetHandleVerifier [0xe8d45f+263f]
+	KERNEL32!BaseThreadInitThunk [0x75c15d49+19]
+	ntdll!RtlInitializeExceptionChain [0x772cd83b+6b]
+	ntdll!RtlGetAppContainerNamedObjectPath [0x772cd7c1+231]
+
+
+   ✅ SporDB'den toplam 256 bitmiş maç skoru okundu.
+
+📝 Skorlar maçlarla eşleştiriliyor...
+
+============================================================
+📊 İŞLEM SONUCU
+   ✅ Güncellenen maç sayısı : 0
+   ❌ Eşleşmeyen maç sayısı : 258
+============================================================
+
+⚠️ Skoru bulunamayan geçmiş maçlar (ilk 15):
+   - Albirex Niigata S vs Tampines Rovers (2026-04-30)
+   - Guangdong Mingtu vs Jiangxi Liansheng (2026-04-30)
+   - Masar vs Proxy (2026-04-30)
+   - Smail vs Al-Nahda (2026-04-30)
+   - Hapoel Acre vs Hapoel Afula (2026-04-30)
+   - Hapoel Nazareth Illit vs Hapoel Hadera (2026-04-30)
+   - Hapoel Kfar Shalem vs Hapoel Kfar Saba (2026-04-30)
+   - Hapoel Ra'anana vs Maccabi Kabilio Jaffa (2026-04-30)
+   - Al Okhdood vs Al-Ettifaq (2026-04-30)
+   - Lilla Torg vs Österlen (2026-04-30)
+   - AL Akhdood vs AL Ettifaq FC (2026-04-30)
+   - CD Marquense vs Xelaju (2026-05-01)
+   - Velez Sarsfield vs Gimnasia Y Tiro de Salta (2026-05-01)
+   - OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava (2026-05-01)
+   - Muang Thong United vs BG Pathum United FC (2026-05-01)
+
+🔒 Tarayıcı kapatılıyor...
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 
+ 
+========================================== 
+SKOR GUNCELLEME BASLADI 
+Tarih Saat: Pzt 04.05.2026 17:00:15,63 
+========================================== 
+============================================================
+⚽ Skor Güncelleyici (Günlük Menü Düzeltmesi v7.1)...
+============================================================
+🌐 Chrome başlatılıyor...
+✅ Chrome başlatıldı!
+📡 https://www.spordb.com/iddaa-programi/ açılıyor...
+✅ Sayfa tamamen yüklendi
+   📅 Kontrol edilecek günler: 04.05.2026, 03.05.2026, 02.05.2026
+✅ Günlük tarih menüsü bulundu!
+ℹ️ Menüde toplam 8 adet gün var
+
+   📅 04.05.2026 tarihi aranıyor...
+      ✅ '04.05.2026' seçildi, yükleniyor...
+      ✅ 04.05.2026 tarihinden 17 maç skoru alındı
+
+   📅 03.05.2026 tarihi aranıyor...
+      ✅ '03.05.2026' seçildi, yükleniyor...
+      ✅ İçerik 1. saniyede güncellendi
+      ✅ 03.05.2026 tarihinden 239 maç skoru alındı
+
+   📅 02.05.2026 tarihi aranıyor...
+❌ Genel işlem hatası: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=147.0.7727.138); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#staleelementreferenceexception
+Stacktrace:
+	chromedriver!GetHandleVerifier [0xe9b373+10553]
+	chromedriver!GetHandleVerifier [0xe9b4a4+10684]
+	chromedriver!(No symbol) [0xca1e10]
+	chromedriver!(No symbol) [0xca8a3d]
+	chromedriver!(No symbol) [0xcaad1a]
+	chromedriver!(No symbol) [0xcaada8]
+	chromedriver!(No symbol) [0xce6e3a]
+	chromedriver!(No symbol) [0xd0d86c]
+	chromedriver!(No symbol) [0xce14f4]
+	chromedriver!(No symbol) [0xd0da34]
+	chromedriver!(No symbol) [0xd2aa36]
+	chromedriver!(No symbol) [0xd0d606]
+	chromedriver!(No symbol) [0xce0039]
+	chromedriver!(No symbol) [0xce0df4]
+	chromedriver!GetHandleVerifier [0x111ddb4+292f94]
+	chromedriver!GetHandleVerifier [0x111937d+28e55d]
+	chromedriver!GetHandleVerifier [0x1138215+2ad3f5]
+	chromedriver!GetHandleVerifier [0xeb4c18+29df8]
+	chromedriver!GetHandleVerifier [0xebc6fd+318dd]
+	chromedriver!GetHandleVerifier [0xea3c78+18e58]
+	chromedriver!GetHandleVerifier [0xea3e42+19022]
+	chromedriver!GetHandleVerifier [0xe8d45f+263f]
+	KERNEL32!BaseThreadInitThunk [0x75c15d49+19]
+	ntdll!RtlInitializeExceptionChain [0x772cd83b+6b]
+	ntdll!RtlGetAppContainerNamedObjectPath [0x772cd7c1+231]
+
+
+   ✅ SporDB'den toplam 256 bitmiş maç skoru okundu.
+
+📝 Skorlar maçlarla eşleştiriliyor...
+
+============================================================
+📊 İŞLEM SONUCU
+   ✅ Güncellenen maç sayısı : 0
+   ❌ Eşleşmeyen maç sayısı : 267
+============================================================
+
+⚠️ Skoru bulunamayan geçmiş maçlar (ilk 15):
+   - Albirex Niigata S vs Tampines Rovers (2026-04-30)
+   - Guangdong Mingtu vs Jiangxi Liansheng (2026-04-30)
+   - Masar vs Proxy (2026-04-30)
+   - Smail vs Al-Nahda (2026-04-30)
+   - Hapoel Acre vs Hapoel Afula (2026-04-30)
+   - Hapoel Nazareth Illit vs Hapoel Hadera (2026-04-30)
+   - Hapoel Kfar Shalem vs Hapoel Kfar Saba (2026-04-30)
+   - Hapoel Ra'anana vs Maccabi Kabilio Jaffa (2026-04-30)
+   - Al Okhdood vs Al-Ettifaq (2026-04-30)
+   - Lilla Torg vs Österlen (2026-04-30)
+   - AL Akhdood vs AL Ettifaq FC (2026-04-30)
+   - CD Marquense vs Xelaju (2026-05-01)
+   - Velez Sarsfield vs Gimnasia Y Tiro de Salta (2026-05-01)
+   - OFK Banik Lehota Pod Vtacnikom vs Inter Bratislava (2026-05-01)
+   - Muang Thong United vs BG Pathum United FC (2026-05-01)
+
+🔒 Tarayıcı kapatılıyor...
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+Everything up-to-date
+TAMAMLANDI 

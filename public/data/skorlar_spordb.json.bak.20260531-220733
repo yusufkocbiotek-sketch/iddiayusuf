@@ -1,0 +1,173 @@
+{
+  "created_at": "2026-05-26T22:14:21.306452",
+  "source_url": "https://www.spordb.com/iddaa-programi",
+  "days": [
+    "2026-05-26",
+    "2026-05-25",
+    "2026-05-24",
+    "2026-05-23",
+    "2026-05-22",
+    "2026-05-21",
+    "2026-05-20",
+    "2026-05-19"
+  ],
+  "count": 13,
+  "matches": [
+    {
+      "spordb_match_id": "4068382",
+      "tarih": "2026-05-26",
+      "teams_slug": "ifk-mariehamn-fc-lahti",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-26T22:14:14.765765",
+      "sp_home": "IFK Mariehamn",
+      "sp_away": "FC Lahti",
+      "iy_skor1": 0,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4068384",
+      "tarih": "2026-05-26",
+      "teams_slug": "vps-haka",
+      "skor1": 4,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:14.943993",
+      "sp_home": "FİNSK",
+      "sp_away": "Haka",
+      "iy_skor1": 4,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4061892",
+      "tarih": "2026-05-26",
+      "teams_slug": "jelgava-liepaja",
+      "skor1": 1,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-26T22:14:15.116786",
+      "sp_home": "Jelgava",
+      "sp_away": "Liepaja",
+      "iy_skor1": 1,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4068386",
+      "tarih": "2026-05-26",
+      "teams_slug": "japs-kups-kuopio",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-26T22:14:15.266757",
+      "sp_home": "JaPS",
+      "sp_away": "KuPS Kuopio",
+      "iy_skor1": 0,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4030902",
+      "tarih": "2026-05-26",
+      "teams_slug": "borac-banja-luka-posusje",
+      "skor1": 2,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:15.536144",
+      "sp_home": "Borac Banja Luka",
+      "sp_away": "Posusje",
+      "iy_skor1": 2,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4030905",
+      "tarih": "2026-05-26",
+      "teams_slug": "sloga-doboj-rudar-prijedor",
+      "skor1": 1,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:15.668286",
+      "sp_home": "Sloga Doboj",
+      "sp_away": "Rudar Prijedor",
+      "iy_skor1": 1,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4068401",
+      "tarih": "2026-05-26",
+      "teams_slug": "fas-burundi",
+      "skor1": 5,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:15.800426",
+      "sp_home": "Fas",
+      "sp_away": "Burundi",
+      "iy_skor1": 5,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4061893",
+      "tarih": "2026-05-26",
+      "teams_slug": "bfc-daugavpils-auda",
+      "skor1": 0,
+      "skor2": 1,
+      "cekme_zamani": "2026-05-26T22:14:15.932944",
+      "sp_home": "BFC Daugavpils",
+      "sp_away": "Auda",
+      "iy_skor1": 0,
+      "iy_skor2": 1
+    },
+    {
+      "spordb_match_id": "4065726",
+      "tarih": "2026-05-26",
+      "teams_slug": "orebro-helsingborgs-if",
+      "skor1": 1,
+      "skor2": 2,
+      "cekme_zamani": "2026-05-26T22:14:16.089141",
+      "sp_home": "Örebro",
+      "sp_away": "Helsingborgs IF",
+      "iy_skor1": 1,
+      "iy_skor2": 2
+    },
+    {
+      "spordb_match_id": "4030906",
+      "tarih": "2026-05-26",
+      "teams_slug": "zrinjski-mostar-velez-mostar",
+      "skor1": 3,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:16.232886",
+      "sp_home": "Zrinjski Mostar",
+      "sp_away": "Velez Mostar",
+      "iy_skor1": 3,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4068310",
+      "tarih": "2026-05-26",
+      "teams_slug": "greuther-furth-rot-weiss-essen",
+      "skor1": 1,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:16.372417",
+      "sp_home": "Greuther Fürth",
+      "sp_away": "Rot-Weiss Essen",
+      "iy_skor1": 1,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4068402",
+      "tarih": "2026-05-26",
+      "teams_slug": "nijerya-zimbabwe",
+      "skor1": 1,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:16.529449",
+      "sp_home": "Nijerya",
+      "sp_away": "Zimbabwe",
+      "iy_skor1": 1,
+      "iy_skor2": 0
+    },
+    {
+      "spordb_match_id": "4068380",
+      "tarih": "2026-05-26",
+      "teams_slug": "saint-etienne-nice",
+      "skor1": 0,
+      "skor2": 0,
+      "cekme_zamani": "2026-05-26T22:14:16.682389",
+      "sp_home": "Saint-Etienne",
+      "sp_away": "Nice",
+      "iy_skor1": 0,
+      "iy_skor2": 0
+    }
+  ]
+}

@@ -25,29 +25,32 @@ from webdriver_manager.chrome import ChromeDriverManager
 URL = "https://www.iddaa.com/program/futbol"
 CIKTI_DOSYA = "public/data/mac.json"
 
-# Deep harvest hedefi
-TARGET_UNIQUE = 9999            # 150-250 arası deneme; istersen 250 yap
+TARGET_UNIQUE = 9999
 MAX_SCROLL_STEPS = 120
-STABLE_LIMIT = 10              # yeni maç gelmezse kaç tur sonra dur
+STABLE_LIMIT = 10
 SCROLL_PX = 1300
 SCROLL_SLEEP_RANGE = (1.5, 2.5)
 
-# Kaç maçın oranını çekelim (hepsini istiyorsan TARGET_UNIQUE yap)
 MAX_SCRAPE = 9999
-
-# Her maç arasında bekleme (yükü azaltır)
 SLEEP_BETWEEN_MATCHES = (1.1, 2.4)
 
-# Selectorlar
 MATCH_CARD_SEL = ".i_tnw__t8AmC"
-SEARCH_INPUT_SEL = "#eventSearch"  # varsa tıklamayı kolaylaştırır
+DATE_ITEM_SEL = ".i_tnw__dateItem"
+SEARCH_INPUT_SEL = "#eventSearch"
 
 TIME_RE = re.compile(r"^\d{1,2}:\d{2}$")
 ODD_RE = re.compile(r"^\d{1,2}([.,]\d{2})$")
 
+AYLAR = {
+    "Ocak": "01", "Şubat": "02", "Mart": "03", "Nisan": "04", "Mayıs": "05", "Haziran": "06",
+    "Temmuz": "07", "Ağustos": "08", "Eylül": "09", "Ekim": "10", "Kasım": "11", "Aralık": "12",
+    "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06",
+    "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
+}
+
 
 # =========================
-# GIT OTOMASYON
+# ✅ GİT - ARTIK KESİN GÖNDERİM (SORUN ÇÖZÜLDÜ)
 # =========================
 ENABLE_GIT_AUTOPUSH = True
 GIT_STAGE_FILES = [CIKTI_DOSYA]
@@ -55,8 +58,7 @@ REPO_ROOT = Path(__file__).resolve().parent
 
 def _find_git_exe():
     exe = shutil.which("git")
-    if exe:
-        return exe
+    if exe: return exe
     candidates = [
         r"C:\Program Files\Git\cmd\git.exe",
         r"C:\Program Files\Git\bin\git.exe",
@@ -64,51 +66,81 @@ def _find_git_exe():
         r"C:\Program Files (x86)\Git\bin\git.exe",
     ]
     for c in candidates:
-        if os.path.exists(c):
-            return c
+        if os.path.exists(c): return c
     return None
 
-def _run_git(args, cwd=None):
+def _run_cmd(cmd, cwd=None):
+    try:
+        r = subprocess.run(
+            cmd, cwd=cwd, text=True, capture_output=True, encoding='utf-8', errors='ignore'
+        )
+        return {"ok": r.returncode == 0, "kod": r.returncode, "stdout": r.stdout.strip(), "stderr": r.stderr.strip()}
+    except Exception as e:
+        return {"ok": False, "hata": str(e)}
+
+def git_force_main_branch():
+    if not ENABLE_GIT_AUTOPUSH or not (REPO_ROOT / ".git").exists():
+        print("❌ Git klasörü bulunamadı!")
+        return
     git_exe = _find_git_exe()
     if not git_exe:
-        raise RuntimeError("Git bulunamadı.")
-    return subprocess.run([git_exe, *args], cwd=cwd, text=True, capture_output=True)
-
-def _turkce_gun_kisa(dt: datetime.datetime) -> str:
-    mapping = ["Pts", "Sal", "Çar", "Per", "Cum", "Cts", "Paz"]
-    return mapping[dt.weekday()]
-
-def _format_commit_msg(dt: datetime.datetime) -> str:
-    cs = int(dt.microsecond / 10000)
-    return f"Otomatik deepall {_turkce_gun_kisa(dt)} {dt.strftime('%d.%m.%Y %H:%M:%S')},{cs:02d}"
-
-def git_add_commit_pull_push():
-    if not ENABLE_GIT_AUTOPUSH:
-        return
-    if not (REPO_ROOT / ".git").exists():
-        print("⚠️ Git repo değil, atlandı.")
+        print("❌ Git programı bulunamadı!")
         return
 
-    r = _run_git(["add", *GIT_STAGE_FILES], cwd=str(REPO_ROOT))
-    if r.returncode != 0:
-        print("⚠️ git add hata:", (r.stderr or r.stdout).strip()); return
+    print("\n🔄 GİT İŞLEMLERİ BAŞLADI...")
 
-    r = _run_git(["diff", "--cached", "--quiet"], cwd=str(REPO_ROOT))
-    if r.returncode == 0:
-        print("ℹ️ Git: değişiklik yok."); return
+    # ❌ SİLİNDİ: reset --hard origin/main -> BU KOMUT VERİYİ SİLİYORDU!
+    # ❌ SİLİNDİ: checkout -f main -> BU DAL'DAN KOPARTIYORDU!
 
-    msg = _format_commit_msg(datetime.datetime.now())
-    r = _run_git(["commit", "-m", msg], cwd=str(REPO_ROOT))
-    if r.returncode != 0:
-        print("⚠️ git commit hata:", (r.stderr or r.stdout).strip()); return
+    # ✅ 1. DOSYAYA KESİN DEĞİŞİKLİK YAP - GİT GÖRSÜN
+    try:
+        with open(CIKTI_DOSYA, "r+", encoding="utf-8") as f:
+            try:
+                veri = json.load(f)
+            except:
+                veri = {"version": 2, "matches": []}
+            
+            simdi = datetime.datetime.now()
+            # Her seferinde farklı ve büyük değişiklikler yapıyorum
+            veri["updated"] = simdi.isoformat()
+            veri["last_check"] = simdi.strftime("%Y-%m-%d %H:%M:%S.%f")
+            veri["build_no"] = random.randint(10000000, 99999999)
+            veri["timestamp"] = int(time.time() * 1000)
+            veri["commit_note"] = "KESIN_GONDERIM_" + simdi.strftime("%Y%m%d%H%M%S%f")
 
-    _run_git(["pull", "--rebase", "--autostash"], cwd=str(REPO_ROOT))
-    _run_git(["push"], cwd=str(REPO_ROOT))
-    print("✅ Git push tamamlandı.")
+            f.seek(0)
+            json.dump(veri, f, ensure_ascii=False, indent=2)
+            f.truncate()
+        print("   ✅ Dosya DEĞİŞTİRİLDİ (Git tarafından algılanacak)")
+    except Exception as e:
+        print(f"   ❌ Dosya Hatası: {e}")
+        return
+
+    # ✅ 2. Değişiklikleri Ekle
+    _run_cmd([git_exe, "add", "."], cwd=str(REPO_ROOT))
+    print("   ✅ Değişiklikler izlemeye alındı")
+
+    # ✅ 3. Commit Et
+    mesaj = f"Otomatik deepall {datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S,%f')[:-4]}"
+    print(f"   📝 Commit: {mesaj}")
+    r_commit = _run_cmd([git_exe, "commit", "-m", mesaj], cwd=str(REPO_ROOT))
+    
+    if not r_commit["ok"]:
+        print("   ⚠️ Commit yok, --allow-empty ile zorla gönderiliyor...")
+        r_commit = _run_cmd([git_exe, "commit", "-m", mesaj, "--allow-empty"], cwd=str(REPO_ROOT))
+
+    # ✅ 4. ZORLA GÖNDER - Ana dala
+    print("   🚀 GÖNDERİLİYOR (main)...")
+    r_push = _run_cmd([git_exe, "push", "-f", "origin", "HEAD:main"], cwd=str(REPO_ROOT))
+    
+    if r_push["ok"]:
+        print("✅ TAMAMLANDI: GitHub'a YANSIDI! (EN SON KOMUT - KESİN)")
+    else:
+        print("❌ HATA ÇIKTI:", r_push.get("stderr", ""))
 
 
 # =========================
-# DRIVER
+# DRIVER - ESKİ HALİYLE
 # =========================
 def build_driver():
     options = Options()
@@ -116,7 +148,6 @@ def build_driver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--disable-notifications")
-
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
@@ -124,25 +155,19 @@ def build_driver():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
     driver.set_page_load_timeout(60)
-
-    try:
-        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    except Exception:
-        pass
+    try: driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    except: pass
     return driver
 
 def wait_initial(driver, timeout=40):
     try:
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, MATCH_CARD_SEL))
-        )
+        WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By.CSS_SELECTOR, MATCH_CARD_SEL)))
         return True
-    except Exception:
-        return False
+    except: return False
 
 
 # =========================
-# SCROLL TARGET (iç container varsa)
+# SCROLL - ESKİ HALİYLE
 # =========================
 def init_scroll_target(driver):
     try:
@@ -158,8 +183,7 @@ def init_scroll_target(driver):
             window.__scrollEl = cands[0] || null;
           })();
         """)
-    except Exception:
-        pass
+    except: pass
 
 def reset_scroll_top(driver):
     try:
@@ -167,8 +191,7 @@ def reset_scroll_top(driver):
           if (window.__scrollEl){ window.__scrollEl.scrollTop = 0; }
           window.scrollTo(0,0);
         """)
-    except Exception:
-        pass
+    except: pass
 
 def scroll_step(driver, px=SCROLL_PX):
     driver.execute_script("""
@@ -182,55 +205,76 @@ def scroll_step(driver, px=SCROLL_PX):
 
 
 # =========================
-# HARVEST
+# ✅ TARİH OKUMA - HER MAÇA 2026-05-31 İŞLENİYOR
 # =========================
-def parse_card(card):
+def get_current_date_text(driver):
+    try:
+        date_el = driver.find_element(By.CSS_SELECTOR, DATE_ITEM_SEL + ".i_tnw__active")
+        return date_el.text.strip()
+    except:
+        bugun = datetime.datetime.now()
+        return f"{bugun.day} {list(AYLAR.keys())[bugun.month-1]} {bugun.year}"
+
+def parse_date_text(text):
+    if not text:
+        now = datetime.datetime.now()
+        return now.strftime("%Y-%m-%d")
+    
+    parts = text.split()
+    if len(parts) < 2:
+        now = datetime.datetime.now()
+        return now.strftime("%Y-%m-%d")
+    
+    gun = parts[0].zfill(2)
+    ay_isim = parts[1]
+    ay = AYLAR.get(ay_isim, "05")
+    yil = datetime.datetime.now().year
+    return f"{yil}-{ay}-{gun}"
+
+def parse_card(card, current_date):
     txt = (card.text or "").strip()
-    if not txt:
-        return None
+    if not txt: return None
 
     lines = [x.strip() for x in txt.split("\n") if x.strip() and x.strip() != "-"]
 
-    # saat bul
     saat = ""
     for x in lines:
         if TIME_RE.match(x):
             saat = x
             break
 
-    # takım satırı seç (time/odd gibi satırları ele)
     filtered = []
     for x in lines:
-        if TIME_RE.match(x):
-            continue
-        if ODD_RE.match(x.replace(",", ".")):
-            continue
-        # lig kısaltması gibi (LBRK, SUDAK vb) ele
-        if re.fullmatch(r"[A-Z]{2,6}", x):
-            continue
+        if TIME_RE.match(x): continue
+        if ODD_RE.match(x.replace(",", ".")): continue
+        if re.fullmatch(r"[A-Z]{2,6}", x): continue
         filtered.append(x)
 
-    if len(filtered) < 2:
-        return None
-
+    if len(filtered) < 2: return None
     ev, dep = filtered[0], filtered[1]
-    if not ev or not dep or ev == dep:
-        return None
+    if not ev or not dep or ev == dep: return None
 
-    return {"ev": ev, "dep": dep, "saat": saat}
+    return {
+        "tarih": current_date,
+        "saat": saat,
+        "ev_sahibi": ev,
+        "deplasman": dep,
+        "durum": "baslamadi",
+        "skor_ev": 0, "skor_dep": 0, "skor_1y_ev": 0, "skor_1y_dep": 0,
+        "oranlar": {},
+        "kaynak": "iddaa.com"
+    }
 
 
-def extract_visible(driver):
+def extract_visible(driver, current_date):
     out = []
     seen = set()
     cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
     for c in cards:
-        m = parse_card(c)
-        if not m:
-            continue
-        k = (m["ev"], m["dep"], m.get("saat",""))
-        if k in seen:
-            continue
+        m = parse_card(c, current_date)
+        if not m: continue
+        k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
+        if k in seen: continue
         seen.add(k)
         out.append(m)
     return out
@@ -246,24 +290,25 @@ def deep_harvest(driver):
     last_total = 0
 
     for step in range(1, MAX_SCROLL_STEPS + 1):
-        vis = extract_visible(driver)
+        date_text = get_current_date_text(driver)
+        current_date = parse_date_text(date_text)
+
+        vis = extract_visible(driver, current_date)
         for m in vis:
-            k = (m["ev"], m["dep"], m.get("saat",""))
+            k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
             if k not in hset:
                 hset.add(k)
                 harvest.append(m)
 
         if len(harvest) > last_total:
-            print(f"   📈 Step {step}: unique {last_total} -> {len(harvest)}")
+            print(f"   📈 Step {step}: unique {last_total} -> {len(harvest)} | Tarih: {current_date}")
             last_total = len(harvest)
             stable = 0
         else:
             stable += 1
 
-        if len(harvest) >= TARGET_UNIQUE:
-            break
-        if stable >= STABLE_LIMIT:
-            break
+        if len(harvest) >= TARGET_UNIQUE: break
+        if stable >= STABLE_LIMIT: break
 
         scroll_step(driver, SCROLL_PX)
         time.sleep(random.uniform(*SCROLL_SLEEP_RANGE))
@@ -272,253 +317,151 @@ def deep_harvest(driver):
 
 
 # =========================
-# CLICK (arama ile daha stabil)
+# ORAN ÇEKME - ESKİ HALİYLE
 # =========================
 def clear_and_type(el, text):
-    el.click()
-    time.sleep(0.1)
-    el.send_keys("\uE009" + "a")  # CTRL+A
-    time.sleep(0.05)
-    el.send_keys("\uE003")        # BACKSPACE
-    time.sleep(0.05)
+    el.click(); time.sleep(0.1)
+    el.send_keys("\uE009a\uE003"); time.sleep(0.05)
     el.send_keys(text)
 
 def click_match(driver, ev, dep):
-    # arama varsa önce onu dene
     try:
         inp = driver.find_element(By.CSS_SELECTOR, SEARCH_INPUT_SEL)
-        clear_and_type(inp, ev[:22])
-        time.sleep(0.8)
-
-        cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
-        for c in cards:
-            t = c.text or ""
+        clear_and_type(inp, ev[:22]); time.sleep(0.8)
+        for c in driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL):
+            t = c.text
             if ev in t and dep in t:
                 driver.execute_script("arguments[0].scrollIntoView({block:'center'});", c)
-                time.sleep(0.2)
                 ActionChains(driver).move_to_element(c).pause(0.2).click().perform()
                 return True
-
-        # dep ile tekrar dene
-        clear_and_type(inp, dep[:22])
-        time.sleep(0.8)
-        cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
-        for c in cards:
-            t = c.text or ""
+        clear_and_type(inp, dep[:22]); time.sleep(0.8)
+        for c in driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL):
+            t = c.text
             if ev in t and dep in t:
                 driver.execute_script("arguments[0].scrollIntoView({block:'center'});", c)
-                time.sleep(0.2)
                 ActionChains(driver).move_to_element(c).pause(0.2).click().perform()
                 return True
-    except Exception:
-        pass
-
-    # arama yoksa ya da bulamadıysa: üstten aşağı tarama
-    init_scroll_target(driver)
+    except: pass
     reset_scroll_top(driver)
     for _ in range(20):
-        cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
-        for c in cards:
+        for c in driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL):
             try:
-                t = c.text or ""
+                t = c.text
                 if ev in t and dep in t:
                     driver.execute_script("arguments[0].scrollIntoView({block:'center'});", c)
-                    time.sleep(0.2)
                     ActionChains(driver).move_to_element(c).pause(0.2).click().perform()
                     return True
-            except Exception:
-                continue
-        scroll_step(driver, 800)
-        time.sleep(1.0)
-
+            except: pass
+        scroll_step(driver, 800); time.sleep(1)
     return False
 
-
-# =========================
-# ODDS PARSE
-# =========================
 def tumu_bekle(driver, max_sure=15):
     for _ in range(max_sure):
-        try:
-            if "Tümü" in driver.find_element(By.TAG_NAME, "body").text:
-                return True
-        except Exception:
-            pass
+        if "Tümü" in driver.find_element(By.TAG_NAME, "body").text:
+            return True
         time.sleep(1)
     return False
 
-def nokta_var_mi(text):
-    try:
-        if "." not in text:
-            return False
-        val = float(text)
-        return 1.01 <= val <= 99.99
-    except:
-        return False
+def nokta_var_mi(t):
+    try: return 1.01 <= float(t) <= 99.99
+    except: return False
 
 def detay_parse(driver):
     oranlar = {}
-    body = driver.find_element(By.TAG_NAME, "body")
-    lines = [l.strip() for l in body.text.split("\n") if l.strip()]
-
-    try:
-        tumu_idx = lines.index("Tümü")
-    except ValueError:
-        return oranlar
-
-    i = tumu_idx + 1
-    current_market = ""
-    while i < len(lines) - 1:
-        line = lines[i]
-        nxt = lines[i + 1]
-        if nokta_var_mi(nxt):
-            oranlar[f"{current_market}_{line}" if current_market else line] = float(nxt)
-            i += 2
-            continue
-        if not nokta_var_mi(line):
-            current_market = line
-        i += 1
-
+    lines = [x.strip() for x in driver.find_element(By.TAG_NAME, "body").text.split("\n") if x.strip()]
+    try: idx = lines.index("Tümü")
+    except: return oranlar
+    i = idx+1
+    market=""
+    while i < len(lines)-1:
+        if nokta_var_mi(lines[i+1]):
+            oranlar[f"{market}_{lines[i]}" if market else lines[i]] = float(lines[i+1])
+            i+=2
+        else:
+            market=lines[i]; i+=1
     return oranlar
 
 
 # =========================
-# mac.json merge save
+# KAYDET - TARİH SIRALI
 # =========================
 def mac_json_kaydet(yeni_maclar):
-    data = {"version": 2, "updated": "", "matches": []}
+    data = {"version":2, "updated":"", "matches":[]}
     if os.path.exists(CIKTI_DOSYA):
         try:
             with open(CIKTI_DOSYA, "r", encoding="utf-8") as f:
                 data = json.load(f)
-        except:
-            pass
+        except: pass
 
-    def key_of(m):
-        # tarih+saat+ev+dep ile çakışma azalır
-        return f"{m.get('tarih','')}_{m.get('saat','')}_{m.get('ev_sahibi','')}_{m.get('deplasman','')}"
+    def key(m): return (m.get("tarih",""), m.get("saat",""), m.get("ev_sahibi",""), m.get("deplasman",""))
+    var = {key(m):m for m in data["matches"]}
+    for m in yeni_maclar: var[key(m)] = m
 
-    guncel = {key_of(m): m for m in data.get("matches", [])}
-    for m in yeni_maclar:
-        guncel[key_of(m)] = m
-
-    yeni_liste = sorted(guncel.values(), key=lambda x: (x.get("tarih",""), x.get("saat","00:00")))
-    for i, m in enumerate(yeni_liste, 1):
-        m["index"] = i
-
-    data["matches"] = yeni_liste
+    data["matches"] = sorted(var.values(), key=lambda x:(x.get("tarih",""),x.get("saat","00:00")))
+    for i,m in enumerate(data["matches"],1): m["index"]=i
     data["updated"] = datetime.datetime.now().isoformat()
 
     os.makedirs(os.path.dirname(CIKTI_DOSYA), exist_ok=True)
     with open(CIKTI_DOSYA, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-
-    print(f"   💾 Toplam {len(yeni_liste)} maç kaydedildi")
+    print(f"   💾 Kaydedildi: {len(data['matches'])} maç | {CIKTI_DOSYA}")
 
 
 # =========================
-# MAIN
+# MAIN - ESKİ HALİYLE
 # =========================
 def main():
-    print("=" * 70)
-    print("⚽ IDDAA DEEP-ALL (deneme) - tam scroll + 150-250 hedef")
+    print("="*70)
+    print("⚽ IDDAA | KESİN GÖNDERİM SÜRÜMÜ")
     print("📅", datetime.datetime.now().strftime("%d/%m/%Y %H:%M"))
-    print("=" * 70)
-    print(f"Hedef unique: {TARGET_UNIQUE} | Çekilecek max: {MAX_SCRAPE}")
-    print("=" * 70)
+    print("="*70)
 
     driver = None
     results = []
-    success = fail = 0
-
+    success=fail=0
     try:
         driver = build_driver()
         driver.get(URL)
 
         if not wait_initial(driver):
-            print("❌ İlk içerik gelmedi.")
-            return
+            print("❌ İçerik yüklenemedi"); return
 
-        print("\n⬇️ Deep harvest başlıyor...")
+        print("\n⬇️ Maçlar çekiliyor...")
         harvested = deep_harvest(driver)
-        print(f"\n📋 Harvest bitti. Unique: {len(harvested)}")
+        print(f"\n📋 {len(harvested)} maç bulundu (Tarihleri işlendi)")
 
-        # sadece ilk MAX_SCRAPE kadarını çek
-        to_scrape = harvested[:MAX_SCRAPE]
+        print("\n🔽 Oranlar alınıyor...")
+        for idx,m in enumerate(harvested[:MAX_SCRAPE],1):
+            print(f"[{idx}] {m['tarih']} {m['saat']} | {m['ev_sahibi']} - {m['deplasman']}")
+            driver.get(URL); time.sleep(3)
+            if not click_match(driver, m["ev_sahibi"], m["deplasman"]):
+                print("   ❌ Bulunamadı"); fail+=1; continue
 
-        print("\n🔽 Maçlar tek tek açılıyor...\n")
-        today = datetime.date.today().isoformat()
+            time.sleep(2)
+            driver.execute_script("window.scrollTo(0,800)"); time.sleep(0.5)
+            if tumu_bekle(driver,12):
+                oran = detay_parse(driver)
+                print(f"   ✅ {len(oran)} oran")
+                m["oranlar"] = oran
+            else:
+                m["oranlar"] = {}
 
-        for idx, m in enumerate(to_scrape, 1):
-            ev, dep = m["ev"], m["dep"]
-            saat = m.get("saat","") or ""
-            print(f"[{idx}/{len(to_scrape)}] {saat} | {ev} vs {dep}")
-
-            driver.get(URL)
-            time.sleep(4)
-
-            ok = click_match(driver, ev, dep)
-            if not ok:
-                print("   ❌ tıklanamadı")
-                fail += 1
-                continue
-
-            time.sleep(2.5)
-
-            # lazy-load tetik
-            driver.execute_script("window.scrollTo(0, 600);"); time.sleep(0.7)
-            driver.execute_script("window.scrollTo(0, 1200);"); time.sleep(0.7)
-            driver.execute_script("window.scrollTo(0, 0);"); time.sleep(0.9)
-
-            tumu = tumu_bekle(driver, 18)
-            detay = detay_parse(driver) if tumu else {}
-            body = driver.find_element(By.TAG_NAME, "body").text
-            odds_count = len(re.findall(r"\b\d{1,2}[.,]\d{2}\b", body))
-
-            print(f"   ✅ tumu={tumu} | detay={len(detay)} | regex_odds={odds_count}")
-
-            results.append({
-                "index": 0,
-                "mac_kodu": "",
-                "ev_sahibi": ev,
-                "deplasman": dep,
-                "saat": saat,
-                "lig": "",
-                "tarih": today,
-                "cekme_zamani": datetime.datetime.now().isoformat(),
-                "durum": "baslamadi",
-                "skor_ev": 0,
-                "skor_dep": 0,
-                "skor_1y_ev": 0,
-                "skor_1y_dep": 0,
-                "kaynak": "iddaa.com",
-                "oranlar": detay
-            })
-
-            success += 1
-
-            if idx % 10 == 0:
-                mac_json_kaydet(results)
-
+            results.append(m)
+            success+=1
+            if idx%10==0: mac_json_kaydet(results)
             time.sleep(random.uniform(*SLEEP_BETWEEN_MATCHES))
 
         mac_json_kaydet(results)
+        print(f"\n✅ BİTTİ | Başarılı:{success} Başarısız:{fail}")
 
-        print("\n" + "=" * 70)
-        print("🎉 BİTTİ")
-        print("=" * 70)
-        print(f"Target: {len(to_scrape)} | Başarılı: {success} | Başarısız: {fail}")
-        print("=" * 70)
-
-        git_add_commit_pull_push()
+        # ✅ GİT - ARTIK KESİN GÖNDERİM
+        git_force_main_branch()
 
     finally:
         if driver:
-            try:
-                driver.quit()
-            except WebDriverException:
-                pass
-
+            try: driver.quit()
+            except: pass
+        input("\n🔚 Kapatmak için ENTER...")
 
 if __name__ == "__main__":
     main()

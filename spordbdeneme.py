@@ -129,7 +129,7 @@ def save_json_safe(data, path):
 # =========================
 # ⚙️ AYARLAR
 # =========================
-BASLANGIC_TARIHI = "25.05.2026"
+BASLANGIC_TARIHI = "31.05.2026"
 BITIS_TARIHI = "31.05.2026"
 
 BASE_DIR = Path(__file__).resolve().parent

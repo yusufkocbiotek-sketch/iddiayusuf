@@ -24,7 +24,7 @@ BASLANGIC_TARIHI = "13/05/2026"
 BITIS_TARIHI = "13/05/2026"
 
 # Eşleştirme ayarları
-ESLESME_SEVIYESI = 0.5  # %50 benzerlik yeterli
+ESLESME_SEVIYESI = 0.5
 GIT_BRANCH_NAME = "main"
 
 # Kurallar
@@ -275,19 +275,19 @@ def maç_satirlarini_bul(driver):
     return []
 
 # =============================================================================
-# 📅 TAKVİM NAVİGASYONU - AY GÖSTERGESİNE TIKLAMA
+# 📅 TAKVİM NAVİGASYONU - TÜRKÇE AY İSİMLERİ İLE
 # =============================================================================
 def takvimde_gezin(driver, hedef_tarih_iso):
     """
     Takvimde hedef tarihe gider
-    1. Takvimi aç
-    2. widget-datepicker__value elementine tıklayarak aylara git
-    3. Hedef tarihi seç
+    Türkçe ay isimlerini destekler (May, Haz, Tem, Ağu, Eyl, Eki, Kas, Ara)
     """
     print(f"   🔧 Takvim navigasyonu: {hedef_tarih_iso}")
     
     try:
+        # ═══════════════════════════════════════════════════
         # 1️⃣ TAKVİMİ AÇ
+        # ═══════════════════════════════════════════════════
         print("   📍 Takvim butonu aranıyor...")
         takvim_buton = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "widget-dateslider__datepicker-toggle"))
@@ -296,64 +296,167 @@ def takvimde_gezin(driver, hedef_tarih_iso):
         print("   ✅ Takvim açıldı")
         time.sleep(2)
         
-        # 2️⃣ AY GÖSTERGESİNE TIKLA (widget-datepicker__value)
-        print("   📍 Ay göstergesine tıklanıyor...")
-        
+        # ═══════════════════════════════════════════════════
+        # 2️⃣ MEVCUT AYI OKU
+        # ═══════════════════════════════════════════════════
+        print("   📍 Mevcut ay okunuyor...")
         ay_gostergesi = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "widget-datepicker__value"))
         )
-        
-        # Mevcut ayı oku
-        mevcut_ay_metni = ay_gostergesi.text.strip()
+        mevcut_ay_metni = ay_gostergesi.text.strip().upper()
         print(f"   📍 Mevcut ay: {mevcut_ay_metni}")
         
-        # Hedef ayı hesapla
+        # ═══════════════════════════════════════════════════
+        # 3️⃣ HEDEF AYI HESAPLA
+        # ═══════════════════════════════════════════════════
         hedef_yil, hedef_ay, hedef_gun = map(int, hedef_tarih_iso.split('-'))
         
-        # Ay isimleri (İngilizce)
+        # Türkçe ay isimleri (kısaltmalar - site böyle gösteriyor)
         ay_isimleri = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
+            "OCA",  # 0 - Ocak
+            "ŞUB",  # 1 - Şubat
+            "MAR",  # 2 - Mart
+            "NIS",  # 3 - Nisan
+            "MAY",  # 4 - Mayıs
+            "HAZ",  # 5 - Haziran
+            "TEM",  # 6 - Temmuz
+            "AĞU",  # 7 - Ağustos
+            "EYL",  # 8 - Eylül
+            "EKI",  # 9 - Ekim
+            "KAS",  # 10 - Kasım
+            "ARA"   # 11 - Aralık
         ]
         
-        hedef_ay_ismi = ay_isimleri[hedef_ay - 1]
+        hedef_ay_kisaltma = ay_isimleri[hedef_ay - 1]
+        print(f"   📍 Hedef ay: {hedef_ay_kisaltma} (index: {hedef_ay - 1})")
         
         # Mevcut ayın index'ini bul
         mevcut_ay_index = -1
         for i, ay in enumerate(ay_isimleri):
-            if mevcut_ay_metni == ay:
+            if mevcut_ay_metni == ay or mevcut_ay_metni.startswith(ay):
                 mevcut_ay_index = i
                 break
         
-        hedef_ay_index = hedef_ay - 1
-        print(f"   📍 Hedef ay: {hedef_ay_ismi} (index: {hedef_ay_index})")
-        
-        # Hedef aya ulaşana kadar tıkla
-        tiklama_sayisi = 0
-        max_tiklama = 12
-        
-        while tiklama_sayisi < max_tiklama:
-            # Mevcut ay hedef ay mı?
-            if mevcut_ay_metni == hedef_ay_ismi:
-                print(f"   ✅ Hedef aya ulaşıldı: {mevcut_ay_metni} (tiklama: {tiklama_sayisi})")
-                break
-            
-            # Tıkla
-            ay_gostergesi = driver.find_element(By.CLASS_NAME, "widget-datepicker__value")
-            driver.execute_script("arguments[0].click();", ay_gostergesi)
-            tiklama_sayisi += 1
-            time.sleep(1.5)
-            
-            # Yeni ayı oku
-            ay_gostergesi = driver.find_element(By.CLASS_NAME, "widget-datepicker__value")
-            mevcut_ay_metni = ay_gostergesi.text.strip()
-            print(f"   📍 Tıklama {tiklama_sayisi}: {mevcut_ay_metni}")
-        else:
-            print(f"   ⚠️ Hedef aya ulaşılamadı (max {max_tiklama} tıklama)")
-            print(f"      Mevcut: {mevcut_ay_metni}, Hedef: {hedef_ay_ismi}")
+        if mevcut_ay_index == -1:
+            print(f"   ⚠️ Mevcut ay tanınamadı: {mevcut_ay_metni}")
+            print(f"      Beklenen format: OCA, ŞUB, MAR, NIS, MAY, HAZ, TEM, AĞU, EYL, EKI, KAS, ARA")
             return False
         
-        # 3️⃣ HEDEF TARİHİ SEÇ
+        hedef_ay_index = hedef_ay - 1
+        print(f"   📍 Mevcut ay index: {mevcut_ay_index}, Hedef ay index: {hedef_ay_index}")
+        
+        # ═══════════════════════════════════════════════════
+        # 4️⃣ PREVIOUS / NEXT BUTONUNA TIKLA
+        # ═══════════════════════════════════════════════════
+        fark = mevcut_ay_index - hedef_ay_index
+        
+        if fark == 0:
+            print(f"   ✅ Zaten hedef aydayız: {mevcut_ay_metni}")
+        
+        elif fark > 0:
+            # Hedef ay geride → Previous ile git
+            print(f"   📍 Geriye gidiliyor: {fark} ay")
+            print(f"      Buton: div.widget-datepicker__nav.widget-datepicker__nav--previous")
+            
+            for i in range(fark):
+                try:
+                    previous_buton = WebDriverWait(driver, 5).until(
+                        EC.element_to_be_clickable((
+                            By.CSS_SELECTOR, 
+                            "div.widget-datepicker__nav.widget-datepicker__nav--previous"
+                        ))
+                    )
+                    
+                    driver.execute_script("arguments[0].click();", previous_buton)
+                    time.sleep(1.5)
+                    
+                    ay_gostergesi = driver.find_element(By.CLASS_NAME, "widget-datepicker__value")
+                    mevcut_ay_metni = ay_gostergesi.text.strip().upper()
+                    print(f"   📍 Geri {i+1}/{fark}: {mevcut_ay_metni}")
+                    
+                except Exception as e:
+                    print(f"   ❌ Previous butonu tıklanamadı (tıklama {i+1}): {e}")
+                    import traceback
+                    traceback.print_exc()
+                    return False
+        
+        else:
+            # Hedef ay ileride → Next butonu
+            fark = abs(fark)
+            print(f"   📍 İleriye gidiliyor: {fark} ay")
+            print(f"      Buton: div.widget-datepicker__nav.widget-datepicker__nav--next")
+            
+            try:
+                for i in range(fark):
+                    try:
+                        next_buton = WebDriverWait(driver, 5).until(
+                            EC.element_to_be_clickable((
+                                By.CSS_SELECTOR, 
+                                "div.widget-datepicker__nav.widget-datepicker__nav--next"
+                            ))
+                        )
+                        
+                        driver.execute_script("arguments[0].click();", next_buton)
+                        time.sleep(1.5)
+                        
+                        ay_gostergesi = driver.find_element(By.CLASS_NAME, "widget-datepicker__value")
+                        mevcut_ay_metni = ay_gostergesi.text.strip().upper()
+                        print(f"   📍 İleri {i+1}/{fark}: {mevcut_ay_metni}")
+                        
+                    except Exception as e:
+                        print(f"   ❌ Next butonu tıklanamadı (tıklama {i+1}): {e}")
+                        return False
+                        
+            except Exception as e:
+                print(f"   ❌ Next navigasyon hatası: {e}")
+                return False
+        
+        # ═══════════════════════════════════════════════════
+        # 5️⃣ HEDEF TARİHİ SEÇ
+        # ═══════════════════════════════════════════════════
+        print(f"   📍 Hedef tarih seçiliyor: {hedef_tarih_iso}")
+        
+        try:
+            tarih_secici = f'td.widget-datepicker__calendar-body-cell[data-date="{hedef_tarih_iso}"]'
+            tarih_elemani = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, tarih_secici))
+            )
+            
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", tarih_elemani)
+            time.sleep(1)
+            driver.execute_script("arguments[0].click();", tarih_elemani)
+            
+            print(f"   ✅ TARİH SEÇİLDİ: {hedef_tarih_iso}")
+            time.sleep(12)
+            
+            return True
+            
+        except Exception as e:
+            print(f"   ❌ TARİH SEÇİLEMEDİ: {e}")
+            print(f"      Aranan: {tarih_secici}")
+            
+            try:
+                tum_tarihler = driver.find_elements(By.CSS_SELECTOR, "td.widget-datepicker__calendar-body-cell")
+                print(f"      Takvimde bulunan tarihler ({len(tum_tarihler)} tane):")
+                for t in tum_tarihler[:15]:
+                    date_attr = t.get_attribute("data-date")
+                    text = t.text.strip()
+                    if date_attr:
+                        print(f"         - {date_attr} (görünen: {text})")
+            except:
+                pass
+            
+            return False
+            
+    except Exception as e:
+        print(f"   ❌ TAKVİM HATASI: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+        
+        # ═══════════════════════════════════════════════════
+        # 5️⃣ HEDEF TARİHİ SEÇ
+        # ═══════════════════════════════════════════════════
         print(f"   📍 Hedef tarih seçiliyor: {hedef_tarih_iso}")
         
         try:
@@ -407,9 +510,9 @@ def get_skorlar_tek_gun(driver, hedef_tarih_iso):
     gecerli_sayisi = 0
     
     try:
-        # ═══════════════════════════════════════════════════════════
+        # ═══════════════════════════════════════════════════
         # 1️⃣ TAKVİM NAVİGASYONU
-        # ═══════════════════════════════════════════════════════════
+        # ═══════════════════════════════════════════════════
         print("🔧 [1/4] Takvim navigasyonu yapılıyor...")
         
         basarili = takvimde_gezin(driver, hedef_tarih_iso)
@@ -417,12 +520,11 @@ def get_skorlar_tek_gun(driver, hedef_tarih_iso):
             print("❌ Takvim navigasyonu başarısız, bu gün atlanıyor")
             return []
         
-        # Debug kaydet
         debug_sayfa_kaydet(driver, hedef_tarih_iso)
         
-        # ═══════════════════════════════════════════════════════════
+        # ═══════════════════════════════════════════════════
         # 2️⃣ SAYFAYI KAYDIRMA VE VERİ TOPLAMA
-        # ═══════════════════════════════════════════════════════════
+        # ═══════════════════════════════════════════════════
         print("🔧 [2/4] Sayfa kaydırılıyor ve veri toplanıyor...")
         
         driver.execute_script("window.scrollTo(0, 0);")
@@ -573,11 +675,7 @@ def get_skorlar_tek_gun(driver, hedef_tarih_iso):
 def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
     """
     Yeni verileri mevcut verilerle eşleştirir ve GÜNCELLER
-    
-    Strateji:
-    1. Önce TAM EŞLEŞME dene (tarih + takım ismi aynı)
-    2. Sonra BENZER EŞLEŞME dene (tarih aynı, takım benzer)
-    3. Hala bulamazsa YENİ EKLE
+    SİLMEZ, ÜZERİNE YAZAR
     """
     mac_listesi = mevcut_yapi.get("matches", [])
     
@@ -596,9 +694,7 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
     
     guncellenen = 0
     eklenen = 0
-    atlanan = 0
     
-    # Her yeni veri için en iyi eşleşmeyi bul
     for y_veri in tum_veriler:
         y_tarih = y_veri["tarih"]
         y_ev = y_veri["ev_sahibi"]
@@ -609,7 +705,7 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
         eslesme_tipi = ""
         
         # ═══════════════════════════════════════════════════
-        # 1️⃣ ÖNCE TAM EŞLEŞME DENE
+        # 1️⃣ TAM EŞLEŞME DENE
         # ═══════════════════════════════════════════════════
         for i, mac in enumerate(mac_listesi):
             if mac is None:
@@ -619,11 +715,9 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
             m_ev = mac.get("ev_sahibi", "")
             m_dep = mac.get("deplasman", "")
             
-            # Tarih aynı mı?
             if not tarihi_esit_kabul_et(m_tarih, y_tarih):
                 continue
             
-            # Takım isimleri TAM AYNI mi?
             akilli_y_ev = akilli_isim_temizle(y_ev)
             akilli_y_dep = akilli_isim_temizle(y_dep)
             akilli_m_ev = akilli_isim_temizle(m_ev)
@@ -635,7 +729,6 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 eslesme_tipi = "tam"
                 break
             
-            # Ters eşleşme kontrolü
             if akilli_y_ev == akilli_m_dep and akilli_y_dep == akilli_m_ev:
                 en_uygun_eslesme = (i, True)
                 en_yuksek_oran = 1.0
@@ -643,7 +736,7 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 break
         
         # ═══════════════════════════════════════════════════
-        # 2️⃣ TAM BULUNAMADI → BENZER EŞLEŞME DENE
+        # 2️⃣ BENZER EŞLEŞME DENE
         # ═══════════════════════════════════════════════════
         if not en_uygun_eslesme:
             for i, mac in enumerate(mac_listesi):
@@ -675,7 +768,7 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                     eslesme_tipi = f"benzer_{toplam_oran:.2f}"
         
         # ═══════════════════════════════════════════════════
-        # 3️⃣ HALA BULUNAMADI → SADECE TARİH İLE EŞLEŞTİR
+        # 3️⃣ TARİH ONLY EŞLEŞTİR
         # ═══════════════════════════════════════════════════
         if not en_uygun_eslesme:
             ayni_tarih_maclari = [
@@ -689,7 +782,7 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 eslesme_tipi = "tarih_only"
         
         # ═══════════════════════════════════════════════════
-        # 4️⃣ EŞLEŞME BULUNDU → GÜNCELLE (ÜZERİNE YAZ!)
+        # 4️⃣ EŞLEŞME BULUNDU → ÜZERİNE YAZ!
         # ═══════════════════════════════════════════════════
         if en_uygun_eslesme:
             index, ters_mi = en_uygun_eslesme
@@ -702,7 +795,6 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 s_ev, s_dep = y_veri["skor_dep"], y_veri["skor_ev"]
                 iy_ev, iy_dep = y_veri["skor_1y_dep"], y_veri["skor_1y_ev"]
             
-            # Eski verileri göster
             eski_ms = f"{mac.get('skor_ev', 0)}-{mac.get('skor_dep', 0)}"
             eski_iy = f"{mac.get('skor_1y_ev', 0)}-{mac.get('skor_1y_dep', 0)}"
             
@@ -863,7 +955,6 @@ if __name__ == "__main__":
         print("   • Eşleşme seviyesi çok düşük/yüksek")
         print("\n💡 Çözüm:")
         print("   • ESLESME_SEVIYESI değerini değiştirin (0.1 - 0.5 arası)")
-        print("   • DEBUG_MODU = True yapıp debug dosyalarını inceleyin")
-    
-    print("\n" + "="*70)
-    input("✅ İŞLEM TAMAMLANDI - Çıkmak için Enter'a basın...")
+ 
+print("\n" + "="*70)
+input("✅ İŞLEM TAMAMLANDI - Çıkmak için Enter'a basın...")

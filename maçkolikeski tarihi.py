@@ -20,8 +20,8 @@ MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
 BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 
 # Tarih aralığı
-BASLANGIC_TARIHI = "13/05/2026"
-BITIS_TARIHI = "25/05/2026"
+BASLANGIC_TARIHI = "04/06/2026"
+BITIS_TARIHI = "05/06/2026"
 
 # Eşleştirme ayarları
 ESLESME_SEVIYESI = 0.25

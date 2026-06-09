@@ -129,8 +129,8 @@ def save_json_safe(data, path):
 # =========================
 # ⚙️ AYARLAR
 # =========================
-BASLANGIC_TARIHI = "12.05.2026"
-BITIS_TARIHI = "12.05.2026"
+BASLANGIC_TARIHI = "13.05.2026"
+BITIS_TARIHI = "13.05.2026"
 
 BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"

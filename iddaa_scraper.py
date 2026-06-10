@@ -17,8 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
 BASE_LINK = "https://www.iddaa.com/canli-skor/futbol"
 
-BASLANGIC_TARIHI = "14/05/2026"
-BITIS_TARIHI = "14/05/2026"
+BASLANGIC_TARIHI = "09/05/2026"
+BITIS_TARIHI = "10/05/2026"
 
 ESLESME_SEVIYESI = 0.25
 GIT_BRANCH_NAME = "main"
@@ -47,7 +47,7 @@ def tarihleri_olustur(baslangic_str, bitis_str):
     bitis = str_to_tarih(bitis_str)
     
     if not baslangic or not bitis:
-        print("❌ Tarih formatı: GG/AA/YYYY (örn: 01/06/2026)")
+        print("❌ Tarih formatı: GG/AA/YYYY")
         return []
 
     tarihler = []
@@ -56,66 +56,38 @@ def tarihleri_olustur(baslangic_str, bitis_str):
         baslangic += datetime.timedelta(days=1)
     return tarihler
 
-def aylar_arasi_fark(hedef_ay, mevcut_ay):
-    fark = mevcut_ay - hedef_ay
-    if fark < 0:
-        fark += 12
-    return fark
-
 # =============================================================================
 # 🔐 İSİM TEMİZLEME VE BENZERLİK
 # =============================================================================
 def akilli_isim_temizle(isim):
     if not isim: 
         return ""
-    
     isim = isim.lower().strip()
-    
-    tr_map = str.maketrans(
-        "çğıöşüâêîôûáéíóúñðßçşğ",
-        "cgiosuaeiouaeiounbscsg"
-    )
+    tr_map = str.maketrans("çğıöşüâêîôûáéíóúñðßçşğ", "cgiosuaeiouaeiounbscsg")
     isim = isim.translate(tr_map)
     isim = re.sub(r'[^a-z\s]', '', isim)
     isim = re.sub(r'\s+', ' ', isim).strip()
-    
-    gereksiz = [
-        'fk', 'sk', 'jk', 'bk', 'fc', 'as', 'spor', 'kulubu', 
-        'kulübü', 'şportif', 'sport', 'clube', 'il', 'gk', 
-        'üni', 'gençler', 'takımı'
-    ]
-    
+    gereksiz = ['fk', 'sk', 'jk', 'bk', 'fc', 'as', 'spor', 'kulubu', 'kulübü', 'şportif', 'sport', 'clube', 'il', 'gk', 'üni', 'gençler', 'takımı']
     for ek in gereksiz:
         if isim.endswith(ek):
             isim = isim[:-len(ek)].strip()
         if isim.startswith(ek):
             isim = isim[len(ek):].strip()
-    
-    if len(isim) < 2:
-        return ""
-    
-    return isim
+    return isim if len(isim) >= 2 else ""
 
 def benzerlik_orani(a, b):
     if not a or not b:
         return 0.0
-    
     a_temiz = akilli_isim_temizle(a)
     b_temiz = akilli_isim_temizle(b)
-    
     if not a_temiz or not b_temiz:
         return 0.0
-    
     if a_temiz == b_temiz:
         return 1.0
-    
     if a_temiz in b_temiz or b_temiz in a_temiz:
         return 0.85
-    
-    if len(a_temiz) > 2 and len(b_temiz) > 2:
-        if a_temiz[:3] == b_temiz[:3]:
-            return 0.6
-    
+    if len(a_temiz) > 2 and len(b_temiz) > 2 and a_temiz[:3] == b_temiz[:3]:
+        return 0.6
     return round(SequenceMatcher(None, a_temiz, b_temiz).ratio(), 2)
 
 # =============================================================================
@@ -124,11 +96,10 @@ def benzerlik_orani(a, b):
 def skor_mantikli_mi(ev, dep, iy_ev, iy_dep, durum, ev_isim="", dep_isim=""):
     if iy_ev > ev or iy_dep > dep:
         if MANTIK_HATASI_DUZELT:
-            return True, f"ℹ️ {ev_isim}-{dep_isim} | Veri geç geldi, kısmi kaydedildi", False
+            return True, f"ℹ️ {ev_isim}-{dep_isim} | Veri geç geldi", False
         else:
-            return False, f"❌ HATA | {ev_isim}-{dep_isim} | İmkansız Skor", False
-    
-    return True, "✅ Geçerli Veri", True
+            return False, f"❌ HATA | İmkansız Skor", False
+    return True, "✅ Geçerli", True
 
 # =============================================================================
 # 📖 DOSYA İŞLEMLERİ
@@ -136,18 +107,13 @@ def skor_mantikli_mi(ev, dep, iy_ev, iy_dep, durum, ev_isim="", dep_isim=""):
 def load_mac_json():
     try:
         if not MAC_JSON_PATH.exists():
-            print(f"⚠️ {MAC_JSON_PATH} bulunamadı")
             return {"matches": []}
-        
         with open(MAC_JSON_PATH, 'r', encoding='utf-8') as f:
             veri = json.load(f)
-        
         if isinstance(veri, dict) and "matches" in veri:
             print(f"📖 Mevcut Dosya Okundu | Toplam: {len(veri['matches'])} maç")
             return veri
-        
         return {"matches": []}
-    
     except Exception as e:
         print(f"❌ OKUMA HATASI: {e}")
         return {"matches": []}
@@ -157,13 +123,10 @@ def save_mac_json(veri):
         yedek = MAC_JSON_PATH.with_name("mac_json_yedek.json")
         with open(yedek, 'w', encoding='utf-8') as f:
             json.dump(veri, f, ensure_ascii=False, indent=2)
-        
         with open(MAC_JSON_PATH, 'w', encoding='utf-8') as f:
             json.dump(veri, f, ensure_ascii=False, indent=2, default=str)
-        
         print("💾 GÜNCEL DOSYA KAYDEDİLDİ ✅")
         return True
-    
     except Exception as e:
         print(f"❌ KAYDETME HATASI: {e}")
         return False
@@ -172,27 +135,21 @@ def git_islemlerini_yap():
     try:
         print("\n🔄 GİT İŞLEMLERİ BAŞLATILIYOR...")
         os.chdir(BASE_DIR)
-        
         subprocess.run(["git", "add", "."], check=True, capture_output=True)
         print("✅ git add .")
-        
         tarih_saat = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
         commit_mesaji = f"[OTOMATİK] | {tarih_saat} | Maç Sonuçları Güncellendi"
         subprocess.run(["git", "commit", "-m", commit_mesaji], check=True, capture_output=True)
         print("✅ git commit")
-        
         subprocess.run(["git", "push", "origin", GIT_BRANCH_NAME], check=True, capture_output=True)
         print(f"✅ git push origin {GIT_BRANCH_NAME}")
-        print("🚀 Tüm Git işlemleri tamamlandı!")
         return True
-        
     except subprocess.CalledProcessError as e:
         if "nothing to commit" in str(e.stderr):
-            print("! Git: Değişiklik yok, gönderilecek bir şey yok")
+            print("! Git: Değişiklik yok")
         else:
             print(f"⚠️ GİT HATA: {e}")
         return False
-    
     except Exception as e:
         print(f"⚠️ GİT GENEL HATA: {e}")
         return False
@@ -218,281 +175,319 @@ def debug_sayfa_kaydet(driver, gun_iso):
         pass
 
 # =============================================================================
-# 📅 TAKVİM NAVİGASYONU - İDDAA.COM
+# 📅 TAKVİM - SENİN ÇALIŞAN KODUN BİREBİR UYARLANMIŞ HALİ
 # =============================================================================
 def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
     """
-    İddaa.com takviminde hedef tarihe gider
-    1. Sayfanın tam yüklenmesini bekle
-    2. span.truncate butonuna tıkla (takvimi açar)
-    3. Previous/Next ile doğru aya git
-    4. Gün numarasına tıkla
+    İddaa.com'da 'Önceki gün'/'Ertesi gün' butonlarıyla hedef tarihe gider.
+    JavaScript ile zorla tıklama kullanır.
     """
-    print(f"   🔧 İddaa Takvim navigasyonu: {hedef_tarih_iso}")
+    print(f"   🔧 İddaa Tarih navigasyonu: {hedef_tarih_iso}")
     
     try:
         hedef_yil, hedef_ay, hedef_gun = map(int, hedef_tarih_iso.split('-'))
         
         # ═══════════════════════════════════════════
-        # 0️⃣ SAYFANIN TAM YÜKLENMESİNİ BEKLE
+        # 0️⃣ POPUP'LARI KAPAT
         # ═══════════════════════════════════════════
-        print("   📍 Sayfa yüklenmesi bekleniyor...")
-        
-        # YÖNTEM 1: Lig başlığı görünene kadar bekle
+        time.sleep(2)
         try:
-            WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'h3[data-testid="tournament-name-link"]'))
-            )
-            print("   ✅ Lig başlıkları yüklendi")
+            kapat_sayisi = driver.execute_script("""
+                var btns = document.querySelectorAll("button[aria-label='Kapat']");
+                btns.forEach(function(b) { b.click(); });
+                return btns.length;
+            """)
+            if kapat_sayisi > 0:
+                print(f"   ✅ {kapat_sayisi} popup kapatıldı")
+                time.sleep(1)
         except:
-            print("   ⚠️ Lig başlığı bulunamadı, devam ediliyor...")
-        
-        # Ekstra bekleme
-        time.sleep(3)
+            pass
         
         # ═══════════════════════════════════════════
-        # 1️⃣ TARİH BUTONUNA TIKLA
+        # 1️⃣ MEVCUT TARİHİ OKU
         # ═══════════════════════════════════════════
-        print("   📍 Tarih butonu aranıyor...")
+        print("   📍 Mevcut tarih okunuyor...")
         
-        takvim_acildi = False
+        ay_kisaltma_tr = {
+            "Oca": 1, "Şub": 2, "Mar": 3, "Nis": 4,
+            "May": 5, "Haz": 6, "Tem": 7, "Ağu": 8,
+            "Eyl": 9, "Eki": 10, "Kas": 11, "Ara": 12
+        }
         
-        # YÖNTEM 1: CSS Selector ile
-        try:
-            tarih_buton = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, "span.truncate"))
-            )
-            
-            buton_metni = tarih_buton.text.strip()
-            print(f"   📍 Buton metni: '{buton_metni}'")
-            
-            driver.execute_script("arguments[0].click();", tarih_buton)
-            print("   ✅ Takvim açıldı (Yöntem 1)")
-            takvim_acildi = True
-        except Exception as e1:
-            print(f"   ⚠️ Yöntem 1 başarısız: {str(e1)[:80]}")
+        mevcut_tarih = None
         
-        # YÖNTEM 2: XPath ile - tüm span.truncate'ları bul
-        if not takvim_acildi:
+        for deneme in range(15):
             try:
-                print("   📍 Yöntem 2 deneniyor...")
-                tum_truncate = driver.find_elements(By.CSS_SELECTOR, "span.truncate")
-                print(f"   📍 {len(tum_truncate)} adet span.truncate bulundu")
-                
-                for btn in tum_truncate:
-                    metin = btn.text.strip()
-                    print(f"      - '{metin}'")
-                    
-                    if metin:  # Boş olmayan ilk butona tıkla
-                        driver.execute_script("arguments[0].click();", btn)
-                        print(f"   ✅ '{metin}' butonuna tıklandı (Yöntem 2)")
-                        takvim_acildi = True
-                        break
-                        
-            except Exception as e2:
-                print(f"   ⚠️ Yöntem 2 başarısız: {str(e2)[:80]}")
-        
-        # YÖNTEM 3: JavaScript ile zorla tıkla
-        if not takvim_acildi:
-            try:
-                print("   📍 Yöntem 3 (JavaScript) deneniyor...")
-                js_result = driver.execute_script("""
-                    var buttons = document.querySelectorAll('span.truncate');
-                    if (buttons.length > 0) {
-                        buttons[0].click();
-                        return buttons[0].innerText;
-                    }
-                    return null;
+                metin = driver.execute_script("""
+                    var span = document.querySelector('span.truncate');
+                    return span ? span.innerText.trim() : null;
                 """)
                 
-                if js_result:
-                    print(f"   ✅ JavaScript ile tıklandı: '{js_result}' (Yöntem 3)")
-                    takvim_acildi = True
-                else:
-                    print("   ⚠️ JavaScript ile buton bulunamadı")
+                if metin:
+                    print(f"   📍 Buton metni: '{metin}'")
                     
-            except Exception as e3:
-                print(f"   ⚠️ Yöntem 3 başarısız: {str(e3)[:80]}")
-        
-        # YÖNTEM 4: Button elementini ara (span değil button olabilir)
-        if not takvim_acildi:
-            try:
-                print("   📍 Yöntem 4 (button element) deneniyor...")
-                
-                # aria-label'da tarih olan button'ları ara
-                tum_buttons = driver.find_elements(By.TAG_NAME, "button")
-                for btn in tum_buttons:
-                    aria = btn.get_attribute("aria-label") or ""
-                    text = btn.text.strip()
-                    
-                    # Tarih içeren veya "Bugün" yazan buton
-                    if any(x in aria or x in text for x in ["Bugün", "Today", "Haz", "May", "June", "Oca", "Şub"]):
-                        driver.execute_script("arguments[0].click();", btn)
-                        print(f"   ✅ Button tıklandı: aria='{aria}', text='{text}' (Yöntem 4)")
-                        takvim_acildi = True
+                    if metin.lower() == "bugün":
+                        mevcut_tarih = datetime.date.today()
+                        print(f"   📍 Bugün: {mevcut_tarih}")
                         break
+                    
+                    parts = metin.split()
+                    if len(parts) >= 3:
+                        gun = int(parts[0])
+                        ay = ay_kisaltma_tr.get(parts[1], 0)
+                        yil = int(parts[2])
+                        if yil < 100:
+                            yil += 2000
                         
-            except Exception as e4:
-                print(f"   ⚠️ Yöntem 4 başarısız: {str(e4)[:80]}")
-        
-        if not takvim_acildi:
-            print("   ❌ Takvim açılamadı!")
+                        if ay > 0:
+                            mevcut_tarih = datetime.date(yil, ay, gun)
+                            print(f"   📍 Mevcut: {mevcut_tarih}")
+                            break
+                            
+            except Exception as e:
+                pass
             
-            # DEBUG: Sayfada ne var?
+            if deneme % 3 == 0 and deneme > 0:
+                print(f"   ⏳ Bekleniyor... ({deneme}sn)")
+            time.sleep(1)
+        
+        if mevcut_tarih is None:
+            print("   ❌ Mevcut tarih okunamadı!")
+            
+            # DEBUG: Tüm truncate span'ları listele
             try:
-                tum_spanlar = driver.find_elements(By.TAG_NAME, "span")
-                print(f"   🔍 Sayfada {len(tum_spanlar)} span var, ilk 20'si:")
-                for s in tum_spanlar[:20]:
-                    txt = s.text.strip()
-                    cls = s.get_attribute("class") or ""
-                    if txt or "truncate" in cls:
-                        print(f"      - class='{cls}' | text='{txt[:50]}'")
+                spans = driver.execute_script("""
+                    var spans = document.querySelectorAll('span.truncate');
+                    var results = [];
+                    spans.forEach(function(s) { results.push(s.innerText.trim()); });
+                    return results;
+                """)
+                print(f"   🔍 span.truncate içerikleri: {spans}")
             except:
                 pass
             
             return False
         
-        time.sleep(2)
-        
         # ═══════════════════════════════════════════
-        # 2️⃣ MEVCUT AYI TESPİT ET
+        # 2️⃣ HEDEF TARİHE GİT
         # ═══════════════════════════════════════════
-        try:
-            secili_gun = WebDriverWait(driver, 5).until(
-                EC.presence_of_element_located((
-                    By.CSS_SELECTOR, 
-                    "button[aria-selected='true']"
-                ))
-            )
-            aria_label = secili_gun.get_attribute("aria-label")
-            print(f"   📍 Seçili gün: {aria_label}")
-            
-            ay_match = re.search(r'(January|February|March|April|May|June|July|August|September|October|November|December)', aria_label)
-            if ay_match:
-                ay_isimleri = {
-                    "January": 1, "February": 2, "March": 3, "April": 4, 
-                    "May": 5, "June": 6, "July": 7, "August": 8,
-                    "September": 9, "October": 10, "November": 11, "December": 12
-                }
-                mevcut_ay_metni = ay_match.group(1)
-                mevcut_ay = ay_isimleri[mevcut_ay_metni]
-                print(f"   📍 Mevcut ay: {mevcut_ay_metni} ({mevcut_ay})")
-            else:
-                mevcut_ay = 6
-                print(f"   ⚠️ Ay tespit edilemedi, varsayılan: Haziran")
-                
-        except Exception as e:
-            print(f"   ⚠️ Seçili gün bulunamadı: {e}")
-            mevcut_ay = 6
+        hedef_tarih = datetime.date(hedef_yil, hedef_ay, hedef_gun)
+        fark = (hedef_tarih - mevcut_tarih).days
         
-        # ═══════════════════════════════════════════
-        # 3️⃣ KAÇ KERE PREVIOUS'A BASILMALI?
-        # ═══════════════════════════════════════════
-        tiklama_sayisi = aylar_arasi_fark(hedef_ay, mevcut_ay)
+        print(f"   📍 Mevcut: {mevcut_tarih} | Hedef: {hedef_tarih} | Fark: {fark} gün")
         
-        print(f"   📍 Previous butonuna {tiklama_sayisi} kere basılacak")
-        
-        if tiklama_sayisi == 0:
-            print(f"   ✅ Zaten hedef aydayız")
-        else:
-            for i in range(tiklama_sayisi):
-                try:
-                    previous_buton = WebDriverWait(driver, 5).until(
-                        EC.element_to_be_clickable((
-                            By.CSS_SELECTOR,
-                            "button[aria-label='Go to the Previous Month']"
-                        ))
-                    )
-                    driver.execute_script("arguments[0].click();", previous_buton)
-                    print(f"   📍 Previous [{i+1}/{tiklama_sayisi}] - Tıklandı")
-                    time.sleep(1.5)
-                    
-                    try:
-                        secili_gun = driver.find_element(By.CSS_SELECTOR, "button[aria-selected='true']")
-                        aria_label = secili_gun.get_attribute("aria-label")
-                        ay_match = re.search(r'(January|February|March|April|May|June|July|August|September|October|November|December)', aria_label)
-                        if ay_match:
-                            ay_isimleri = {
-                                "January": 1, "February": 2, "March": 3, "April": 4, 
-                                "May": 5, "June": 6, "July": 7, "August": 8,
-                                "September": 9, "October": 10, "November": 11, "December": 12
-                            }
-                            mevcut_ay = ay_isimleri[ay_match.group(1)]
-                            print(f"      Yeni ay: {ay_match.group(1)} ({mevcut_ay})")
-                    except:
-                        pass
-                        
-                except NoSuchElementException:
-                    print(f"   ⚠️ Previous butonu bulunamadı (deneme {i+1})")
-                    break
-                except Exception as e:
-                    print(f"   ⚠️ Previous butonu tıklanamadı (deneme {i+1}): {e}")
-                    break
-        
-        # ═══════════════════════════════════════════
-        # 4️⃣ HEDEF GÜN NUMARASINA TIKLA
-        # ═══════════════════════════════════════════
-        print(f"   📍 Hedef gün seçiliyor: {hedef_gun} ({hedef_tarih_iso})")
-        
-        try:
-            ay_ingilizce = {
-                1: "January", 2: "February", 3: "March", 4: "April",
-                5: "May", 6: "June", 7: "July", 8: "August",
-                9: "September", 10: "October", 11: "November", 12: "December"
-            }
-            
-            ay_adi = ay_ingilizce[hedef_ay]
-            
-            tum_gunler = driver.find_elements(By.CSS_SELECTOR, "button[aria-label]")
-            bulundu = False
-            
-            for gun_btn in tum_gunler:
-                aria = gun_btn.get_attribute("aria-label") or ""
-                if ay_adi in aria and str(hedef_yil) in aria:
-                    gun_match = re.search(r',\s*(\d+)(?:st|nd|rd|th)?', aria)
-                    if gun_match and int(gun_match.group(1)) == hedef_gun:
-                        driver.execute_script("arguments[0].scrollIntoView({block:'center'});", gun_btn)
-                        time.sleep(0.5)
-                        driver.execute_script("arguments[0].click();", gun_btn)
-                        print(f"   ✅ TARİH SEÇİLDİ: {hedef_tarih_iso} | Aria: {aria}")
-                        bulundu = True
-                        break
-            
-            if not bulundu:
-                print(f"   ❌ Hedef tarih takvimde bulunamadı!")
-                print(f"      Aranan: {ay_adi} {hedef_gun}, {hedef_yil}")
-                
-                print(f"      Takvimdeki günler:")
-                for gun_btn in tum_gunler[:31]:
-                    aria = gun_btn.get_attribute("aria-label") or ""
-                    text = gun_btn.text.strip()
-                    if aria:
-                        print(f"         - {text} | {aria}")
-                
-                return False
-            
-            time.sleep(12)
+        if fark == 0:
+            print(f"   ✅ Zaten hedef tarihteyiz!")
+            time.sleep(3)
             return True
+        
+        max_tiklama = abs(fark) + 5
+        tiklanan = 0
+        
+        # ── JAVASCRIPT TIKLAMA FONKSİYONU ──
+        def js_tikla(selector):
+            """JavaScript ile element bul ve tıkla"""
+            result = driver.execute_script(f"""
+                var el = document.querySelector('{selector}');
+                if (el) {{
+                    el.click();
+                    return 'clicked';
+                }}
+                return 'not found';
+            """)
+            return result == 'clicked'
+        
+        def js_tikla_xpath(xpath_expr):
+            """XPath ile element bul ve tıkla"""
+            result = driver.execute_script(f"""
+                var xpath = "{xpath_expr}";
+                var result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+                var el = result.singleNodeValue;
+                if (el) {{
+                    el.click();
+                    return 'clicked';
+                }}
+                return 'not found';
+            """)
+            return result == 'clicked'
+        
+        if fark > 0:
+            # İLERİ GİT → "Ertesi gün"
+            print(f"   📍 İleri gitmek gerekiyor ({fark} gün)...")
             
-        except Exception as e:
-            print(f"   ❌ TARİH SEÇİLEMEDİ: {e}")
-            import traceback
-            traceback.print_exc()
-            return False
+            for i in range(max_tiklama):
+                tiklandi = False
+                
+                # YÖNTEM 1: aria-label
+                if not tiklandi:
+                    tiklandi = js_tikla("button[aria-label='Ertesi gün']")
+                
+                # YÖNTEM 2: title attribute
+                if not tiklandi:
+                    tiklandi = js_tikla("button[title='Ertesi gün']")
+                
+                # YÖNTEM 3: SVG arrow-right içindeki button
+                if not tiklandi:
+                    tiklandi = js_tikla("button:has(svg [href*='arrow-right'])")
+                
+                # YÖNTEM 4: XPath
+                if not tiklandi:
+                    tiklandi = js_tikla_xpath("//button[@title='Ertesi gün' or @aria-label='Ertesi gün']")
+                
+                # YÖNTEM 5: Tüm button'ları tara, text'inde "Ertesi" geçen
+                if not tiklandi:
+                    tiklandi = driver.execute_script("""
+                        var btns = document.querySelectorAll('button');
+                        for (var i = 0; i < btns.length; i++) {
+                            var txt = btns[i].innerText || '';
+                            var aria = btns[i].getAttribute('aria-label') || '';
+                            var title = btns[i].getAttribute('title') || '';
+                            if (txt.includes('Ertesi') || aria.includes('Ertesi') || title.includes('Ertesi')) {
+                                btns[i].click();
+                                return true;
+                            }
+                        }
+                        return false;
+                    """)
+                
+                if tiklandi:
+                    tiklanan += 1
+                    print(f"   📍 Ertesi gün [{tiklanan}/{fark}]")
+                else:
+                    print(f"   ❌ Ertesi gün butonu bulunamadı! (deneme {i+1})")
+                    break
+                
+                time.sleep(1.5)
+                
+                # Mevcut tarihi güncelle
+                try:
+                    yeni_metin = driver.execute_script("""
+                        var span = document.querySelector('span.truncate');
+                        return span ? span.innerText.trim() : null;
+                    """)
+                    
+                    if yeni_metin:
+                        if yeni_metin.lower() == "bugün":
+                            mevcut_tarih = datetime.date.today()
+                        else:
+                            parts = yeni_metin.split()
+                            if len(parts) >= 3:
+                                g = int(parts[0])
+                                a = ay_kisaltma_tr.get(parts[1], 0)
+                                y = int(parts[2])
+                                if y < 100: y += 2000
+                                if a > 0:
+                                    mevcut_tarih = datetime.date(y, a, g)
+                except:
+                    pass
+                
+                if mevcut_tarih >= hedef_tarih:
+                    print(f"   ✅ Hedef tarihe ulaşıldı: {mevcut_tarih}")
+                    break
+        
+        elif fark < 0:
+            # GERİ GİT → "Önceki gün"
+            geri_fark = abs(fark)
+            print(f"   📍 Geri gitmek gerekiyor ({geri_fark} gün)...")
             
+            for i in range(max_tiklama):
+                tiklandi = False
+                
+                # YÖNTEM 1: aria-label
+                if not tiklandi:
+                    tiklandi = js_tikla("button[aria-label='Önceki gün']")
+                
+                # YÖNTEM 2: title attribute
+                if not tiklandi:
+                    tiklandi = js_tikla("button[title='Önceki gün']")
+                
+                # YÖNTEM 3: SVG arrow-left içindeki button
+                if not tiklandi:
+                    tiklandi = js_tikla("button:has(svg [href*='arrow-left'])")
+                
+                # YÖNTEM 4: XPath
+                if not tiklandi:
+                    tiklandi = js_tikla_xpath("//button[@title='Önceki gün' or @aria-label='Önceki gün']")
+                
+                # YÖNTEM 5: Tüm button'ları tara
+                if not tiklandi:
+                    tiklandi = driver.execute_script("""
+                        var btns = document.querySelectorAll('button');
+                        for (var i = 0; i < btns.length; i++) {
+                            var txt = btns[i].innerText || '';
+                            var aria = btns[i].getAttribute('aria-label') || '';
+                            var title = btns[i].getAttribute('title') || '';
+                            if (txt.includes('Önceki') || aria.includes('Önceki') || title.includes('Önceki')) {
+                                btns[i].click();
+                                return true;
+                            }
+                        }
+                        return false;
+                    """)
+                
+                if tiklandi:
+                    tiklanan += 1
+                    print(f"   📍 Önceki gün [{tiklanan}/{geri_fark}]")
+                else:
+                    print(f"   ❌ Önceki gün butonu bulunamadı! (deneme {i+1})")
+                    break
+                
+                time.sleep(1.5)
+                
+                # Mevcut tarihi güncelle
+                try:
+                    yeni_metin = driver.execute_script("""
+                        var span = document.querySelector('span.truncate');
+                        return span ? span.innerText.trim() : null;
+                    """)
+                    
+                    if yeni_metin:
+                        if yeni_metin.lower() == "bugün":
+                            mevcut_tarih = datetime.date.today()
+                        else:
+                            parts = yeni_metin.split()
+                            if len(parts) >= 3:
+                                g = int(parts[0])
+                                a = ay_kisaltma_tr.get(parts[1], 0)
+                                y = int(parts[2])
+                                if y < 100: y += 2000
+                                if a > 0:
+                                    mevcut_tarih = datetime.date(y, a, g)
+                except:
+                    pass
+                
+                if mevcut_tarih <= hedef_tarih:
+                    print(f"   ✅ Hedef tarihe ulaşıldı: {mevcut_tarih}")
+                    break
+        
+        # ═══════════════════════════════════════════
+        # 3️⃣ SON KONTROL
+        # ═══════════════════════════════════════════
+        time.sleep(3)
+        
+        try:
+            son_metin = driver.execute_script("""
+                var span = document.querySelector('span.truncate');
+                return span ? span.innerText.trim() : null;
+            """)
+            print(f"   📍 Son durum: '{son_metin}'")
+        except:
+            pass
+        
+        print(f"   ✅ Tarih navigasyonu tamamlandı!")
+        time.sleep(5)
+        return True
+        
     except Exception as e:
-        print(f"   ❌ TAKVİM HATASI: {e}")
+        print(f"   ❌ TARİH HATASI: {e}")
         import traceback
         traceback.print_exc()
         return False
+
 # =============================================================================
-# 🌐 MAÇ SATIRLARINI BUL - İDDAA.COM
+# 🌐 MAÇ SATIRLARINI BUL
 # =============================================================================
 def iddaa_mac_satirlarini_bul(driver):
-    """
-    İddaa.com'daki maç satırlarını bulur
-    Lig başlığı + maç listesi yapısını kullanır
-    """
     mac_gruplari = []
     
     try:
@@ -506,11 +501,9 @@ def iddaa_mac_satirlarini_bul(driver):
         
         for lig_baslik in lig_basliklari:
             try:
-                # ── LİG ADINI ÇEK ──
                 lig_link = lig_baslik.find_element(By.CSS_SELECTOR, "a[href*='tournament']")
                 lig_adi = lig_link.text.strip()
                 
-                # ── ÜLKE ADINI ÇEK ──
                 ulke_adi = ""
                 try:
                     tum_truncate = lig_baslik.find_elements(By.CSS_SELECTOR, "div.truncate")
@@ -522,7 +515,6 @@ def iddaa_mac_satirlarini_bul(driver):
                 except:
                     pass
                 
-                # ── BU LİGİN MAÇLARINI BUL ──
                 mac_satirlari = []
                 
                 try:
@@ -552,26 +544,25 @@ def iddaa_mac_satirlarini_bul(driver):
                             "lig": lig_adi,
                             "ulke": ulke_adi
                         })
-                        
-                    except Exception as e:
+                    except:
                         continue
                 
                 if mac_satirlari:
                     print(f"   📍 {lig_adi} ({ulke_adi}) → {len(mac_satirlari)} maç")
                     mac_gruplari.extend(mac_satirlari)
                     
-            except Exception as e:
+            except:
                 continue
         
         print(f"✅ Toplam {len(mac_gruplari)} maç satırı bulundu")
         return mac_gruplari
         
     except Exception as e:
-        print(f"❌ Maç satırları bulunurken hata: {e}")
+        print(f"❌ Maç satırları hatası: {e}")
         return []
 
 # =============================================================================
-# 🌐 ANA ÇEKİM FONKSİYONU - İDDAA.COM
+# 🌐 ANA ÇEKİM FONKSİYONU
 # =============================================================================
 def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
     print(f"\n{'='*70}")
@@ -583,15 +574,15 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
     gecerli_sayisi = 0
     
     try:
-        print("🔧 [1/4] Takvim navigasyonu yapılıyor...")
+        print("🔧 [1/4] Takvim navigasyonu...")
         basarili = iddaa_takvimde_gezin(driver, hedef_tarih_iso)
         if not basarili:
-            print("❌ Takvim navigasyonu başarısız, bu gün atlanıyor")
+            print("❌ Takvim başarısız, atlanıyor")
             return []
         
         debug_sayfa_kaydet(driver, hedef_tarih_iso)
         
-        print("🔧 [2/4] Sayfa kaydırılıyor ve veri toplanıyor...")
+        print("🔧 [2/4] Sayfa kaydırılıyor...")
         driver.execute_script("window.scrollTo(0, 0);")
         time.sleep(3)
         
@@ -609,7 +600,7 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                 continue
             
             if adim % 20 == 0:
-                print(f"   📍 Adım {adim+1}/{max_adim} - {len(mac_gruplari)} satır bulundu")
+                print(f"   📍 Adım {adim+1}/{max_adim} - {len(mac_gruplari)} satır")
             
             for mac_info in mac_gruplari:
                 try:
@@ -624,34 +615,29 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                     
                     kimlik = f"{akilli_isim_temizle(ev_isim)}-{akilli_isim_temizle(dep_isim)}"
                     
-                    # ═══════════════════════════════════════════
-                    # 🎯 SKOR ÇEKME - İDDAA.COM SELECTOR'LARI
-                    # ═══════════════════════════════════════════
                     s_ev, s_dep = 0, 0
                     iy_ev, iy_dep = 0, 0
                     
-                    # ── MAÇ SONUCU SKORLARI ──
+                    # SKOR ÇEKME
                     try:
-                        tum_score_divler = satir.find_elements(By.CSS_SELECTOR, 
+                        tum_score = satir.find_elements(By.CSS_SELECTOR, 
                             "div.rounded-match__score, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6")
-                        
-                        if len(tum_score_divler) >= 4:
-                            s_ev = rakam_bul(tum_score_divler[0].text)
-                            s_dep = rakam_bul(tum_score_divler[1].text)
-                            iy_ev = rakam_bul(tum_score_divler[2].text)
-                            iy_dep = rakam_bul(tum_score_divler[3].text)
+                        if len(tum_score) >= 4:
+                            s_ev = rakam_bul(tum_score[0].text)
+                            s_dep = rakam_bul(tum_score[1].text)
+                            iy_ev = rakam_bul(tum_score[2].text)
+                            iy_dep = rakam_bul(tum_score[3].text)
                     except: pass
                     
                     if s_ev == 0 and s_dep == 0:
                         try:
-                            font_medium_scores = satir.find_elements(By.CSS_SELECTOR, 
+                            font_med = satir.find_elements(By.CSS_SELECTOR, 
                                 "div.rounded-match__score.font-medium, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6.font-medium")
-                            font_normal_scores = satir.find_elements(By.CSS_SELECTOR, 
+                            font_norm = satir.find_elements(By.CSS_SELECTOR, 
                                 "div.rounded-match__score.font-normal, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6.font-normal")
-                            
-                            if len(font_medium_scores) >= 1 and len(font_normal_scores) >= 1:
-                                s_dep = rakam_bul(font_medium_scores[0].text)
-                                s_ev = rakam_bul(font_normal_scores[0].text)
+                            if len(font_med) >= 1 and len(font_norm) >= 1:
+                                s_dep = rakam_bul(font_med[0].text)
+                                s_ev = rakam_bul(font_norm[0].text)
                         except: pass
                     
                     if s_ev == 0 and s_dep == 0:
@@ -662,47 +648,29 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                                 txt = div.text.strip()
                                 if txt.isdigit():
                                     sayilar.append(int(txt))
-                            
                             if len(sayilar) >= 4:
-                                s_ev = sayilar[0]
-                                s_dep = sayilar[1]
-                                iy_ev = sayilar[2]
-                                iy_dep = sayilar[3]
+                                s_ev, s_dep, iy_ev, iy_dep = sayilar[0], sayilar[1], sayilar[2], sayilar[3]
                             elif len(sayilar) >= 2:
-                                s_ev = sayilar[0]
-                                s_dep = sayilar[1]
+                                s_ev, s_dep = sayilar[0], sayilar[1]
                         except: pass
                     
-                    # ═══════════════════════════════════════════
-                    # 🔄 DUPLICATE KONTROLÜ
-                    # ═══════════════════════════════════════════
+                    # DUPLICATE KONTROL
                     if kimlik in gorulen:
-                        eski_veri = gorulen[kimlik]
-                        
-                        if (eski_veri["skor_ev"] == s_ev and 
-                            eski_veri["skor_dep"] == s_dep and
-                            eski_veri["skor_1y_ev"] == iy_ev and
-                            eski_veri["skor_1y_dep"] == iy_dep):
+                        eski = gorulen[kimlik]
+                        if (eski["skor_ev"] == s_ev and eski["skor_dep"] == s_dep and
+                            eski["skor_1y_ev"] == iy_ev and eski["skor_1y_dep"] == iy_dep):
                             continue
-                        
                         print(f"   ⚠️ DUPLICATE FARKLI SKOR: {ev_isim} - {dep_isim}")
-                        print(f"      İlk: MS:{eski_veri['skor_ev']}-{eski_veri['skor_dep']} | İY:{eski_veri['skor_1y_ev']}-{eski_veri['skor_1y_dep']}")
+                        print(f"      İlk: MS:{eski['skor_ev']}-{eski['skor_dep']} | İY:{eski['skor_1y_ev']}-{eski['skor_1y_dep']}")
                         print(f"      Yeni: MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep}")
-                        print(f"      → İlk kayıt korunuyor")
                         continue
                     
-                    # ═══════════════════════════════════════════
-                    # 🚨 DURUM BELİRLEME
-                    # ═══════════════════════════════════════════
                     durum = "baslamadi"
                     if s_ev > 0 or s_dep > 0:
                         durum = "bitti"
                     elif iy_ev > 0 or iy_dep > 0:
                         durum = "devam ediyor"
                     
-                    # ═══════════════════════════════════════════
-                    # 💾 KAYIT ET
-                    # ═══════════════════════════════════════════
                     yeni_veri = {
                         "tarih": hedef_tarih_iso,
                         "ev_sahibi": ev_isim,
@@ -721,24 +689,21 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                     skor_listesi.append(yeni_veri)
                     
                     gecerli_sayisi += 1
-                    print(f"   ✅ [{gecerli_sayisi}] {ev_isim} - {dep_isim} | MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep} | {lig_adi} | {durum}")
+                    print(f"   ✅ [{gecerli_sayisi}] {ev_isim} - {dep_isim} | MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep} | {lig_adi}")
                     
-                except Exception as e:
+                except:
                     continue
             
             try:
                 son_durum = driver.execute_script(
-                    "return window.innerHeight + window.scrollY >= document.body.scrollHeight - 500;"
-                )
+                    "return window.innerHeight + window.scrollY >= document.body.scrollHeight - 500;")
                 if son_durum:
-                    print(f"🏁 Sayfa sonuna ulaşıldı! (Adım: {adim+1})")
+                    print(f"🏁 Sayfa sonu! (Adım: {adim+1})")
                     break
             except:
                 pass
         
-        print(f"\n📊 {hedef_tarih_iso} ÖZET:")
-        print(f"   • Toplam veri: {len(skor_listesi)}")
-        print(f"   • Geçerli veri: {gecerli_sayisi}")
+        print(f"\n📊 {hedef_tarih_iso}: {len(skor_listesi)} veri")
         
     except Exception as e:
         print(f"❌ ÇEKİM HATASI: {e}")
@@ -756,24 +721,22 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
     if not mac_listesi:
         print("⚠️ Mevcut yapıda maç bulunamadı!")
         return 0
-    
     if not tum_veriler:
-        print("⚠️ Güncellenecek veri bulunamadı!")
+        print("⚠️ Güncellenecek veri yok!")
         return 0
     
-    print(f"\n🧠 EŞLEŞTİRME BAŞLIYOR (±2 GÜN TARİH TOLERANSLI)...")
-    print(f"   • Mevcut JSON maç sayısı: {len(mac_listesi)}")
-    print(f"   • Siteden Çekilen Yeni maç sayısı: {len(tum_veriler)}")
+    print(f"\n🧠 EŞLEŞTİRME (±2 GÜN TOLERANS)...")
+    print(f"   • JSON: {len(mac_listesi)} maç | Yeni: {len(tum_veriler)} maç")
     
     guncelleme_sayisi = 0
     atlanan_sayisi = 0
-    kullanilan_json_indeksleri = set()
+    kullanilan = set()
     
-    def tarih_farki_gun(tarih1_str, tarih2_str):
+    def tarih_farki(t1, t2):
         try:
-            t1 = datetime.datetime.strptime(str(tarih1_str).strip(), "%Y-%m-%d").date()
-            t2 = datetime.datetime.strptime(str(tarih2_str).strip(), "%Y-%m-%d").date()
-            return abs((t1 - t2).days)
+            d1 = datetime.datetime.strptime(str(t1).strip(), "%Y-%m-%d").date()
+            d2 = datetime.datetime.strptime(str(t2).strip(), "%Y-%m-%d").date()
+            return abs((d1 - d2).days)
         except:
             return 999
     
@@ -782,89 +745,70 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
         y_dep = y_veri["deplasman"]
         y_tarih = str(y_veri["tarih"]).strip()
         
-        en_yuksek_oran = 0
-        en_iyi_mac_index = -1
-        en_iyi_ters_mi = False
+        en_oran = 0
+        en_idx = -1
+        en_ters = False
         
         for idx, mac in enumerate(mac_listesi):
-            if idx in kullanilan_json_indeksleri:
+            if idx in kullanilan:
                 continue
             
             mac_tarih = str(mac.get("tarih", "")).strip()
             
-            # ±2 GÜN DIŞINDAKİLERİ ATLA
             if mac_tarih and y_tarih:
-                fark = tarih_farki_gun(mac_tarih, y_tarih)
+                fark = tarih_farki(mac_tarih, y_tarih)
                 if fark > 2:
                     continue
             
-            oran_normal = (benzerlik_orani(mac["ev_sahibi"], y_ev) + 
-                          benzerlik_orani(mac["deplasman"], y_dep))
-            oran_ters = (benzerlik_orani(mac["ev_sahibi"], y_dep) + 
-                        benzerlik_orani(mac["deplasman"], y_ev))
+            oran_n = benzerlik_orani(mac["ev_sahibi"], y_ev) + benzerlik_orani(mac["deplasman"], y_dep)
+            oran_t = benzerlik_orani(mac["ev_sahibi"], y_dep) + benzerlik_orani(mac["deplasman"], y_ev)
             
-            # TARİH BONUSU
-            tarih_bonus = 0.0
+            tb = 0.0
             if mac_tarih and y_tarih:
-                fark = tarih_farki_gun(mac_tarih, y_tarih)
-                if fark == 0:
-                    tarih_bonus = 2.0
-                elif fark == 1:
-                    tarih_bonus = 1.5
-                elif fark == 2:
-                    tarih_bonus = 1.0
+                fark = tarih_farki(mac_tarih, y_tarih)
+                if fark == 0: tb = 2.0
+                elif fark == 1: tb = 1.5
+                elif fark == 2: tb = 1.0
             
-            toplam_normal = oran_normal + tarih_bonus
-            toplam_ters = oran_ters + tarih_bonus
-            toplam_oran = max(toplam_normal, toplam_ters)
+            toplam = max(oran_n + tb, oran_t + tb)
             
-            if toplam_oran > en_yuksek_oran:
-                en_yuksek_oran = toplam_oran
-                en_iyi_mac_index = idx
-                en_iyi_ters_mi = toplam_ters > toplam_normal
+            if toplam > en_oran:
+                en_oran = toplam
+                en_idx = idx
+                en_ters = (oran_t + tb) > (oran_n + tb)
         
-        min_gerekli = ESLESME_SEVIYESI * 2
-        
-        if en_yuksek_oran >= min_gerekli and en_iyi_mac_index != -1:
-            mac = mac_listesi[en_iyi_mac_index]
-            
+        if en_oran >= ESLESME_SEVIYESI * 2 and en_idx != -1:
+            mac = mac_listesi[en_idx]
             mac_tarih = str(mac.get("tarih", "")).strip()
-            fark_bilgi = ""
-            if mac_tarih and y_tarih:
-                fark = tarih_farki_gun(mac_tarih, y_tarih)
-                if fark == 0:
-                    fark_bilgi = "✅ AYNI TARİH"
-                else:
-                    fark_bilgi = f"⚠️ ±{fark} GÜN FARK"
+            fark = tarih_farki(mac_tarih, y_tarih) if mac_tarih and y_tarih else 999
+            etiket = "✅ AYNI" if fark == 0 else f"⚠️ ±{fark} GÜN"
             
-            if not en_iyi_ters_mi:
-                s_ev, s_dep = y_veri["skor_ev"], y_veri["skor_dep"]
-                iy_ev, iy_dep = y_veri["skor_1y_ev"], y_veri["skor_1y_dep"]
+            if not en_ters:
+                se, sd = y_veri["skor_ev"], y_veri["skor_dep"]
+                iye, iyd = y_veri["skor_1y_ev"], y_veri["skor_1y_dep"]
             else:
-                s_ev, s_dep = y_veri["skor_dep"], y_veri["skor_ev"]
-                iy_ev, iy_dep = y_veri["skor_1y_dep"], y_veri["skor_1y_ev"]
+                se, sd = y_veri["skor_dep"], y_veri["skor_ev"]
+                iye, iyd = y_veri["skor_1y_dep"], y_veri["skor_1y_ev"]
             
-            mac["skor_ev"] = s_ev
-            mac["skor_dep"] = s_dep
-            mac["skor_1y_ev"] = iy_ev
-            mac["skor_1y_dep"] = iy_dep
+            mac["skor_ev"] = se
+            mac["skor_dep"] = sd
+            mac["skor_1y_ev"] = iye
+            mac["skor_1y_dep"] = iyd
             mac["durum"] = y_veri["durum"]
             
-            kullanilan_json_indeksleri.add(en_iyi_mac_index)
+            kullanilan.add(en_idx)
             guncelleme_sayisi += 1
             
-            print(f"   ✅ [{guncelleme_sayisi}] {mac['ev_sahibi']} - {mac['deplasman']} | {fark_bilgi}")
-            print(f"      JSON Tarihi: {mac_tarih} | Çekilen Tarih: {y_tarih}")
-            print(f"      MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep}")
+            print(f"   ✅ [{guncelleme_sayisi}] {mac['ev_sahibi']} - {mac['deplasman']} | {etiket}")
+            print(f"      JSON: {mac_tarih} | Yeni: {y_tarih} | MS:{se}-{sd} | İY:{iye}-{iyd}")
         else:
             atlanan_sayisi += 1
-            if en_yuksek_oran > 0:
-                print(f"   ⏭️ ATLADI: {y_ev} - {y_dep} ({y_tarih}) | Oran: {en_yuksek_oran:.2f}")
+            if en_oran > 0:
+                print(f"   ⏭️ ATLADI: {y_ev} - {y_dep} ({y_tarih}) | Oran: {en_oran:.2f}")
             else:
-                print(f"   ⏭️ ATLADI: {y_ev} - {y_dep} ({y_tarih}) | Eşleşme bulunamadı")
+                print(f"   ⏭️ ATLADI: {y_ev} - {y_dep} ({y_tarih}) | Eşleşme yok")
     
-    print(f"\n✅ GÜNCELLENEN: {guncelleme_sayisi}")
-    print(f"⏭️ ATLANAN: {atlanan_sayisi}")
+    print(f"\n✅ GÜNCELLENEN: {guncelleme_sayisi} | ATLANAN: {atlanan_sayisi}")
     return guncelleme_sayisi
 
 # =============================================================================
@@ -872,26 +816,25 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
 # =============================================================================
 if __name__ == "__main__":
     print("="*70)
-    print("⚽ İDDAA.COM SCORE SCRAPER - TAM OTOMATİK")
+    print("⚽ İDDAA.COM SCORE SCRAPER")
     print("="*70)
-    print(f"📅 Tarih Aralığı: {BASLANGIC_TARIHI} - {BITIS_TARIHI}")
-    print(f"🔄 Eşleşme Seviyesi: {ESLESME_SEVIYESI}")
-    print(f"📦 JSON Dosyası: {MAC_JSON_PATH}")
+    print(f"📅 {BASLANGIC_TARIHI} - {BITIS_TARIHI}")
+    print(f"📦 {MAC_JSON_PATH}")
     print("="*70)
     
     mevcut_yapi = load_mac_json()
     if not mevcut_yapi:
-        print("❌ mac.json bulunamadı veya bozuk!")
-        input("Çıkmak için Enter'a basın...")
+        print("❌ mac.json bulunamadı!")
+        input("Çıkmak için Enter...")
         exit()
     
     tarihler = tarihleri_olustur(BASLANGIC_TARIHI, BITIS_TARIHI)
     if not tarihler:
-        print("❌ Geçersiz tarih aralığı!")
-        input("Çıkmak için Enter'a basın...")
+        print("❌ Geçersiz tarih!")
+        input("Çıkmak için Enter...")
         exit()
     
-    print(f"\n📅 İşlenecek {len(tarihler)} gün:")
+    print(f"\n📅 {len(tarihler)} gün:")
     for t in tarihler:
         print(f"   • {t}")
     
@@ -927,16 +870,16 @@ if __name__ == "__main__":
                 gunluk_veri = iddaa_get_skorlar_tek_gun(driver, gun_iso)
                 tum_veriler.extend(gunluk_veri)
                 
-                print(f"\n📊 {gun_iso} SONUÇ: {len(gunluk_veri)} veri çekildi")
+                print(f"\n📊 {gun_iso}: {len(gunluk_veri)} veri")
                 
-            except Exception as gun_hatasi:
-                print(f"❌ {gun_iso} işlenirken hata: {gun_hatasi}")
+            except Exception as hata:
+                print(f"❌ {gun_iso} hatası: {hata}")
                 import traceback
                 traceback.print_exc()
                 continue
         
-    except Exception as genel_hata:
-        print(f"❌ GENEL HATA: {genel_hata}")
+    except Exception as genel:
+        print(f"❌ GENEL HATA: {genel}")
         import traceback
         traceback.print_exc()
     
@@ -949,31 +892,21 @@ if __name__ == "__main__":
                 pass
     
     if not tum_veriler:
-        print("\n" + "="*70)
-        print("❌ HİÇ VERİ ÇEKİLEMEDİ!")
-        print("="*70)
-        print("\n💡 DEBUG_MODU = True yapıp tekrar deneyin")
-        input("\nÇıkmak için Enter'a basın...")
+        print("\n❌ HİÇ VERİ ÇEKİLEMEDİ!")
+        print("💡 DEBUG_MODU = True yapın")
+        input("\nEnter...")
         exit()
     
-    print("\n" + "="*70)
-    print(f"📊 TOPLAM VERİ: {len(tum_veriler)} maç çekildi")
-    print("="*70)
+    print(f"\n📊 TOPLAM: {len(tum_veriler)} maç")
     
-    print("\n🧠 GÜNCELLEME BAŞLIYOR...")
     guncellenen = skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler)
     
     if guncellenen > 0:
-        print(f"\n✅ {guncellenen} MAÇ BAŞARIYLA GÜNCELLENDİ!")
-        
+        print(f"\n✅ {guncellenen} MAÇ GÜNCELLENDİ!")
         if save_mac_json(mevcut_yapi):
             git_islemlerini_yap()
-        else:
-            print("⚠️ JSON kaydedilemedi, Git atlandı")
     else:
         print("\n❌ HİÇBİR MAÇ GÜNCELLENEMEDİ!")
-        print("\n💡 ESLESME_SEVIYESI değerini değiştirin (0.1 - 0.5 arası)")
-        print("💡 DEBUG_MODU = True yapıp debug dosyalarını inceleyin")
     
     print("\n" + "="*70)
-    input("✅ İŞLEM TAMAMLANDI - Çıkmak için Enter'a basın...")
+    input("✅ TAMAMLANDI - Enter...")

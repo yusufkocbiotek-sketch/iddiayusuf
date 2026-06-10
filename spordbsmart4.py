@@ -20,7 +20,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ⚙️ AYARLAR
 # =========================
 BASLANGIC_TARIHI = "10.05.2026"
-BITIS_TARIHI = "10.05.2026"
+BITIS_TARIHI = "14.05.2026"
 
 BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
@@ -28,7 +28,7 @@ SPORDB_URL = "https://www.spordb.com/iddaa-programi/"
 
 TARIH_TOLERANSI_GUN = 3        # ±3 gün tolerans
 GUCLU_TAKIM_ESIGI = 0.80       # Tek takım eşleşmesi için gereken benzerlik
-MIN_TOPLAM_PUAN = 1.10         # İki takımın toplam benzerlik alt sınırı (yanlış eşleşme freni)
+MIN_TOPLAM_PUAN = 1.10         # İki takımın toplam benzerlik alt sınırı
 
 BEKLEME_KISA = 2
 BEKLEME_ORTA = 4
@@ -43,7 +43,7 @@ MAX_DENEME = 2
 # =========================================================
 TAKIM_TAKMA_ADLAR = {
     "aktobe lento": "aktobe lento",
-    "zhas kanat": "aktobe lento",          # örnek alias
+    "zhas kanat": "aktobe lento",
     "k kyzylorda": "kaisar kyzylorda",
     "kaysar": "kaisar",
     "kaisar kyzylorda": "kaisar",
@@ -244,6 +244,15 @@ def parse_date(s):
     except:
         return None
 
+def gun_listesi_olustur(bas, bit):
+    """Başlangıç-bitiş arasındaki TÜM günleri tek tek listeler."""
+    gunler = []
+    aktif = bas
+    while aktif <= bit:
+        gunler.append(aktif)
+        aktif += datetime.timedelta(days=1)
+    return gunler
+
 # =========================
 # 🚀 DRIVER
 # =========================
@@ -281,8 +290,9 @@ def build_driver():
 # =========================
 # 📅 HAFTA & GÜN SEÇİMİ
 # =========================
-def select_week(driver, start_date, end_date):
-    print("🔄 Hafta seçiliyor...")
+def select_week(driver, hedef_tarih):
+    """Verilen TEK güne uygun haftayı seçer."""
+    print(f"🔄 {hedef_tarih.strftime('%d.%m.%Y')} için hafta seçiliyor...")
     try:
         select_el = WebDriverWait(driver, 20).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, "#iddaa_daterange")))
@@ -296,21 +306,21 @@ def select_week(driver, start_date, end_date):
             try:
                 bas = datetime.datetime.strptime(bas_str.strip(), "%d.%m.%Y").date()
                 bit = datetime.datetime.strptime(bit_str.strip(), "%d.%m.%Y").date()
-                if bas <= start_date <= bit:
+                if bas <= hedef_tarih <= bit:
                     opt.click()
                     time.sleep(BEKLEME_UZUN)
-                    print(f"✅ SEÇİLDİ: {txt}")
+                    print(f"✅ HAFTA SEÇİLDİ: {txt}")
                     return True
             except:
                 continue
-        print("❌ Uygun tarih aralığı bulunamadı!")
+        print(f"❌ {hedef_tarih} için uygun hafta bulunamadı!")
         return False
     except Exception as e:
         print(f"❌ HAFTA HATA: {e}")
         return False
 
-def get_days(driver, start_date, end_date):
-    gunler = []
+def get_day_option(driver, hedef_tarih):
+    """Seçili haftanın gün listesinden hedef günü bulur."""
     try:
         select_el = WebDriverWait(driver, 20).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, "#iddaa_dateselector")))
@@ -322,18 +332,18 @@ def get_days(driver, start_date, end_date):
                 continue
             try:
                 g_date = datetime.datetime.strptime(txt, "%d.%m.%Y").date()
-                if start_date <= g_date <= end_date:
-                    gunler.append({
+                if g_date == hedef_tarih:
+                    return {
                         "deger": val,
                         "gorunen": txt,
                         "formatli_tarih": g_date.strftime("%Y-%m-%d")
-                    })
+                    }
             except:
                 pass
-        return sorted(gunler, key=lambda x: x["gorunen"])
+        return None
     except Exception as e:
-        print(f"❌ GÜN LİSTE HATA: {e}")
-        return []
+        print(f"❌ GÜN BULMA HATA: {e}")
+        return None
 
 # =========================
 # ⚡ MAÇ VERİSİ ÇEKME
@@ -450,7 +460,8 @@ def fetch_day(driver, gun):
     return matches
 
 # =========================================================
-# 🧠 EŞLEŞTİRME - EN İYİ ADAY SİSTEMİ (ASIL DÜZELTME BURADA)
+# 🧠 EŞLEŞTİRME - ÇOKLU GÜNCELLEME SİSTEMİ
+# ±3 gün içinde eşleşen TÜM kayıtlara (kopyalar dahil) skor yazar
 # =========================================================
 def merge_data(mevcut, yeni):
     mac_listesi = mevcut.get("matches", [])
@@ -466,7 +477,6 @@ def merge_data(mevcut, yeni):
 
         # ─────────────────────────────────────────────
         # 1️⃣ FRENLERİ GEÇEN TÜM ADAYLARI TOPLA
-        # (Sadece en iyisini değil, HEPSİNİ!)
         # ─────────────────────────────────────────────
         adaylar = []  # [(index, puan, detay), ...]
 
@@ -502,11 +512,8 @@ def merge_data(mevcut, yeni):
 
         # ─────────────────────────────────────────────
         # 2️⃣ TÜM ADAYLARI GÜNCELLE (KOPYALAR DAHİL!)
-        # Eskiden sadece en iyisi güncelleniyordu,
-        # şimdi eşleşen her kayıt aynı skoru alıyor.
         # ─────────────────────────────────────────────
         if adaylar:
-            # En yüksek puanlı başta olsun (log okumak için)
             adaylar.sort(key=lambda x: x[1], reverse=True)
 
             for sira, (idx, puan, detay) in enumerate(adaylar):
@@ -548,6 +555,7 @@ def merge_data(mevcut, yeni):
     mevcut["matches"] = mac_listesi
     print(f"\n📊 ÖZET: 🔄 {guncelle_say} ana güncelleme | 👯 {kopya_say} kopya senkronize | ➕ {ekle_say} yeni")
     return mevcut, guncelle_say, ekle_say
+
 # =========================
 # 📤 GİT İŞLEMLERİ
 # =========================
@@ -570,11 +578,11 @@ def git_islemleri():
         return False
 
 # =========================
-# 🎯 ANA AKIŞ
+# 🎯 ANA AKIŞ (GÜN GÜN DÖNGÜ - DÜZELTİLDİ ✅)
 # =========================
 if __name__ == "__main__":
     print("=" * 60)
-    print("🚀 SPORDB | AKILLI EŞLEŞTİRME + İSİM HAFIZASI + ±3 GÜN ✅")
+    print("🚀 SPORDB | GÜN GÜN DÖNGÜ + ÇOKLU GÜNCELLEME + HAFIZA ✅")
     print("=" * 60)
 
     bas_tar = parse_date(BASLANGIC_TARIHI)
@@ -584,32 +592,62 @@ if __name__ == "__main__":
         input("Devam...")
         exit()
 
+    # 🚨 DÜZELTME: Tüm günleri baştan listele
+    hedef_gunler = gun_listesi_olustur(bas_tar, bit_tar)
+    print(f"📅 İşlenecek {len(hedef_gunler)} gün:")
+    for g in hedef_gunler:
+        print(f"   • {g.strftime('%d.%m.%Y')}")
+
     driver = None
+    tum_yeni = []
+
     try:
         driver = build_driver()
-        driver.get(SPORDB_URL)
-        time.sleep(BEKLEME_UZUN)
 
-        if not select_week(driver, bas_tar, bit_tar):
-            raise Exception("Hafta seçilemedi!")
-        time.sleep(BEKLEME_UZUN)
+        # 🚨 DÜZELTME: Her gün için sayfayı YENİDEN yükle + haftayı YENİDEN seç
+        # Böylece hafta değişse de, sayfa durumu bozulsa da her gün garantili işlenir
+        for gun_tarihi in hedef_gunler:
+            print("\n" + "#" * 60)
+            print(f"# 📅 GÜN: {gun_tarihi.strftime('%d.%m.%Y')}")
+            print("#" * 60)
 
-        gunler = get_days(driver, bas_tar, bit_tar)
-        if not gunler:
-            raise Exception("Gün bulunamadı!")
+            try:
+                # Sayfayı sıfırdan yükle (önceki günün kalıntılarını temizler)
+                driver.get(SPORDB_URL)
+                time.sleep(BEKLEME_UZUN)
 
-        tum_yeni = []
-        for gun in gunler:
-            tum_yeni.extend(fetch_day(driver, gun))
+                # Bu güne ait haftayı seç
+                if not select_week(driver, gun_tarihi):
+                    print(f"⏭️ {gun_tarihi} atlandı (hafta yok)")
+                    continue
+                time.sleep(BEKLEME_ORTA)
+
+                # Gün seçeneğini bul
+                gun = get_day_option(driver, gun_tarihi)
+                if not gun:
+                    print(f"⏭️ {gun_tarihi} atlandı (gün listede yok)")
+                    continue
+
+                # Maçları çek
+                gunluk = fetch_day(driver, gun)
+                tum_yeni.extend(gunluk)
+                print(f"📊 {gun['gorunen']} SONUÇ: {len(gunluk)} maç çekildi")
+
+            except Exception as gun_hata:
+                print(f"❌ {gun_tarihi} işlenirken hata: {str(gun_hata)[:50]}")
+                continue  # Bir gün patlasa bile diğer günlere DEVAM ET
 
         print(f"\n📊 TOPLAM ÇEKİLEN: {len(tum_yeni)} maç")
 
-        mevcut_veri = load_json_safe(MAC_JSON_PATH)
-        yeni_veri, guncelle, ekle_say = merge_data(mevcut_veri, tum_yeni)
+        if tum_yeni:
+            mevcut_veri = load_json_safe(MAC_JSON_PATH)
+            yeni_veri, guncelle, ekle_say = merge_data(mevcut_veri, tum_yeni)
 
-        if save_json_safe(yeni_veri, MAC_JSON_PATH):
-            print(f"\n🎉 İŞLEM TAMAMLANDI: {guncelle} Güncellendi | {ekle_say} Yeni Eklendi")
-            git_islemleri()
+            if save_json_safe(yeni_veri, MAC_JSON_PATH):
+                print(f"\n🎉 İŞLEM TAMAMLANDI: {guncelle} Güncellendi | {ekle_say} Yeni Eklendi")
+                git_islemleri()
+        else:
+            print("\n⚠️ Hiç veri çekilemedi, JSON'a dokunulmadı.")
 
     except Exception as err:
         print(f"\n❌ KRİTİK HATA: {err}")

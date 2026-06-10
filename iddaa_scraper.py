@@ -223,7 +223,7 @@ def debug_sayfa_kaydet(driver, gun_iso):
 def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
     """
     İddaa.com takviminde hedef tarihe gider
-    1. "Bugün" butonuna tıkla (takvimi açar)
+    1. İlk görünen span.truncate'a tıkla (takvimi açar)
     2. Previous/Next ile doğru aya git
     3. Gün numarasına tıkla
     """
@@ -233,24 +233,29 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
         hedef_yil, hedef_ay, hedef_gun = map(int, hedef_tarih_iso.split('-'))
         
         # ═══════════════════════════════════════════
-        # 1️⃣ "BUGÜN" BUTONUNA TIKLA (Takvimi açar)
+        # 1️⃣ İLK GÖRÜNEN span.truncate'A TIKLA
         # ═══════════════════════════════════════════
-        print("   📍 'Bugün' butonu aranıyor...")
-        bugun_buton = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "span.truncate"))
-        )
+        print("   📍 Tarih butonu aranıyor...")
         
-        bugun_text = bugun_buton.text.strip()
-        print(f"   📍 Buton metni: '{bugun_text}'")
-        
-        driver.execute_script("arguments[0].click();", bugun_buton)
-        print("   ✅ Takvim açıldı")
-        time.sleep(2)
+        try:
+            tarih_buton = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "span.truncate"))
+            )
+            
+            buton_metni = tarih_buton.text.strip()
+            print(f"   📍 Buton metni: '{buton_metni}'")
+            
+            driver.execute_script("arguments[0].click();", tarih_buton)
+            print("   ✅ Takvim açıldı")
+            time.sleep(2)
+            
+        except Exception as e:
+            print(f"   ❌ Tarih butonu bulunamadı: {e}")
+            return False
         
         # ═══════════════════════════════════════════
         # 2️⃣ MEVCUT AYI TESPİT ET
         # ═══════════════════════════════════════════
-        # Takvimdeki seçili günün aria-label'ından ayı al
         try:
             secili_gun = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((
@@ -259,9 +264,8 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
                 ))
             )
             aria_label = secili_gun.get_attribute("aria-label")
-            print(f"   📍 Seçili gün aria-label: {aria_label}")
+            print(f"   📍 Seçili gün: {aria_label}")
             
-            # "Monday, June 8th, 2026" → June → 6
             ay_match = re.search(r'(January|February|March|April|May|June|July|August|September|October|November|December)', aria_label)
             if ay_match:
                 ay_isimleri = {
@@ -273,7 +277,7 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
                 mevcut_ay = ay_isimleri[mevcut_ay_metni]
                 print(f"   📍 Mevcut ay: {mevcut_ay_metni} ({mevcut_ay})")
             else:
-                mevcut_ay = 6  # Varsayılan
+                mevcut_ay = 6
                 print(f"   ⚠️ Ay tespit edilemedi, varsayılan: Haziran")
                 
         except Exception as e:
@@ -281,7 +285,7 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
             mevcut_ay = 6
         
         # ═══════════════════════════════════════════
-        # 3️⃣ KAÇ KERE PREVIOUS/NEXT'E BASILMALI?
+        # 3️⃣ KAÇ KERE PREVIOUS'A BASILMALI?
         # ═══════════════════════════════════════════
         tiklama_sayisi = aylar_arasi_fark(hedef_ay, mevcut_ay)
         
@@ -302,7 +306,6 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
                     print(f"   📍 Previous [{i+1}/{tiklama_sayisi}] - Tıklandı")
                     time.sleep(1.5)
                     
-                    # Ay değişimini kontrol et
                     try:
                         secili_gun = driver.find_element(By.CSS_SELECTOR, "button[aria-selected='true']")
                         aria_label = secili_gun.get_attribute("aria-label")
@@ -331,8 +334,6 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
         print(f"   📍 Hedef gün seçiliyor: {hedef_gun} ({hedef_tarih_iso})")
         
         try:
-            # Aria-label'dan tarihi eşleştir: "Monday, June 8th, 2026"
-            # Suffix'leri kaldırarak arama yap
             ay_ingilizce = {
                 1: "January", 2: "February", 3: "March", 4: "April",
                 5: "May", 6: "June", 7: "July", 8: "August",
@@ -341,15 +342,12 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
             
             ay_adi = ay_ingilizce[hedef_ay]
             
-            # Tüm gün butonlarını bul ve aria-label'dan eşleştir
             tum_gunler = driver.find_elements(By.CSS_SELECTOR, "button[aria-label]")
             bulundu = False
             
             for gun_btn in tum_gunler:
                 aria = gun_btn.get_attribute("aria-label") or ""
-                # "Monday, June 8th, 2026" içinde hedef yıl, ay ve gün var mı?
                 if ay_adi in aria and str(hedef_yil) in aria:
-                    # Gün numarasını çek (8th, 1st, 2nd, 3rd gibi suffix'leri temizle)
                     gun_match = re.search(r',\s*(\d+)(?:st|nd|rd|th)?', aria)
                     if gun_match and int(gun_match.group(1)) == hedef_gun:
                         driver.execute_script("arguments[0].scrollIntoView({block:'center'});", gun_btn)
@@ -363,7 +361,6 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
                 print(f"   ❌ Hedef tarih takvimde bulunamadı!")
                 print(f"      Aranan: {ay_adi} {hedef_gun}, {hedef_yil}")
                 
-                # Mevcut günleri logla
                 print(f"      Takvimdeki günler:")
                 for gun_btn in tum_gunler[:31]:
                     aria = gun_btn.get_attribute("aria-label") or ""
@@ -373,7 +370,7 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
                 
                 return False
             
-            time.sleep(12)  # Sayfanın yüklenmesini bekle
+            time.sleep(12)
             return True
             
         except Exception as e:
@@ -387,7 +384,6 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
         import traceback
         traceback.print_exc()
         return False
-
 # =============================================================================
 # 🌐 MAÇ SATIRLARINI BUL - İDDAA.COM
 # =============================================================================
@@ -399,7 +395,6 @@ def iddaa_mac_satirlarini_bul(driver):
     mac_gruplari = []
     
     try:
-        # Lig başlıklarını bul (h3 data-testid="tournament-name-link")
         lig_basliklari = driver.find_elements(By.CSS_SELECTOR, 'h3[data-testid="tournament-name-link"]')
         
         if not lig_basliklari:
@@ -417,48 +412,32 @@ def iddaa_mac_satirlarini_bul(driver):
                 # ── ÜLKE ADINI ÇEK ──
                 ulke_adi = ""
                 try:
-                    ulke_div = lig_baslik.find_element(By.CSS_SELECTOR, "div.truncate@matchlist-lg\\/matchlist\\:flex-\\[1_0_auto\\]")
-                    ulke_adi = ulke_div.text.strip()
+                    tum_truncate = lig_baslik.find_elements(By.CSS_SELECTOR, "div.truncate")
+                    for div in tum_truncate:
+                        txt = div.text.strip()
+                        if txt and txt != lig_adi and len(txt) < 20:
+                            ulke_adi = txt
+                            break
                 except:
                     pass
                 
-                # Alternatif ülke çekme yöntemi
-                if not ulke_adi:
-                    try:
-                        tum_truncate = lig_baslik.find_elements(By.CSS_SELECTOR, "div.truncate")
-                        for div in tum_truncate:
-                            txt = div.text.strip()
-                            if txt and txt != lig_adi and len(txt) < 20:
-                                ulke_adi = txt
-                                break
-                    except:
-                        pass
-                
                 # ── BU LİGİN MAÇLARINI BUL ──
-                # Lig başlığının sonraki kardeş elementleri maç satırlarıdır
                 mac_satirlari = []
-                next_sibling = lig_baslik.find_element(By.XPATH, "./..")  # Parent h3
                 
-                # Parent'ın sonraki sibling'lerini tara
-                parent_container = lig_baslik.find_element(By.XPATH, "./ancestor::div[contains(@class, 'match-list') or contains(@class, 'tournament')]")
-                
-                # Maç satırlarını bul (role="row" veya belirli class'lar)
-                mac_divler = parent_container.find_elements(By.CSS_SELECTOR, "div[role='row'], div[class*='match-row'], div[class*='MatchRow']")
-                
-                if not mac_divler:
-                    # Alternatif: h3'ten sonra gelen div'ler
+                try:
+                    parent_container = lig_baslik.find_element(By.XPATH, "./ancestor::div[contains(@class, 'match-list') or contains(@class, 'tournament')]")
+                    mac_divler = parent_container.find_elements(By.CSS_SELECTOR, "div[role='row'], div[class*='match-row'], div[class*='MatchRow']")
+                except:
                     mac_divler = lig_baslik.find_elements(By.XPATH, 
                         "./following-sibling::div[contains(@class, 'match') or contains(@class, 'row') or @role='row']")
                 
                 for mac_div in mac_divler:
                     try:
-                        # Ev sahibi ve deplasman takım isimlerini çek
                         truncate_divler = mac_div.find_elements(By.CSS_SELECTOR, "div.truncate")
                         
                         if len(truncate_divler) < 2:
                             continue
                         
-                        # Font'a bakmaksızın ilk iki truncate div'i al
                         ev_isim = truncate_divler[0].text.strip()
                         dep_isim = truncate_divler[1].text.strip()
                         
@@ -551,25 +530,19 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                     iy_ev, iy_dep = 0, 0
                     
                     # ── MAÇ SONUCU SKORLARI ──
-                    # MS ve İY başlıklarını bul, sonra skorları eşleştir
                     try:
-                        # Tüm skor hücrelerini bul
                         tum_score_divler = satir.find_elements(By.CSS_SELECTOR, 
                             "div.rounded-match__score, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6")
                         
                         if len(tum_score_divler) >= 4:
-                            # İlk 2'si MS, son 2'si İY olabilir
-                            # Ya da sırayla: MS_ev, MS_dep, İY_ev, İY_dep
                             s_ev = rakam_bul(tum_score_divler[0].text)
                             s_dep = rakam_bul(tum_score_divler[1].text)
                             iy_ev = rakam_bul(tum_score_divler[2].text)
                             iy_dep = rakam_bul(tum_score_divler[3].text)
                     except: pass
                     
-                    # Alternatif: font-medium vs font-normal ayrımıyla
                     if s_ev == 0 and s_dep == 0:
                         try:
-                            # Deplesman skoru font-medium, ev sahibi font-normal
                             font_medium_scores = satir.find_elements(By.CSS_SELECTOR, 
                                 "div.rounded-match__score.font-medium, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6.font-medium")
                             font_normal_scores = satir.find_elements(By.CSS_SELECTOR, 
@@ -580,7 +553,6 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                                 s_ev = rakam_bul(font_normal_scores[0].text)
                         except: pass
                     
-                    # Alternatif: Tüm w-6 class'lı div'leri al
                     if s_ev == 0 and s_dep == 0:
                         try:
                             tum_w6 = satir.find_elements(By.CSS_SELECTOR, "div.w-6")

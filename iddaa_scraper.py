@@ -223,9 +223,10 @@ def debug_sayfa_kaydet(driver, gun_iso):
 def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
     """
     İddaa.com takviminde hedef tarihe gider
-    1. İlk görünen span.truncate'a tıkla (takvimi açar)
-    2. Previous/Next ile doğru aya git
-    3. Gün numarasına tıkla
+    1. Sayfanın tam yüklenmesini bekle
+    2. span.truncate butonuna tıkla (takvimi açar)
+    3. Previous/Next ile doğru aya git
+    4. Gün numarasına tıkla
     """
     print(f"   🔧 İddaa Takvim navigasyonu: {hedef_tarih_iso}")
     
@@ -233,10 +234,30 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
         hedef_yil, hedef_ay, hedef_gun = map(int, hedef_tarih_iso.split('-'))
         
         # ═══════════════════════════════════════════
-        # 1️⃣ İLK GÖRÜNEN span.truncate'A TIKLA
+        # 0️⃣ SAYFANIN TAM YÜKLENMESİNİ BEKLE
+        # ═══════════════════════════════════════════
+        print("   📍 Sayfa yüklenmesi bekleniyor...")
+        
+        # YÖNTEM 1: Lig başlığı görünene kadar bekle
+        try:
+            WebDriverWait(driver, 15).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, 'h3[data-testid="tournament-name-link"]'))
+            )
+            print("   ✅ Lig başlıkları yüklendi")
+        except:
+            print("   ⚠️ Lig başlığı bulunamadı, devam ediliyor...")
+        
+        # Ekstra bekleme
+        time.sleep(3)
+        
+        # ═══════════════════════════════════════════
+        # 1️⃣ TARİH BUTONUNA TIKLA
         # ═══════════════════════════════════════════
         print("   📍 Tarih butonu aranıyor...")
         
+        takvim_acildi = False
+        
+        # YÖNTEM 1: CSS Selector ile
         try:
             tarih_buton = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, "span.truncate"))
@@ -246,12 +267,92 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
             print(f"   📍 Buton metni: '{buton_metni}'")
             
             driver.execute_script("arguments[0].click();", tarih_buton)
-            print("   ✅ Takvim açıldı")
-            time.sleep(2)
+            print("   ✅ Takvim açıldı (Yöntem 1)")
+            takvim_acildi = True
+        except Exception as e1:
+            print(f"   ⚠️ Yöntem 1 başarısız: {str(e1)[:80]}")
+        
+        # YÖNTEM 2: XPath ile - tüm span.truncate'ları bul
+        if not takvim_acildi:
+            try:
+                print("   📍 Yöntem 2 deneniyor...")
+                tum_truncate = driver.find_elements(By.CSS_SELECTOR, "span.truncate")
+                print(f"   📍 {len(tum_truncate)} adet span.truncate bulundu")
+                
+                for btn in tum_truncate:
+                    metin = btn.text.strip()
+                    print(f"      - '{metin}'")
+                    
+                    if metin:  # Boş olmayan ilk butona tıkla
+                        driver.execute_script("arguments[0].click();", btn)
+                        print(f"   ✅ '{metin}' butonuna tıklandı (Yöntem 2)")
+                        takvim_acildi = True
+                        break
+                        
+            except Exception as e2:
+                print(f"   ⚠️ Yöntem 2 başarısız: {str(e2)[:80]}")
+        
+        # YÖNTEM 3: JavaScript ile zorla tıkla
+        if not takvim_acildi:
+            try:
+                print("   📍 Yöntem 3 (JavaScript) deneniyor...")
+                js_result = driver.execute_script("""
+                    var buttons = document.querySelectorAll('span.truncate');
+                    if (buttons.length > 0) {
+                        buttons[0].click();
+                        return buttons[0].innerText;
+                    }
+                    return null;
+                """)
+                
+                if js_result:
+                    print(f"   ✅ JavaScript ile tıklandı: '{js_result}' (Yöntem 3)")
+                    takvim_acildi = True
+                else:
+                    print("   ⚠️ JavaScript ile buton bulunamadı")
+                    
+            except Exception as e3:
+                print(f"   ⚠️ Yöntem 3 başarısız: {str(e3)[:80]}")
+        
+        # YÖNTEM 4: Button elementini ara (span değil button olabilir)
+        if not takvim_acildi:
+            try:
+                print("   📍 Yöntem 4 (button element) deneniyor...")
+                
+                # aria-label'da tarih olan button'ları ara
+                tum_buttons = driver.find_elements(By.TAG_NAME, "button")
+                for btn in tum_buttons:
+                    aria = btn.get_attribute("aria-label") or ""
+                    text = btn.text.strip()
+                    
+                    # Tarih içeren veya "Bugün" yazan buton
+                    if any(x in aria or x in text for x in ["Bugün", "Today", "Haz", "May", "June", "Oca", "Şub"]):
+                        driver.execute_script("arguments[0].click();", btn)
+                        print(f"   ✅ Button tıklandı: aria='{aria}', text='{text}' (Yöntem 4)")
+                        takvim_acildi = True
+                        break
+                        
+            except Exception as e4:
+                print(f"   ⚠️ Yöntem 4 başarısız: {str(e4)[:80]}")
+        
+        if not takvim_acildi:
+            print("   ❌ Takvim açılamadı!")
             
-        except Exception as e:
-            print(f"   ❌ Tarih butonu bulunamadı: {e}")
+            # DEBUG: Sayfada ne var?
+            try:
+                tum_spanlar = driver.find_elements(By.TAG_NAME, "span")
+                print(f"   🔍 Sayfada {len(tum_spanlar)} span var, ilk 20'si:")
+                for s in tum_spanlar[:20]:
+                    txt = s.text.strip()
+                    cls = s.get_attribute("class") or ""
+                    if txt or "truncate" in cls:
+                        print(f"      - class='{cls}' | text='{txt[:50]}'")
+            except:
+                pass
+            
             return False
+        
+        time.sleep(2)
         
         # ═══════════════════════════════════════════
         # 2️⃣ MEVCUT AYI TESPİT ET

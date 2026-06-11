@@ -373,67 +373,124 @@ def takvimde_gezin(driver, hedef_tarih):
         print("   ✅ Takvim açıldı")
         time.sleep(2)
 
-        ay_isimleri = {
-            "january": 1, "february": 2, "march": 3, "april": 4,
-            "may": 5, "june": 6, "july": 7, "august": 8,
-            "september": 9, "october": 10, "november": 11, "december": 12,
-            "ocak": 1, "şubat": 2, "subat": 2, "mart": 3, "nisan": 4,
-            "mayıs": 5, "mayis": 5, "haziran": 6, "temmuz": 7, "ağustos": 8,
-            "agustos": 8, "eylül": 9, "eylul": 9, "ekim": 10, "kasım": 11,
-            "kasim": 11, "aralık": 12, "aralik": 12
+        # 🇹🇷 Türkçe kısaltmalar + İngilizce (her ihtimale karşı)
+        AY_KISALTMA = {
+            "oca": 1, "sub": 2, "şub": 2, "mar": 3, "nis": 4,
+            "may": 5, "haz": 6, "tem": 7, "agu": 8, "ağu": 8,
+            "eyl": 9, "eki": 10, "kas": 11, "ara": 12,
+            "jan": 1, "feb": 2, "apr": 4, "jun": 6, "jul": 7,
+            "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12
         }
 
-        def mevcut_ay_yil_oku():
-            """Takvim başlığından ay ve yılı okur. Örn: 'June 2026'"""
+        def takvim_durumu_oku():
+            """
+            Tüm .widget-datepicker__value elemanlarını okur.
+            Birinde ay kısaltması (Haz, May...), birinde yıl (2026) olur.
+            Döner: (ay_no, ay_index, yil, yil_index)
+            """
+            ay_no, ay_idx, yil, yil_idx = None, None, None, None
             try:
-                el = driver.find_element(By.CLASS_NAME, "widget-datepicker__value")
-                metin = el.text.strip().lower()
-                yil_m = re.search(r"(\d{4})", metin)
-                yil = int(yil_m.group(1)) if yil_m else hedef_yil
-                ay = None
-                for ad, no in ay_isimleri.items():
-                    if ad in metin:
-                        ay = no
-                        break
-                return ay, yil
-            except:
-                return None, None
+                degerler = driver.find_elements(By.CLASS_NAME, "widget-datepicker__value")
+                for i, el in enumerate(degerler):
+                    metin = el.text.strip().lower()
+                    if not metin:
+                        continue
+                    # Yıl mı? (4 haneli sayı)
+                    yil_m = re.search(r"(\d{4})", metin)
+                    if yil_m:
+                        yil = int(yil_m.group(1))
+                        yil_idx = i
+                        continue
+                    # Ay kısaltması mı?
+                    metin_temiz = metin[:3]
+                    if metin_temiz in AY_KISALTMA:
+                        ay_no = AY_KISALTMA[metin_temiz]
+                        ay_idx = i
+            except Exception as e:
+                print(f"   ⚠️ Takvim okuma hatası: {str(e)[:30]}")
+            return ay_no, ay_idx, yil, yil_idx
 
-        # 2️⃣ DOĞRU AYA GİT (önceki/sonraki butonlarıyla, max 24 adım)
-        for _ in range(24):
-            m_ay, m_yil = mevcut_ay_yil_oku()
-            if m_ay is None:
+        # 2️⃣ DOĞRU AY/YILA GİT
+        # İki ayrı nav seti var: ay navları ve yıl navları.
+        # value[i] hangi indexte ise, previous[i]/next[i] de ona aittir.
+        for deneme in range(40):
+            ay_no, ay_idx, yil, yil_idx = takvim_durumu_oku()
+
+            if ay_no is None:
+                print("   ⚠️ Ay okunamadı, tarih seçimine direkt geçiliyor...")
                 break
-            fark = (hedef_yil - m_yil) * 12 + (hedef_ay - m_ay)
-            if fark == 0:
-                print(f"   ✅ Hedef aydayız ({m_ay}/{m_yil})")
+
+            # Yıl okunamadıysa hedef yılla aynı varsay
+            if yil is None:
+                yil = hedef_yil
+
+            print(f"   📍 Takvim şu an: Ay={ay_no}, Yıl={yil} | Hedef: Ay={hedef_ay}, Yıl={hedef_yil}")
+
+            if ay_no == hedef_ay and yil == hedef_yil:
+                print("   ✅ Hedef ay/yıla ulaşıldı")
                 break
-            elif fark < 0:
-                sel = "div.widget-datepicker__nav.widget-datepicker__nav--previous"
-            else:
-                sel = "div.widget-datepicker__nav.widget-datepicker__nav--next"
+
+            prev_butonlar = driver.find_elements(
+                By.CSS_SELECTOR, "div.widget-datepicker__nav.widget-datepicker__nav--previous")
+            next_butonlar = driver.find_elements(
+                By.CSS_SELECTOR, "div.widget-datepicker__nav.widget-datepicker__nav--next")
+
             try:
-                btn = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, sel)))
-                driver.execute_script("arguments[0].click();", btn)
+                # ÖNCE YILI DÜZELT (varsa ayrı yıl navı)
+                if yil != hedef_yil and yil_idx is not None:
+                    if yil > hedef_yil and len(prev_butonlar) > yil_idx:
+                        driver.execute_script("arguments[0].click();", prev_butonlar[yil_idx])
+                        print("   ⏪ Yıl geri")
+                    elif yil < hedef_yil and len(next_butonlar) > yil_idx:
+                        driver.execute_script("arguments[0].click();", next_butonlar[yil_idx])
+                        print("   ⏩ Yıl ileri")
+                    time.sleep(1.2)
+                    continue
+
+                # SONRA AYI DÜZELT
+                # (Yıl navı yoksa ay navı yıl sınırını kendisi aşar varsayımıyla
+                #  toplam fark üzerinden ilerle)
+                toplam_fark = (hedef_yil - yil) * 12 + (hedef_ay - ay_no)
+                if toplam_fark < 0 and len(prev_butonlar) > (ay_idx or 0):
+                    driver.execute_script("arguments[0].click();", prev_butonlar[ay_idx or 0])
+                    print("   ⏪ Ay geri")
+                elif toplam_fark > 0 and len(next_butonlar) > (ay_idx or 0):
+                    driver.execute_script("arguments[0].click();", next_butonlar[ay_idx or 0])
+                    print("   ⏩ Ay ileri")
+                else:
+                    break
                 time.sleep(1.2)
-            except:
+
+            except Exception as nav_hata:
+                print(f"   ⚠️ Nav tıklama hatası: {str(nav_hata)[:30]}")
                 break
 
         # 3️⃣ HEDEF GÜNÜ SEÇ
         tarih_secici = f'td.widget-datepicker__calendar-body-cell[data-date="{hedef_iso}"]'
-        tarih_elemani = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, tarih_secici)))
-        driver.execute_script("arguments[0].scrollIntoView({block:'center'});", tarih_elemani)
-        time.sleep(1)
-        driver.execute_script("arguments[0].click();", tarih_elemani)
-        print(f"   ✅ TARİH SEÇİLDİ: {hedef_iso}")
-        time.sleep(10)  # Sayfanın yüklenmesi
-        return True
+        try:
+            tarih_elemani = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, tarih_secici)))
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", tarih_elemani)
+            time.sleep(1)
+            driver.execute_script("arguments[0].click();", tarih_elemani)
+            print(f"   ✅ TARİH SEÇİLDİ: {hedef_iso}")
+            time.sleep(10)
+            return True
+        except Exception as e:
+            print(f"   ❌ TARİH HÜCRESI BULUNAMADI: {str(e)[:40]}")
+            # Debug: takvimde görünen tarihleri listele
+            try:
+                hucreler = driver.find_elements(
+                    By.CSS_SELECTOR, "td.widget-datepicker__calendar-body-cell")
+                ornekler = [h.get_attribute("data-date") for h in hucreler[:10] if h.get_attribute("data-date")]
+                print(f"      Takvimde görünenler (ilk 10): {ornekler}")
+            except:
+                pass
+            return False
 
     except Exception as e:
         print(f"   ❌ TAKVİM HATASI: {str(e)[:60]}")
         return False
-
 # =========================================================
 # 🌐 MACKOLİK GÜNLÜK ÇEKİM (BUFFER'LI KAYDIRMA)
 # =========================================================

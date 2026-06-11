@@ -178,18 +178,11 @@ def debug_sayfa_kaydet(driver, gun_iso):
 # 📅 TAKVİM - SENİN ÇALIŞAN KODUN BİREBİR UYARLANMIŞ HALİ
 # =============================================================================
 def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
-    """
-    İddaa.com'da 'Önceki gün'/'Ertesi gün' butonlarıyla hedef tarihe gider.
-    JavaScript ile zorla tıklama kullanır.
-    """
     print(f"   🔧 İddaa Tarih navigasyonu: {hedef_tarih_iso}")
     
     try:
         hedef_yil, hedef_ay, hedef_gun = map(int, hedef_tarih_iso.split('-'))
         
-        # ═══════════════════════════════════════════
-        # 0️⃣ POPUP'LARI KAPAT
-        # ═══════════════════════════════════════════
         time.sleep(2)
         try:
             kapat_sayisi = driver.execute_script("""
@@ -203,283 +196,75 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
         except:
             pass
         
-        # ═══════════════════════════════════════════
-        # 1️⃣ MEVCUT TARİHİ OKU
-        # ═══════════════════════════════════════════
-        print("   📍 Mevcut tarih okunuyor...")
-        
-        ay_kisaltma_tr = {
-            "Oca": 1, "Şub": 2, "Mar": 3, "Nis": 4,
-            "May": 5, "Haz": 6, "Tem": 7, "Ağu": 8,
-            "Eyl": 9, "Eki": 10, "Kas": 11, "Ara": 12
-        }
-        
-        mevcut_tarih = None
-        
-        for deneme in range(15):
-            try:
-                metin = driver.execute_script("""
-                    var span = document.querySelector('span.truncate');
-                    return span ? span.innerText.trim() : null;
-                """)
-                
-                if metin:
-                    print(f"   📍 Buton metni: '{metin}'")
-                    
-                    if metin.lower() == "bugün":
-                        mevcut_tarih = datetime.date.today()
-                        print(f"   📍 Bugün: {mevcut_tarih}")
-                        break
-                    
-                    parts = metin.split()
-                    if len(parts) >= 3:
-                        gun = int(parts[0])
-                        ay = ay_kisaltma_tr.get(parts[1], 0)
-                        yil = int(parts[2])
-                        if yil < 100:
-                            yil += 2000
-                        
-                        if ay > 0:
-                            mevcut_tarih = datetime.date(yil, ay, gun)
-                            print(f"   📍 Mevcut: {mevcut_tarih}")
-                            break
-                            
-            except Exception as e:
-                pass
-            
-            if deneme % 3 == 0 and deneme > 0:
-                print(f"   ⏳ Bekleniyor... ({deneme}sn)")
-            time.sleep(1)
-        
-        if mevcut_tarih is None:
-            print("   ❌ Mevcut tarih okunamadı!")
-            
-            # DEBUG: Tüm truncate span'ları listele
-            try:
-                spans = driver.execute_script("""
-                    var spans = document.querySelectorAll('span.truncate');
-                    var results = [];
-                    spans.forEach(function(s) { results.push(s.innerText.trim()); });
-                    return results;
-                """)
-                print(f"   🔍 span.truncate içerikleri: {spans}")
-            except:
-                pass
-            
-            return False
-        
-        # ═══════════════════════════════════════════
-        # 2️⃣ HEDEF TARİHE GİT
-        # ═══════════════════════════════════════════
-        hedef_tarih = datetime.date(hedef_yil, hedef_ay, hedef_gun)
-        fark = (hedef_tarih - mevcut_tarih).days
-        
-        print(f"   📍 Mevcut: {mevcut_tarih} | Hedef: {hedef_tarih} | Fark: {fark} gün")
-        
-        if fark == 0:
-            print(f"   ✅ Zaten hedef tarihteyiz!")
-            time.sleep(3)
-            return True
-        
-        max_tiklama = abs(fark) + 5
-        tiklanan = 0
-        
-        # ── JAVASCRIPT TIKLAMA FONKSİYONU ──
-        def js_tikla(selector):
-            """JavaScript ile element bul ve tıkla"""
-            result = driver.execute_script(f"""
-                var el = document.querySelector('{selector}');
-                if (el) {{
-                    el.click();
-                    return 'clicked';
-                }}
-                return 'not found';
-            """)
-            return result == 'clicked'
-        
-        def js_tikla_xpath(xpath_expr):
-            """XPath ile element bul ve tıkla"""
-            result = driver.execute_script(f"""
-                var xpath = "{xpath_expr}";
-                var result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-                var el = result.singleNodeValue;
-                if (el) {{
-                    el.click();
-                    return 'clicked';
-                }}
-                return 'not found';
-            """)
-            return result == 'clicked'
-        
-        if fark > 0:
-            # İLERİ GİT → "Ertesi gün"
-            print(f"   📍 İleri gitmek gerekiyor ({fark} gün)...")
-            
-            for i in range(max_tiklama):
-                tiklandi = False
-                
-                # YÖNTEM 1: aria-label
-                if not tiklandi:
-                    tiklandi = js_tikla("button[aria-label='Ertesi gün']")
-                
-                # YÖNTEM 2: title attribute
-                if not tiklandi:
-                    tiklandi = js_tikla("button[title='Ertesi gün']")
-                
-                # YÖNTEM 3: SVG arrow-right içindeki button
-                if not tiklandi:
-                    tiklandi = js_tikla("button:has(svg [href*='arrow-right'])")
-                
-                # YÖNTEM 4: XPath
-                if not tiklandi:
-                    tiklandi = js_tikla_xpath("//button[@title='Ertesi gün' or @aria-label='Ertesi gün']")
-                
-                # YÖNTEM 5: Tüm button'ları tara, text'inde "Ertesi" geçen
-                if not tiklandi:
-                    tiklandi = driver.execute_script("""
-                        var btns = document.querySelectorAll('button');
-                        for (var i = 0; i < btns.length; i++) {
-                            var txt = btns[i].innerText || '';
-                            var aria = btns[i].getAttribute('aria-label') || '';
-                            var title = btns[i].getAttribute('title') || '';
-                            if (txt.includes('Ertesi') || aria.includes('Ertesi') || title.includes('Ertesi')) {
-                                btns[i].click();
-                                return true;
-                            }
-                        }
-                        return false;
-                    """)
-                
-                if tiklandi:
-                    tiklanan += 1
-                    print(f"   📍 Ertesi gün [{tiklanan}/{fark}]")
-                else:
-                    print(f"   ❌ Ertesi gün butonu bulunamadı! (deneme {i+1})")
-                    break
-                
-                time.sleep(1.5)
-                
-                # Mevcut tarihi güncelle
-                try:
-                    yeni_metin = driver.execute_script("""
-                        var span = document.querySelector('span.truncate');
-                        return span ? span.innerText.trim() : null;
-                    """)
-                    
-                    if yeni_metin:
-                        if yeni_metin.lower() == "bugün":
-                            mevcut_tarih = datetime.date.today()
-                        else:
-                            parts = yeni_metin.split()
-                            if len(parts) >= 3:
-                                g = int(parts[0])
-                                a = ay_kisaltma_tr.get(parts[1], 0)
-                                y = int(parts[2])
-                                if y < 100: y += 2000
-                                if a > 0:
-                                    mevcut_tarih = datetime.date(y, a, g)
-                except:
-                    pass
-                
-                if mevcut_tarih >= hedef_tarih:
-                    print(f"   ✅ Hedef tarihe ulaşıldı: {mevcut_tarih}")
-                    break
-        
-        elif fark < 0:
-            # GERİ GİT → "Önceki gün"
-            geri_fark = abs(fark)
-            print(f"   📍 Geri gitmek gerekiyor ({geri_fark} gün)...")
-            
-            for i in range(max_tiklama):
-                tiklandi = False
-                
-                # YÖNTEM 1: aria-label
-                if not tiklandi:
-                    tiklandi = js_tikla("button[aria-label='Önceki gün']")
-                
-                # YÖNTEM 2: title attribute
-                if not tiklandi:
-                    tiklandi = js_tikla("button[title='Önceki gün']")
-                
-                # YÖNTEM 3: SVG arrow-left içindeki button
-                if not tiklandi:
-                    tiklandi = js_tikla("button:has(svg [href*='arrow-left'])")
-                
-                # YÖNTEM 4: XPath
-                if not tiklandi:
-                    tiklandi = js_tikla_xpath("//button[@title='Önceki gün' or @aria-label='Önceki gün']")
-                
-                # YÖNTEM 5: Tüm button'ları tara
-                if not tiklandi:
-                    tiklandi = driver.execute_script("""
-                        var btns = document.querySelectorAll('button');
-                        for (var i = 0; i < btns.length; i++) {
-                            var txt = btns[i].innerText || '';
-                            var aria = btns[i].getAttribute('aria-label') || '';
-                            var title = btns[i].getAttribute('title') || '';
-                            if (txt.includes('Önceki') || aria.includes('Önceki') || title.includes('Önceki')) {
-                                btns[i].click();
-                                return true;
-                            }
-                        }
-                        return false;
-                    """)
-                
-                if tiklandi:
-                    tiklanan += 1
-                    print(f"   📍 Önceki gün [{tiklanan}/{geri_fark}]")
-                else:
-                    print(f"   ❌ Önceki gün butonu bulunamadı! (deneme {i+1})")
-                    break
-                
-                time.sleep(1.5)
-                
-                # Mevcut tarihi güncelle
-                try:
-                    yeni_metin = driver.execute_script("""
-                        var span = document.querySelector('span.truncate');
-                        return span ? span.innerText.trim() : null;
-                    """)
-                    
-                    if yeni_metin:
-                        if yeni_metin.lower() == "bugün":
-                            mevcut_tarih = datetime.date.today()
-                        else:
-                            parts = yeni_metin.split()
-                            if len(parts) >= 3:
-                                g = int(parts[0])
-                                a = ay_kisaltma_tr.get(parts[1], 0)
-                                y = int(parts[2])
-                                if y < 100: y += 2000
-                                if a > 0:
-                                    mevcut_tarih = datetime.date(y, a, g)
-                except:
-                    pass
-                
-                if mevcut_tarih <= hedef_tarih:
-                    print(f"   ✅ Hedef tarihe ulaşıldı: {mevcut_tarih}")
-                    break
-        
-        # ═══════════════════════════════════════════
-        # 3️⃣ SON KONTROL
-        # ═══════════════════════════════════════════
-        time.sleep(3)
+        cal_btn = WebDriverWait(driver, 15).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Takvim' or contains(@aria-label, 'Takvim')]"))
+        )
+        driver.execute_script("arguments[0].click();", cal_btn)
+        time.sleep(2)
         
         try:
-            son_metin = driver.execute_script("""
-                var span = document.querySelector('span.truncate');
-                return span ? span.innerText.trim() : null;
-            """)
-            print(f"   📍 Son durum: '{son_metin}'")
+            WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']")))
         except:
-            pass
+            driver.switch_to.default_content()
+            WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']")))
+
+        cells = driver.find_elements(By.CSS_SELECTOR, f"td[data-day='{hedef_tarih_iso}']")
+        month_clicks = 0
         
-        print(f"   ✅ Tarih navigasyonu tamamlandı!")
-        time.sleep(5)
-        return True
-        
+        while not cells and month_clicks < 12:
+            prev_btns = driver.find_elements(By.XPATH, "//button[contains(@aria-label, 'Previous') or @name='previous-month' or contains(@aria-label, 'Önceki')]")
+            if not prev_btns:
+                prev_btns = driver.find_elements(By.XPATH, "//button[.//svg[contains(@href, 'arrow-left')]]")
+            if prev_btns:
+                driver.execute_script("arguments[0].click();", prev_btns[0])
+                time.sleep(1)
+                cells = driver.find_elements(By.CSS_SELECTOR, f"td[data-day='{hedef_tarih_iso}']")
+                month_clicks += 1
+            else:
+                break
+                
+        if cells:
+            btns = cells[0].find_elements(By.TAG_NAME, "button")
+            if btns:
+                driver.execute_script("arguments[0].click();", btns[0])
+            else:
+                driver.execute_script("arguments[0].click();", cells[0])
+            time.sleep(5)
+            print(f"   ✅ TARİH SEÇİLDİ: {hedef_tarih_iso}")
+            return True
+        else:
+            print(f"   ❌ Hedef tarih bulunamadı: {hedef_tarih_iso}")
+            
+            tum_butonlar = driver.find_elements(By.CSS_SELECTOR, "button[aria-label]")
+            bulundu = False
+            ay_ingilizce = {1:"January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December"}
+            ay_adi = ay_ingilizce.get(hedef_ay, "")
+            
+            for btn in tum_butonlar:
+                aria = btn.get_attribute("aria-label") or ""
+                if ay_adi in aria and str(hedef_yil) in aria:
+                    gun_match = re.search(r',\s*(\d+)(?:st|nd|rd|th)?', aria)
+                    if gun_match and int(gun_match.group(1)) == hedef_gun:
+                        driver.execute_script("arguments[0].click();", btn)
+                        print(f"   ✅ TARİH SEÇİLDİ (button): {hedef_tarih_iso}")
+                        time.sleep(5)
+                        bulundu = True
+                        break
+            
+            if bulundu:
+                return True
+            
+            print(f"   🔍 Takvimdeki günler:")
+            for btn in tum_butonlar[:35]:
+                aria = btn.get_attribute("aria-label") or ""
+                text = btn.text.strip()
+                if aria:
+                    print(f"      - {text} | {aria}")
+            
+            return False
+            
     except Exception as e:
-        print(f"   ❌ TARİH HATASI: {e}")
+        print(f"   ❌ TAKVİM HATASI: {e}")
         import traceback
         traceback.print_exc()
         return False

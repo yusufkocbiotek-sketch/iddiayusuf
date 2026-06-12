@@ -20,8 +20,8 @@ from selenium.common.exceptions import *
 # =========================
 # ⚙️ AYARLAR
 # =========================
-BASLANGIC_TARIHI = "01.06.2026"   # GG.AA.YYYY
-BITIS_TARIHI = "12.05.2026"       # GG.AA.YYYY
+BASLANGIC_TARIHI = "16.05.2026"   # GG.AA.YYYY
+BITIS_TARIHI = "16.05.2026"       # GG.AA.YYYY
 
 BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
@@ -135,6 +135,7 @@ TAKIM_TAKMA_ADLAR = {
     "asane fotball 2": "aasane 2",
     "il gneist": "gneist",
     "nykoebing": "nykobing",
+    "fa 2000 kobenhavn": "fa 2000",
     "nykobing fc": "nykobing",
 
     # ====== KANADA / ABD ======

@@ -20,8 +20,8 @@ from selenium.common.exceptions import *
 # =========================
 # ⚙️ AYARLAR
 # =========================
-BASLANGIC_TARIHI = "23.05.2026"   # GG.AA.YYYY
-BITIS_TARIHI = "25.05.2026"       # GG.AA.YYYY
+BASLANGIC_TARIHI = "01.06.2026"   # GG.AA.YYYY
+BITIS_TARIHI = "12.05.2026"       # GG.AA.YYYY
 
 BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"

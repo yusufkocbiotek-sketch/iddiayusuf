@@ -38,9 +38,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .tablo{width:100%;margin-top:10px}
 .gun-baslik{background:#161b22;border:1px solid #21262d;padding:8px 12px;font-size:12px;font-weight:700;color:#00c853;display:flex;justify-content:space-between;border-radius:6px 6px 0 0;margin-top:10px}
 .gun-baslik .gc{background:#00c853;color:#0d1117;padding:1px 8px;border-radius:10px;font-size:10px}
-.tablo-header{display:grid;grid-template-columns:50px 1fr repeat(13,46px) 24px;background:#1a1f2e;border:1px solid #21262d;padding:4px 0;font-size:8px;color:#888;text-align:center;font-weight:600}
+.tablo-header{display:grid;grid-template-columns:50px 1fr repeat(14,46px) 24px;background:#1a1f2e;border:1px solid #21262d;padding:4px 0;font-size:8px;color:#888;text-align:center;font-weight:600}
 .tablo-header div{padding:2px}
-.mac-satir{display:grid;grid-template-columns:50px 1fr repeat(13,46px) 24px;background:#161b22;border:1px solid #21262d;border-top:none;padding:0;align-items:center;font-size:11px;transition:background .2s}
+.mac-satir{display:grid;grid-template-columns:50px 1fr repeat(14,46px) 24px;background:#161b22;border:1px solid #21262d;border-top:none;padding:0;align-items:center;font-size:11px;transition:background .2s}
 .mac-satir:hover{background:#1a2233}
 .mac-satir:last-child{border-radius:0 0 6px 6px}
 .ms-saat{text-align:center;padding:6px 2px;display:flex;flex-direction:column}
@@ -118,14 +118,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 .footer{background:#161b22;border-top:1px solid #21262d;padding:10px 15px;text-align:center;font-size:10px;color:#444;margin-top:15px}
 
 @media(max-width:900px){
-.tablo-header,.mac-satir{grid-template-columns:45px 1fr repeat(7,42px) 22px}
-.tablo-header div:nth-child(n+11),.mac-satir .oran-hucre:nth-child(n+11){display:none}
-.tablo-header div:nth-child(n+11){display:none}
+.tablo-header,.mac-satir{grid-template-columns:45px 1fr repeat(8,42px) 22px}
+.tablo-header div:nth-child(n+12),.mac-satir .oran-hucre:nth-child(n+12){display:none}
+.tablo-header div:nth-child(n+12){display:none}
 }
 @media(max-width:600px){
-.tablo-header,.mac-satir{grid-template-columns:40px 1fr repeat(5,38px) 20px}
-.tablo-header div:nth-child(n+9),.mac-satir .oran-hucre:nth-child(n+9){display:none}
-.tablo-header div:nth-child(n+9){display:none}
+.tablo-header,.mac-satir{grid-template-columns:40px 1fr repeat(6,38px) 20px}
+.tablo-header div:nth-child(n+10),.mac-satir .oran-hucre:nth-child(n+10){display:none}
+.tablo-header div:nth-child(n+10){display:none}
 .header h1{font-size:16px}.fr,.air{flex-direction:column;align-items:stretch}
 .filters input[type=text]{max-width:100%;width:100%}.ofk{flex-direction:column;align-items:stretch}
 }
@@ -226,7 +226,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 </style>
 </head>
 <body>
-<div class="header"><h1>⚽ İddaa Oranları & Analiz</h1><div class="info" id="info">Yükleniyor...</div></div>
+<div class="header"><h1>⚽ İddaa Oranları - Analiz & Bülten</h1><div class="info" id="info">Yükleniyor...</div></div>
 <div class="main-tabs">
   <div class="main-tab aktif" onclick="mainTab(0)">📋 Bülten</div>
   <div class="main-tab" onclick="mainTab(1)">📊 Oran Analizi</div>
@@ -255,8 +255,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
         <option value="ms1d">MS1↓</option>
         <option value="ms2a">MS2↑</option>
         <option value="ms2d">MS2↓</option>
-        <option value="usta">Üst↑</option>
-        <option value="alta">Alt↑</option>
+        <option value="usta">Üst2.5↑</option>
+        <option value="alta">Alt2.5↑</option>
+        <option value="ust15a">Üst1.5↑</option>
+        <option value="alt15a">Alt1.5↑</option>
       </select>
       <button class="btn-r" onclick="resetFiltre()">↺</button>
     </div>
@@ -266,149 +268,42 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
         <select id="oranTuru">
           <option value="">Tür...</option>
           
-          <optgroup label="MS">
+          <optgroup label="Maç Sonucu">
             <option value="Maç Sonucu_1">MS1</option>
             <option value="Maç Sonucu_0">MSX</option>
             <option value="Maç Sonucu_2">MS2</option>
           </optgroup>
 
-          <optgroup label="A/Ü">
-            <option value="Alt/Üst 2.5_Alt">Alt2.5</option>
-            <option value="Alt/Üst 2.5_Üst">Üst2.5</option>
-            <option value="İlk Yarı Alt/Üst 1.5_Alt">İYA1.5</option>
-            <option value="İlk Yarı Alt/Üst 1.5_Üst">İYÜ1.5</option>
+          <optgroup label="Alt/Üst">
+            <option value="Alt/Üst 1.5_Alt">1.5 Alt</option>
+            <option value="Alt/Üst 1.5_Üst">1.5 Üst</option>
+            <option value="Alt/Üst 2.5_Alt">2.5 Alt</option>
+            <option value="Alt/Üst 2.5_Üst">2.5 Üst</option>
+            <option value="Alt/Üst 3.5_Alt">3.5 Alt</option>
+            <option value="Alt/Üst 3.5_Üst">3.5 Üst</option>
           </optgroup>
 
-          <optgroup label="KG">
-            <option value="Karşılıklı Gol_Var">KGV</option>
-            <option value="Karşılıklı Gol_Yok">KGY</option>
-            <option value="İlk Yarı Karşılıklı Gol_Var">İYKG Var</option>
-            <option value="İlk Yarı Karşılıklı Gol_Yok">İYKG Yok</option>
-            <option value="İkinci Yarı Karşılıklı Gol_Var">2YKG Var</option>
-            <option value="İkinci Yarı Karşılıklı Gol_Yok">2YKG Yok</option>
+          <optgroup label="Karşılıklı Gol">
+            <option value="Karşılıklı Gol_Var">Var</option>
+            <option value="Karşılıklı Gol_Yok">Yok</option>
           </optgroup>
 
-          <optgroup label="İY">
+          <optgroup label="İlk Yarı">
             <option value="İlk Yarı Sonucu_1">İY1</option>
             <option value="İlk Yarı Sonucu_0">İYX</option>
             <option value="İlk Yarı Sonucu_2">İY2</option>
+            <option value="İlk Yarı Alt/Üst 1.5_Alt">İY1.5 Alt</option>
+            <option value="İlk Yarı Alt/Üst 1.5_Üst">İY1.5 Üst</option>
+            <option value="İlk Yarı Karşılıklı Gol_Var">İY KG Var</option>
+            <option value="İlk Yarı Karşılıklı Gol_Yok">İY KG Yok</option>
           </optgroup>
 
-          <optgroup label="Kmb">
-            <option value="Her İki Yarıda da Üst 1.5_Evet">2YÜ1.5</option>
-            
-            <!-- Maç Sonucu + KG Tüm Kombinasyonlar -->
-            <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">1+KGV</option>
-            <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">1+KGY</option>
-            <option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">X+KGV</option>
-            <option value="Maç Sonucu ve Karşılıklı Gol_0 ve Yok">X+KGY</option>
-            <option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">2+KGV</option>
-            <option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">2+KGY</option>
-
-            <!-- İY + 2Y KG Tüm Durumlar -->
-            <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2YKG E/E</option>
-            <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır">2YKG E/H</option>
-            <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet">2YKG H/E</option>
-            <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">2YKG H/H</option>
-
-            <!-- Maç Sonucu + 1.5 Alt/Üst -->
-            <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Alt">MS 1 + 1.5 Alt</option>
-            <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Üst">MS 1 + 1.5 Üst</option>
-            <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Alt">MS X + 1.5 Alt</option>
-            <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Üst">MS X + 1.5 Üst</option>
-            <option value="Maç Sonucu ve Alt/Üst 1.5_2 ve Alt">MS 2 + 1.5 Alt</option>
-            <option value="Maç Sonucu ve Alt/Üst 1.5_2 ve Üst">MS 2 + 1.5 Üst</option>
-
-            <!-- Maç Sonucu + 2.5 Alt/Üst -->
-            <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Alt">MS 1 + 2.5 Alt</option>
-            <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Üst">MS 1 + 2.5 Üst</option>
-            <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Alt">MS X + 2.5 Alt</option>
-            <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Üst">MS X + 2.5 Üst</option>
-            <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Alt">MS 2 + 2.5 Alt</option>
-            <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Üst">MS 2 + 2.5 Üst</option>
-
-            <!-- 2.5 Alt/Üst + KG -->
-            <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Var">2.5 Alt + KG Var</option>
-            <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Yok">2.5 Alt + KG Yok</option>
-            <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Var">2.5 Üst + KG Var</option>
-            <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Yok">2.5 Üst + KG Yok</option>
-          </optgroup>
-
-          <!-- YENİ EKLENEN TÜM FİLTRELER -->
-          <optgroup label="🏆 Her İki Yarıyı Kazanır">
-            <option value="Ev Sahibi Her İki Yarıyı Kazanır_Evet">Ev Sahibi Her İki Yarıyı Kazanır</option>
-            <option value="Deplasman Her İki Yarıyı Kazanır_Evet">Deplasman Her İki Yarıyı Kazanır</option>
-          </optgroup>
-
-          <optgroup label="⏱️ İlk Yarı / Maç Sonucu (İY/MS)">
+          <optgroup label="Diğer">
+            <option value="Her İki Yarıda da Üst 1.5_Evet">2Y Üst1.5</option>
             <option value="İlk Yarı / Maç Sonucu_1/1">İY/MS 1/1</option>
-            <option value="İlk Yarı / Maç Sonucu_1/0">İY/MS 1/0</option>
-            <option value="İlk Yarı / Maç Sonucu_1/2">İY/MS 1/2</option>
-            <option value="İlk Yarı / Maç Sonucu_0/1">İY/MS 0/1</option>
-            <option value="İlk Yarı / Maç Sonucu_0/0">İY/MS 0/0</option>
-            <option value="İlk Yarı / Maç Sonucu_0/2">İY/MS 0/2</option>
-            <option value="İlk Yarı / Maç Sonucu_2/1">İY/MS 2/1</option>
-            <option value="İlk Yarı / Maç Sonucu_2/0">İY/MS 2/0</option>
-            <option value="İlk Yarı / Maç Sonucu_2/2">İY/MS 2/2</option>
+            <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">MS+KG 1Var</option>
           </optgroup>
 
-          <optgroup label="⚽ İY Sonucu + İY KG">
-            <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var">İY 1 + KG Var</option>
-            <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok">İY 1 + KG Yok</option>
-            <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var">İY 0 + KG Var</option>
-            <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok">İY 0 + KG Yok</option>
-            <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var">İY 2 + KG Var</option>
-            <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok">İY 2 + KG Yok</option>
-          </optgroup>
-
-          <optgroup label="📉 İY Sonucu + İY Alt/Üst 1.5">
-            <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Alt">İY 1 + Alt 1.5</option>
-            <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Alt">İY 0 + Alt 1.5</option>
-            <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Alt">İY 2 + Alt 1.5</option>
-            <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Üst">İY 1 + Üst 1.5</option>
-            <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Üst">İY 0 + Üst 1.5</option>
-            <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Üst">İY 2 + Üst 1.5</option>
-          </optgroup>
-
-          <optgroup label="🎯 Toplam Gol Aralığı">
-            <option value="Toplam Gol_0-1 gol">Toplam Gol: 0-1</option>
-            <option value="Toplam Gol_2-3 gol">Toplam Gol: 2-3</option>
-            <option value="Toplam Gol_4-5 gol">Toplam Gol: 4-5</option>
-            <option value="Toplam Gol_6+ gol">Toplam Gol: 6+</option>
-          </optgroup>
-
-          <optgroup label="🎯 Maç Skoru (Final Score)">
-            <option value="Maç Skoru_1:0">Skor: 1-0</option>
-            <option value="Maç Skoru_2:0">Skor: 2-0</option>
-            <option value="Maç Skoru_2:1">Skor: 2-1</option>
-            <option value="Maç Skoru_3:0">Skor: 3-0</option>
-            <option value="Maç Skoru_3:1">Skor: 3-1</option>
-            <option value="Maç Skoru_3:2">Skor: 3-2</option>
-            <option value="Maç Skoru_0:0">Skor: 0-0</option>
-            <option value="Maç Skoru_1:1">Skor: 1-1</option>
-            <option value="Maç Skoru_2:2">Skor: 2-2</option>
-            <option value="Maç Skoru_3:3">Skor: 3-3</option>
-            <option value="Maç Skoru_0:1">Skor: 0-1</option>
-            <option value="Maç Skoru_0:2">Skor: 0-2</option>
-            <option value="Maç Skoru_1:2">Skor: 1-2</option>
-            <option value="Maç Skoru_0:3">Skor: 0-3</option>
-            <option value="Maç Skoru_1:3">Skor: 1-3</option>
-            <option value="Maç Skoru_2:3">Skor: 2-3</option>
-            <option value="Maç Skoru_diğer">Skor: Diğer</option>
-          </optgroup>
-
-          <optgroup label="🎯 İlk Yarı Skoru (Detaylı)">
-            <option value="İlk Yarı Skoru_0:0">İY Skoru 0-0</option>
-            <option value="İlk Yarı Skoru_1:1">İY Skoru 1-1</option>
-            <option value="İlk Yarı Skoru_2:2">İY Skoru 2-2</option>
-            <option value="İlk Yarı Skoru_1:0">İY Skoru 1-0</option>
-            <option value="İlk Yarı Skoru_2:0">İY Skoru 2-0</option>
-            <option value="İlk Yarı Skoru_2:1">İY Skoru 2-1</option>
-            <option value="İlk Yarı Skoru_0:1">İY Skoru 0-1</option>
-            <option value="İlk Yarı Skoru_0:2">İY Skoru 0-2</option>
-            <option value="İlk Yarı Skoru_1:2">İY Skoru 1-2</option>
-            <option value="İlk Yarı Skoru_diğer">İY Skoru Diğer</option>
-          </optgroup>
         </select>
         <span class="fl">=</span><input type="number" id="oranDeger" step="0.01" placeholder="Oran">
         <button class="btn-a" onclick="filtreEkle()">+</button>
@@ -426,206 +321,32 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 <div class="tab-icerik" id="tab1">
   <div class="analiz-panel">
     <div class="analiz-baslik">📊 Oran Analizi — Biten Maç İstatistikleri</div>
-    <p style="color:#888;font-size:11px;margin-bottom:8px">Birden fazla filtre ekleyin (VE koşulu). Eşittir filtre.</p>
+    <p style="color:#888;font-size:11px;margin-bottom:8px">Birden fazla filtre ekleyebilirsin (VE mantığı ile çalışır).</p>
     <div class="air">
-      <select id="analizOranTuru" multiple size="18" style="width:100%;min-width:300px;">
-        <optgroup label="MS">
+      <select id="analizOranTuru">
+        <option value="">Tür Seç...</option>
+        <optgroup label="Maç Sonucu">
           <option value="Maç Sonucu_1">MS1</option>
           <option value="Maç Sonucu_0">MSX</option>
           <option value="Maç Sonucu_2">MS2</option>
         </optgroup>
-
-        <optgroup label="A/Ü">
-          <option value="Alt/Üst 2.5_Alt">Alt2.5</option>
-          <option value="Alt/Üst 2.5_Üst">Üst2.5</option>
-          <option value="İlk Yarı Alt/Üst 1.5_Alt">İYA1.5</option>
-          <option value="İlk Yarı Alt/Üst 1.5_Üst">İYÜ1.5</option>
+        <optgroup label="Alt/Üst">
+          <option value="Alt/Üst 1.5_Alt">1.5 Alt</option>
+          <option value="Alt/Üst 1.5_Üst">1.5 Üst</option>
+          <option value="Alt/Üst 2.5_Alt">2.5 Alt</option>
+          <option value="Alt/Üst 2.5_Üst">2.5 Üst</option>
         </optgroup>
-
         <optgroup label="KG">
-          <option value="Karşılıklı Gol_Var">KGV</option>
-          <option value="Karşılıklı Gol_Yok">KGY</option>
-          <option value="İlk Yarı Karşılıklı Gol_Var">İYKG Var</option>
-          <option value="İlk Yarı Karşılıklı Gol_Yok">İYKG Yok</option>
-          <option value="İkinci Yarı Karşılıklı Gol_Var">2YKG Var</option>
-          <option value="İkinci Yarı Karşılıklı Gol_Yok">2YKG Yok</option>
-
-          <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Alt">MS 1 + 1.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Üst">MS 1 + 1.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Alt">MS X + 1.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Üst">MS X + 1.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_2 ve Alt">MS 2 + 1.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_2 ve Üst">MS 2 + 1.5 Üst</option>
-
-          <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Alt">MS 1 + 2.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Üst">MS 1 + 2.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Alt">MS X + 2.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Üst">MS X + 2.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Alt">MS 2 + 2.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Üst">MS 2 + 2.5 Üst</option>
-
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Var">2.5 Alt + KG Var</option>
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Yok">2.5 Alt + KG Yok</option>
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Var">2.5 Üst + KG Var</option>
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Yok">2.5 Üst + KG Yok</option>
-        </optgroup>
-
-        <optgroup label="İY">
-          <option value="İlk Yarı Sonucu_1">İY1</option>
-          <option value="İlk Yarı Sonucu_0">İYX</option>
-          <option value="İlk Yarı Sonucu_2">İY2</option>
-        </optgroup>
-
-        <optgroup label="Kmb">
-          <option value="Her İki Yarıda da Üst 1.5_Evet">2YÜ1.5</option>
-          
-          <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">1+KGV</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">1+KGY</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">X+KGV</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_0 ve Yok">X+KGY</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">2+KGV</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">2+KGY</option>
-
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">2YKG E/E</option>
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır">2YKG E/H</option>
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet">2YKG H/E</option>
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">2YKG H/H</option>
-        </optgroup>
-
-        <!-- ULTRA DETAYLI FİLTRELER -->
-        <optgroup label="🏆 Her İki Yarıyı Kazanır">
-          <option value="Ev Sahibi Her İki Yarıyı Kazanır_Evet">Ev Sahibi Her İki Yarıyı Kazanır</option>
-          <option value="Deplasman Her İki Yarıyı Kazanır_Evet">Deplasman Her İki Yarıyı Kazanır</option>
-        </optgroup>
-
-        <optgroup label="⏱️ İlk Yarı / Maç Sonucu (İY/MS)">
-          <option value="İlk Yarı / Maç Sonucu_1/1">İY/MS 1/1</option>
-          <option value="İlk Yarı / Maç Sonucu_1/0">İY/MS 1/0</option>
-          <option value="İlk Yarı / Maç Sonucu_1/2">İY/MS 1/2</option>
-          <option value="İlk Yarı / Maç Sonucu_0/1">İY/MS 0/1</option>
-          <option value="İlk Yarı / Maç Sonucu_0/0">İY/MS 0/0</option>
-          <option value="İlk Yarı / Maç Sonucu_0/2">İY/MS 0/2</option>
-          <option value="İlk Yarı / Maç Sonucu_2/1">İY/MS 2/1</option>
-          <option value="İlk Yarı / Maç Sonucu_2/0">İY/MS 2/0</option>
-          <option value="İlk Yarı / Maç Sonucu_2/2">İY/MS 2/2</option>
-        </optgroup>
-
-        <optgroup label="🤝 Maç Sonucu ve KG (Kombine)">
-          <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Var">MS 1 + KG Var</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_1 ve Yok">MS 1 + KG Yok</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_0 ve Var">MS 0 + KG Var</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_0 ve Yok">MS 0 + KG Yok</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_2 ve Var">MS 2 + KG Var</option>
-          <option value="Maç Sonucu ve Karşılıklı Gol_2 ve Yok">MS 2 + KG Yok</option>
-        </optgroup>
-
-        <optgroup label="⚽ İY Sonucu + İY KG">
-          <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var">İY 1 + KG Var</option>
-          <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok">İY 1 + KG Yok</option>
-          <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var">İY 0 + KG Var</option>
-          <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok">İY 0 + KG Yok</option>
-          <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var">İY 2 + KG Var</option>
-          <option value="İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok">İY 2 + KG Yok</option>
-        </optgroup>
-
-        <optgroup label="📉 İY Sonucu + İY Alt/Üst 1.5">
-          <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Alt">İY 1 + Alt 1.5</option>
-          <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Alt">İY 0 + Alt 1.5</option>
-          <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Alt">İY 2 + Alt 1.5</option>
-          <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Üst">İY 1 + Üst 1.5</option>
-          <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Üst">İY 0 + Üst 1.5</option>
-          <option value="İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Üst">İY 2 + Üst 1.5</option>
-        </optgroup>
-
-        <optgroup label="🥅 İkinci Yarı KG">
-          <option value="İkinci Yarı Karşılıklı Gol_Var">2. Yarı KG Var</option>
-          <option value="İkinci Yarı Karşılıklı Gol_Yok">2. Yarı KG Yok</option>
-        </optgroup>
-
-        <optgroup label="🎯 Maç Sonucu ve Alt/Üst 1.5">
-          <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Alt">MS 1 + 1.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Üst">MS 1 + 1.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Alt">MS X + 1.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Üst">MS X + 1.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_2 ve Alt">MS 2 + 1.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 1.5_2 ve Üst">MS 2 + 1.5 Üst</option>
-        </optgroup>
-
-        <optgroup label="🎯 Maç Sonucu ve 2.5 Alt/Üst">
-          <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Alt">MS 1 + 2.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Üst">MS 1 + 2.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Alt">MS X + 2.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Üst">MS X + 2.5 Üst</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Alt">MS 2 + 2.5 Alt</option>
-          <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Üst">MS 2 + 2.5 Üst</option>
-        </optgroup>
-
-        <optgroup label="🎯 2.5 Alt/Üst ve Karşılıklı Gol">
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Var">2.5 Alt + KG Var</option>
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Yok">2.5 Alt + KG Yok</option>
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Var">2.5 Üst + KG Var</option>
-          <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Yok">2.5 Üst + KG Yok</option>
-        </optgroup>
-
-        <optgroup label="📈 Her İki Yarıda Üst 1.5">
-          <option value="Her İki Yarıda da Üst 1.5_Evet">Her İki Yarıda da Üst 1.5 (Evet)</option>
-        </optgroup>
-
-        <optgroup label="🎯 Toplam Gol Aralığı">
-          <option value="Toplam Gol_0-1 gol">Toplam Gol: 0-1</option>
-          <option value="Toplam Gol_2-3 gol">Toplam Gol: 2-3</option>
-          <option value="Toplam Gol_4-5 gol">Toplam Gol: 4-5</option>
-          <option value="Toplam Gol_6+ gol">Toplam Gol: 6+</option>
-        </optgroup>
-
-        <optgroup label="🎯 Maç Skoru (Final Score)">
-          <option value="Maç Skoru_1:0">Skor: 1-0</option>
-          <option value="Maç Skoru_2:0">Skor: 2-0</option>
-          <option value="Maç Skoru_2:1">Skor: 2-1</option>
-          <option value="Maç Skoru_3:0">Skor: 3-0</option>
-          <option value="Maç Skoru_3:1">Skor: 3-1</option>
-          <option value="Maç Skoru_3:2">Skor: 3-2</option>
-          <option value="Maç Skoru_0:0">Skor: 0-0</option>
-          <option value="Maç Skoru_1:1">Skor: 1-1</option>
-          <option value="Maç Skoru_2:2">Skor: 2-2</option>
-          <option value="Maç Skoru_3:3">Skor: 3-3</option>
-          <option value="Maç Skoru_0:1">Skor: 0-1</option>
-          <option value="Maç Skoru_0:2">Skor: 0-2</option>
-          <option value="Maç Skoru_1:2">Skor: 1-2</option>
-          <option value="Maç Skoru_0:3">Skor: 0-3</option>
-          <option value="Maç Skoru_1:3">Skor: 1-3</option>
-          <option value="Maç Skoru_2:3">Skor: 2-3</option>
-          <option value="Maç Skoru_diğer">Skor: Diğer</option>
-        </optgroup>
-
-        <optgroup label="🎯 İlk Yarı Skoru (Detaylı)">
-          <option value="İlk Yarı Skoru_0:0">İY Skoru 0-0</option>
-          <option value="İlk Yarı Skoru_1:1">İY Skoru 1-1</option>
-          <option value="İlk Yarı Skoru_2:2">İY Skoru 2-2</option>
-          <option value="İlk Yarı Skoru_1:0">İY Skoru 1-0</option>
-          <option value="İlk Yarı Skoru_2:0">İY Skoru 2-0</option>
-          <option value="İlk Yarı Skoru_2:1">İY Skoru 2-1</option>
-          <option value="İlk Yarı Skoru_0:1">İY Skoru 0-1</option>
-          <option value="İlk Yarı Skoru_0:2">İY Skoru 0-2</option>
-          <option value="İlk Yarı Skoru_1:2">İY Skoru 1-2</option>
-          <option value="İlk Yarı Skoru_diğer">İY Skoru Diğer</option>
-        </optgroup>
-
-        <optgroup label="🥅 İY ve 2Y KG (Detaylı)">
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır">İY & 2Y KG: H/H</option>
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır">İY & 2Y KG: E/H</option>
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet">İY & 2Y KG: E/E</option>
-          <option value="İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet">İY & 2Y KG: H/E</option>
+          <option value="Karşılıklı Gol_Var">KG Var</option>
+          <option value="Karşılıklı Gol_Yok">KG Yok</option>
         </optgroup>
       </select>
-
-      <span class="fl">=</span><input type="number" id="analizOranDeger" step="0.01" placeholder="Oran">
+      <input type="number" id="analizOranDeger" step="0.01" placeholder="Değer">
       <button class="btn-a" onclick="analizFiltreEkle()">+ Ekle</button>
-      <button class="btn-a" onclick="analizYap()">🔍 Analiz</button>
       <button class="btn-r" onclick="analizFiltreTemizle()">Temizle</button>
     </div>
     <div class="filtre-listesi" id="analizFiltreListesi"></div>
-    <div id="analizSonuc"><div class="analiz-yok">👆 Filtre ekle → Analiz Et</div></div>
+    <div id="analizSonuc"><div class="analiz-yok">Filtre ekleyip "Analiz Et"e bas</div></div>
   </div>
 </div>
 
@@ -638,7 +359,7 @@ let tumMaclar=[],gecmisMaclar=[],bultenFiltreler=[],analizFiltreler=[];
 
 async function yukle(){try{const r=await fetch(JSON_URL+"?t="+Date.now());const d=await r.json();tumMaclar=d.matches||[];document.getElementById("info").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>iddaa.com";tarihleriDoldur();ligleriDoldur();filtrele();gecmisYukle()}catch(e){document.getElementById("container").innerHTML='<div class="hata">'+e.message+'</div>'}}
 
-async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());const d=await r.json();gecmisMaclar=d.matches||[];document.getElementById("info").innerHTML+="<br>Gecmis: "+gecmisMaclar.length+" mac"}catch(e){}}
+async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());const d=await r.json();gecmisMaclar=d.matches||[];document.getElementById("info").innerHTML+="<br>Gecmis: "+gecmisMaclar.length+" maç"}catch(e){}}
 
 function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
 function ligleriDoldur(){const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();const s=document.getElementById("ligSelect");l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}
@@ -691,166 +412,56 @@ function dogruOran(m, key){
   if(key === "İlk Yarı Sonucu_0") return iy === "0";
   if(key === "İlk Yarı Sonucu_2") return iy === "2";
 
-  // İkinci yarı sonucu
-  if(key === "İkinci Yarı Sonucu_1") return ikinci === "1";
-  if(key === "İkinci Yarı Sonucu_0") return ikinci === "0";
-  if(key === "İkinci Yarı Sonucu_2") return ikinci === "2";
-
   // Maç alt/üst
-  if(key.includes("Alt/Üst 2.5_Alt")) return toplamGol < 2.5;
-  if(key.includes("Alt/Üst 2.5_Üst")) return toplamGol > 2.5;
   if(key.includes("Alt/Üst 1.5_Alt")) return toplamGol < 1.5;
   if(key.includes("Alt/Üst 1.5_Üst")) return toplamGol > 1.5;
+  if(key.includes("Alt/Üst 2.5_Alt")) return toplamGol < 2.5;
+  if(key.includes("Alt/Üst 2.5_Üst")) return toplamGol > 2.5;
   if(key.includes("Alt/Üst 3.5_Alt")) return toplamGol < 3.5;
   if(key.includes("Alt/Üst 3.5_Üst")) return toplamGol > 3.5;
 
   // İlk yarı alt/üst
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Alt")) return iyGol < 0.5;
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Üst")) return iyGol > 0.5;
   if(key.includes("İlk Yarı Alt/Üst 1.5_Alt")) return iyGol < 1.5;
   if(key.includes("İlk Yarı Alt/Üst 1.5_Üst")) return iyGol > 1.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Alt")) return iyGol < 2.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Üst")) return iyGol > 2.5;
 
   // KG
   if(key === "Karşılıklı Gol_Var") return kgVar;
   if(key === "Karşılıklı Gol_Yok") return !kgVar;
-
   if(key === "İlk Yarı Karşılıklı Gol_Var") return iyKgVar;
   if(key === "İlk Yarı Karşılıklı Gol_Yok") return !iyKgVar;
 
-  if(key === "İkinci Yarı Karşılıklı Gol_Var") return ikinciKgVar;
-  if(key === "İkinci Yarı Karşılıklı Gol_Yok") return !ikinciKgVar;
-
-  // Maç sonucu + KG
+  // Diğer mevcut kontroller...
   if(key.startsWith("Maç Sonucu ve Karşılıklı Gol_")){
-    const secim = key.split("_")[1]; // "1 ve Var"
+    const secim = key.split("_")[1];
     if(!secim) return false;
-
     const parca = secim.split(" ve ");
     const msSecim = parca[0];
     const kgSecim = parca[1];
-
-    const msDogru = msSecim === ms;
-    const kgDogru = kgSecim === "Var" ? kgVar : !kgVar;
-
-    return msDogru && kgDogru;
+    return msSecim === ms && (kgSecim === "Var" ? kgVar : !kgVar);
   }
 
-  // İlk yarı / maç sonucu
   if(key.startsWith("İlk Yarı / Maç Sonucu_")){
-    const secim = key.split("_")[1]; // 1/1, 0/2 vb.
+    const secim = key.split("_")[1];
     return secim === (iy + "/" + ms);
   }
 
-  // İlk yarı sonucu + İY KG
-  if(key.startsWith("İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_")){
-    const secim = key.split("_")[1]; // 1 ve Var
-    if(!secim) return false;
-
-    const parca = secim.split(" ve ");
-    const iySecim = parca[0];
-    const kgSecim = parca[1];
-
-    const iyDogru = iySecim === iy;
-    const kgDogru = kgSecim === "Var" ? iyKgVar : !iyKgVar;
-
-    return iyDogru && kgDogru;
-  }
-
-  // İlk yarı sonucu + İY Alt/Üst 1.5
-  if(key.startsWith("İlk Yarı Sonucu ve Altı/Üstü 1.5_")){
-    const secim = key.split("_")[1]; // 1 ve Üst
-    if(!secim) return false;
-
-    const parca = secim.split(" ve ");
-    const iySecim = parca[0];
-    const auSecim = parca[1];
-
-    const iyDogru = iySecim === iy;
-    const auDogru = auSecim === "Üst" ? iyGol > 1.5 : iyGol < 1.5;
-
-    return iyDogru && auDogru;
-  }
-
-  // Her iki yarıda da üst 1.5
   if(key === "Her İki Yarıda da Üst 1.5_Evet"){
     return iyGol > 1.5 && (ikinciSe + ikinciSd) > 1.5;
   }
 
-  if(key === "Her İki Yarıda da Üst 1.5_Hayır"){
-    return !(iyGol > 1.5 && (ikinciSe + ikinciSd) > 1.5);
-  }
-
-  // Her iki yarıda da alt 1.5
-  if(key === "Her İki Yarıda da Alt 1.5_Evet"){
-    return iyGol < 1.5 && (ikinciSe + ikinciSd) < 1.5;
-  }
-
-  if(key === "Her İki Yarıda da Alt 1.5_Hayır"){
-    return !(iyGol < 1.5 && (ikinciSe + ikinciSd) < 1.5);
-  }
-
-
-  // İlk yarı ve ikinci yarıda KG olur
-  if(key.startsWith("İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_")){
-    const secim = key.split("_")[1]; // Evet / Hayır
-    if(!secim) return false;
-
-    const parca = secim.split(" / ");
-    const ilk = parca[0];
-    const ikinciYari = parca[1];
-
-    const ilkDogru = ilk === "Evet" ? iyKgVar : !iyKgVar;
-    const ikinciDogru = ikinciYari === "Evet" ? ikinciKgVar : !ikinciKgVar;
-
-    return ilkDogru && ikinciDogru;
-  }
-
-  // Maç Sonucu ve Alt/Üst 1.5
-  if (key === "Maç Sonucu ve Alt/Üst 1.5") {
-      const secim = (m.oranlar[key] || "").toString().split("_")[1] || "";
-      const msDeger = secim.charAt(0); // 1 / X / 2
-      const auDeger = secim.includes("Alt") ? "Alt" : "Üst";
-
-      const msDogru = msDeger === (se > sd ? "1" : se < sd ? "2" : "X");
-      const auDogru = auDeger === "Alt" ? (se + sd) < 1.5 : (se + sd) > 1.5;
-
-      return msDogru && auDogru;
-  }
-
-  // Maç Sonucu ve Alt/Üst 2.5
-  if (key === "Maç Sonucu ve Alt/Üst 2.5") {
-      const secim = (m.oranlar[key] || "").toString().split("_")[1] || "";
-      const msDeger = secim.charAt(0);
-      const auDeger = secim.includes("Alt") ? "Alt" : "Üst";
-
-      const msDogru = msDeger === (se > sd ? "1" : se < sd ? "2" : "X");
-      const auDogru = auDeger === "Alt" ? (se + sd) < 2.5 : (se + sd) > 2.5;
-      return msDogru && auDogru;
-  }
-
-  // Alt/Üst 2.5 ve Karşılıklı Gol
-  if (key === "Alt/Üst 2.5 ve Karşılıklı Gol") {
-      const secim = (m.oranlar[key] || "").toString().split("_")[1] || "";
-      const auDeger = secim.includes("Alt") ? "Alt" : "Üst";
-      const kgDeger = secim.includes("Var") ? "Var" : "Yok";
-
-      const auDogru = auDeger === "Alt" ? (se + sd) < 2.5 : (se + sd) > 2.5;
-      const kgDogru = kgDeger === "Var" ? (se > 0 && sd > 0) : !(se > 0 && sd > 0);
-      return auDogru && kgDogru;
-  }
-  // Tek / Çift
-  if(key === "Tek/Çift_Tek") return toplamGol % 2 === 1;
-  if(key === "Tek/Çift_Çift") return toplamGol % 2 === 0;
-
-  if(key === "İlk Yarı Tek/Çift_Tek") return iyGol % 2 === 1;
-  if(key === "İlk Yarı Tek/Çift_Çift") return iyGol % 2 === 0;
-
   return false;
 }
+
 function mainTab(i){document.querySelectorAll(".main-tab").forEach((t,j)=>t.classList.toggle("aktif",j===i));document.querySelectorAll(".tab-icerik").forEach((t,j)=>t.classList.toggle("aktif",j===i))}
-function KA(t){const m={"Maç Sonucu_1":"MS1","Maç Sonucu_0":"MSX","Maç Sonucu_2":"MS2","Alt/Üst 2.5_Alt":"Alt","Alt/Üst 2.5_Üst":"Üst","Karşılıklı Gol_Var":"KGV","Karşılıklı Gol_Yok":"KGY","Maç Sonucu ve Alt/Üst 1.5":"MS+1.5AU","Maç Sonucu ve Alt/Üst 2.5":"MS+2.5AU","Alt/Üst 2.5 ve Karşılıklı Gol":"2.5AU+KG","Maç Sonucu ve Alt/Üst 1.5_1 ve Alt":"1+1.5A","Maç Sonucu ve Alt/Üst 1.5_1 ve Üst":"1+1.5Ü","Maç Sonucu ve Alt/Üst 1.5_0 ve Alt":"X+1.5A","Maç Sonucu ve Alt/Üst 1.5_0 ve Üst":"X+1.5Ü","Maç Sonucu ve Alt/Üst 1.5_2 ve Alt":"2+1.5A","Maç Sonucu ve Alt/Üst 1.5_2 ve Üst":"2+1.5Ü","Maç Sonucu ve Alt/Üst 2.5_1 ve Alt":"1+2.5A","Maç Sonucu ve Alt/Üst 2.5_1 ve Üst":"1+2.5Ü","Maç Sonucu ve Alt/Üst 2.5_0 ve Alt":"X+2.5A","Maç Sonucu ve Alt/Üst 2.5_0 ve Üst":"X+2.5Ü","Maç Sonucu ve Alt/Üst 2.5_2 ve Alt":"2+2.5A","Maç Sonucu ve Alt/Üst 2.5_2 ve Üst":"2+2.5Ü","Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Var":"2.5A+KV","Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Yok":"2.5A+KY","Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Var":"2.5Ü+KV","Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Yok":"2.5Ü+KY","İlk Yarı Sonucu_1":"İY1","İlk Yarı Sonucu_0":"İYX","İlk Yarı Sonucu_2":"İY2","İlk Yarı Alt/Üst 1.5_Alt":"İYA","İlk Yarı Alt/Üst 1.5_Üst":"İYÜ","İlk Yarı Karşılıklı Gol_Var":"İYKG","İkinci Yarı Karşılıklı Gol_Var":"2YKG","Her İki Yarıda da Üst 1.5_Evet":"2YÜ","Maç Sonucu ve Karşılıklı Gol_1 ve Var":"1KG","Maç Sonucu ve Karşılıklı Gol_0 ve Var":"XKG","Maç Sonucu ve Karşılıklı Gol_2 ve Var":"2KG","Maç Sonucu ve Karşılıklı Gol_1 ve Yok":"1KY","Maç Sonucu ve Karşılıklı Gol_2 ve Yok":"2KY","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet":"EE","İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır":"HH"};return m[t]||t.substring(0,8)}
+function KA(t){const m={
+  "Maç Sonucu_1":"MS1","Maç Sonucu_0":"MSX","Maç Sonucu_2":"MS2",
+  "Alt/Üst 1.5_Alt":"1.5A","Alt/Üst 1.5_Üst":"1.5Ü",
+  "Alt/Üst 2.5_Alt":"2.5A","Alt/Üst 2.5_Üst":"2.5Ü",
+  "Karşılıklı Gol_Var":"KGV","Karşılıklı Gol_Yok":"KGY",
+  "İlk Yarı Sonucu_1":"İY1","İlk Yarı Sonucu_0":"İYX","İlk Yarı Sonucu_2":"İY2",
+  "İlk Yarı Alt/Üst 1.5_Alt":"İY1.5A","İlk Yarı Alt/Üst 1.5_Üst":"İY1.5Ü",
+  "Her İki Yarıda da Üst 1.5_Evet":"2YÜ"
+};return m[t]||t.substring(0,8)}
 
 function filtreEkle(){const t=document.getElementById("oranTuru").value;const d=parseFloat(document.getElementById("oranDeger").value);if(!t||!d)return;bultenFiltreler.push({tur:t,deger:d});document.getElementById("oranDeger").value="";fListeGoster();filtrele()}
 function filtreSil(i){bultenFiltreler.splice(i,1);fListeGoster();filtrele()}
@@ -872,6 +483,8 @@ if(si==="ms1a")s.sort((a,b)=>g(a.oranlar["Maç Sonucu_1"])-g(b.oranlar["Maç Son
 else if(si==="ms1d")s.sort((a,b)=>g(b.oranlar["Maç Sonucu_1"])-g(a.oranlar["Maç Sonucu_1"]));
 else if(si==="ms2a")s.sort((a,b)=>g(a.oranlar["Maç Sonucu_2"])-g(b.oranlar["Maç Sonucu_2"]));
 else if(si==="ms2d")s.sort((a,b)=>g(b.oranlar["Maç Sonucu_2"])-g(a.oranlar["Maç Sonucu_2"]));
+else if(si==="ust15a")s.sort((a,b)=>g(a.oranlar["Alt/Üst 1.5_Üst"])-g(b.oranlar["Alt/Üst 1.5_Üst"]));
+else if(si==="alt15a")s.sort((a,b)=>g(a.oranlar["Alt/Üst 1.5_Alt"])-g(b.oranlar["Alt/Üst 1.5_Alt"]));
 else if(si==="usta")s.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Üst"])-g(b.oranlar["Alt/Üst 2.5_Üst"]));
 else if(si==="alta")s.sort((a,b)=>g(a.oranlar["Alt/Üst 2.5_Alt"])-g(b.oranlar["Alt/Üst 2.5_Alt"]));
 else s.sort((a,b)=>(a.tarih+a.saat).localeCompare(b.tarih+b.saat));
@@ -880,7 +493,7 @@ statsGoster(s);render(s)}
 function resetFiltre(){document.getElementById("aramaInput").value="";["tarihSelect","ligSelect","durumSelect"].forEach(id=>document.getElementById(id).value="");document.getElementById("siralama").value="tarih";bultenFiltreler=[];fListeGoster();filtrele()}
 
 function statsGoster(m){const to=m.reduce((t,x)=>t+Object.keys(x.oranlar).length,0);const bi=m.filter(x=>x.durum==="bitti").length;
-document.getElementById("statsBar").innerHTML='<div class="si"><div class="sv">'+m.length+'</div><div class="sl">Mac</div></div><div class="si"><div class="sv">'+to.toLocaleString()+'</div><div class="sl">Oran</div></div><div class="si"><div class="sv">'+bi+'</div><div class="sl">Biten</div></div><div class="si"><div class="sv">'+(m.length-bi)+'</div><div class="sl">Gelecek</div></div>'}
+document.getElementById("statsBar").innerHTML='<div class="si"><div class="sv">'+m.length+'</div><div class="sl">Maç</div></div><div class="si"><div class="sv">'+to.toLocaleString()+'</div><div class="sl">Oran</div></div><div class="si"><div class="sv">'+bi+'</div><div class="sl">Biten</div></div><div class="si"><div class="sv">'+(m.length-bi)+'</div><div class="sl">Gelecek</div></div>'}
 
 function OH(v, m, key){
   const cls = dogruOran(m, key) ? " dogru" : "";
@@ -889,21 +502,21 @@ function OH(v, m, key){
     : '<div class="oran-hucre"><div class="ov" style="color:#333">-</div></div>';
 }
 function render(maclar){
-if(!maclar.length){document.getElementById("container").innerHTML='<div class="bos">Sonuc yok</div>';return}
+if(!maclar.length){document.getElementById("container").innerHTML='<div class="bos">Sonuç yok</div>';return}
 const grp={};maclar.forEach(m=>{if(!grp[m.tarih])grp[m.tarih]=[];grp[m.tarih].push(m)});
 let h="";
 Object.keys(grp).sort().forEach(tarih=>{
 const gm=grp[tarih];const d=new Date(tarih);
-h+='<div class="gun-h">'+d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"})+'<span class="gc">'+gm.length+'</span></div>';
-h+='<div class="tablo-header"><div>Saat</div><div style="text-align:left">Mac</div><div>MS1</div><div>MSX</div><div>MS2</div><div>Alt</div><div>Ust</div><div>KGV</div><div>KGY</div><div>IY1</div><div>IYX</div><div>IY2</div><div>IYA</div><div>IYU</div><div>V</div></div>';
+h+='<div class="gun-baslik">'+d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric",weekday:"long"})+'<span class="gc">'+gm.length+'</span></div>';
+h+='<div class="tablo-header"><div>Saat</div><div style="text-align:left">Maç</div><div>MS1</div><div>MSX</div><div>MS2</div><div>1.5A</div><div>1.5Ü</div><div>2.5A</div><div>2.5Ü</div><div>KGV</div><div>KGY</div><div>IY1</div><div>IYX</div><div>IY2</div><div>IYA</div><div>IYU</div><div>V</div></div>';
 gm.forEach((m,idx)=>{
 const o=m.oranlar;const id="d"+tarih.replace(/-/g,"")+idx;
-const skorTxt=m.durum==="bitti"?' <span style="color:#f0b90b;font-weight:700"> MS: '+m.skor_ev+'-'+m.skor_dep+' | İY: '+m.skor_1y_ev+'-'+m.skor_1y_dep+'</span>':' <span style="color:#555"> MS: - | İY: -</span>';
+const skorTxt=m.durum==="bitti"?' <span class="skor"> MS: '+m.skor_ev+'-'+m.skor_dep+' | İY: '+m.skor_1y_ev+'-'+m.skor_1y_dep+'</span>':' <span style="color:#555"> MS: - | İY: -</span>';
 h+='<div class="mac-satir">';
 h+='<div class="ms-saat"><span class="s">'+m.saat+'</span><span class="t">#'+(m.mac_kodu||"")+'</span></div>';
 h+='<div class="ms-takim"><span class="ev">'+m.ev_sahibi+skorTxt+'</span><span class="dep">'+m.deplasman+'</span></div>';
-const keys=["Maç Sonucu_1","Maç Sonucu_0","Maç Sonucu_2","Alt/Üst 2.5_Alt","Alt/Üst 2.5_Üst","Karşılıklı Gol_Var","Karşılıklı Gol_Yok","İlk Yarı Sonucu_1","İlk Yarı Sonucu_0","İlk Yarı Sonucu_2","İlk Yarı Alt/Üst 1.5_Alt","İlk Yarı Alt/Üst 1.5_Üst","İlk Yarı Karşılıklı Gol_Var"];
-keys.forEach(k=>{h+='<div class="oran-hucre">'+OH(o[k])+'</div>'});
+const keys=["Maç Sonucu_1","Maç Sonucu_0","Maç Sonucu_2","Alt/Üst 1.5_Alt","Alt/Üst 1.5_Üst","Alt/Üst 2.5_Alt","Alt/Üst 2.5_Üst","Karşılıklı Gol_Var","Karşılıklı Gol_Yok","İlk Yarı Sonucu_1","İlk Yarı Sonucu_0","İlk Yarı Sonucu_2","İlk Yarı Alt/Üst 1.5_Alt","İlk Yarı Alt/Üst 1.5_Üst"];
+keys.forEach(k=>{h+=OH(o[k],m,k)});
 h+='<div class="ma-btn" id="aw'+id+'" onclick="dtoggle(\''+id+'\')">V</div>';
 h+='</div>';
 h+='<div class="detay-row" id="'+id+'">';
@@ -912,297 +525,35 @@ const gn=Object.keys(gr);
 h+='<div class="dtabs">';gn.forEach((g,i)=>h+='<div class="dtab'+(i===0?" a":"")+'" onclick="tc(\''+id+'\','+i+')">'+g+' ('+gr[g].length+')</div>');h+='</div>';
 gn.forEach((g,i)=>{h+='<div class="dcon'+(i===0?" a":"")+'" id="'+id+'t'+i+'"><div class="dgb">'+g+'</div><div class="ds">';
 gr[g].forEach(item=>{const dcls=dogruOran(m,item.k)?" dogru":"";h+='<div class="dor'+dcls+'"><span class="dl">'+item.l+'</span><span class="dv">'+item.v+'</span>';if(item.p>0&&item.p<100)h+='<span class="dp">%'+item.p+'</span>';h+='</div>'});h+='</div></div>'}); h+='</div>'})});
-document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" mac | iddaa.com"}
+document.getElementById("container").innerHTML=h;document.getElementById("footer").textContent=maclar.length+" maç | iddaa.com"}
 
 function dtoggle(id){document.getElementById(id).classList.toggle("acik");document.getElementById("aw"+id).classList.toggle("open")}
 function tc(id,ti){const p=document.getElementById(id);p.querySelectorAll(".dtab").forEach((t,i)=>t.classList.toggle("a",i===ti));p.querySelectorAll(".dcon").forEach((c,i)=>c.classList.toggle("a",i===ti))}
 
-function analizFiltreEkle(){const t=document.getElementById("analizOranTuru").value;const d=parseFloat(document.getElementById("analizOranDeger").value);if(!t||!d)return;analizFiltreler.push({tur:t,deger:d});document.getElementById("analizOranDeger").value="";afGoster()}
-function analizFiltreSil(i){analizFiltreler.splice(i,1);afGoster()}
-function analizFiltreTemizle(){analizFiltreler=[];afGoster();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Filtre ekle</div>'}
+function analizFiltreEkle(){const t=document.getElementById("analizOranTuru").value;const d=parseFloat(document.getElementById("analizOranDeger").value);if(!t||!d)return;analizFiltreler.push({tur:t,deger:d});document.getElementById("analizOranDeger").value="";afGoster();analizYap()}
+function analizFiltreSil(i){analizFiltreler.splice(i,1);afGoster();analizYap()}
+function analizFiltreTemizle(){analizFiltreler=[];afGoster();document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Filtre ekleyin</div>'}
 function afGoster(){document.getElementById("analizFiltreListesi").innerHTML=analizFiltreler.map((f,i)=>'<div class="filtre-tag"><span class="ft-text">'+KA(f.tur)+'='+f.deger+'</span><span class="ft-sil" onclick="analizFiltreSil('+i+')">X</span></div>').join("")}
 
 
-/* ANALIZ TABLOSU YARDIMCI FONKSIYONLARI - OTOMATIK EKLENDI */
+/* ANALIZ TABLOSU YARDIMCI FONKSIYONLARI */
 function dogruOranAnaliz(m,key){
   if(!m || m.durum !== "bitti") return false;
   if(!key) return false;
 
   const se = Number(m.skor_ev || 0);
   const sd = Number(m.skor_dep || 0);
-  const iySe = Number(m.skor_1y_ev || 0);
-  const iySd = Number(m.skor_1y_dep || 0);
-
   const toplamGol = se + sd;
-  const iyGol = iySe + iySd;
-  const ikinciSe = se - iySe;
-  const ikinciSd = sd - iySd;
-  const ikinciGol = ikinciSe + ikinciSd;
 
-  const kgVar = se > 0 && sd > 0;
-  const iyKgVar = iySe > 0 && iySd > 0;
-  const ikinciKgVar = ikinciSe > 0 && ikinciSd > 0;
+  // 1.5 Alt/Üst
+  if(key === "Alt/Üst 1.5_Alt") return toplamGol < 1.5;
+  if(key === "Alt/Üst 1.5_Üst") return toplamGol > 1.5;
 
-  const ms = se > sd ? "1" : (se === sd ? "0" : "2");
-  const iy = iySe > iySd ? "1" : (iySe === iySd ? "0" : "2");
-  const ikinci = ikinciSe > ikinciSd ? "1" : (ikinciSe === ikinciSd ? "0" : "2");
+  // Diğer kontroller...
+  if(key === "Alt/Üst 2.5_Alt") return toplamGol < 2.5;
+  if(key === "Alt/Üst 2.5_Üst") return toplamGol > 2.5;
 
-  // Maç sonucu
-  if(key === "Maç Sonucu_1") return ms === "1";
-  if(key === "Maç Sonucu_0") return ms === "0";
-  if(key === "Maç Sonucu_2") return ms === "2";
-
-  // İlk yarı sonucu
-  if(key === "İlk Yarı Sonucu_1") return iy === "1";
-  if(key === "İlk Yarı Sonucu_0") return iy === "0";
-  if(key === "İlk Yarı Sonucu_2") return iy === "2";
-
-  // İkinci yarı sonucu
-  if(key === "İkinci Yarı Sonucu_1") return ikinci === "1";
-  if(key === "İkinci Yarı Sonucu_0") return ikinci === "0";
-  if(key === "İkinci Yarı Sonucu_2") return ikinci === "2";
-
-  // İlk yarı alt/üst önce kontrol edilmeli
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Alt")) return iyGol < 0.5;
-  if(key.includes("İlk Yarı Alt/Üst 0.5_Üst")) return iyGol > 0.5;
-  if(key.includes("İlk Yarı Alt/Üst 1.5_Alt")) return iyGol < 1.5;
-  if(key.includes("İlk Yarı Alt/Üst 1.5_Üst")) return iyGol > 1.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Alt")) return iyGol < 2.5;
-  if(key.includes("İlk Yarı Alt/Üst 2.5_Üst")) return iyGol > 2.5;
-
-  // Maç alt/üst
-  if(key.includes("Alt/Üst 0.5_Alt")) return toplamGol < 0.5;
-  if(key.includes("Alt/Üst 0.5_Üst")) return toplamGol > 0.5;
-  if(key.includes("Alt/Üst 1.5_Alt")) return toplamGol < 1.5;
-  if(key.includes("Alt/Üst 1.5_Üst")) return toplamGol > 1.5;
-  if(key.includes("Alt/Üst 2.5_Alt")) return toplamGol < 2.5;
-  if(key.includes("Alt/Üst 2.5_Üst")) return toplamGol > 2.5;
-  if(key.includes("Alt/Üst 3.5_Alt")) return toplamGol < 3.5;
-  if(key.includes("Alt/Üst 3.5_Üst")) return toplamGol > 3.5;
-  if(key.includes("Altı/Üstü 2.5") && key.includes("_Alt")) return toplamGol < 2.5;
-  if(key.includes("Altı/Üstü 2.5") && key.includes("_Üst")) return toplamGol > 2.5;
-
-  // Karşılıklı gol
-  if(key === "Karşılıklı Gol_Var") return kgVar;
-  if(key === "Karşılıklı Gol_Yok") return !kgVar;
-  if(key === "İlk Yarı Karşılıklı Gol_Var") return iyKgVar;
-  if(key === "İlk Yarı Karşılıklı Gol_Yok") return !iyKgVar;
-  if(key === "İkinci Yarı Karşılıklı Gol_Var") return ikinciKgVar;
-  if(key === "İkinci Yarı Karşılıklı Gol_Yok") return !ikinciKgVar;
-
-  // Maç sonucu + KG
-  if(key.startsWith("Maç Sonucu ve Karşılıklı Gol_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" ve ");
-    const msSecim = parca[0];
-    const kgSecim = parca[1];
-    return msSecim === ms && (kgSecim === "Var" ? kgVar : !kgVar);
-  }
-
-  // İlk yarı / maç sonucu
-  if(key.startsWith("İlk Yarı / Maç Sonucu_")){
-    const secim = key.split("_")[1];
-    return secim === (iy + "/" + ms);
-  }
-
-  // İlk yarı sonucu + İY KG
-  if(key.startsWith("İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" ve ");
-    return parca[0] === iy && (parca[1] === "Var" ? iyKgVar : !iyKgVar);
-  }
-
-  // İlk yarı sonucu + İY Alt/Üst 1.5
-  if(key.startsWith("İlk Yarı Sonucu ve Altı/Üstü 1.5_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" ve ");
-    return parca[0] === iy && (parca[1] === "Üst" ? iyGol > 1.5 : iyGol < 1.5);
-  }
-
-  // Her iki yarıda üst/alt 1.5
-  if(key === "Her İki Yarıda da Üst 1.5_Evet") return iyGol > 1.5 && ikinciGol > 1.5;
-  if(key === "Her İki Yarıda da Üst 1.5_Hayır") return !(iyGol > 1.5 && ikinciGol > 1.5);
-  if(key === "Her İki Yarıda da Alt 1.5_Evet") return iyGol < 1.5 && ikinciGol < 1.5;
-  if(key === "Her İki Yarıda da Alt 1.5_Hayır") return !(iyGol < 1.5 && ikinciGol < 1.5);
-
-  // İlk yarı ve ikinci yarıda KG olur
-  if(key.startsWith("İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_")){
-    const secim = key.split("_")[1];
-    if(!secim) return false;
-    const parca = secim.split(" / ");
-    const ilkDogru = parca[0] === "Evet" ? iyKgVar : !iyKgVar;
-    const ikinciDogru = parca[1] === "Evet" ? ikinciKgVar : !ikinciKgVar;
-    return ilkDogru && ikinciDogru;
-  }
-
-  // Tek / çift
-  if(key === "Tek/Çift_Tek") return toplamGol % 2 === 1;
-  if(key === "Tek/Çift_Çift") return toplamGol % 2 === 0;
-  if(key === "İlk Yarı Tek/Çift_Tek") return iyGol % 2 === 1;
-  if(key === "İlk Yarı Tek/Çift_Çift") return iyGol % 2 === 0;
-
-  return false;
-}
-
-function analizKisaBaslik(key){
-  if(typeof KA === "function") return KA(key);
-  return key;
-}
-
-
-function analizOranKeyleri(maclar){
-  const istenen = [
-    // Maç Sonucu
-    "Maç Sonucu_1",
-    "Maç Sonucu_0",
-    "Maç Sonucu_2",
-
-    // Alt Üst 2.5
-    "Alt/Üst 2.5_Alt",
-    "Alt/Üst 2.5_Üst",
-
-    // KG
-    "Karşılıklı Gol_Var",
-    "Karşılıklı Gol_Yok",
-
-    // İlk Yarı Sonucu
-    "İlk Yarı Sonucu_1",
-    "İlk Yarı Sonucu_0",
-    "İlk Yarı Sonucu_2",
-
-    // İlk Yarı Alt/Üst 1.5
-    "İlk Yarı Alt/Üst 1.5_Alt",
-    "İlk Yarı Alt/Üst 1.5_Üst",
-
-    // Her iki yarıda Üst 1.5
-    "Her İki Yarıda da Üst 1.5_Evet",
-    "Her İki Yarıda da Üst 1.5_Hayır",
-
-    // Alt/Üst 3.5
-    "Alt/Üst 3.5_Alt",
-    "Alt/Üst 3.5_Üst",
-
-    // İlk Yarı ve İkinci Yarıda KG Olur
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Evet",
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Evet / Hayır",
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Evet",
-    "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur_Hayır / Hayır",
-
-    // Ev sahibi her iki yarıda gol atar
-    "Ev Sahibi Her İki Yarıda da Gol Atar_Evet",
-    "Ev Sahibi Her İki Yarıda da Gol Atar_Hayır",
-
-    // Deplasman her iki yarıda gol atar
-    "Deplasman Her İki Yarıda da Gol Atar_Evet",
-    "Deplasman Her İki Yarıda da Gol Atar_Hayır",
-
-    // İkinci Yarı KG
-    "İkinci Yarı Karşılıklı Gol_Var",
-    "İkinci Yarı Karşılıklı Gol_Yok",
-
-    // Altı/Üstü 2.5 ve KG
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Var",
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Yok",
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Var",
-    "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Yok",
-
-    // İlk Yarı Sonucu ve İlk Yarı KG
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var",
-    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok",
-
-    // İlk Yarı / Maç Sonucu
-    "İlk Yarı / Maç Sonucu_1/1",
-    "İlk Yarı / Maç Sonucu_1/0",
-    "İlk Yarı / Maç Sonucu_1/2",
-    "İlk Yarı / Maç Sonucu_0/1",
-    "İlk Yarı / Maç Sonucu_0/0",
-    "İlk Yarı / Maç Sonucu_0/2",
-    "İlk Yarı / Maç Sonucu_2/1",
-    "İlk Yarı / Maç Sonucu_2/0",
-    "İlk Yarı / Maç Sonucu_2/2",
-
-    // Ev sahibi her iki yarıyı kazanır
-    "Ev Sahibi Her İki Yarıyı Kazanır_Evet",
-    "Ev Sahibi Her İki Yarıyı Kazanır_Hayır",
-
-    // Deplasman her iki yarıyı kazanır
-    "Deplasman Her İki Yarıyı Kazanır_Evet",
-    "Deplasman Her İki Yarıyı Kazanır_Hayır"
-  ];
-
-  // Sadece eşleşen maçlarda gerçekten bulunan kolonları göster
-  const mevcut = new Set();
-
-  maclar.forEach(m=>{
-    Object.keys(m.oranlar || {}).forEach(k=>{
-      mevcut.add(k);
-    });
-  });
-
-  return istenen;
-
-}
-
-
-function analizMacTablosuHtml(maclar){
-  if(!maclar.length) return "";
-
-  const keys = analizOranKeyleri(maclar);
-
-  let h = "";
-  h += '<div class="analiz-table-info">';
-  h += 'Eşleşen maçlar alt alta listelenir. Oran sütunları sağa doğru kaydırılabilir. Yeşil hücreler o maç sonucuna göre doğru gelen oranlardır.';
-  h += '</div>';
-
-  h += '<div class="analiz-table-wrap">';
-  h += '<table class="analiz-table">';
-  h += '<thead><tr>';
-  h += '<th>Tarih</th>';
-  h += '<th>Saat</th>';
-  h += '<th>Maç</th>';
-  h += '<th>İY</th>';
-  h += '<th>MS</th>';
-
-  keys.forEach(k=>{
-    h += '<th title="'+k.replaceAll('"','&quot;')+'">'+analizKisaBaslik(k)+'</th>';
-  });
-
-  h += '</tr></thead><tbody>';
-
-  maclar.forEach(m=>{
-    h += '<tr>';
-    h += '<td>'+m.tarih+'</td>';
-    h += '<td>'+(m.saat || "")+'</td>';
-    h += '<td class="mac-col">'+m.ev_sahibi+' - '+m.deplasman+'</td>';
-    h += '<td class="skor-col">'+(m.skor_1y_ev ?? 0)+'-'+(m.skor_1y_dep ?? 0)+'</td>';
-    h += '<td class="skor-col">'+(m.skor_ev ?? 0)+'-'+(m.skor_dep ?? 0)+'</td>';
-
-    keys.forEach(k=>{
-      const v = m.oranlar ? m.oranlar[k] : null;
-
-      if(v){
-        const dogru = dogruOranAnaliz(m,k);
-        h += '<td class="oran-cell'+(dogru ? ' dogru' : '')+'" title="'+k.replaceAll('"','&quot;')+'">';
-        h += '<div class="oran-v">'+v+'</div>';
-        h += '<div class="oran-p">%'+pct(v)+'</div>';
-        h += '</td>';
-      }else{
-        h += '<td class="oran-cell"><span class="bos-oran">-</span></td>';
-      }
-    });
-
-    h += '</tr>';
-  });
-
-  h += '</tbody></table></div>';
-  return h;
+  return dogruOran(m,key);
 }
 
 
@@ -1216,75 +567,52 @@ function analizYap(){
 
   const bm = hepsi.filter(m=>{
     if(m.durum !== "bitti") return false;
-
     for(const f of analizFiltreler){
       const v = m.oranlar ? m.oranlar[f.tur] : null;
       if(!v || Math.abs(v - f.deger) > 0.009) return false;
     }
-
     return true;
   });
 
   if(!bm.length){
-    document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Eşleşen bitmiş maç yok ('+hepsi.length+' maç tarandı)</div>';
+    document.getElementById("analizSonuc").innerHTML='<div class="analiz-yok">Eşleşen bitmiş maç yok</div>';
     return;
   }
 
-  let ek=0,be=0,dk=0,u25=0,a25=0,kgv=0,kgy=0,iye=0,iyb=0,iyd=0,tg=0;
+  let ek=0,be=0,dk=0,u15=0,a15=0,u25=0,a25=0;
 
   bm.forEach(m=>{
     const se=Number(m.skor_ev||0);
     const sd=Number(m.skor_dep||0);
     const t=se+sd;
-    tg+=t;
 
     if(se>sd) ek++;
     else if(se===sd) be++;
     else dk++;
 
+    if(t>1.5) u15++;
+    else a15++;
+
     if(t>2.5) u25++;
     else a25++;
-
-    if(se>0&&sd>0) kgv++;
-    else kgy++;
-
-    const ise=Number(m.skor_1y_ev||0);
-    const isd=Number(m.skor_1y_dep||0);
-
-    if(ise>isd) iye++;
-    else if(ise===isd) iyb++;
-    else iyd++;
   });
 
   const n=bm.length;
   const P=v=>Math.round(v/n*100);
-  const fs=analizFiltreler.map(f=>KA(f.tur)+"="+f.deger).join(" & ");
 
   let h='';
-  h+='<div class="analiz-baslik">'+fs+' — '+n+' Maç ('+hepsi.length+' tarandı)</div>';
-
+  h+='<div class="analiz-baslik">Sonuçlar ('+n+' maç)</div>';
   h+='<div class="analiz-grid">';
-  h+='<div class="ak"><div class="akb">Maç</div><div class="akd">'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">Ort Gol</div><div class="akd">'+(tg/n).toFixed(1)+'</div></div>';
-  h+='<div class="ak"><div class="akb">Üst2.5</div><div class="akd" style="color:#00c853">%'+P(u25)+'</div><div class="aka">'+u25+'/'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">KG Var</div><div class="akd" style="color:#f0b90b">%'+P(kgv)+'</div><div class="aka">'+kgv+'/'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">Ev Kazandı</div><div class="akd" style="color:#00c853">%'+P(ek)+'</div><div class="aka">'+ek+'/'+n+'</div></div>';
-  h+='<div class="ak"><div class="akb">Berabere</div><div class="akd" style="color:#f0b90b">%'+P(be)+'</div><div class="aka">'+be+'/'+n+'</div></div>';
+  h+='<div class="ak"><div class="akb">1.5 Üst</div><div class="akd">%'+P(u15)+'</div><div class="aka">'+u15+'/'+n+'</div></div>';
+  h+='<div class="ak"><div class="akb">1.5 Alt</div><div class="akd">%'+P(a15)+'</div><div class="aka">'+a15+'/'+n+'</div></div>';
+  h+='<div class="ak"><div class="akb">2.5 Üst</div><div class="akd">%'+P(u25)+'</div><div class="aka">'+u25+'/'+n+'</div></div>';
+  h+='<div class="ak"><div class="akb">Ev Kazandı</div><div class="akd">%'+P(ek)+'</div><div class="aka">'+ek+'/'+n+'</div></div>';
+  h+='<div class="ak"><div class="akb">Berabere</div><div class="akd">%'+P(be)+'</div><div class="aka">'+be+'/'+n+'</div></div>';
+  h+='<div class="ak"><div class="akb">Deplasman</div><div class="akd">%'+P(dk)+'</div><div class="aka">'+dk+'/'+n+'</div></div>';
   h+='</div>';
-
-  h+=bar("Maç Sonucu","Ev%"+P(ek),P(ek),"X%"+P(be),P(be),"Dep%"+P(dk),P(dk));
-  h+=bar("Alt/Üst","Alt%"+P(a25),P(a25),"",0,"Üst%"+P(u25),P(u25));
-  h+=bar("KG","Var%"+P(kgv),P(kgv),"",0,"Yok%"+P(kgy),P(kgy));
-  h+=bar("İY","Ev%"+P(iye),P(iye),"X%"+P(iyb),P(iyb),"Dep%"+P(iyd),P(iyd));
-
-  h+='<div class="analiz-baslik" style="margin-top:12px">📋 Filtreye Uyan Maçlar ve Oranlar</div>';
-  h+=analizMacTablosuHtml(bm);
 
   document.getElementById("analizSonuc").innerHTML=h;
 }
-
-  
-function bar(t,l1,w1,l2,w2,l3,w3){let h='<div class="abar"><div class="abar-b">'+t+'</div><div class="abar-ic">';if(w1>0)h+='<div class="ab-ev" style="width:'+w1+'%">'+l1+'</div>';if(w2>0)h+='<div class="ab-ber" style="width:'+w2+'%">'+l2+'</div>';if(w3>0)h+='<div class="ab-dep" style="width:'+w3+'%">'+l3+'</div>';return h+'</div></div>'}
 
 yukle();
 

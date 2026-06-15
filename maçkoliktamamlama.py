@@ -29,7 +29,7 @@ BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 GIT_BRANCH_NAME = "main"
 
 # Eşleştirme frenleri
-TARIH_TOLERANSI_GUN = 4        # ±4 gün tolerans
+TARIH_TOLERANSI_GUN = 15        # ±15 gün tolerans
 GUCLU_TAKIM_ESIGI = 0.80       # En az bir takım bu kadar benzemeli
 MIN_TOPLAM_PUAN = 1.30         # İki takımın toplam benzerlik alt sınırı (hayalet eşleşme freni)
 MIN_TEK_TARAF = 0.50           # Bir taraf bundan düşükse farklı maçtır

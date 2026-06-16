@@ -19,14 +19,14 @@ from selenium.webdriver.support import expected_conditions as EC
 # =========================
 # ⚙️ AYARLAR
 # =========================
-BASLANGIC_TARIHI = "13.06.2026"
-BITIS_TARIHI = "15.06.2026"
+BASLANGIC_TARIHI = "14.06.2026"
+BITIS_TARIHI = "17.06.2026"
 
 BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
 SPORDB_URL = "https://www.spordb.com/iddaa-programi/"
 
-TARIH_TOLERANSI_GUN = 3        # ±3 gün tolerans
+TARIH_TOLERANSI_GUN = 5        # ±5 gün tolerans
 GUCLU_TAKIM_ESIGI = 0.80       # Tek takım eşleşmesi için gereken benzerlik
 MIN_TOPLAM_PUAN = 1.10         # İki takımın toplam benzerlik alt sınırı
 

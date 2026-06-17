@@ -20,7 +20,7 @@ from selenium.common.exceptions import *
 # =========================
 # ⚙️ AYARLAR
 # =========================
-BASLANGIC_TARIHI = "14.06.2026"   # GG.AA.YYYY
+BASLANGIC_TARIHI = "12.06.2026"   # GG.AA.YYYY
 BITIS_TARIHI = "17.06.2026"       # GG.AA.YYYY
 
 BASE_DIR = Path(__file__).resolve().parent

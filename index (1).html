@@ -584,9 +584,9 @@ function macBittiMi(m){
   return m && m.durum === "bitti";
 }
 
-function dogruOran(m, key) {
-  if (!macBittiMi(m)) return false;
-  if (!key) return false;
+function dogruOran(m, key){
+  if(!macBittiMi(m)) return false;
+  if(!key) return false;
 
   const se = Number(m.skor_ev || 0);
   const sd = Number(m.skor_dep || 0);
@@ -594,7 +594,6 @@ function dogruOran(m, key) {
   const iySd = Number(m.skor_1y_dep || 0);
   const ikinciSe = se - iySe;
   const ikinciSd = sd - iySd;
-
   const toplamGol = se + sd;
   const iyGol = iySe + iySd;
   const ikinciGol = ikinciSe + ikinciSd;
@@ -607,116 +606,157 @@ function dogruOran(m, key) {
   const iy = iySe > iySd ? "1" : iySe === iySd ? "0" : "2";
   const ikinci = ikinciSe > ikinciSd ? "1" : ikinciSe === ikinciSd ? "0" : "2";
 
-  // ========== Maç Sonucu ==========
-  if (key === "Maç Sonucu_1") return ms === "1";
-  if (key === "Maç Sonucu_0") return ms === "0";
-  if (key === "Maç Sonucu_2") return ms === "2";
+  // Maç sonucu
+  if(key === "Maç Sonucu_1") return ms === "1";
+  if(key === "Maç Sonucu_0") return ms === "0";
+  if(key === "Maç Sonucu_2") return ms === "2";
 
-  // ========== İlk Yarı Sonucu ==========
-  if (key === "İlk Yarı Sonucu_1") return iy === "1";
-  if (key === "İlk Yarı Sonucu_0") return iy === "0";
-  if (key === "İlk Yarı Sonucu_2") return iy === "2";
+  // İlk yarı sonucu
+  if(key === "İlk Yarı Sonucu_1") return iy === "1";
+  if(key === "İlk Yarı Sonucu_0") return iy === "0";
+  if(key === "İlk Yarı Sonucu_2") return iy === "2";
 
-  // ========== Alt / Üst - Tüm Maç ==========
-  if (key === "Alt/Üst 0.5_Alt") return toplamGol < 0.5;
-  if (key === "Alt/Üst 0.5_Üst") return toplamGol > 0.5;
-  if (key === "Alt/Üst 1.5_Alt") return toplamGol < 1.5;
-  if (key === "Alt/Üst 1.5_Üst") return toplamGol > 1.5;
-  if (key === "Alt/Üst 2.5_Alt") return toplamGol < 2.5;
-  if (key === "Alt/Üst 2.5_Üst") return toplamGol > 2.5;
-  if (key === "Alt/Üst 3.5_Alt") return toplamGol < 3.5;
-  if (key === "Alt/Üst 3.5_Üst") return toplamGol > 3.5;
-  if (key === "Alt/Üst 4.5_Alt") return toplamGol < 4.5;
-  if (key === "Alt/Üst 4.5_Üst") return toplamGol > 4.5;
+  // Alt/Üst - Genel
+  if(key === "Alt/Üst 0.5_Alt") return toplamGol < 0.5;
+  if(key === "Alt/Üst 0.5_Üst") return toplamGol > 0.5;
+  if(key === "Alt/Üst 1.5_Alt") return toplamGol < 1.5;
+  if(key === "Alt/Üst 1.5_Üst") return toplamGol > 1.5;
+  if(key === "Alt/Üst 2.5_Alt") return toplamGol < 2.5;
+  if(key === "Alt/Üst 2.5_Üst") return toplamGol > 2.5;
+  if(key === "Alt/Üst 3.5_Alt") return toplamGol < 3.5;
+  if(key === "Alt/Üst 3.5_Üst") return toplamGol > 3.5;
+  if(key === "Alt/Üst 4.5_Alt") return toplamGol < 4.5;
+  if(key === "Alt/Üst 4.5_Üst") return toplamGol > 4.5;
 
-  // ========== İlk Yarı Alt / Üst ==========
-  if (key === "İlk Yarı Alt/Üst 0.5_Alt") return iyGol < 0.5;
-  if (key === "İlk Yarı Alt/Üst 0.5_Üst") return iyGol > 0.5;
-  if (key === "İlk Yarı Alt/Üst 1.5_Alt") return iyGol < 1.5;
-  if (key === "İlk Yarı Alt/Üst 1.5_Üst") return iyGol > 1.5;
-  if (key === "İlk Yarı Alt/Üst 2.5_Alt") return iyGol < 2.5;
-  if (key === "İlk Yarı Alt/Üst 2.5_Üst") return iyGol > 2.5;
+  // ✅ EV SAHİBİ ALT/ÜST
+  if(key === "Ev Sahibi Alt/Üst 0.5_Alt") return se < 0.5;
+  if(key === "Ev Sahibi Alt/Üst 0.5_Üst") return se > 0.5;
+  if(key === "Ev Sahibi Alt/Üst 1.5_Alt") return se < 1.5;
+  if(key === "Ev Sahibi Alt/Üst 1.5_Üst") return se > 1.5;
+  if(key === "Ev Sahibi Alt/Üst 2.5_Alt") return se < 2.5;
+  if(key === "Ev Sahibi Alt/Üst 2.5_Üst") return se > 2.5;
 
-  // ========== Karşılıklı Gol ==========
-  if (key === "Karşılıklı Gol_Var") return kgVar;
-  if (key === "Karşılıklı Gol_Yok") return !kgVar;
-  if (key === "İlk Yarı Karşılıklı Gol_Var") return iyKgVar;
-  if (key === "İlk Yarı Karşılıklı Gol_Yok") return !iyKgVar;
-  if (key === "İkinci Yarı Karşılıklı Gol_Var") return ikinciKgVar;
-  if (key === "İkinci Yarı Karşılıklı Gol_Yok") return !ikinciKgVar;
+  // ✅ DEPLASMAN ALT/ÜST
+  if(key === "Deplasman Alt/Üst 0.5_Alt") return sd < 0.5;
+  if(key === "Deplasman Alt/Üst 0.5_Üst") return sd > 0.5;
+  if(key === "Deplasman Alt/Üst 1.5_Alt") return sd < 1.5;
+  if(key === "Deplasman Alt/Üst 1.5_Üst") return sd > 1.5;
+  if(key === "Deplasman Alt/Üst 2.5_Alt") return sd < 2.5;
+  if(key === "Deplasman Alt/Üst 2.5_Üst") return sd > 2.5;
 
-  // ========== Her İki Yarıda KG ==========
-  if (key === "Her İki Yarıda Karşılıklı Gol_EE") return iyKgVar && ikinciKgVar;
-  if (key === "Her İki Yarıda Karşılıklı Gol_EH") return iyKgVar && !ikinciKgVar;
-  if (key === "Her İki Yarıda Karşılıklı Gol_HE") return !iyKgVar && ikinciKgVar;
-  if (key === "Her İki Yarıda Karşılıklı Gol_HH") return !iyKgVar && !ikinciKgVar;
+  // İlk Yarı Alt/Üst - Genel
+  if(key === "İlk Yarı Alt/Üst 0.5_Alt") return iyGol < 0.5;
+  if(key === "İlk Yarı Alt/Üst 0.5_Üst") return iyGol > 0.5;
+  if(key === "İlk Yarı Alt/Üst 1.5_Alt") return iyGol < 1.5;
+  if(key === "İlk Yarı Alt/Üst 1.5_Üst") return iyGol > 1.5;
+  if(key === "İlk Yarı Alt/Üst 2.5_Alt") return iyGol < 2.5;
+  if(key === "İlk Yarı Alt/Üst 2.5_Üst") return iyGol > 2.5;
 
-  // ========== Çifte Şans ==========
-  if (key === "Çifte Şans_1X") return ms === "1" || ms === "0";
-  if (key === "Çifte Şans_12") return ms === "1" || ms === "2";
-  if (key === "Çifte Şans_X2") return ms === "0" || ms === "2";
+  // ✅ EV SAHİBİ İLK YARI ALT/ÜST
+  if(key === "Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt") return iySe < 0.5;
+  if(key === "Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst") return iySe > 0.5;
 
-  // ========== İlk Yarı / Maç Sonucu ==========
-  if (key === "İlk Yarı / Maç Sonucu_1/1") return iy === "1" && ms === "1";
-  if (key === "İlk Yarı / Maç Sonucu_1/X") return iy === "1" && ms === "0";
-  if (key === "İlk Yarı / Maç Sonucu_1/2") return iy === "1" && ms === "2";
-  if (key === "İlk Yarı / Maç Sonucu_X/1") return iy === "0" && ms === "1";
-  if (key === "İlk Yarı / Maç Sonucu_X/X") return iy === "0" && ms === "0";
-  if (key === "İlk Yarı / Maç Sonucu_X/2") return iy === "0" && ms === "2";
-  if (key === "İlk Yarı / Maç Sonucu_2/1") return iy === "2" && ms === "1";
-  if (key === "İlk Yarı / Maç Sonucu_2/X") return iy === "2" && ms === "0";
-  if (key === "İlk Yarı / Maç Sonucu_2/2") return iy === "2" && ms === "2";
+  // ✅ DEPLASMAN İLK YARI ALT/ÜST
+  if(key === "Deplasman İlk Yarı Alt/Üst 0.5_Alt") return iySd < 0.5;
+  if(key === "Deplasman İlk Yarı Alt/Üst 0.5_Üst") return iySd > 0.5;
 
-  // ========== MS + KG ==========
-  if (key.startsWith("Maç Sonucu ve Karşılıklı Gol_")) {
-    const parca = key.split("_")[1].split(" ve ");
-    const secimMs = parca[0];
-    const secimKg = parca[1];
-    return ms === secimMs && (secimKg === "Var" ? kgVar : !kgVar);
+  // KG
+  if(key === "Karşılıklı Gol_Var") return kgVar;
+  if(key === "Karşılıklı Gol_Yok") return !kgVar;
+  if(key === "İlk Yarı Karşılıklı Gol_Var") return iyKgVar;
+  if(key === "İlk Yarı Karşılıklı Gol_Yok") return !iyKgVar;
+  if(key === "İkinci Yarı Karşılıklı Gol_Var") return ikinciKgVar;
+  if(key === "İkinci Yarı Karşılıklı Gol_Yok") return !ikinciKgVar;
+
+  // Her İki Yarıda KG
+  if(key === "Her İki Yarıda Karşılıklı Gol_EE") return iyKgVar && ikinciKgVar;
+  if(key === "Her İki Yarıda Karşılıklı Gol_EH") return iyKgVar && !ikinciKgVar;
+  if(key === "Her İki Yarıda Karşılıklı Gol_HE") return !iyKgVar && ikinciKgVar;
+  if(key === "Her İki Yarıda Karşılıklı Gol_HH") return !iyKgVar && !ikinciKgVar;
+
+  // Çifte Şans
+  if(key === "Çifte Şans_1X") return ms === "1" || ms === "0";
+  if(key === "Çifte Şans_12") return ms === "1" || ms === "2";
+  if(key === "Çifte Şans_X2") return ms === "0" || ms === "2";
+
+  // İY/MS
+  if(key === "İlk Yarı / Maç Sonucu_1/1") return iy === "1" && ms === "1";
+  if(key === "İlk Yarı / Maç Sonucu_1/X") return iy === "1" && ms === "0";
+  if(key === "İlk Yarı / Maç Sonucu_1/2") return iy === "1" && ms === "2";
+  if(key === "İlk Yarı / Maç Sonucu_X/1") return iy === "0" && ms === "1";
+  if(key === "İlk Yarı / Maç Sonucu_X/X") return iy === "0" && ms === "0";
+  if(key === "İlk Yarı / Maç Sonucu_X/2") return iy === "0" && ms === "2";
+  if(key === "İlk Yarı / Maç Sonucu_2/1") return iy === "2" && ms === "1";
+  if(key === "İlk Yarı / Maç Sonucu_2/X") return iy === "2" && ms === "0";
+  if(key === "İlk Yarı / Maç Sonucu_2/2") return iy === "2" && ms === "2";
+
+  // MS + KG
+  if(key.startsWith("Maç Sonucu ve Karşılıklı Gol_")){
+    const secim = key.split("_")[1];
+    const parca = secim.split(" ve ");
+    const msSecim = parca[0];
+    const kgSecim = parca[1];
+    return msSecim === ms && (kgSecim === "Var" ? kgVar : !kgVar);
   }
 
-  // ========== MS + Alt/Üst ==========
-  if (key === "Maç Sonucu ve Alt/Üst 1.5_1 ve Alt") return ms === "1" && toplamGol < 1.5;
-  if (key === "Maç Sonucu ve Alt/Üst 1.5_1 ve Üst") return ms === "1" && toplamGol > 1.5;
-  if (key === "Maç Sonucu ve Alt/Üst 1.5_0 ve Alt") return ms === "0" && toplamGol < 1.5;
-  if (key === "Maç Sonucu ve Alt/Üst 1.5_0 ve Üst") return ms === "0" && toplamGol > 1.5;
-  if (key === "Maç Sonucu ve Alt/Üst 1.5_2 ve Alt") return ms === "2" && toplamGol < 1.5;
-  if (key === "Maç Sonucu ve Alt/Üst 1.5_2 ve Üst") return ms === "2" && toplamGol > 1.5;
+  // MS + Alt/Üst 1.5 - Sadece Üst
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_1 ve Üst") return ms === "1" && toplamGol > 1.5;
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_0 ve Üst") return ms === "0" && toplamGol > 1.5;
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_2 ve Üst") return ms === "2" && toplamGol > 1.5;
 
-  if (key === "Maç Sonucu ve Alt/Üst 2.5_1 ve Alt") return ms === "1" && toplamGol < 2.5;
-  if (key === "Maç Sonucu ve Alt/Üst 2.5_1 ve Üst") return ms === "1" && toplamGol > 2.5;
-  if (key === "Maç Sonucu ve Alt/Üst 2.5_0 ve Alt") return ms === "0" && toplamGol < 2.5;
-  if (key === "Maç Sonucu ve Alt/Üst 2.5_0 ve Üst") return ms === "0" && toplamGol > 2.5;
-  if (key === "Maç Sonucu ve Alt/Üst 2.5_2 ve Alt") return ms === "2" && toplamGol < 2.5;
-  if (key === "Maç Sonucu ve Alt/Üst 2.5_2 ve Üst") return ms === "2" && toplamGol > 2.5;
+  // MS + Alt/Üst 2.5 - Sadece Üst
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_1 ve Üst") return ms === "1" && toplamGol > 2.5;
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_0 ve Üst") return ms === "0" && toplamGol > 2.5;
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_2 ve Üst") return ms === "2" && toplamGol > 2.5;
 
-  if (key === "Maç Sonucu ve Alt/Üst 3.5_1 ve Alt") return ms === "1" && toplamGol < 3.5;
-  if (key === "Maç Sonucu ve Alt/Üst 3.5_1 ve Üst") return ms === "1" && toplamGol > 3.5;
-  if (key === "Maç Sonucu ve Alt/Üst 3.5_0 ve Alt") return ms === "0" && toplamGol < 3.5;
-  if (key === "Maç Sonucu ve Alt/Üst 3.5_0 ve Üst") return ms === "0" && toplamGol > 3.5;
-  if (key === "Maç Sonucu ve Alt/Üst 3.5_2 ve Alt") return ms === "2" && toplamGol < 3.5;
-  if (key === "Maç Sonucu ve Alt/Üst 3.5_2 ve Üst") return ms === "2" && toplamGol > 3.5;
+  // MS + Alt/Üst 3.5 - Sadece Üst
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_1 ve Üst") return ms === "1" && toplamGol > 3.5;
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_0 ve Üst") return ms === "0" && toplamGol > 3.5;
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_2 ve Üst") return ms === "2" && toplamGol > 3.5;
 
-  if (key === "Maç Sonucu ve Alt/Üst 4.5_1 ve Alt") return ms === "1" && toplamGol < 4.5;
-  if (key === "Maç Sonucu ve Alt/Üst 4.5_1 ve Üst") return ms === "1" && toplamGol > 4.5;
-  if (key === "Maç Sonucu ve Alt/Üst 4.5_0 ve Alt") return ms === "0" && toplamGol < 4.5;
-  if (key === "Maç Sonucu ve Alt/Üst 4.5_0 ve Üst") return ms === "0" && toplamGol > 4.5;
-  if (key === "Maç Sonucu ve Alt/Üst 4.5_2 ve Alt") return ms === "2" && toplamGol < 4.5;
-  if (key === "Maç Sonucu ve Alt/Üst 4.5_2 ve Üst") return ms === "2" && toplamGol > 4.5;
+  // Her İki Yarıda da Üst 1.5 / 2.5
+  if(key === "Her İki Yarıda da Üst 1.5_Evet") return iyGol > 1.5 && ikinciGol > 1.5;
+  if(key === "Her İki Yarıda da Üst 2.5_Evet") return iyGol > 2.5 && ikinciGol > 2.5;
 
-  // ========== Diğer Özel Bahisler ==========
-  if (key === "Her İki Yarıda da Üst 1.5_Evet") return iyGol > 1.5 && ikinciGol > 1.5;
-  if (key === "Her İki Yarıda da Üst 2.5_Evet") return iyGol > 2.5 && ikinciGol > 2.5;
-  if (key === "Ev Sahibi Her İki Yarıyı Kazanır_Evet") return iy === "1" && ikinci === "1";
-  if (key === "Deplasman Her İki Yarıyı Kazanır_Evet") return iy === "2" && ikinci === "2";
+  // Ev Sahibi / Deplasman Her İki Yarıyı Kazanır
+  if(key === "Ev Sahibi Her İki Yarıyı Kazanır_Evet") return iy === "1" && ikinci === "1";
+  if(key === "Deplasman Her İki Yarıyı Kazanır_Evet") return iy === "2" && ikinci === "2";
 
-  // ========== Toplam Gol Aralığı ==========
-  if (key === "Toplam Gol_0-1") return toplamGol >= 0 && toplamGol <= 1;
-  if (key === "Toplam Gol_2-3") return toplamGol >= 2 && toplamGol <= 3;
-  if (key === "Toplam Gol_4-6") return toplamGol >= 4 && toplamGol <= 6;
-  if (key === "Toplam Gol_7+") return toplamGol >= 7;
+  // Toplam Gol Aralıkları
+  if(key === "Toplam Gol_0-1") return toplamGol >= 0 && toplamGol <= 1;
+  if(key === "Toplam Gol_2-3") return toplamGol >= 2 && toplamGol <= 3;
+  if(key === "Toplam Gol_4-6") return toplamGol >= 4 && toplamGol <= 6;
+  if(key === "Toplam Gol_7+") return toplamGol >= 7;
 
-  // Tanımlanmayan anahtarlar için
+  // MS + Alt/Üst Tam Liste
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_1 ve Alt") return ms === "1" && toplamGol < 1.5;
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_1 ve Üst") return ms === "1" && toplamGol > 1.5;
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_0 ve Alt") return ms === "0" && toplamGol < 1.5;
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_0 ve Üst") return ms === "0" && toplamGol > 1.5;
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_2 ve Alt") return ms === "2" && toplamGol < 1.5;
+  if(key === "Maç Sonucu ve Alt/Üst 1.5_2 ve Üst") return ms === "2" && toplamGol > 1.5;
+
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_1 ve Alt") return ms === "1" && toplamGol < 2.5;
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_1 ve Üst") return ms === "1" && toplamGol > 2.5;
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_0 ve Alt") return ms === "0" && toplamGol < 2.5;
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_0 ve Üst") return ms === "0" && toplamGol > 2.5;
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_2 ve Alt") return ms === "2" && toplamGol < 2.5;
+  if(key === "Maç Sonucu ve Alt/Üst 2.5_2 ve Üst") return ms === "2" && toplamGol > 2.5;
+
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_1 ve Alt") return ms === "1" && toplamGol < 3.5;
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_1 ve Üst") return ms === "1" && toplamGol > 3.5;
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_0 ve Alt") return ms === "0" && toplamGol < 3.5;
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_0 ve Üst") return ms === "0" && toplamGol > 3.5;
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_2 ve Alt") return ms === "2" && toplamGol < 3.5;
+  if(key === "Maç Sonucu ve Alt/Üst 3.5_2 ve Üst") return ms === "2" && toplamGol > 3.5;
+
+  if(key === "Maç Sonucu ve Alt/Üst 4.5_1 ve Alt") return ms === "1" && toplamGol < 4.5;
+  if(key === "Maç Sonucu ve Alt/Üst 4.5_1 ve Üst") return ms === "1" && toplamGol > 4.5;
+  if(key === "Maç Sonucu ve Alt/Üst 4.5_0 ve Alt") return ms === "0" && toplamGol < 4.5;
+  if(key === "Maç Sonucu ve Alt/Üst 4.5_0 ve Üst") return ms === "0" && toplamGol > 4.5;
+  if(key === "Maç Sonucu ve Alt/Üst 4.5_2 ve Alt") return ms === "2" && toplamGol < 4.5;
+  if(key === "Maç Sonucu ve Alt/Üst 4.5_2 ve Üst") return ms === "2" && toplamGol > 4.5;
+
   return false;
 }
 
@@ -1071,7 +1111,7 @@ bm.forEach(m => {
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Sonucu_0')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Sonucu_0']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Sonucu_2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Sonucu_2']||'-'}</div></td>
 
-      <!-- ALT/ÜST -->
+      <!-- GENEL ALT/ÜST -->
       <td class="oran-cell ${dogruOran(m,'Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 0.5_Alt']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 0.5_Üst']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 1.5_Alt']||'-'}</div></td>
@@ -1083,13 +1123,37 @@ bm.forEach(m => {
       <td class="oran-cell ${dogruOran(m,'Alt/Üst 4.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 4.5_Alt']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Alt/Üst 4.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 4.5_Üst']||'-'}</div></td>
 
-      <!-- İLK YARI ALT/ÜST -->
+      <!-- ✅ EV SAHİBİ ALT/ÜST -->
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 0.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 0.5_Üst']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 1.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 1.5_Üst']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 2.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 2.5_Üst']||'-'}</div></td>
+
+      <!-- ✅ DEPLASMAN ALT/ÜST -->
+      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 0.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 0.5_Üst']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 1.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 1.5_Üst']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 2.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 2.5_Üst']||'-'}</div></td>
+
+      <!-- İLK YARI GENEL ALT/ÜST -->
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 1.5_Alt']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 1.5_Üst']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 2.5_Alt']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 2.5_Üst']||'-'}</div></td>
+
+      <!-- ✅ EV SAHİBİ İLK YARI ALT/ÜST -->
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
+
+      <!-- ✅ DEPLASMAN İLK YARI ALT/ÜST -->
+      <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
+      <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
 
       <!-- KARŞILIKLI GOL -->
       <td class="oran-cell ${dogruOran(m,'Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['Karşılıklı Gol_Var']||'-'}</div></td>
@@ -1110,7 +1174,7 @@ bm.forEach(m => {
       <td class="oran-cell ${dogruOran(m,'Çifte Şans_12')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_12']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Çifte Şans_X2')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_X2']||'-'}</div></td>
 
-      <!-- İY / MS TÜM KOMBİNASYONLAR -->
+      <!-- İY / MS -->
       <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/1')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/1']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/X')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/X']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/2']||'-'}</div></td>
@@ -1129,7 +1193,7 @@ bm.forEach(m => {
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_2 ve Var')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_2 ve Var']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_2 ve Yok')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_2 ve Yok']||'-'}</div></td>
 
-      <!-- MS + ALT/ÜST TÜM KOMBİNASYONLAR -->
+      <!-- MS + ALT/ÜST -->
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_1 ve Alt']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_1 ve Üst']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_0 ve Alt']||'-'}</div></td>

@@ -746,8 +746,8 @@ function dogruOran(m, key){
   // Toplam Gol Aralıkları
   if(key === "Toplam Gol_0-1") return toplamGol >= 0 && toplamGol <= 1;
   if(key === "Toplam Gol_2-3") return toplamGol >= 2 && toplamGol <= 3;
-  if(key === "Toplam Gol_4-6") return toplamGol >= 4 && toplamGol <= 6;
-  if(key === "Toplam Gol_7+") return toplamGol >= 7;
+  if(key === "Toplam Gol_4-5") return toplamGol >= 4 && toplamGol <= 5;
+  if(key === "Toplam Gol_6+") return toplamGol >= 6;
 
   // MS + Alt/Üst Tam Liste
   if(key === "Maç Sonucu ve Alt/Üst 1.5_1 ve Alt") return ms === "1" && toplamGol < 1.5;
@@ -1209,8 +1209,8 @@ function analizYap() {
     <!-- TOPLAM GOL -->
     <th>Gol 0-1</th>
     <th>Gol 2-3</th>
-    <th>Gol 4-6</th>
-    <th>Gol 7+</th>
+    <th>Gol 4-5</th>
+    <th>Gol 6+</th>
     <th>Toplam Gol</th>
   </tr></thead><tbody>`;
 

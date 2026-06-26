@@ -737,6 +737,7 @@ function dogruOran(m, key){
   // Her İki Yarıda da Üst 1.5 / 2.5
   if(key === "Her İki Yarıda da Üst 1.5_Evet") return iyGol > 1.5 && ikinciGol > 1.5;
   if(key === "Her İki Yarıda da Üst 2.5_Evet") return iyGol > 2.5 && ikinciGol > 2.5;
+  if(key === "Her İki Yarıda da Alt 1.5_Evet") return iyGol < 1.5 && ikinciGol < 1.5;
 
   // Ev Sahibi / Deplasman Her İki Yarıyı Kazanır
   if(key === "Ev Sahibi Her İki Yarıyı Kazanır_Evet") return iy === "1" && ikinci === "1";
@@ -1234,110 +1235,109 @@ bm.forEach(m => {
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Sonucu_0')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Sonucu_0']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'İlk Yarı Sonucu_2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Sonucu_2']||'-'}</div></td>
 
-      <!-- GENEL ALT/ÜST -->
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 0.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 0.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 1.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 1.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 2.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 2.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 3.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 3.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 3.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 3.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 4.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 4.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Alt/Üst 4.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 4.5_Üst']||'-'}</div></td>
+            <!-- Genel Alt/Üst -->
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 0.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 0.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 1.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 1.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 2.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 2.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 3.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 3.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 3.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 3.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 4.5_Alt')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 4.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Alt/Üst 4.5_Üst')?'dogru':''}"><div class="oran-v">${o['Alt/Üst 4.5_Üst']||'-'}</div></td>
 
-      <!-- ✅ EV SAHİBİ ALT/ÜST -->
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 0.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 0.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 1.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 1.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 2.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 2.5_Üst']||'-'}</div></td>
+            <!-- Ev Sahibi Alt/Üst -->
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 0.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 0.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 1.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 1.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 2.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi Alt/Üst 2.5_Üst']||'-'}</div></td>
 
-      <!-- ✅ DEPLASMAN ALT/ÜST -->
-      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 0.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 0.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 1.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 1.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 2.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 2.5_Üst']||'-'}</div></td>
+            <!-- Deplasman Alt/Üst -->
+            <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 0.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 0.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 1.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 1.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 2.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Deplasman Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman Alt/Üst 2.5_Üst']||'-'}</div></td>
 
-      <!-- İLK YARI GENEL ALT/ÜST -->
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 1.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 1.5_Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 2.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 2.5_Üst']||'-'}</div></td>
+            <!-- İlk Yarı Genel Alt/Üst -->
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 1.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 1.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 2.5_Alt')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 2.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 2.5_Üst']||'-'}</div></td>
 
-      <!-- ✅ EV SAHİBİ İLK YARI ALT/ÜST -->
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
+            <!-- İlk Yarı Takım Alt/Üst -->
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
 
-      <!-- ✅ DEPLASMAN İLK YARI ALT/ÜST -->
-      <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
+            <!-- Karşılıklı Gol -->
+            <td class="oran-cell ${dogruOran(m,'Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['Karşılıklı Gol_Var']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Karşılıklı Gol_Yok')?'dogru':''}"><div class="oran-v">${o['Karşılıklı Gol_Yok']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Karşılıklı Gol_Var']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı Karşılıklı Gol_Yok')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Karşılıklı Gol_Yok']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İkinci Yarı Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['İkinci Yarı Karşılıklı Gol_Var']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İkinci Yarı Karşılıklı Gol_Yok')?'dogru':''}"><div class="oran-v">${o['İkinci Yarı Karşılıklı Gol_Yok']||'-'}</div></td>
 
-      <!-- KARŞILIKLI GOL -->
-      <td class="oran-cell ${dogruOran(m,'Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['Karşılıklı Gol_Var']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Karşılıklı Gol_Yok')?'dogru':''}"><div class="oran-v">${o['Karşılıklı Gol_Yok']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Karşılıklı Gol_Var']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı Karşılıklı Gol_Yok')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Karşılıklı Gol_Yok']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İkinci Yarı Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['İkinci Yarı Karşılıklı Gol_Var']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İkinci Yarı Karşılıklı Gol_Yok')?'dogru':''}"><div class="oran-v">${o['İkinci Yarı Karşılıklı Gol_Yok']||'-'}</div></td>
+            <!-- Her İki Yarı KG -->
+            <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_EE')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_EE']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_EH')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_EH']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_HE')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_HE']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_HH')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_HH']||'-'}</div></td>
 
-      <!-- HER İKİ YARIDA KG -->
-      <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_EE')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_EE']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_EH')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_EH']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_HE')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_HE']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Her İki Yarıda Karşılıklı Gol_HH')?'dogru':''}"><div class="oran-v">${o['Her İki Yarıda Karşılıklı Gol_HH']||'-'}</div></td>
+            <!-- Çifte Şans -->
+            <td class="oran-cell ${dogruOran(m,'Çifte Şans_1X')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_1X']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Çifte Şans_12')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_12']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Çifte Şans_X2')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_X2']||'-'}</div></td>
 
-      <!-- ÇİFTE ŞANS -->
-      <td class="oran-cell ${dogruOran(m,'Çifte Şans_1X')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_1X']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Çifte Şans_12')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_12']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Çifte Şans_X2')?'dogru':''}"><div class="oran-v">${o['Çifte Şans_X2']||'-'}</div></td>
+            <!-- İY / MS -->
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/1')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/1']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/X')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/X']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/2']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_X/1')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_X/1']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_X/X')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_X/X']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_X/2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_X/2']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_2/1')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_2/1']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_2/X')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_2/X']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_2/2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_2/2']||'-'}</div></td>
 
-      <!-- İY / MS -->
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/1')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/1']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/X')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/X']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_1/2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_1/2']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_X/1')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_X/1']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_X/X')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_X/X']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_X/2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_X/2']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_2/1')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_2/1']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_2/X')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_2/X']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'İlk Yarı / Maç Sonucu_2/2')?'dogru':''}"><div class="oran-v">${o['İlk Yarı / Maç Sonucu_2/2']||'-'}</div></td>
+            <!-- MS + KG -->
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_1 ve Var')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_1 ve Var']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_1 ve Yok')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_1 ve Yok']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_0 ve Var')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_0 ve Var']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_0 ve Yok')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_0 ve Yok']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_2 ve Var')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_2 ve Var']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_2 ve Yok')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_2 ve Yok']||'-'}</div></td>
 
-      <!-- MS + KG -->
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_1 ve Var')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_1 ve Var']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_1 ve Yok')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_1 ve Yok']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_0 ve Var')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_0 ve Var']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_0 ve Yok')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_0 ve Yok']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_2 ve Var')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_2 ve Var']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Karşılıklı Gol_2 ve Yok')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Karşılıklı Gol_2 ve Yok']||'-'}</div></td>
+            <!-- MS + Alt/Üst 1.5 -->
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_1 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_1 ve Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_0 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_0 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_0 ve Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_2 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_2 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_2 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_2 ve Üst']||'-'}</div></td>
 
-      <!-- MS + ALT/ÜST -->
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_1 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_1 ve Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_0 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_0 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_0 ve Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_2 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_2 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 1.5_2 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 1.5_2 ve Üst']||'-'}</div></td>
+            <!-- MS + Alt/Üst 2.5 -->
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_1 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_1 ve Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_0 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_0 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_0 ve Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_2 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_2 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_2 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_2 ve Üst']||'-'}</div></td>
 
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_1 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_1 ve Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_0 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_0 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_0 ve Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_2 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_2 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 2.5_2 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 2.5_2 ve Üst']||'-'}</div></td>
-
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_1 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_1 ve Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_0 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_0 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_0 ve Üst']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_2 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_2 ve Alt']||'-'}</div></td>
-      <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_2 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_2 ve Üst']||'-'}</div></td>
-
+            <!-- MS + Alt/Üst 3.5 -->
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_1 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_1 ve Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_0 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_0 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_0 ve Üst']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_2 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_2 ve Alt']||'-'}</div></td>
+            <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 3.5_2 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 3.5_2 ve Üst']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 4.5_1 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 4.5_1 ve Alt']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 4.5_1 ve Üst')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 4.5_1 ve Üst']||'-'}</div></td>
       <td class="oran-cell ${dogruOran(m,'Maç Sonucu ve Alt/Üst 4.5_0 ve Alt')?'dogru':''}"><div class="oran-v">${o['Maç Sonucu ve Alt/Üst 4.5_0 ve Alt']||'-'}</div></td>

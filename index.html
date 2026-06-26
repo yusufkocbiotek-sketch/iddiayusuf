@@ -1099,14 +1099,117 @@ function analizYap() {
 
   h += `<div class="analiz-table-wrap"><table class="analiz-table"><thead><tr>
     <th>Tarih / Saat</th>
-    <th class="mac-col">Maç</th>
-    <th class="skor-col">Skor</th>
-    <th>MS1</th><th>MSX</th><th>MS2</th>
-    <th>1.5A</th><th>1.5Ü</th>
-    <th>2.5A</th><th>2.5Ü</th>
-    <th>KG Var</th><th>KG Yok</th>
-    <th>İY KG Var</th><th>İY2 KG Var</th>
-    <th>İY/MS 1/2</th><th>İY/MS 2/1</th>
+     <th class="mac-col">Maç</th>
+     <th class="skor-col">Skor</th>
+     <!-- MAÇ SONUCU -->
+     <th>MS1</th>
+     <th>MSX</th>
+     <th>MS2</th>
+     <!-- GENEL ALT/ÜST -->
+     <th>0.5A</th>
+     <th>0.5Ü</th>
+     <th>1.5A</th>
+     <th>1.5Ü</th>
+     <th>2.5A</th>
+     <th>2.5Ü</th>
+     <th>3.5A</th>
+     <th>3.5Ü</th>
+     <th>4.5A</th>
+     <th>4.5Ü</th>
+     <!-- EV SAHİBİ ALT/ÜST -->
+     <th>EVS 0.5A</th>
+     <th>EVS 0.5Ü</th>
+     <th>EVS 1.5A</th>
+     <th>EVS 1.5Ü</th>
+     <th>EVS 2.5A</th>
+     <th>EVS 2.5Ü</th>
+     <!-- DEPLASMAN ALT/ÜST -->
+     <th>DEP 0.5A</th>
+     <th>DEP 0.5Ü</th>
+     <th>DEP 1.5A</th>
+     <th>DEP 1.5Ü</th>
+     <th>DEP 2.5A</th>
+     <th>DEP 2.5Ü</th>
+    <!-- İLK YARI GENEL ALT/ÜST -->
+    <th>İY 0.5A</th>
+    <th>İY 0.5Ü</th>
+    <th>İY 1.5A</th>
+    <th>İY 1.5Ü</th>
+    <th>İY 2.5A</th>
+    <th>İY 2.5Ü</th>
+    <!-- İLK YARI TAKIM ALT/ÜST -->
+    <th>EVS İY 0.5A</th>
+    <th>EVS İY 0.5Ü</th>
+    <th>DEP İY 0.5A</th>
+    <th>DEP İY 0.5Ü</th>
+    <!-- KARŞILIKLI GOL -->
+    <th>KG Var</th>
+    <th>KG Yok</th>
+    <th>İY KG Var</th>
+    <th>İY KG Yok</th>
+    <th>İY2 KG Var</th>
+    <th>İY2 KG Yok</th>
+    <!-- HER İKİ YARI KG -->
+    <th>İY+İY2 KG E/E</th>
+    <th>İY+İY2 KG E/H</th>
+    <th>İY+İY2 KG H/E</th>
+    <th>İY+İY2 KG H/H</th>
+    <!-- ÇİFTE ŞANS -->
+    <th>1X</th>
+    <th>12</th>
+    <th>X2</th>
+    <!-- İY / MS -->
+     <th>İY/MS 1/1</th>
+    <th>İY/MS 1/X</th>
+    <th>İY/MS 1/2</th>
+    <th>İY/MS X/1</th>
+    <th>İY/MS X/X</th>
+    <th>İY/MS X/2</th>
+    <th>İY/MS 2/1</th>
+    <th>İY/MS 2/X</th>
+    <th>İY/MS 2/2</th>
+    <!-- MS + KG -->
+    <th>MS1+KGV</th>
+    <th>MS1+KGY</th>
+    <th>MSX+KGV</th>
+    <th>MSX+KGY</th>
+    <th>MS2+KGV</th>
+    <th>MS2+KGY</th>
+    <!-- MS + ALT/ÜST -->
+    <th>MS1+1.5A</th>
+    <th>MS1+1.5Ü</th>
+    <th>MSX+1.5A</th>
+    <th>MSX+1.5Ü</th>
+    <th>MS2+1.5A</th>
+    <th>MS2+1.5Ü</th>
+    <th>MS1+2.5A</th>
+    <th>MS1+2.5Ü</th>
+    <th>MSX+2.5A</th>
+    <th>MSX+2.5Ü</th>
+    <th>MS2+2.5A</th> 
+    <th>MS2+2.5Ü</th>
+    <th>MS1+3.5A</th>
+    <th>MS1+3.5Ü</th>
+    <th>MSX+3.5A</th>
+    <th>MSX+3.5Ü</th>
+    <th>MS2+3.5A</th>
+    <th>MS2+3.5Ü</th>
+    <th>MS1+4.5A</th>
+    <th>MS1+4.5Ü</th>
+    <th>MSX+4.5A</th>
+    <th>MSX+4.5Ü</th>
+    <th>MS2+4.5A</th>
+    <th>MS2+4.5Ü</th>
+    <!-- ÖZEL DURUMLAR -->
+    <th>Ev İki Yarı Kazanır</th>
+    <th>Dep İki Yarı Kazanır</th>
+    <th>Her İki Yarı 1.5Ü</th>
+    <th>Her İki Yarı 2.5Ü</th>
+    <!-- TOPLAM GOL -->
+    <th>Gol 0-1</th>
+    <th>Gol 2-3</th>
+    <th>Gol 4-6</th>
+    <th>Gol 7+</th>
     <th>Toplam Gol</th>
   </tr></thead><tbody>`;
 

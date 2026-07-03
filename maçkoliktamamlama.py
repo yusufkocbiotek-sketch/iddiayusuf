@@ -335,6 +335,12 @@ def build_driver():
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--disable-blink-features=AutomationControlled")
     opts.add_argument("--log-level=3")
+    opts.add_argument("--disable-gpu")                         # ✅ YENİ
+    opts.add_argument("--disable-software-rasterizer")         # ✅ YENİ
+    opts.add_argument("--disable-extensions")                  # ✅ YENİ
+    opts.add_argument("--disable-popup-blocking")              # ✅ YENİ
+    opts.add_argument("--disable-infobars")                    # ✅ YENİ
+    opts.add_argument("--memory-pressure-off")                 # ✅ YENİ
     opts.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
     opts.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
     opts.add_experimental_option("useAutomationExtension", False)
@@ -342,6 +348,7 @@ def build_driver():
     print("🔄 ChromeDriver hazırlanıyor...")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=opts)
     driver.set_page_load_timeout(60)
+    driver.set_script_timeout(60) 
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     print("✅ Tarayıcı başarıyla başlatıldı")
     return driver
@@ -372,7 +379,7 @@ def takvimde_gezin(driver, hedef_tarih):
             EC.element_to_be_clickable((By.CLASS_NAME, "widget-dateslider__datepicker-toggle")))
         driver.execute_script("arguments[0].click();", takvim_buton)
         print("   ✅ Takvim açıldı")
-        time.sleep(2)
+        time.sleep(2.5)
 
         # 🇹🇷 Türkçe kısaltmalar + İngilizce (her ihtimale karşı)
         AY_KISALTMA = {
@@ -515,7 +522,7 @@ def get_skorlar_tek_gun(driver, hedef_tarih):
 
         for adim in range(MAX_KAYDIRMA_ADIMI):
             driver.execute_script(f"window.scrollBy(0, {ADIM_KAYDIRMA_MIKTARI});")
-            time.sleep(ADIMLAR_ARASI_BEKLEME)  # 1.2s buffer
+            time.sleep(ADIMLAR_ARASI_BEKLEME)  # 1.5s buffer
 
             try:
                 mac_satirlari = driver.find_elements(By.CSS_SELECTOR, "div.match-row")

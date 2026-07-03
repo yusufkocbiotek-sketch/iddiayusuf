@@ -1,12 +1,10 @@
-import json
-import os
 import re
 import time
 import datetime
 import traceback
+import json
 import subprocess
 from pathlib import Path
-from difflib import SequenceMatcher
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -14,245 +12,31 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import *
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 # =========================
-# ⚙️ AYARLAR
+# AYARLAR
 # =========================
-BASLANGIC_TARIHI = "24.06.2026"   # GG.AA.YYYY
-BITIS_TARIHI = "30.06.2026"       # GG.AA.YYYY
+BASLANGIC_TARIHI = "01.07.2026"
+BITIS_TARIHI     = "02.07.2026"
+
+BASE_URL = "https://www.sofascore.com/tr/football/"
+PAGE_LOAD_TIMEOUT = 90
+WAIT_LONG = 8
+WAIT_SHORT = 2
 
 BASE_DIR = Path(__file__).resolve().parent
-MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
-BASE_LINK = "https://www.sofascore.com/tr"
-GIT_BRANCH_NAME = "main"
+JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
+GIT_BRANCH = "main"
 
-# Eşleştirme frenleri
-TARIH_TOLERANSI_GUN = 15        # ±15 gün tolerans
-GUCLU_TAKIM_ESIGI = 0.80       # En az bir takım bu kadar benzemeli
-MIN_TOPLAM_PUAN = 1.30         # İki takımın toplam benzerlik alt sınırı
-MIN_TEK_TARAF = 0.50           # Bir taraf bundan düşükse farklı maçtır
-
-# Performans Ayarları
-SAYFA_YUKLEME_BEKLEME = 30
-ADIM_KAYDIRMA_MIKTARI = 800
-ADIMLAR_ARASI_BEKLEME = 2
-MAX_KAYDIRMA_ADIMI = 120
-SCRIPT_TIMEOUT = 50
-PAGE_LOAD_TIMEOUT = 60
-MAX_DENEME = 2
-
-# =========================================================
-# 🧠 İSİM HAFIZASI (TAKMA ADLAR) - AYNI KALDI
-# =========================================================
-TAKIM_TAKMA_ADLAR = {
-    # ====== GENEL / AVRUPA ======
-    "psg": "paris saint germain",
-    "paris sg": "paris saint germain",
-    "man utd": "manchester united",
-    "man city": "manchester city",
-    "inter milan": "inter",
-    "internazionale": "inter",
-    "athletic club": "athletic bilbao",
-    "sporting cp": "sporting lizbon",
-
-    # ====== KAZAKİSTAN ======
-    "k kyzylorda": "kaisar",
-    "kaysar": "kaisar",
-    "kaisar kyzylorda": "kaisar",
-    "fc astana": "astana",
-    "altay vko": "altay",
-    "altay oskemen": "altay",
-    "fc ordabasy": "ordabasy",
-    "ordabasy shymkent": "ordabasy",
-
-    # ====== PORTEKİZ ======
-    "amarante fc": "amarante",
-    "ud santarem": "santarem",
-    "u.d. santarem": "santarem",
-
-    # ====== ETİYOPYA ======
-    "arba minch kenema": "arba minch",
-    "arba minch city": "arba minch",
-    "wolaita dicha sc": "wolaita dicha",
-    "wolaitta dicha": "wolaita dicha",
-    "bahir dar kenema fc": "bahir dar kenema",
-    "bahir dar city": "bahir dar kenema",
-    "welwalu adigrat": "welwalo adigrat",
-    "welwalo adigrat university": "welwalo adigrat",
-
-    # ====== ARJANTİN ======
-    "argentinos j": "argentinos juniors",
-    "argentinos jrs": "argentinos juniors",
-    "ath lanus": "lanus",
-    "ca lanus": "lanus",
-    "ca acassuso": "acassuso",
-    "ca defensores de belgrano": "defensores de belgrano",
-    "def belgrano": "defensores de belgrano",
-    "ca chaco for ever": "chaco for ever",
-    "dep madryn": "deportivo madryn",
-
-    # ====== MACARİSTAN ======
-    "bfc siofok": "siofok",
-    "erdi vse": "erd",
-    "erd vse": "erd",
-
-    # ====== ÇİN ======
-    "pekin guoan": "beijing guoan",
-    "shanghai sipg": "shanghai port",
-    "shenzhen juniors fc": "shenzhen juniors",
-    "shenzhen peng city": "shenzhen juniors",
-
-    # ====== AVUSTRALYA ======
-    "north eastern metrostars sc": "metrostars",
-    "ne metrostars": "metrostars",
-    "edgeworth fc": "edgeworth",
-    "edgeworth eagles": "edgeworth",
-    "maitland fc": "maitland",
-    "para hills knights sc": "para hills knights",
-    "para hills": "para hills knights",
-    "fc bulleen lions": "bulleen lions",
-    "bulleen": "bulleen lions",
-    "melb. sharks": "melbourne sharks",
-    "melb sharks": "melbourne sharks",
-    "port melbourne sharks": "melbourne sharks",
-    "magic united tfa": "magic united",
-    "magic utd": "magic united",
-    "adelaide city fc": "adelaide city",
-    "white city fk beograd": "white city",
-    "white city woodville": "white city",
-
-    # ====== İSVİÇRE ======
-    "sc bruhl st gallen": "sc bruhl",
-    "sc brühl": "sc bruhl",
-    "bruhl sg": "sc bruhl",
-    "sc cham": "cham",
-    "bsc young boys": "young boys",
-
-    # ====== NORVEÇ / DANİMARKA ======
-    "aasane fotball 2": "aasane 2",
-    "asane 2": "aasane 2",
-    "asane fotball 2": "aasane 2",
-    "il gneist": "gneist",
-    "nykoebing": "nykobing",
-    "fa 2000 kobenhavn": "fa 2000",
-    "nykobing fc": "nykobing",
-
-    # ====== KANADA / ABD ======
-    "atl ottawa": "atletico ottawa",
-    "forge fc": "forge",
-    "av alta fc": "av alta",
-    "avs alta": "av alta",
-    "new york cosmos": "ny cosmos",
-    "n.y. cosmos": "ny cosmos",
-
-    # ====== FAS ======
-    "chabab atlas khenifra": "chabab khenifra",
-    "cak khenifra": "chabab khenifra",
-
-    # ====== PERU ======
-    "asociacion deportiva tarma": "adt tarma",
-    "adt": "adt tarma",
-    "ad tarma": "adt tarma",
-
-    # ====== GÜNEY AMERİKA ======
-    "ldu": "ldu quito",
-    "sao": "sao paulo",
-    "san": "san lorenzo",
-
-    # ====== HOLLANDA ======
-    "jong ajax": "ajax 2",
-    "ajax amsterdam": "ajax",
-    "jong utrecht": "utrecht 2",
-    "fc utrecht": "utrecht",
-    "jong psv": "psv 2",
-    "jong az": "az 2",
-
-    # ====== DİĞER ======
-    "bfc": "bfc daugavpils",
-    "ifk": "ifk mariehamn",
-    "zrinjski": "zrinjski mostar",
-    "saint": "saint etienne",
-}
-
-# =========================================================
-# 🔍 İSİM NORMALİZE + BENZERLİK
-# =========================================================
-def isim_normalize(s):
-    if not s:
-        return ""
-    s = str(s).lower().strip()
-
-    if s in TAKIM_TAKMA_ADLAR:
-        s = TAKIM_TAKMA_ADLAR[s]
-
-    s = s.replace("(k)", " kadin ").replace("(w)", " kadin ")
-    if s.startswith("jong "):
-        s = s[5:].strip() + " 2"
-    s = re.sub(r"\b(ii)\b", "2", s)
-    s = re.sub(r"\b(genc|gencler|gençler|youth|u19|u20|u21|u23|junior|juniors)\b", "genc", s)
-    s = re.sub(r"\b(kadin|kadın|women|ladies|fem|feminino)\b", "kadin", s)
-
-    tr_map = str.maketrans("çğıöşü", "cgiosu")
-    s = s.translate(tr_map)
-    s = re.sub(r"[^a-z0-9\s]", "", s)
-
-    for ek in [" fc", " fk", " sk", " jk", " cf", " sc", " club", " spor"]:
-        if s.endswith(ek):
-            s = s[: -len(ek)]
-    for on_ek in ["fc ", "fk ", "sc ", "ca ", "cd ", "ud ", "il "]:
-        if s.startswith(on_ek):
-            s = s[len(on_ek):]
-    s = re.sub(r"\s+", " ", s).strip()
-
-    if s in TAKIM_TAKMA_ADLAR:
-        s = TAKIM_TAKMA_ADLAR[s]
-
-    return s
-
-def benzerlik(a, b):
-    a_n = isim_normalize(a)
-    b_n = isim_normalize(b)
-    if not a_n or not b_n:
-        return 0.0
-
-    for etiket in ["2", "genc", "kadin"]:
-        a_var = etiket in a_n.split()
-        b_var = etiket in b_n.split()
-        if a_var != b_var:
-            return 0.10
-
-    if a_n == b_n:
-        return 1.0
-    if a_n in b_n or b_n in a_n:
-        return 0.90
-    return SequenceMatcher(None, a_n, b_n).ratio()
 
 # =========================
-# 📅 TARİH FONKSİYONLARI
+# TARİH
 # =========================
-def esnek_tarih_parse(t):
-    t = str(t).strip()[:10]
-    for fmt in ("%Y-%m-%d", "%d.%m.%Y", "%d-%m-%Y", "%Y.%m.%d"):
-        try:
-            return datetime.datetime.strptime(t, fmt).date()
-        except:
-            continue
-    return None
-
-def dates_close(t1, t2):
-    d1 = esnek_tarih_parse(t1)
-    d2 = esnek_tarih_parse(t2)
-    if not d1 or not d2:
-        return False
-    return abs((d1 - d2).days) <= TARIH_TOLERANSI_GUN
-
 def parse_date(s):
-    try:
-        return datetime.datetime.strptime(s, "%d.%m.%Y").date()
-    except:
-        return None
+    return datetime.datetime.strptime(s, "%d.%m.%Y").date()
 
 def gun_listesi_olustur(bas, bit):
     gunler = []
@@ -262,65 +46,17 @@ def gun_listesi_olustur(bas, bit):
         aktif += datetime.timedelta(days=1)
     return gunler
 
-# =========================
-# 📂 JSON İŞLEMLERİ
-# =========================
-def load_json_safe(path):
+def dates_close(t1, t2):
     try:
-        if not path.exists():
-            return {"matches": [], "son_guncelleme": ""}
-        with open(path, "r", encoding="utf-8") as f:
-            veri = json.load(f)
-            if "matches" not in veri or not isinstance(veri["matches"], list):
-                veri["matches"] = []
-            return veri
-    except Exception as e:
-        print(f"⚠️ JSON OKUMA HATASI: {e}")
-        return {"matches": [], "son_guncelleme": ""}
-
-def save_json_safe(data, path):
-    try:
-        temiz_mac_listesi = []
-        for idx, mac in enumerate(data.get("matches", []), 1):
-            ev_sahibi = str(mac.get("ev_sahibi", "")).strip()
-            deplasman = str(mac.get("deplasman", "")).strip()
-
-            if ev_sahibi and deplasman:
-                temiz_mac = {
-                    "index": idx,
-                    "mac_kodu": str(mac.get("mac_kodu", "")),
-                    "ev_sahibi": ev_sahibi,
-                    "deplasman": deplasman,
-                    "saat": str(mac.get("saat", "")),
-                    "lig": str(mac.get("lig", "")),
-                    "tarih": str(mac.get("tarih", "")),
-                    "cekme_zamani": str(mac.get("cekme_zamani", datetime.datetime.now().isoformat())),
-                    "durum": str(mac.get("durum", "baslamadi")),
-                    "skor_ev": int(mac.get("skor_ev", 0)),
-                    "skor_dep": int(mac.get("skor_dep", 0)),
-                    "skor_1y_ev": int(mac.get("skor_1y_ev", 0)),
-                    "skor_1y_dep": int(mac.get("skor_1y_dep", 0)),
-                    "kaynak": str(mac.get("kaynak", "sofascore.com")),
-                    "oranlar": mac.get("oranlar", {})
-                }
-                temiz_mac_listesi.append(temiz_mac)
-
-        data["son_guncelleme"] = datetime.datetime.now().isoformat()
-        cikti_verisi = {"matches": temiz_mac_listesi, "son_guncelleme": data["son_guncelleme"]}
-
-        temp_path = path.with_suffix(".tmp")
-        with open(temp_path, "w", encoding="utf-8", newline='\n') as f:
-            json.dump(cikti_verisi, f, ensure_ascii=False, indent=2)
-
-        temp_path.replace(path)
-        print(f"💾 KAYIT BAŞARILI: {path.name} | Toplam: {len(temiz_mac_listesi)} maç")
-        return True
-    except Exception as e:
-        print(f"❌ KAYIT HATASI: {e}")
+        d1 = datetime.datetime.strptime(str(t1)[:10], "%Y-%m-%d").date()
+        d2 = datetime.datetime.strptime(str(t2)[:10], "%Y-%m-%d").date()
+        return abs((d1 - d2).days) <= 15
+    except:
         return False
 
+
 # =========================
-# 🚀 DRIVER (Sofascore için optimize)
+# DRIVER | GELİŞMİŞ BOT KORUMASI
 # =========================
 def build_driver():
     opts = Options()
@@ -329,413 +65,291 @@ def build_driver():
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--disable-blink-features=AutomationControlled")
     opts.add_argument("--disable-extensions")
-    opts.add_argument("--disable-plugins")
-    opts.add_argument("--disable-images")
     opts.add_argument("--disable-gpu")
-    opts.add_argument("--disable-software-rasterizer")
-    opts.add_argument("--log-level=3")
-    opts.add_argument("--disable-background-networking")
-    opts.add_argument("--disable-sync")
-    opts.add_argument("--metrics-recording-only")
-    opts.add_argument("--no-first-run")
-    opts.add_argument("--disable-renderer-backgrounding")
-    opts.add_argument("--disable-site-isolation-trials")
-    opts.add_argument("--disable-features=IsolateOrigins,site-per-process")
-    opts.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
+    opts.add_argument("--lang=tr-TR")
+    opts.add_argument("--accept-lang=tr,en;q=0.9")
+    opts.add_argument("--disable-popup-blocking")
+    opts.add_argument("--disable-notifications")
+    opts.add_argument("--disable-web-security")
+    opts.add_argument("--allow-running-insecure-content")
+    opts.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36")
 
-    opts.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
+    opts.add_experimental_option("excludeSwitches", ["enable-automation"])
     opts.add_experimental_option("useAutomationExtension", False)
+    opts.add_experimental_option("prefs", {
+        "profile.default_content_setting_values.notifications": 2,
+        "credentials_enable_service": False,
+        "profile.password_manager_enabled": False
+    })
 
-    opts.page_load_strategy = "eager"
-
-    print("🔄 ChromeDriver hazırlanıyor...")
     driver = webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),
         options=opts
     )
 
     driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
-    driver.set_script_timeout(SCRIPT_TIMEOUT)
-    driver.implicitly_wait(5)
-
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    print("✅ Tarayıcı başarıyla başlatıldı")
+    driver.implicitly_wait(WAIT_SHORT)
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined});")
+    driver.execute_script("Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});")
+    driver.execute_script("Object.defineProperty(navigator, 'languages', {get: () => ['tr-TR', 'tr', 'en-US', 'en']});")
     return driver
 
-# =========================
-# 🛠️ YARDIMCILAR
-# =========================
-def rakam_bul(text):
-    if not text:
-        return 0
-    rakamlar = re.findall(r'\d+', str(text))
-    return int(rakamlar[0]) if rakamlar else 0
 
-# =========================================================
-# 📅 SOFASCORE TARİH SEÇİMİ (SON DÜZELTME: "Tümü" sekmesi)
-# =========================================================
-def tarihi_sec(driver, hedef_tarih):
-    hedef_gun = hedef_tarih.day
-    hedef_ay_metin = hedef_tarih.strftime("%B %Y")  # Örn: "Haziran 2026", "Temmuz 2026"
-    print(f"   🔧 Tarih seçiliyor: {hedef_tarih.strftime('%d.%m.%Y')}")
+# =========================
+# LİGLERİ TEK TEK AÇ | GÜNCELLENMİŞ SEÇİCİLER
+# =========================
+def ligleri_tek_tek_ac_ve_cek(driver):
+    print("🔽 Ligler aranıyor ve açılıyor...")
+    tum_maclar = []
 
-    for deneme in range(MAX_DENEME):
+    # ✅ Sofascore'un en güncel yapısına uygun SEÇİCİLER
+    lig_satirlari = driver.find_elements(
+        By.XPATH,
+        "//div[contains(@class, 'tournamentHeader') or contains(@class, 'event__header') or contains(@class, 'sc-fqkvVR') or contains(@class, 'sc-ktHwxA')]"
+    )
+
+    if not lig_satirlari:
+        print("   ⚠️ Klasik seçicilerle bulunamadı, alternatif yöntem deneniyor...")
+        lig_satirlari = driver.find_elements(
+            By.XPATH,
+            "//div[.//h2 or .//h3 or .//span[contains(@class, 'tournament')]]"
+        )
+
+    print(f"   📍 {len(lig_satirlari)} lig grubu bulundu")
+
+    for lig_idx, lig in enumerate(lig_satirlari):
         try:
-            # 1. Önce "Tümü" sekmesini aktif hale getir
-            print("   📂 Tümü sekmesi açılıyor...")
-            tum_sekme = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-testid="tab-all"]'))
-            )
-            driver.execute_script("arguments[0].click();", tum_sekme)
-            time.sleep(2)
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", lig)
+            time.sleep(1)
 
-            # 2. Takvim butonunu bul ve aç
-            print("   📅 Takvim butonu aranıyor...")
-            tarih_buton = WebDriverWait(driver, 12).until(
-                EC.element_to_be_clickable((By.XPATH,
-                    "//span[contains(@class,'textStyle_assistive')]/ancestor::button | "
-                    "//button[.//span[contains(@class,'textStyle_assistive')]]"))
-            )
-            driver.execute_script("arguments[0].click();", tarih_buton)
-            time.sleep(2)
-
-            # 3. Mevcut ay/yılı oku
-            ay_yil_gosterge = WebDriverWait(driver, 8).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "span.textStyle_display.medium.c_neutrals.nLv1"))
-            )
-            mevcut_ay_yil = ay_yil_gosterge.text.strip()
-            print(f"   🗓️ Şu anki: {mevcut_ay_yil} | Hedef: {hedef_ay_metin}")
-
-            # 4. Gerekirse ay değiştir
-            while mevcut_ay_yil != hedef_ay_metin:
-                oklar = driver.find_elements(By.CSS_SELECTOR, "svg.w_xl.h_xl.fill_[currentColor]")
-                if len(oklar) < 2:
-                    raise Exception("Ok butonları bulunamadı")
-
-                # Sol ok = önceki ay, Sağ ok = sonraki ay
-                if datetime.datetime.strptime(mevcut_ay_yil, "%B %Y").date() > hedef_tarih.replace(day=1):
-                    driver.execute_script("arguments[0].click();", oklar[0])
-                else:
-                    driver.execute_script("arguments[0].click();", oklar[1])
-
-                time.sleep(1.2)
-                mevcut_ay_yil = driver.find_element(By.CSS_SELECTOR, "span.textStyle_display.medium.c_neutrals.nLv1").text.strip()
-
-            # 5. Hedef günü seç
-            gunler = WebDriverWait(driver, 8).until(
-                EC.presence_of_all_elements_located((By.CSS_SELECTOR, "button[role='gridcell'], div[role='gridcell']"))
-            )
-            for gun in gunler:
-                if gun.text.strip() == str(hedef_gun):
-                    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", gun)
-                    time.sleep(0.5)
-                    driver.execute_script("arguments[0].click();", gun)
-                    print(f"   ✅ Tarih seçildi: {hedef_tarih.strftime('%d.%m.%Y')}")
-                    time.sleep(4)
-                    return True
-
-        except Exception as e:
-            print(f"   ⚠️ Hata ({deneme+1}/{MAX_DENEME}): {str(e)[:60]}")
-            try: driver.execute_script("document.body.click();")
-            except: pass
-            time.sleep(2.5)
-            continue
-
-    print(f"   ❌ Seçim başarısız: {hedef_tarih.strftime('%d.%m.%Y')}")
-    return False
-# =========================================================
-# 🌐 SOFASCORE GÜNLÜK VERİ ÇEKİMİ
-# =========================================================
-def get_skorlar_tek_gun(driver, hedef_tarih):
-    hedef_iso = hedef_tarih.strftime("%Y-%m-%d")
-    print(f"\n{'='*60}\n📅 İŞLENİYOR: {hedef_iso}\n{'='*60}")
-
-    skor_listesi = []
-    gorulen = set()
-
-    try:
-        if not tarihi_sec(driver, hedef_tarih):
-            return []
-
-        print("🔧 Lig grupları genişletiliyor ve sayfa kaydırılıyor...")
-        driver.execute_script("window.scrollTo(0, 0);")
-        time.sleep(2)
-
-        # Tüm kapalı lig gruplarını aç
-        oku_butonlar = driver.find_elements(By.CSS_SELECTOR, "svg.stk_currentColor.fill_currentColor")
-        for buton in oku_butonlar:
+            # ✅ Genişletme butonu
             try:
-                driver.execute_script("arguments[0].scrollIntoView({block:'center'});", buton)
-                time.sleep(0.3)
-                driver.execute_script("arguments[0].click();", buton)
-                time.sleep(0.5)
+                ok_buton = lig.find_element(
+                    By.XPATH,
+                    ".//button | .//*[name()='svg' and (@viewBox='0 0 24 24' or @viewBox='0 0 16 16')]/.."
+                )
+                driver.execute_script("arguments[0].click();", ok_buton)
+                print(f"   ✅ Lig {lig_idx+1} açıldı")
+                time.sleep(WAIT_LONG)
             except:
+                print(f"   ℹ️ Lig {lig_idx+1} zaten açık veya buton yok")
+
+            # ✅ Maç satırları | GÜNCELLENMİŞ
+            mac_satirlari = lig.find_elements(
+                By.XPATH,
+                "./following-sibling::div[1]//div[contains(@class, 'event__match') or contains(@class, 'sc-fjdhpX') or contains(@class, 'sc-ghqWyX')]"
+            )
+
+            if not mac_satirlari:
                 continue
 
-        # Sayfayı kaydırarak tüm maçları yükle
-        for adim in range(MAX_KAYDIRMA_ADIMI):
-            driver.execute_script(f"window.scrollBy(0, {ADIM_KAYDIRMA_MIKTARI});")
-            time.sleep(ADIMLAR_ARASI_BEKLEME)
+            print(f"      📋 {len(mac_satirlari)} maç bulundu")
 
-            # Maç satırlarını bul
-            mac_satirlari = driver.find_elements(By.CSS_SELECTOR, "div[role='button'][data-testid='event-row']")
-
-            for satir in mac_satirlari:
+            for mac in mac_satirlari:
                 try:
-                    # Takım isimleri
-                    ev_isim = satir.find_element(By.CSS_SELECTOR, "div[data-testid='team-home'] span").text.strip()
-                    dep_isim = satir.find_element(By.CSS_SELECTOR, "div[data-testid='team-away'] span").text.strip()
-                    if not ev_isim or not dep_isim or ev_isim == dep_isim:
-                        continue
+                    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", mac)
+                    time.sleep(0.5)
 
-                    kimlik = f"{isim_normalize(ev_isim)}|{isim_normalize(dep_isim)}"
-                    if kimlik in gorulen:
-                        continue
-                    gorulen.add(kimlik)
+                    # Link ve takım isimleri
+                    mac_link = mac.find_element(By.TAG_NAME, "a").get_attribute("href")
+                    bdiler = mac.find_elements(By.TAG_NAME, "bdi")
+                    ev, dep = None, None
+                    for bdi in bdiler:
+                        metin = bdi.text.strip()
+                        if re.match(r'\d{2}:\d{2}|\d+\.\d+\.\d+', metin):
+                            continue
+                        if ev is None and metin:
+                            ev = metin
+                        elif ev and metin:
+                            dep = metin
+                            break
 
-                    # Maç detayını aç
-                    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", satir)
-                    time.sleep(0.3)
-                    driver.execute_script("arguments[0].click();", satir)
-                    time.sleep(1.2)
+                    ev = ev or "Bilinmiyor"
+                    dep = dep or "Bilinmiyor"
 
-                    # Sağ panelden skorları çek
-                    try:
-                        ft_metin = WebDriverWait(driver, 3).until(
-                            EC.visibility_of_element_located((By.CSS_SELECTOR, "span.textStyle_display.micro.c_neutrals.nLv1:has-text('FT')"))
-                        ).text.strip()
-                        s_ev, s_dep = map(int, re.findall(r'\d+', ft_metin))
-                    except:
-                        s_ev, s_dep = 0, 0
+                    # ✅ Detay sayfasına girip İY + MS al
+                    ana_pencere = driver.current_window_handle
+                    driver.execute_script(f"window.open('{mac_link}', '_blank');")
+                    time.sleep(1.5)
+                    driver.switch_to.window(driver.window_handles[-1])
 
-                    try:
-                        ht_metin = WebDriverWait(driver, 2).until(
-                            EC.visibility_of_element_located((By.CSS_SELECTOR, "span.textStyle_display.micro.c_neutrals.nLv1:has-text('HT')"))
-                        ).text.strip()
-                        iy_ev, iy_dep = map(int, re.findall(r'\d+', ht_metin))
-                    except:
-                        iy_ev, iy_dep = 0, 0
+                    WebDriverWait(driver, 12).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, "div[class*='detail']"))
+                    )
+                    time.sleep(2)
 
-                    if iy_ev > s_ev or iy_dep > s_dep:
-                        iy_ev, iy_dep = 0, 0
-
+                    skor_ev = skor_dep = iy_ev = iy_dep = 0
                     durum = "baslamadi"
-                    if s_ev > 0 or s_dep > 0 or iy_ev > 0 or iy_dep > 0:
-                        durum = "bitti"
 
-                    # Paneli kapat
                     try:
-                        kapat_buton = driver.find_element(By.CSS_SELECTOR, "button[aria-label='Kapat']")
-                        driver.execute_script("arguments[0].click();", kapat_buton)
-                        time.sleep(0.5)
+                        iy_blok = driver.find_element(By.XPATH, "//div[contains(text(), 'İY') or contains(text(), 'HT')]/following-sibling::div[1]")
+                        iy_metin = iy_blok.text.strip().replace(":", "-")
+                        iy_ev, iy_dep = map(int, iy_metin.split("-"))
+
+                        ft_blok = driver.find_element(By.XPATH, "//div[contains(text(), 'MS') or contains(text(), 'FT') or contains(text(), 'Maç sonu')]/following-sibling::div[1]")
+                        ft_metin = ft_blok.text.strip().replace(":", "-")
+                        skor_ev, skor_dep = map(int, ft_metin.split("-"))
+                        durum = "bitti"
                     except:
                         pass
 
-                    skor_listesi.append({
-                        "tarih": hedef_iso,
-                        "ev_sahibi": ev_isim,
-                        "deplasman": dep_isim,
-                        "skor_ev": s_ev,
-                        "skor_dep": s_dep,
+                    if len(driver.window_handles) > 1:
+                        driver.close()
+                    driver.switch_to.window(ana_pencere)
+
+                    tum_maclar.append({
+                        "ev_sahibi": ev,
+                        "deplasman": dep,
+                        "skor_ev": skor_ev,
+                        "skor_dep": skor_dep,
                         "skor_1y_ev": iy_ev,
                         "skor_1y_dep": iy_dep,
                         "durum": durum,
-                        "kaynak": "sofascore.com"
+                        "kaynak": "selenium",
+                        "cekme_zamani": datetime.datetime.now().isoformat()
                     })
 
-                    print(f"   ✅ [{len(skor_listesi)}] {ev_isim} - {dep_isim} | MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep}")
-
-                except StaleElementReferenceException:
-                    continue
                 except Exception as e:
+                    if len(driver.window_handles) > 1:
+                        driver.close()
+                        driver.switch_to.window(ana_pencere)
                     continue
 
-            son = driver.execute_script("return window.innerHeight + window.scrollY >= document.body.scrollHeight - 500;")
-            if son:
-                print(f"🏁 Sayfa sonuna ulaşıldı! (Adım: {adim+1})")
-                break
-
-        print(f"\n📊 {hedef_iso} ÖZET: {len(skor_listesi)} maç çekildi")
-        return skor_listesi
-
-    except Exception as e:
-        print(f"❌ ÇEKİM HATASI: {e}")
-        traceback.print_exc()
-        return []
-
-# =========================================================
-# 🧠 EŞLEŞTİRME - AYNI MANTIK
-# =========================================================
-def merge_data(mevcut, yeni):
-    mac_listesi = mevcut.get("matches", [])
-    guncelle_say = 0
-    kopya_say = 0
-    print("\n🔎 EŞLEŞTİRME BAŞLADI...")
-
-    for sp in yeni:
-        sp_tarih = sp.get("tarih", "")
-        sp_ev = sp.get("ev_sahibi", "")
-        sp_dep = sp.get("deplasman", "")
-
-        if sp.get("durum") == "baslamadi":
+        except:
             continue
 
-        adaylar = []
-        for idx, mevcut_mac in enumerate(mac_listesi):
-            if not dates_close(mevcut_mac.get("tarih", ""), sp_tarih):
-                continue
+    return tum_maclar
 
-            oran_ev = benzerlik(mevcut_mac.get("ev_sahibi", ""), sp_ev)
-            oran_dep = benzerlik(mevcut_mac.get("deplasman", ""), sp_dep)
-            toplam = oran_ev + oran_dep
-
-            if 0.90 <= toplam < MIN_TOPLAM_PUAN or (toplam >= MIN_TOPLAM_PUAN and min(oran_ev, oran_dep) < MIN_TEK_TARAF):
-                print(f"🟡 YAKIN-ELENEN: WEB[{sp_ev} - {sp_dep}] ↔ JSON[{mevcut_mac.get('ev_sahibi','')} - {mevcut_mac.get('deplasman','')}] | ev:{oran_ev:.2f} dep:{oran_dep:.2f}")
-
-            if toplam < MIN_TOPLAM_PUAN:
-                continue
-            if oran_ev < GUCLU_TAKIM_ESIGI and oran_dep < GUCLU_TAKIM_ESIGI:
-                continue
-            if min(oran_ev, oran_dep) < MIN_TEK_TARAF:
-                continue
-
-            puan = toplam
-            d1 = esnek_tarih_parse(mevcut_mac.get("tarih", ""))
-            d2 = esnek_tarih_parse(sp_tarih)
-            if d1 and d2 and d1 == d2:
-                puan += 0.50
-
-            adaylar.append((idx, puan, f"ev:{oran_ev:.2f} dep:{oran_dep:.2f}"))
-
-        if adaylar:
-            adaylar.sort(key=lambda x: x[1], reverse=True)
-            for sira, (idx, puan, detay) in enumerate(adaylar):
-                mevcut_mac = mac_listesi[idx]
-                degisti_mi = False
-                if mevcut_mac["skor_ev"] != sp["skor_ev"] or mevcut_mac["skor_dep"] != sp["skor_dep"]:
-                    degisti_mi = True
-                    mevcut_mac["skor_ev"] = sp["skor_ev"]
-                    mevcut_mac["skor_dep"] = sp["skor_dep"]
-                if mevcut_mac["skor_1y_ev"] != sp["skor_1y_ev"] or mevcut_mac["skor_1y_dep"] != sp["skor_1y_dep"]:
-                    degisti_mi = True
-                    mevcut_mac["skor_1y_ev"] = sp["skor_1y_ev"]
-                    mevcut_mac["skor_1y_dep"] = sp["skor_1y_dep"]
-                if mevcut_mac["durum"] != sp["durum"]:
-                    degisti_mi = True
-                    mevcut_mac["durum"] = sp["durum"]
-
-                if degisti_mi:
-                    mevcut_mac["cekme_zamani"] = datetime.datetime.now().isoformat()
-                    if sira == 0:
-                        guncelle_say += 1
-                        print(f"🔄 GÜNCELLE [P:{puan:.2f}]: {mevcut_mac['ev_sahibi']} - {mevcut_mac['deplasman']} | {sp['skor_ev']}-{sp['skor_dep']}")
-                    else:
-                        kopya_say += 1
-
-    eksikler = []
-    web_tarihler = {sp.get("tarih", "") for sp in yeni}
-    for mac in mac_listesi:
-        if mac.get("durum") == "baslamadi":
-            for wt in web_tarihler:
-                if dates_close(mac.get("tarih", ""), wt):
-                    eksikler.append(mac)
-                    break
-
-    if eksikler:
-        print(f"\n⚠️ HÂLÂ GÜNCELLENMEYEN {len(eksikler)} MAÇ:")
-        with open(BASE_DIR / "eksik_maclar.json", "w", encoding="utf-8") as f:
-            json.dump(eksikler, f, ensure_ascii=False, indent=2)
-
-    print(f"\n📊 ÖZET: 🔄 {guncelle_say} güncelleme | 👯 {kopya_say} duplike | ❓ {len(eksikler)} eksik")
-    return mevcut, guncelle_say, kopya_say
 
 # =========================
-# 📤 GİT İŞLEMLERİ
+# ANA ÇEKİM FONKSİYONU
 # =========================
-def git_islemleri():
+def maclari_cek_selenium(driver, hedef_tarih):
+    tarih_str = hedef_tarih.strftime("%Y-%m-%d")
+    url = BASE_URL + tarih_str
+
+    print(f"\n🌐 Yükleniyor: {url}")
     try:
-        print("\n🔄 GİT İŞLEMLERİ BAŞLATILIYOR...")
-        subprocess.run(["git", "add", "."], cwd=BASE_DIR, check=True, capture_output=True, text=True)
-        zaman = datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-        commit_mesaji = f"Sofascore Skor Güncelleme | {zaman}"
-        subprocess.run(["git", "commit", "--allow-empty", "-m", commit_mesaji], cwd=BASE_DIR, capture_output=True, text=True)
-        subprocess.run(["git", "push", "origin", GIT_BRANCH_NAME], cwd=BASE_DIR, check=True, capture_output=True, text=True)
-        print("✅ GİT BAŞARILI")
+        driver.get(url)
+    except TimeoutException:
+        print("   ⚠️ Zaman aşımı, devam ediliyor...")
+
+    # Sayfanın tam yüklenmesi için bekle
+    try:
+        WebDriverWait(driver, 25).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "div[class*='event'], div[class*='tournament']"))
+        )
+    except:
+        print("   ⚠️ İçerik bulunamadı")
+        return []
+
+    time.sleep(WAIT_LONG * 2)
+    return ligleri_tek_tek_ac_ve_cek(driver)
+
+
+# =========================
+# VERİ YÖNETİMİ
+# =========================
+def load_json_safe():
+    try:
+        if not JSON_PATH.exists():
+            return {"matches": []}
+        with open(JSON_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {"matches": []}
+
+def merge_data(mevcut, yeni):
+    mac_listesi = mevcut.get("matches", [])
+    guncelle = ekle = 0
+
+    for sp in yeni:
+        if sp["durum"] == "baslamadi":
+            continue
+        bulundu = False
+        for mc in mac_listesi:
+            if (dates_close(mc["tarih"], sp["tarih"]) and
+                mc["ev_sahibi"].lower().strip() == sp["ev_sahibi"].lower().strip() and
+                mc["deplasman"].lower().strip() == sp["deplasman"].lower().strip()):
+
+                if any(mc.get(k) != sp.get(k) for k in ["skor_ev", "skor_dep", "skor_1y_ev", "skor_1y_dep"]):
+                    mc.update(sp)
+                    guncelle += 1
+                bulundu = True
+                break
+        if not bulundu:
+            mac_listesi.append(sp)
+            ekle += 1
+
+    mevcut["matches"] = mac_listesi
+    mevcut["son_guncelleme"] = datetime.datetime.now().isoformat()
+    return mevcut, guncelle, ekle
+
+def save_json_safe(data):
+    try:
+        JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(JSON_PATH, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
         return True
-    except Exception as e:
-        print(f"❌ GİT HATA: {e}")
+    except:
         return False
 
+def git_push():
+    try:
+        subprocess.run(["git", "add", "."], cwd=BASE_DIR, check=True, capture_output=True)
+        subprocess.run(["git", "commit", "-m", f"Güncelleme: {datetime.datetime.now().strftime('%d.%m.%Y %H:%M')}"], cwd=BASE_DIR, capture_output=True)
+        subprocess.run(["git", "push", "origin", GIT_BRANCH], cwd=BASE_DIR, check=True, capture_output=True)
+        return True
+    except:
+        return False
+
+
 # =========================
-# 🎯 ANA AKIŞ
+# ANA
 # =========================
 if __name__ == "__main__":
     print("=" * 60)
-    print("🚀 SOFASCORE | SKOR ÇEKİCİ | UYARLANMIŞ ✅")
+    print("🚀 SOFASCORE SKOR ÇEKİCİ | v6 - Seçiciler + Bot Koruması Güncellendi")
     print("=" * 60)
 
-    bas_tar = parse_date(BASLANGIC_TARIHI)
-    bit_tar = parse_date(BITIS_TARIHI)
-    if not bas_tar or not bit_tar:
-        print("❌ Tarih hatası! Format: GG.AA.YYYY")
-        input("Devam...")
-        exit()
+    bas = parse_date(BASLANGIC_TARIHI)
+    bit = parse_date(BITIS_TARIHI)
+    gunler = gun_listesi_olustur(bas, bit)
 
-    hedef_gunler = gun_listesi_olustur(bas_tar, bit_tar)
-    print(f"📅 İşlenecek {len(hedef_gunler)} gün:")
-    for g in hedef_gunler:
-        print(f"   • {g.strftime('%d.%m.%Y')}")
-
-    driver = None
-    tum_yeni = []
+    driver = build_driver()
+    tum_maclar = []
 
     try:
-        driver = build_driver()
+        for gun in gunler:
+            print("\n" + "=" * 60)
+            print(f"📆 {gun.strftime('%d.%m.%Y')}")
+            print("=" * 60)
 
-        for gun_tarihi in hedef_gunler:
-            print("\n" + "#" * 60)
-            print(f"# 📅 GÜN: {gun_tarihi.strftime('%d.%m.%Y')}")
-            print("#" * 60)
+            maclar = maclari_cek_selenium(driver, gun)
+            tum_maclar.extend(maclar)
 
-            for deneme in range(MAX_DENEME):
-                try:
-                    print(f"🔗 Sayfa yükleniyor... Deneme {deneme+1}/{MAX_DENEME}")
-                    driver.get(BASE_LINK)
-                    time.sleep(5)
-                    driver.execute_script("window.stop();")
-                    time.sleep(3)
+            print(f"   ✅ Bu gün: {len(maclar)} maç")
+            time.sleep(3)
 
-                    gunluk = get_skorlar_tek_gun(driver, gun_tarihi)
-                    tum_yeni.extend(gunluk)
-                    break
-
-                except TimeoutException as te:
-                    print(f"⏱️ ZAMAN AŞIMI: {te} | Yeniden deniyorum...")
-                    try:
-                        driver.execute_script("window.stop();")
-                    except: pass
-                    time.sleep(3)
-                    continue
-                except Exception as gun_hata:
-                    print(f"❌ {gun_tarihi} hata: {str(gun_hata)[:50]}")
-                    break
-
-        print(f"\n📊 TOPLAM ÇEKİLEN: {len(tum_yeni)} maç")
-
-        if tum_yeni:
-            mevcut_veri = load_json_safe(MAC_JSON_PATH)
-            yeni_veri, guncelle, kopya = merge_data(mevcut_veri, tum_yeni)
-
-            if save_json_safe(yeni_veri, MAC_JSON_PATH):
-                print(f"\n🎉 İŞLEM TAMAMLANDI: {guncelle} Güncellendi | {kopya} Duplike Senkronize")
-                git_islemleri()
-        else:
-            print("\n⚠️ Hiç veri çekilemedi, JSON'a dokunulmadı.")
-
-    except Exception as err:
-        print(f"\n❌ KRİTİK HATA: {err}")
+    except Exception as e:
+        print(f"\n❌ GENEL HATA: {e}")
         traceback.print_exc()
+
     finally:
-        if driver:
-            driver.quit()
-        input("\n✅ TAMAMLANDI. Kapatmak için ENTER...")
+        driver.quit()
+        print("\n🔒 Tarayıcı kapatıldı")
+
+    print("\n" + "=" * 60)
+    print(f"📊 TOPLAM ÇEKİLEN: {len(tum_maclar)}")
+    print("=" * 60)
+
+    if tum_maclar:
+        mevcut = load_json_safe()
+        yeni_veri, guncelleme, ekleme = merge_data(mevcut, tum_maclar)
+        if save_json_safe(yeni_veri):
+            print(f"✅ {guncelleme} güncellendi, {ekleme} yeni eklendi")
+            git_push()
+    else:
+        print("ℹ️ Hiç veri alınamadı")
+
+    input("\nÇıkmak için ENTER...")

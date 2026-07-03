@@ -23,7 +23,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ⚙️ AYARLAR
 # =========================
 BASLANGIC_TARIHI = "14.06.2026"
-BITIS_TARIHI = "16.06.2026"
+BITIS_TARIHI = "16.05.2026"
 
 BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"

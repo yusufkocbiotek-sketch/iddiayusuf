@@ -11,8 +11,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import *
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -66,48 +64,58 @@ def build_driver():
 
 
 # =========================
-# LİG BAŞLIKLARINI BUL
+# LİG TOGGLE BUTONLARINI BUL (JavaScript ile)
 # =========================
-def lig_bashliklari_bul(driver):
+def lig_toggle_butonlari_bul(driver):
     """
-    Lig başlık divlerini bulur (bdi içeren, ok butonu olanlar)
+    JavaScript ile tüm butonları tarar, içinde M11.99 18 (chevron down) 
+    path'i olan SVG bulunanları döndürür.
     """
-    return driver.find_elements(
-        By.XPATH,
-        "//div[contains(@class,'h_4xl') and .//bdi and .//button[.//svg]]"
-    )
-
-
-# =========================
-# OK BUTONUNU BUL (Chevron Down)
-# =========================
-def ok_butonunu_bul(lig_div):
+    script = """
+    var result = [];
+    var buttons = document.querySelectorAll('button');
+    for (var i = 0; i < buttons.length; i++) {
+        var btn = buttons[i];
+        var svg = btn.querySelector('svg');
+        if (svg) {
+            var path = svg.querySelector('path');
+            if (path) {
+                var d = path.getAttribute('d');
+                if (d && d.includes('M11.99 18')) {
+                    result.push(btn);
+                }
+            }
+        }
+    }
+    return result;
     """
-    Lig divi içindeki chevron-down (aşağı ok) butonunu bulur.
-    Yıldız değil, genişletme oku.
-    """
+    
     try:
-        # SVG'si chevron-down olan buton (path'te 11.99 18 koordinatları var)
-        # veya daha genel: lig divi içindeki son button veya svg'li button
-        buttons = lig_div.find_elements(By.TAG_NAME, "button")
-        
-        for btn in buttons:
-            try:
-                svg = btn.find_element(By.TAG_NAME, "svg")
-                # Chevron down SVG'sinin özelliği: path'te "18" ve "8.5" koordinatları var
-                svg_html = svg.get_attribute("outerHTML")
-                if "11.99 18" in svg_html or "M11.99 18" in svg_html or "chevron" in svg_html.lower():
-                    return btn
-            except:
-                continue
-        
-        # Bulamazsa son button'u dene (genelde en sağdaki ok olur)
-        if buttons:
-            return buttons[-1]
-            
+        butonlar = driver.execute_script(script)
+        return butonlar if butonlar else []
+    except Exception as e:
+        print(f"   JS Hatası: {e}")
+        return []
+
+
+# =========================
+# LİG ADINI AL
+# =========================
+def lig_adi_al(toggle_btn):
+    """Toggle butonunun üstündeki lig adını bulur"""
+    try:
+        # 3 seviye yukarı çık ve bdi ara
+        parent = toggle_btn.find_element(By.XPATH, "./ancestor::div[.//bdi][1]")
+        bdi = parent.find_element(By.TAG_NAME, "bdi")
+        return bdi.text.strip()
     except:
-        pass
-    return None
+        try:
+            # Alternatif: Kardeş div'de bdi ara
+            parent = toggle_btn.find_element(By.XPATH, "./parent::div/parent::div")
+            bdi = parent.find_element(By.TAG_NAME, "bdi")
+            return bdi.text.strip()
+        except:
+            return "Bilinmeyen Lig"
 
 
 # =========================
@@ -121,107 +129,82 @@ def maclari_cek(driver, hedef_tarih):
     print(f"\n🌐 {url}")
     driver.get(url)
 
-    wait = WebDriverWait(driver, 20)
-
+    # Sayfanın tam yüklenmesi için bekle
+    time.sleep(5)
+    
+    # Cookie kabul et (varsa)
     try:
-        wait.until(
-            EC.presence_of_element_located(
-                (By.XPATH, "//div[contains(@class,'h_4xl')]")
-            )
-        )
+        cookie_btn = driver.find_element(By.XPATH, "//button[contains(text(),'Kabul') or contains(text(),'Accept') or contains(text(),'Tümü')]")
+        cookie_btn.click()
+        time.sleep(1)
     except:
-        print("❌ Sayfa yüklenmedi")
-        return []
+        pass
 
-    time.sleep(3)
-
-    # Sayfayı tam yükle
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(2)
+    # Sayfayı kaydırarak tüm içeriği yükle
+    for _ in range(3):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
     driver.execute_script("window.scrollTo(0, 0);")
     time.sleep(2)
 
     skor_listesi = []
     gorulen = set()
 
-    lig_index = 0
+    # Toggle butonlarını bul (Chevron down olanlar)
+    print("   🔍 Toggle butonları aranıyor...")
+    toggle_butonlari = lig_toggle_butonlari_bul(driver)
+    
+    if not toggle_butonlari:
+        print("❌ Hiç lig toggle butonu bulunamadı!")
+        return []
 
-    while True:
+    print(f"   ✅ {len(toggle_butonlari)} lig bulundu")
 
-        ligler = lig_bashliklari_bul(driver)
-
-        if lig_index >= len(ligler):
-            print("✅ Tüm ligler bitti")
-            break
-
-        lig_div = ligler[lig_index]
-
-        # Lig adını al
-        try:
-            lig_adi = lig_div.find_element(By.TAG_NAME, "bdi").text.strip()
-        except:
-            lig_adi = f"Lig {lig_index+1}"
-
-        print(f"\n📋 [{lig_index+1}] {lig_adi}")
-
-        # ===== OK BUTONUNU BUL VE TIKLA (LİGİ AÇ) =====
-        ok_btn = ok_butonunu_bul(lig_div)
+    for i, toggle_btn in enumerate(toggle_butonlari):
         
-        if not ok_btn:
-            print("   ⚠️ Ok butonu bulunamadı, sonraki lige geçiliyor")
-            lig_index += 1
-            continue
+        lig_adi = lig_adi_al(toggle_btn)
+        print(f"\n📋 [{i+1}] {lig_adi}")
 
+        # ===== LİGİ AÇ =====
         try:
-            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", ok_btn)
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", toggle_btn)
             time.sleep(0.5)
-            driver.execute_script("arguments[0].click();", ok_btn)
-            print("   🔽 Lig açıldı")
-            time.sleep(2)
+            driver.execute_script("arguments[0].click();", toggle_btn)
+            print("   🔽 Açıldı")
+            time.sleep(2.5)
         except Exception as e:
-            print(f"   ❌ Açılamadı: {str(e)[:40]}")
-            lig_index += 1
+            print(f"   ❌ Açılamadı: {e}")
             continue
 
-        # ===== AÇILAN LİGİN MAÇLARINI BUL =====
-        # Lig div'inden sonraki kardeş element (açılan liste)
+        # ===== BU LİGİN MAÇLARINI BUL =====
+        maclar = []
         try:
-            # Lig başlığından sonraki div (maç listesi container)
-            mac_liste_container = lig_div.find_element(By.XPATH, "./following-sibling::div[1]")
+            # Toggle butonunun bulunduğu header'dan sonraki div (maç listesi)
+            header_div = toggle_btn.find_element(By.XPATH, "./ancestor::div[contains(@class,'h_4xl') or contains(@class,'py_sm')][1]")
+            mac_liste_div = header_div.find_element(By.XPATH, "./following-sibling::div[1]")
             
-            # Maç satırları: event-hl-... linkleri veya js-list-cell-target divleri
-            maclar = mac_liste_container.find_elements(
-                By.XPATH,
-                ".//a[contains(@class,'event-hl-')]"
-            )
+            # Maç linkleri (event-hl-... veya /maç/ içerenler)
+            maclar = mac_liste_div.find_elements(By.XPATH, ".//a[contains(@href,'/maç/') or contains(@class,'event')]")
             
             if not maclar:
-                maclar = mac_liste_container.find_elements(
-                    By.XPATH,
-                    ".//div[contains(@class,'js-list-cell-target')]"
-                )
+                # Alternatif: js-list-cell-target divleri
+                maclar = mac_liste_div.find_elements(By.XPATH, ".//div[contains(@class,'js-list-cell-target')]")
                 
         except Exception as e:
             print(f"   ⚠️ Maç listesi bulunamadı: {e}")
-            maclar = []
 
-        print(f"   🔎 {len(maclar)} maç bulundu")
+        print(f"   🔎 {len(maclar)} maç")
 
         # ===== HER MAÇI İŞLE =====
         for mac_idx in range(len(maclar)):
-
             try:
                 # DOM yenilendiği için tekrar bul
-                mac_liste_container = lig_div.find_element(By.XPATH, "./following-sibling::div[1]")
-                maclar = mac_liste_container.find_elements(
-                    By.XPATH,
-                    ".//a[contains(@class,'event-hl-')]"
-                )
-                if not maclar:
-                    maclar = mac_liste_container.find_elements(
-                        By.XPATH,
-                        ".//div[contains(@class,'js-list-cell-target')]"
-                    )
+                try:
+                    header_div = toggle_btn.find_element(By.XPATH, "./ancestor::div[contains(@class,'h_4xl') or contains(@class,'py_sm')][1]")
+                    mac_liste_div = header_div.find_element(By.XPATH, "./following-sibling::div[1]")
+                    maclar = mac_liste_div.find_elements(By.XPATH, ".//a[contains(@href,'/maç/') or contains(@class,'event')]")
+                except:
+                    pass
 
                 if mac_idx >= len(maclar):
                     break
@@ -239,7 +222,9 @@ def maclari_cek(driver, hedef_tarih):
                 except:
                     continue
 
-                # Duplike kontrol
+                if not ev or not dep:
+                    continue
+
                 kimlik = f"{ev}|{dep}|{tarih_str}"
                 if kimlik in gorulen:
                     continue
@@ -249,35 +234,29 @@ def maclari_cek(driver, hedef_tarih):
 
                 # ===== MAÇA TIKLA =====
                 try:
-                    # Önce skor span'ını dene
-                    skor_span = mac.find_element(
-                        By.XPATH,
-                        ".//span[contains(@class,'score') or contains(@class,'c_neutrals')]"
-                    )
-                    driver.execute_script("arguments[0].click();", skor_span)
+                    # Skor span'ını dene
+                    try:
+                        skor_span = mac.find_element(By.XPATH, ".//span[contains(@class,'score') or contains(@class,'c_neutral')]")
+                        driver.execute_script("arguments[0].click();", skor_span)
+                    except:
+                        driver.execute_script("arguments[0].click();", mac)
+                    
+                    time.sleep(3)
                 except:
-                    driver.execute_script("arguments[0].click();", mac)
+                    continue
 
-                time.sleep(2.5)
-
-                # ===== PANELDEN FT ve HT AL =====
+                # ===== PANELDEN SKOR AL =====
                 ft_skor = "0-0"
                 ht_skor = "0-0"
 
                 try:
-                    ft_el = driver.find_element(
-                        By.XPATH,
-                        "//span[text()='FT']/following::span[1]"
-                    )
+                    ft_el = driver.find_element(By.XPATH, "//span[text()='FT']/following::span[1]")
                     ft_skor = ft_el.text.strip()
                 except:
                     pass
 
                 try:
-                    ht_el = driver.find_element(
-                        By.XPATH,
-                        "//span[text()='HT']/following::span[1]"
-                    )
+                    ht_el = driver.find_element(By.XPATH, "//span[text()='HT']/following::span[1]")
                     ht_skor = ht_el.text.strip()
                 except:
                     pass
@@ -297,14 +276,14 @@ def maclari_cek(driver, hedef_tarih):
                     "skor_dep": int(ft_nums[1]) if len(ft_nums) > 1 else 0,
                     "skor_1y_ev": int(ht_nums[0]) if len(ht_nums) > 0 else 0,
                     "skor_1y_dep": int(ht_nums[1]) if len(ht_nums) > 1 else 0,
-                    "durum": "bitti" if len(ft_nums) >= 2 else "baslamadi",
+                    "durum": "bitti" if len(ft_nums) >= 2 else "devam" if ft_nums else "baslamadi",
                     "cekme_zamani": datetime.datetime.now().isoformat()
                 })
 
                 # Panel kapat
                 try:
                     driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
-                    time.sleep(0.8)
+                    time.sleep(0.5)
                 except:
                     pass
 
@@ -312,17 +291,13 @@ def maclari_cek(driver, hedef_tarih):
                 print(f"         ❌ Hata: {str(e)[:40]}")
                 continue
 
-        # ===== LİGİ KAPAT (TEKRAR OK'A BAS) =====
+        # ===== LİGİ KAPAT =====
         try:
-            ok_btn = ok_butonunu_bul(lig_div)
-            if ok_btn:
-                driver.execute_script("arguments[0].click();", ok_btn)
-                print("   ✅ Lig kapatıldı")
-                time.sleep(1)
+            driver.execute_script("arguments[0].click();", toggle_btn)
+            print("   ✅ Kapatıldı")
+            time.sleep(1)
         except:
             pass
-
-        lig_index += 1
 
     return skor_listesi
 
@@ -343,7 +318,7 @@ def git_push():
         subprocess.run(["git", "push", "origin", GIT_BRANCH], cwd=BASE_DIR, check=False)
         print("✅ Git push OK")
     except Exception as e:
-        print(f"⚠️ Git hata: {e}")
+        print(f"⚠️ Git: {e}")
 
 
 # =========================
@@ -351,7 +326,7 @@ def git_push():
 # =========================
 if __name__ == "__main__":
 
-    print("\n🚀 SOFASCORE SKOR ÇEKİCİ v5.2 (Chevron Fix)\n")
+    print("\n🚀 SOFASCORE SKOR ÇEKİCİ v5.4 (JavaScript Chevron Fix)\n")
 
     bas = parse_date(BASLANGIC_TARIHI)
     bit = parse_date(BITIS_TARIHI)

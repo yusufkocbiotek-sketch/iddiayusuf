@@ -26,7 +26,7 @@ GIT_BRANCH_NAME = "main"
 KURAL_SKOR_KONTROL = True
 MANTIK_HATASI_DUZELT = True
 
-SAYFA_YUKLEME_BEKLEME = 30
+SAYFA_YUKLEME_BEKLEME = 15
 ADIM_KAYDIRMA_MIKTARI = 600
 GENEL_HATA_BEKLEME = 2
 
@@ -175,7 +175,7 @@ def debug_sayfa_kaydet(driver, gun_iso):
         pass
 
 # =============================================================================
-# 📅 TAKVİM - SENİN ÇALIŞAN KODUN BİREBİR UYARLANMIŞ HALİ
+# 📅 TAKVİM - JS AY DEĞİŞTİRME MOTORLU KESİN ÇÖZÜM
 # =============================================================================
 def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
     print(f"   🔧 İddaa Tarih navigasyonu: {hedef_tarih_iso}")
@@ -183,106 +183,164 @@ def iddaa_takvimde_gezin(driver, hedef_tarih_iso):
     try:
         hedef_yil, hedef_ay, hedef_gun = map(int, hedef_tarih_iso.split('-'))
         
-        time.sleep(2)
+        # Çok uzun bekle (React yükleme için)
+        time.sleep(5)
+        
+        # Popup kapat (kesin)
         try:
-            kapat_sayisi = driver.execute_script("""
-                var btns = document.querySelectorAll("button[aria-label='Kapat']");
-                btns.forEach(function(b) { b.click(); });
-                return btns.length;
+            driver.execute_script("""
+                document.querySelectorAll("button[aria-label='Kapat'], button[aria-label='Close'], .modal-close").forEach(b => b.click());
             """)
-            if kapat_sayisi > 0:
-                print(f"   ✅ {kapat_sayisi} popup kapatıldı")
-                time.sleep(1)
+            time.sleep(1)
         except:
             pass
         
-        cal_btn = WebDriverWait(driver, 15).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Takvim' or contains(@aria-label, 'Takvim')]"))
-        )
-        driver.execute_script("arguments[0].click();", cal_btn)
-        time.sleep(2)
+        print("   🔍 Takvim butonu aranıyor (Agresif mod)...")
         
+        # STRATEJİ 1: WebDriverWait + data-testid (En stabil)
         try:
-            WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']")))
+            wait = WebDriverWait(driver, 10)
+            # data-testid="icon-use" içeren ve dates href'li olanın parent button'u
+            takvim_btn = wait.until(
+                EC.element_to_be_clickable((By.XPATH, "//button[.//*[contains(@href, 'dates') or contains(@href, 'calendar')]]"))
+            )
+            print("   ✅ Bulundu (WebDriverWait + SVG href)")
         except:
-            driver.switch_to.default_content()
-            WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, "//div[@role='dialog']")))
-
-        cells = driver.find_elements(By.CSS_SELECTOR, f"td[data-day='{hedef_tarih_iso}']")
-        month_clicks = 0
+            takvim_btn = None
         
-        while not cells and month_clicks < 12:
-            prev_btns = driver.find_elements(By.XPATH, "//button[contains(@aria-label, 'Previous') or @name='previous-month' or contains(@aria-label, 'Önceki')]")
-            if not prev_btns:
-                prev_btns = driver.find_elements(By.XPATH, "//button[.//svg[contains(@href, 'arrow-left')]]")
-            if prev_btns:
-                driver.execute_script("arguments[0].click();", prev_btns[0])
-                time.sleep(1)
-                cells = driver.find_elements(By.CSS_SELECTOR, f"td[data-day='{hedef_tarih_iso}']")
-                month_clicks += 1
-            else:
-                break
+        # STRATEJİ 2: JavaScript ile DOM tarama
+        if not takvim_btn:
+            takvim_btn = driver.execute_script("""
+                // Tüm butonları tar
+                const buttons = Array.from(document.querySelectorAll('button'));
                 
-        if cells:
-            btns = cells[0].find_elements(By.TAG_NAME, "button")
-            if btns:
-                driver.execute_script("arguments[0].click();", btns[0])
-            else:
-                driver.execute_script("arguments[0].click();", cells[0])
-            time.sleep(5)
-            print(f"   ✅ TARİH SEÇİLDİ: {hedef_tarih_iso}")
-            return True
-        else:
-            print(f"   ❌ Hedef tarih bulunamadı: {hedef_tarih_iso}")
+                // 1. İçinde dates/calendar SVG'si olan
+                for (let btn of buttons) {
+                    if (btn.innerHTML.includes('dates-') || btn.innerHTML.includes('calendar')) return btn;
+                }
+                
+                // 2. İçinde truncate span olan ve metni sayı içeren (2 Tem 26 vb)
+                for (let btn of buttons) {
+                    const span = btn.querySelector('span.truncate');
+                    if (span && /\\d/.test(span.textContent)) return btn;
+                }
+                
+                // 3. Aria-label'ı takvim/calendar olan
+                for (let btn of buttons) {
+                    const aria = btn.getAttribute('aria-label');
+                    if (aria && (aria.toLowerCase().includes('takvim') || aria.toLowerCase().includes('calendar'))) return btn;
+                }
+                
+                return null;
+            """)
+            if takvim_btn:
+                print("   ✅ Bulundu (JavaScript DOM tarama)")
+        
+        # STRATEJİ 3: Manuel debug tarama (Son çare)
+        if not takvim_btn:
+            print("   ⚠️ Normal yöntemler başarısız, debug taraması yapılıyor...")
+            buttons = driver.find_elements(By.TAG_NAME, "button")
+            print(f"   Toplam {len(buttons)} buton var.")
             
-            tum_butonlar = driver.find_elements(By.CSS_SELECTOR, "button[aria-label]")
-            bulundu = False
-            ay_ingilizce = {1:"January",2:"February",3:"March",4:"April",5:"May",6:"June",7:"July",8:"August",9:"September",10:"October",11:"November",12:"December"}
-            ay_adi = ay_ingilizce.get(hedef_ay, "")
+            for i, btn in enumerate(buttons[:20]):  # İlk 20'sini kontrol et
+                try:
+                    html = btn.get_attribute("innerHTML")
+                    text = btn.text.strip()
+                    # Eğer içinde 'dates' veya tarih formatı varsa
+                    if "dates" in html or (text and any(c.isdigit() for c in text)):
+                        print(f"   [Aday {i}] Text: '{text[:20]}' | HTML: {html[:80]}...")
+                        if not takvim_btn:  # İlk bulduğunu al
+                            takvim_btn = btn
+                except:
+                    continue
             
-            for btn in tum_butonlar:
-                aria = btn.get_attribute("aria-label") or ""
-                if ay_adi in aria and str(hedef_yil) in aria:
-                    gun_match = re.search(r',\s*(\d+)(?:st|nd|rd|th)?', aria)
-                    if gun_match and int(gun_match.group(1)) == hedef_gun:
-                        driver.execute_script("arguments[0].click();", btn)
-                        print(f"   ✅ TARİH SEÇİLDİ (button): {hedef_tarih_iso}")
-                        time.sleep(5)
-                        bulundu = True
-                        break
-            
-            if bulundu:
-                return True
-            
-            print(f"   🔍 Takvimdeki günler:")
-            for btn in tum_butonlar[:35]:
-                aria = btn.get_attribute("aria-label") or ""
-                text = btn.text.strip()
-                if aria:
-                    print(f"      - {text} | {aria}")
-            
+            if takvim_btn:
+                print("   ✅ Debug taramasıyla bulundu")
+        
+        if not takvim_btn:
+            print("   ❌ Takvim butonu bulunamadı! Sayfa yapısı değişmiş olabilir.")
+            # Ekran görüntüsü al
+            try:
+                driver.save_screenshot("takvim_hata.png")
+                print("   📸 Ekran görüntüsü kaydedildi: takvim_hata.png")
+            except:
+                pass
             return False
+        
+        # TIKLA (JavaScript ile kesin tıklama)
+        print("   👆 Takvime tıklanıyor...")
+        driver.execute_script("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", takvim_btn)
+        time.sleep(0.5)
+        driver.execute_script("arguments[0].click();", takvim_btn)
+        print("   ✅ Takvim açıldı")
+        time.sleep(4)  # Animasyon için bekle
+        
+        # HEDEF TARİH SEÇİMİ (Önceki ay navigasyonu ile)
+        print(f"   🔍 Hedef tarih aranıyor: {hedef_tarih_iso}")
+        max_attempts = 36
+        
+        for attempt in range(max_attempts):
+            # data-day attribute'u ile direkt bul
+            try:
+                gun_btn = driver.find_element(By.CSS_SELECTOR, f'td[data-day="{hedef_tarih_iso}"] button')
+                
+                if gun_btn.get_attribute("disabled") != "true":
+                    driver.execute_script("arguments[0].click();", gun_btn)
+                    time.sleep(3)
+                    print(f"   ✅ TARİH SEÇİLDİ: {hedef_tarih_iso}")
+                    return True
+                else:
+                    print("   ⚠️ Tarih pasif (disabled)")
+                    return False
+            except NoSuchElementException:
+                pass
             
+            # Önceki ay butonu (Nav bar içindeki ilk buton - arrow-left SVG'si olan)
+            try:
+                # JavaScript ile bul (en güvenlisi)
+                prev_btn = driver.execute_script("""
+                    const nav = document.querySelector('nav[aria-label="Navigation bar"]');
+                    if (nav) return nav.querySelector('button');
+                    // Alternatif: arrow-left içeren ilk buton
+                    const btns = document.querySelectorAll('button');
+                    for (let btn of btns) {
+                        const use = btn.querySelector('use');
+                        if (use && use.getAttribute('href') && use.getAttribute('href').includes('arrow-left')) return btn;
+                    }
+                    return null;
+                """)
+                
+                if prev_btn:
+                    driver.execute_script("arguments[0].click();", prev_btn)
+                    if attempt % 3 == 0:
+                        print(f"   ⬅️ Önceki ay ({attempt+1})")
+                    time.sleep(1.5)
+                else:
+                    print("   ❌ Önceki ay butonu bulunamadı!")
+                    break
+                    
+            except Exception as e:
+                print(f"   ❌ Navigasyon hatası: {str(e)[:50]}")
+                break
+        
+        print(f"   ❌ Hedef tarihe ({hedef_tarih_iso}) ulaşılamadı")
+        return False
+        
     except Exception as e:
-        print(f"   ❌ TAKVİM HATASI: {e}")
+        print(f"   ❌ KRİTİK HATA: {e}")
         import traceback
         traceback.print_exc()
         return False
-
 # =============================================================================
 # 🌐 MAÇ SATIRLARINI BUL
 # =============================================================================
 def iddaa_mac_satirlarini_bul(driver):
     mac_gruplari = []
-    
     try:
         lig_basliklari = driver.find_elements(By.CSS_SELECTOR, 'h3[data-testid="tournament-name-link"]')
         
         if not lig_basliklari:
-            print("⚠️ Hiç lig başlığı bulunamadı!")
             return []
-        
-        print(f"✅ {len(lig_basliklari)} lig başlığı bulundu")
         
         for lig_baslik in lig_basliklari:
             try:
@@ -301,18 +359,15 @@ def iddaa_mac_satirlarini_bul(driver):
                     pass
                 
                 mac_satirlari = []
-                
                 try:
                     parent_container = lig_baslik.find_element(By.XPATH, "./ancestor::div[contains(@class, 'match-list') or contains(@class, 'tournament')]")
                     mac_divler = parent_container.find_elements(By.CSS_SELECTOR, "div[role='row'], div[class*='match-row'], div[class*='MatchRow']")
                 except:
-                    mac_divler = lig_baslik.find_elements(By.XPATH, 
-                        "./following-sibling::div[contains(@class, 'match') or contains(@class, 'row') or @role='row']")
+                    mac_divler = lig_baslik.find_elements(By.XPATH, "./following-sibling::div[contains(@class, 'match') or contains(@class, 'row') or @role='row']")
                 
                 for mac_div in mac_divler:
                     try:
                         truncate_divler = mac_div.find_elements(By.CSS_SELECTOR, "div.truncate")
-                        
                         if len(truncate_divler) < 2:
                             continue
                         
@@ -333,15 +388,11 @@ def iddaa_mac_satirlarini_bul(driver):
                         continue
                 
                 if mac_satirlari:
-                    print(f"   📍 {lig_adi} ({ulke_adi}) → {len(mac_satirlari)} maç")
                     mac_gruplari.extend(mac_satirlari)
-                    
             except:
                 continue
         
-        print(f"✅ Toplam {len(mac_gruplari)} maç satırı bulundu")
         return mac_gruplari
-        
     except Exception as e:
         print(f"❌ Maç satırları hatası: {e}")
         return []
@@ -362,30 +413,25 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
         print("🔧 [1/4] Takvim navigasyonu...")
         basarili = iddaa_takvimde_gezin(driver, hedef_tarih_iso)
         if not basarili:
-            print("❌ Takvim başarısız, atlanıyor")
+            print("❌ Takvim başarısız, gün atlanıyor...")
             return []
         
         debug_sayfa_kaydet(driver, hedef_tarih_iso)
         
         print("🔧 [2/4] Sayfa kaydırılıyor...")
         driver.execute_script("window.scrollTo(0, 0);")
-        time.sleep(3)
+        time.sleep(2)
         
         max_adim = 200
         
         for adim in range(max_adim):
             driver.execute_script(f"window.scrollBy(0, {ADIM_KAYDIRMA_MIKTARI});")
-            time.sleep(1.2)
+            time.sleep(1.0)
             
             mac_gruplari = iddaa_mac_satirlarini_bul(driver)
             
             if not mac_gruplari:
-                if adim % 20 == 0:
-                    print(f"   📍 Adım {adim+1}/{max_adim} - Henüz maç yok...")
                 continue
-            
-            if adim % 20 == 0:
-                print(f"   📍 Adım {adim+1}/{max_adim} - {len(mac_gruplari)} satır")
             
             for mac_info in mac_gruplari:
                 try:
@@ -405,8 +451,7 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                     
                     # SKOR ÇEKME
                     try:
-                        tum_score = satir.find_elements(By.CSS_SELECTOR, 
-                            "div.rounded-match__score, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6")
+                        tum_score = satir.find_elements(By.CSS_SELECTOR, "div.rounded-match__score, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6")
                         if len(tum_score) >= 4:
                             s_ev = rakam_bul(tum_score[0].text)
                             s_dep = rakam_bul(tum_score[1].text)
@@ -416,10 +461,8 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                     
                     if s_ev == 0 and s_dep == 0:
                         try:
-                            font_med = satir.find_elements(By.CSS_SELECTOR, 
-                                "div.rounded-match__score.font-medium, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6.font-medium")
-                            font_norm = satir.find_elements(By.CSS_SELECTOR, 
-                                "div.rounded-match__score.font-normal, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6.font-normal")
+                            font_med = satir.find_elements(By.CSS_SELECTOR, "div.rounded-match__score.font-medium, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6.font-medium")
+                            font_norm = satir.find_elements(By.CSS_SELECTOR, "div.rounded-match__score.font-normal, div.relative.flex.h-\\[1\\.125rem\\].justify-center.w-6.font-normal")
                             if len(font_med) >= 1 and len(font_norm) >= 1:
                                 s_dep = rakam_bul(font_med[0].text)
                                 s_ev = rakam_bul(font_norm[0].text)
@@ -428,26 +471,14 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                     if s_ev == 0 and s_dep == 0:
                         try:
                             tum_w6 = satir.find_elements(By.CSS_SELECTOR, "div.w-6")
-                            sayilar = []
-                            for div in tum_w6:
-                                txt = div.text.strip()
-                                if txt.isdigit():
-                                    sayilar.append(int(txt))
+                            sayilar = [int(div.text.strip()) for div in tum_w6 if div.text.strip().isdigit()]
                             if len(sayilar) >= 4:
                                 s_ev, s_dep, iy_ev, iy_dep = sayilar[0], sayilar[1], sayilar[2], sayilar[3]
                             elif len(sayilar) >= 2:
                                 s_ev, s_dep = sayilar[0], sayilar[1]
                         except: pass
                     
-                    # DUPLICATE KONTROL
                     if kimlik in gorulen:
-                        eski = gorulen[kimlik]
-                        if (eski["skor_ev"] == s_ev and eski["skor_dep"] == s_dep and
-                            eski["skor_1y_ev"] == iy_ev and eski["skor_1y_dep"] == iy_dep):
-                            continue
-                        print(f"   ⚠️ DUPLICATE FARKLI SKOR: {ev_isim} - {dep_isim}")
-                        print(f"      İlk: MS:{eski['skor_ev']}-{eski['skor_dep']} | İY:{eski['skor_1y_ev']}-{eski['skor_1y_dep']}")
-                        print(f"      Yeni: MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep}")
                         continue
                     
                     durum = "baslamadi"
@@ -475,20 +506,17 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
                     
                     gecerli_sayisi += 1
                     print(f"   ✅ [{gecerli_sayisi}] {ev_isim} - {dep_isim} | MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep} | {lig_adi}")
-                    
                 except:
                     continue
             
             try:
-                son_durum = driver.execute_script(
-                    "return window.innerHeight + window.scrollY >= document.body.scrollHeight - 500;")
+                son_durum = driver.execute_script("return window.innerHeight + window.scrollY >= document.body.scrollHeight - 500;")
                 if son_durum:
-                    print(f"🏁 Sayfa sonu! (Adım: {adim+1})")
                     break
             except:
                 pass
         
-        print(f"\n📊 {hedef_tarih_iso}: {len(skor_listesi)} veri")
+        print(f"\n📊 {hedef_tarih_iso}: {len(skor_listesi)} veri çekildi.")
         
     except Exception as e:
         print(f"❌ ÇEKİM HATASI: {e}")
@@ -502,19 +530,11 @@ def iddaa_get_skorlar_tek_gun(driver, hedef_tarih_iso):
 # =============================================================================
 def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
     mac_listesi = mevcut_yapi.get("matches", [])
-    
-    if not mac_listesi:
-        print("⚠️ Mevcut yapıda maç bulunamadı!")
-        return 0
-    if not tum_veriler:
-        print("⚠️ Güncellenecek veri yok!")
+    if not mac_listesi or not tum_veriler:
         return 0
     
     print(f"\n🧠 EŞLEŞTİRME (±2 GÜN TOLERANS)...")
-    print(f"   • JSON: {len(mac_listesi)} maç | Yeni: {len(tum_veriler)} maç")
-    
     guncelleme_sayisi = 0
-    atlanan_sayisi = 0
     kullanilan = set()
     
     def tarih_farki(t1, t2):
@@ -539,11 +559,8 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 continue
             
             mac_tarih = str(mac.get("tarih", "")).strip()
-            
-            if mac_tarih and y_tarih:
-                fark = tarih_farki(mac_tarih, y_tarih)
-                if fark > 2:
-                    continue
+            if mac_tarih and y_tarih and tarih_farki(mac_tarih, y_tarih) > 2:
+                continue
             
             oran_n = benzerlik_orani(mac["ev_sahibi"], y_ev) + benzerlik_orani(mac["deplasman"], y_dep)
             oran_t = benzerlik_orani(mac["ev_sahibi"], y_dep) + benzerlik_orani(mac["deplasman"], y_ev)
@@ -556,7 +573,6 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 elif fark == 2: tb = 1.0
             
             toplam = max(oran_n + tb, oran_t + tb)
-            
             if toplam > en_oran:
                 en_oran = toplam
                 en_idx = idx
@@ -564,10 +580,6 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
         
         if en_oran >= ESLESME_SEVIYESI * 2 and en_idx != -1:
             mac = mac_listesi[en_idx]
-            mac_tarih = str(mac.get("tarih", "")).strip()
-            fark = tarih_farki(mac_tarih, y_tarih) if mac_tarih and y_tarih else 999
-            etiket = "✅ AYNI" if fark == 0 else f"⚠️ ±{fark} GÜN"
-            
             if not en_ters:
                 se, sd = y_veri["skor_ev"], y_veri["skor_dep"]
                 iye, iyd = y_veri["skor_1y_ev"], y_veri["skor_1y_dep"]
@@ -575,25 +587,14 @@ def skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler):
                 se, sd = y_veri["skor_dep"], y_veri["skor_ev"]
                 iye, iyd = y_veri["skor_1y_dep"], y_veri["skor_1y_ev"]
             
-            mac["skor_ev"] = se
-            mac["skor_dep"] = sd
-            mac["skor_1y_ev"] = iye
-            mac["skor_1y_dep"] = iyd
+            mac["skor_ev"], mac["skor_dep"] = se, sd
+            mac["skor_1y_ev"], mac["skor_1y_dep"] = iye, iyd
             mac["durum"] = y_veri["durum"]
             
             kullanilan.add(en_idx)
             guncelleme_sayisi += 1
+            print(f"   ✅ [{guncelleme_sayisi}] {mac['ev_sahibi']} - {mac['deplasman']} | MS:{se}-{sd}")
             
-            print(f"   ✅ [{guncelleme_sayisi}] {mac['ev_sahibi']} - {mac['deplasman']} | {etiket}")
-            print(f"      JSON: {mac_tarih} | Yeni: {y_tarih} | MS:{se}-{sd} | İY:{iye}-{iyd}")
-        else:
-            atlanan_sayisi += 1
-            if en_oran > 0:
-                print(f"   ⏭️ ATLADI: {y_ev} - {y_dep} ({y_tarih}) | Oran: {en_oran:.2f}")
-            else:
-                print(f"   ⏭️ ATLADI: {y_ev} - {y_dep} ({y_tarih}) | Eşleşme yok")
-    
-    print(f"\n✅ GÜNCELLENEN: {guncelleme_sayisi} | ATLANAN: {atlanan_sayisi}")
     return guncelleme_sayisi
 
 # =============================================================================
@@ -603,25 +604,14 @@ if __name__ == "__main__":
     print("="*70)
     print("⚽ İDDAA.COM SCORE SCRAPER")
     print("="*70)
-    print(f"📅 {BASLANGIC_TARIHI} - {BITIS_TARIHI}")
-    print(f"📦 {MAC_JSON_PATH}")
-    print("="*70)
     
     mevcut_yapi = load_mac_json()
     if not mevcut_yapi:
-        print("❌ mac.json bulunamadı!")
-        input("Çıkmak için Enter...")
         exit()
     
     tarihler = tarihleri_olustur(BASLANGIC_TARIHI, BITIS_TARIHI)
     if not tarihler:
-        print("❌ Geçersiz tarih!")
-        input("Çıkmak için Enter...")
         exit()
-    
-    print(f"\n📅 {len(tarihler)} gün:")
-    for t in tarihler:
-        print(f"   • {t}")
     
     chrome_options = Options()
     chrome_options.add_argument("--start-maximized")
@@ -634,64 +624,32 @@ if __name__ == "__main__":
     chrome_options.add_experimental_option("useAutomationExtension", False)
     
     driver = None
-    
     try:
-        print("\n🚀 TARAYICI BAŞLATILIYOR...")
         driver = webdriver.Chrome(options=chrome_options)
         driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        print("✅ Tarayıcı hazır!")
         
         tum_veriler = []
-        
         for gun_iso in tarihler:
-            try:
-                print(f"\n{'#'*70}")
-                print(f"# 📅 GÜN: {gun_iso}")
-                print(f"{'#'*70}")
-                
-                driver.get(BASE_LINK)
-                time.sleep(SAYFA_YUKLEME_BEKLEME)
-                
-                gunluk_veri = iddaa_get_skorlar_tek_gun(driver, gun_iso)
-                tum_veriler.extend(gunluk_veri)
-                
-                print(f"\n📊 {gun_iso}: {len(gunluk_veri)} veri")
-                
-            except Exception as hata:
-                print(f"❌ {gun_iso} hatası: {hata}")
-                import traceback
-                traceback.print_exc()
-                continue
-        
+            driver.get(BASE_LINK)
+            time.sleep(SAYFA_YUKLEME_BEKLEME)
+            gunluk_veri = iddaa_get_skorlar_tek_gun(driver, gun_iso)
+            tum_veriler.extend(gunluk_veri)
+            
     except Exception as genel:
         print(f"❌ GENEL HATA: {genel}")
-        import traceback
-        traceback.print_exc()
-    
     finally:
         if driver is not None:
-            try:
-                driver.quit()
-                print("\n✅ Tarayıcı kapatıldı")
-            except:
-                pass
+            try: driver.quit()
+            except: pass
     
-    if not tum_veriler:
-        print("\n❌ HİÇ VERİ ÇEKİLEMEDİ!")
-        print("💡 DEBUG_MODU = True yapın")
-        input("\nEnter...")
-        exit()
-    
-    print(f"\n📊 TOPLAM: {len(tum_veriler)} maç")
-    
-    guncellenen = skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler)
-    
-    if guncellenen > 0:
-        print(f"\n✅ {guncellenen} MAÇ GÜNCELLENDİ!")
-        if save_mac_json(mevcut_yapi):
-            git_islemlerini_yap()
+    if tum_veriler:
+        guncellenen = skorlari_eslestir_ve_guncelle(mevcut_yapi, tum_veriler)
+        if guncellenen > 0:
+            print(f"\n✅ {guncellenen} MAÇ GÜNCELLENDİ!")
+            if save_mac_json(mevcut_yapi):
+                git_islemlerini_yap()
     else:
-        print("\n❌ HİÇBİR MAÇ GÜNCELLENEMEDİ!")
+        print("\n❌ HİÇ VERİ ÇEKİLEMEDİ!")
     
     print("\n" + "="*70)
     input("✅ TAMAMLANDI - Enter...")

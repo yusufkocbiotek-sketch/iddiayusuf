@@ -240,8 +240,7 @@ def update_mac_json_safely(scraped_matches):
         print(f"⚠️ mac.json bulunamadı! Aranan yol: {MAC_JSON_PATH}")
         return 0
 
-    # ✅ Backup'ı Git dışında tut (OUT_DIR'e kaydet)
-    backup_path = OUT_DIR / "mac_backup.json"  # ← Git repo dışına taşındı
+    backup_path = OUT_DIR / "mac_backup.json"
     shutil.copy2(MAC_JSON_PATH, backup_path)
     print(f"💾 Güvenlik yedeği alındı: {backup_path}")
 
@@ -262,9 +261,10 @@ def update_mac_json_safely(scraped_matches):
             scraped_lookup[key] = m
 
     updated_count = 0
+    unmatched_count = 0
 
     def update_match_obj(obj):
-        nonlocal updated_count
+        nonlocal updated_count, unmatched_count
         if not isinstance(obj, dict):
             return
 
@@ -279,6 +279,8 @@ def update_mac_json_safely(scraped_matches):
 
         if not h or not a or h == "?" or a == "?":
             return
+
+        matched = False  # ✅ Eşleşme kontrolü
 
         # ✅ FUZZY + TARİH TOLERANSLI EŞLEŞTİRME
         for scraped_key, new_data in scraped_lookup.items():
@@ -325,6 +327,8 @@ def update_mac_json_safely(scraped_matches):
                 obj["cekme_zamani"] = datetime.now().isoformat()
 
                 updated_count += 1
+                matched = True  # ✅ Eşleşti işaretle
+                
                 print(
                     f"✅ FUZZY ±{ESLESME_TOLERANSI_GUN}G EŞLEŞTİ: "
                     f"{obj.get('ev_sahibi')} vs {obj.get('deplasman')} "
@@ -332,6 +336,10 @@ def update_mac_json_safely(scraped_matches):
                     f"(Benzerlik: Ev={ev_oran:.2f}, Dep={dep_oran:.2f})"
                 )
                 break  # İlk eşleşmede dur
+        
+        # ✅ Eşleşmeyen maçları say
+        if not matched:
+            unmatched_count += 1
 
     def traverse_and_update(data):
         if isinstance(data, dict):
@@ -347,7 +355,19 @@ def update_mac_json_safely(scraped_matches):
     with open(MAC_JSON_PATH, 'w', encoding='utf-8') as f:
         json.dump(original_data, f, ensure_ascii=False, indent=2)
 
-    print(f"\n✅ GÜVENLİ GÜNCELLEME BAŞARILI! {updated_count} maçın skoru/durumu güncellendi.")
+    print(f"\n✅ GÜVENLİ GÜNCELLEME BAŞARILI!")
+    print(f"   ✅ Güncellenen maç: {updated_count}")
+    print(f"   ⚠️ Eşleşmeyen çekilen maç: {unmatched_count}")
+    
+    # ✅ Eşleşmeyenleri rapor et
+    if unmatched_count > 0:
+        unmatched_file = OUT_DIR / f"unmatched_{date.today().strftime('%Y%m%d_%H%M%S')}.json"
+        unmatched_file.write_text(
+            json.dumps(scraped_matches, ensure_ascii=False, indent=2),
+            encoding="utf-8"
+        )
+        print(f"   📋 Eşleşmeyen maçlar kaydedildi: {unmatched_file}")
+    
     return updated_count
 
 def auto_git_commit_and_push(updated_count):

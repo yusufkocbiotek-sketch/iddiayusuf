@@ -428,7 +428,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
             <option value="Her İki Yarıda da Üst 1.5_Evet">Her İki Yarı Üst 1.5</option>
             <option value="Ev Sahibi Her İki Yarıyı Kazanır_Evet">Ev Her İki Yarı Kazanır</option>
             <option value="Deplasman Her İki Yarıyı Kazanır_Evet">Dep Her İki Yarı Kazanır</option>
-             <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Alt">MS1 + 1.5 Alt</option>
+            <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Alt">MS1 + 1.5 Alt</option>
     	    <option value="Maç Sonucu ve Alt/Üst 1.5_1 ve Üst">MS1 + 1.5 Üst</option>
     	    <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Alt">MSX + 1.5 Alt</option>
     	    <option value="Maç Sonucu ve Alt/Üst 1.5_0 ve Üst">MSX + 1.5 Üst</option>
@@ -437,12 +437,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 
     	    <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Alt">MS1 + 2.5 Alt</option>
     	    <option value="Maç Sonucu ve Alt/Üst 2.5_1 ve Üst">MS1 + 2.5 Üst</option>
-  	     <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Alt">MSX + 2.5 Alt</option>
+  	    <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Alt">MSX + 2.5 Alt</option>
     	    <option value="Maç Sonucu ve Alt/Üst 2.5_0 ve Üst">MSX + 2.5 Üst</option>
     	    <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Alt">MS2 + 2.5 Alt</option>
     	    <option value="Maç Sonucu ve Alt/Üst 2.5_2 ve Üst">MS2 + 2.5 Üst</option>
 
-   	     <option value="Maç Sonucu ve Alt/Üst 3.5_1 ve Alt">MS1 + 3.5 Alt</option>
+   	    <option value="Maç Sonucu ve Alt/Üst 3.5_1 ve Alt">MS1 + 3.5 Alt</option>
     	    <option value="Maç Sonucu ve Alt/Üst 3.5_1 ve Üst">MS1 + 3.5 Üst</option>
     	    <option value="Maç Sonucu ve Alt/Üst 3.5_0 ve Alt">MSX + 3.5 Alt</option>
     	    <option value="Maç Sonucu ve Alt/Üst 3.5_0 ve Üst">MSX + 3.5 Üst</option>
@@ -823,6 +823,37 @@ function dogruOran(m, key){
   if(key === "Maç Sonucu ve Alt/Üst 4.5_2 ve Alt") return ms === "2" && toplamGol < 4.5;
   if(key === "Maç Sonucu ve Alt/Üst 4.5_2 ve Üst") return ms === "2" && toplamGol > 4.5;
 
+  // 1. İY Sonucu + İY KG (6 tane)
+  if(key === "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var") return iy === "1" && iyKgVar;
+  if(key === "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok") return iy === "1" && !iyKgVar;
+  if(key === "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var") return iy === "0" && iyKgVar;
+  if(key === "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok") return iy === "0" && !iyKgVar;
+  if(key === "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var") return iy === "2" && iyKgVar;
+  if(key === "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok") return iy === "2" && !iyKgVar;
+
+  // 2. İY Sonucu + İY Alt/Üst 1.5 (6 tane)
+  if(key === "İlk Yarı Sonucu ve Alt/Üst 1.5_1 ve Alt") return iy === "1" && iyGol < 1.5;
+  if(key === "İlk Yarı Sonucu ve Alt/Üst 1.5_1 ve Üst") return iy === "1" && iyGol > 1.5;
+  if(key === "İlk Yarı Sonucu ve Alt/Üst 1.5_0 ve Alt") return iy === "0" && iyGol < 1.5;
+  if(key === "İlk Yarı Sonucu ve Alt/Üst 1.5_0 ve Üst") return iy === "0" && iyGol > 1.5;
+  if(key === "İlk Yarı Sonucu ve Alt/Üst 1.5_2 ve Alt") return iy === "2" && iyGol < 1.5;
+  if(key === "İlk Yarı Sonucu ve Alt/Üst 1.5_2 ve Üst") return iy === "2" && iyGol > 1.5;
+
+  // 3. Alt/Üst 2.5 + KG (4 tane)
+  if(key === "Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Var") return toplamGol < 2.5 && kgVar;
+  if(key === "Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Var") return toplamGol > 2.5 && kgVar;
+  if(key === "Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Yok") return toplamGol < 2.5 && !kgVar;
+  if(key === "Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Yok") return toplamGol > 2.5 && !kgVar;
+
+  // 4. Her İki Yarıda Alt 1.5 Hayır
+  if(key === "Her İki Yarıda da Alt 1.5_Hayır") return !(iyGol < 1.5 && ikinciGol < 1.5);
+
+  // 5. Toplam Gol aralık isimleri JSON'da farklı olabilir - kontrol et:
+  // JSON'da "Toplam Gol_4-5" varsa:
+  if(key === "Toplam Gol_4-5") return toplamGol >= 4 && toplamGol <= 5;
+  // JSON'da "Toplam Gol_6+" varsa:
+  if(key === "Toplam Gol_6+") return toplamGol >= 6;
+
   return false;
 }
 
@@ -846,7 +877,9 @@ function KA(t) {
     "İlk Yarı Alt/Üst 0.5_Alt": "İY0.5A", "İlk Yarı Alt/Üst 0.5_Üst": "İY0.5Ü",
     "İlk Yarı Alt/Üst 1.5_Alt": "İY1.5A", "İlk Yarı Alt/Üst 1.5_Üst": "İY1.5Ü",
     "İlk Yarı Alt/Üst 2.5_Alt": "İY2.5A", "İlk Yarı Alt/Üst 2.5_Üst": "İY2.5Ü",
+    "Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt": "EVS İY0.5A", "Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst": "EVS İY0.5Ü",
     "Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt": "EVS İY1.5A", "Ev Sahibi İlk Yarı Alt/Üst 1.5_Üst": "EVS İY1.5Ü",
+    "Deplasman İlk Yarı Alt/Üst 0.5_Alt": "DEP İY0.5A", "Deplasman İlk Yarı Alt/Üst 0.5_Üst": "DEP İY0.5Ü",
     "Deplasman İlk Yarı Alt/Üst 1.5_Alt": "DEP İY1.5A", "Deplasman İlk Yarı Alt/Üst 1.5_Üst": "DEP İY1.5Ü",
     "Çifte Şans_1X": "1X", "Çifte Şans_12": "12", "Çifte Şans_X2": "X2",
     "İlk Yarı / Maç Sonucu_1/1": "İY/MS 1/1", "İlk Yarı / Maç Sonucu_1/X": "İY/MS 1/X",
@@ -860,26 +893,21 @@ function KA(t) {
     "Deplasman Her İki Yarıyı Kazanır_Evet": "Dep İki Yarı Kazanır",
     "Toplam Gol_0-1": "Gol 0-1", "Toplam Gol_2-3": "Gol 2-3",
     "Toplam Gol_4-6": "Gol 4-6", "Toplam Gol_7+": "Gol 7+",
-
     "Maç Sonucu ve Karşılıklı Gol_1 ve Var": "MS1 + KGV",
     "Maç Sonucu ve Karşılıklı Gol_1 ve Yok": "MS1 + KGY",
     "Maç Sonucu ve Karşılıklı Gol_0 ve Var": "MSX + KGV",
     "Maç Sonucu ve Karşılıklı Gol_0 ve Yok": "MSX + KGY",
     "Maç Sonucu ve Karşılıklı Gol_2 ve Var": "MS2 + KGV",
     "Maç Sonucu ve Karşılıklı Gol_2 ve Yok": "MS2 + KGY",
-
     "Maç Sonucu ve Alt/Üst 1.5_1 ve Alt": "MS1 + 1.5A", "Maç Sonucu ve Alt/Üst 1.5_1 ve Üst": "MS1 + 1.5Ü",
     "Maç Sonucu ve Alt/Üst 1.5_0 ve Alt": "MSX + 1.5A", "Maç Sonucu ve Alt/Üst 1.5_0 ve Üst": "MSX + 1.5Ü",
     "Maç Sonucu ve Alt/Üst 1.5_2 ve Alt": "MS2 + 1.5A", "Maç Sonucu ve Alt/Üst 1.5_2 ve Üst": "MS2 + 1.5Ü",
-
     "Maç Sonucu ve Alt/Üst 2.5_1 ve Alt": "MS1 + 2.5A", "Maç Sonucu ve Alt/Üst 2.5_1 ve Üst": "MS1 + 2.5Ü",
     "Maç Sonucu ve Alt/Üst 2.5_0 ve Alt": "MSX + 2.5A", "Maç Sonucu ve Alt/Üst 2.5_0 ve Üst": "MSX + 2.5Ü",
     "Maç Sonucu ve Alt/Üst 2.5_2 ve Alt": "MS2 + 2.5A", "Maç Sonucu ve Alt/Üst 2.5_2 ve Üst": "MS2 + 2.5Ü",
-
     "Maç Sonucu ve Alt/Üst 3.5_1 ve Alt": "MS1 + 3.5A", "Maç Sonucu ve Alt/Üst 3.5_1 ve Üst": "MS1 + 3.5Ü",
     "Maç Sonucu ve Alt/Üst 3.5_0 ve Alt": "MSX + 3.5A", "Maç Sonucu ve Alt/Üst 3.5_0 ve Üst": "MSX + 3.5Ü",
     "Maç Sonucu ve Alt/Üst 3.5_2 ve Alt": "MS2 + 3.5A", "Maç Sonucu ve Alt/Üst 3.5_2 ve Üst": "MS2 + 3.5Ü",
-
     "Maç Sonucu ve Alt/Üst 4.5_1 ve Alt": "MS1 + 4.5A", "Maç Sonucu ve Alt/Üst 4.5_1 ve Üst": "MS1 + 4.5Ü",
     "Maç Sonucu ve Alt/Üst 4.5_0 ve Alt": "MSX + 4.5A", "Maç Sonucu ve Alt/Üst 4.5_0 ve Üst": "MSX + 4.5Ü",
     "Maç Sonucu ve Alt/Üst 4.5_2 ve Alt": "MS2 + 4.5A", "Maç Sonucu ve Alt/Üst 4.5_2 ve Üst": "MS2 + 4.5Ü"
@@ -1329,14 +1357,14 @@ bm.forEach(m => {
             <td class="oran-cell ${dogruOran(m,'İlk Yarı Alt/Üst 2.5_Üst')?'dogru':''}"><div class="oran-v">${o['İlk Yarı Alt/Üst 2.5_Üst']||'-'}</div></td>
 
             <!-- İlk Yarı Takım Alt/Üst -->
-            <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt']||'-'}</div></td>
+	    <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
+	    <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
+	    <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt']||'-'}</div></td>
 	    <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 1.5_Üst']||'-'}</div></td>
+	    <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
+	    <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
 	    <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 1.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 1.5_Alt']||'-'}</div></td>
 	    <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 1.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 1.5_Üst']||'-'}</div></td>
-	    <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
-            <td class="oran-cell ${dogruOran(m,'Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
-            <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Alt')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Alt']||'-'}</div></td>
-            <td class="oran-cell ${dogruOran(m,'Deplasman İlk Yarı Alt/Üst 0.5_Üst')?'dogru':''}"><div class="oran-v">${o['Deplasman İlk Yarı Alt/Üst 0.5_Üst']||'-'}</div></td>
 
             <!-- Karşılıklı Gol -->
             <td class="oran-cell ${dogruOran(m,'Karşılıklı Gol_Var')?'dogru':''}"><div class="oran-v">${o['Karşılıklı Gol_Var']||'-'}</div></td>

@@ -309,12 +309,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
             <option value="İlk Yarı Sonucu_1">İY1</option>
             <option value="İlk Yarı Sonucu_0">İYX</option>
             <option value="İlk Yarı Sonucu_2">İY2</option>
-            <option value="İlk Yarı Alt/Üst 0.5_Alt">İY0.5 Alt</option>
-            <option value="İlk Yarı Alt/Üst 0.5_Üst">İY0.5 Üst</option>
-            <option value="İlk Yarı Alt/Üst 1.5_Alt">İY1.5 Alt</option>
-            <option value="İlk Yarı Alt/Üst 1.5_Üst">İY1.5 Üst</option>
-            <option value="İlk Yarı Alt/Üst 2.5_Alt">İY2.5 Alt</option>
-            <option value="İlk Yarı Alt/Üst 2.5_Üst">İY2.5 Üst</option>
+            <option value="İlk Yarı Altı/Üstü 0.5_Alt">İY0.5 Alt</option>
+            <option value="İlk Yarı Altı/Üstü 0.5_Üst">İY0.5 Üst</option>
+            <option value="İlk Yarı Altı/Üstü 1.5_Alt">İY1.5 Alt</option>
+            <option value="İlk Yarı Altı/Üstü 1.5_Üst">İY1.5 Üst</option>
+            <option value="İlk Yarı Altı/Üstü 2.5_Alt">İY2.5 Alt</option>
+            <option value="İlk Yarı Altı/Üstü 2.5_Üst">İY2.5 Üst</option>
           </optgroup>
 
           <optgroup label="Çifte Şans">
@@ -384,14 +384,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
             <option value="Her İki Yarıda da Alt 1.5_Hayır">Her İki Yarı 1.5 Alt Değil</option>
             <option value="Her İki Yarıda da Üst 1.5_Evet">Her İki Yarı 1.5 Üst</option>
 
-            <option value="Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt">Ev Sahibi İY 0.5 Alt</option>
-            <option value="Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst">Ev Sahibi İY 0.5 Üst</option>
-	    <option value="Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt">Ev Sahibi İY 1.5 Alt</option>
-	    <option value="Ev Sahibi İlk Yarı Alt/Üst 1.5_Üst">Ev Sahibi İY 1.5 Üst</option>
-            <option value="Deplasman İlk Yarı Alt/Üst 0.5_Alt">Deplasman İY 0.5 Alt</option>
-            <option value="Deplasman İlk Yarı Alt/Üst 0.5_Üst">Deplasman İY 0.5 Üst</option>
-	    <option value="Deplasman İlk Yarı Alt/Üst 1.5_Alt">Deplasman İY 1.5 Alt</option>
-	    <option value="Deplasman İlk Yarı Alt/Üst 1.5_Üst">Deplasman İY 1.5 Üst</option>
+            <option value="Ev Sahibi İlk Yarı Altı/Üstü 0.5_Alt">Ev Sahibi İY 0.5 Alt</option>
+            <option value="Ev Sahibi İlk Yarı Altı/Üstü 0.5_Üst">Ev Sahibi İY 0.5 Üst</option>
+	    <option value="Ev Sahibi İlk Yarı Altı/Üstü 1.5_Alt">Ev Sahibi İY 1.5 Alt</option>
+	    <option value="Ev Sahibi İlk Yarı Altı/Üstü 1.5_Üst">Ev Sahibi İY 1.5 Üst</option>
+            <option value="Deplasman İlk Yarı Altı/Üstü 0.5_Alt">Deplasman İY 0.5 Alt</option>
+            <option value="Deplasman İlk Yarı Altı/Üstü 0.5_Üst">Deplasman İY 0.5 Üst</option>
+	    <option value="Deplasman İlk Yarı Altı/Üstü 1.5_Alt">Deplasman İY 1.5 Alt</option>
+	    <option value="Deplasman İlk Yarı Altı/Üstü 1.5_Üst">Deplasman İY 1.5 Üst</option>
 
             <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Alt ve Var">2.5 Alt + KG Var</option>
             <option value="Alt/Üst 2.5 ve Karşılıklı Gol_Üst ve Var">2.5 Üst + KG Var</option>
@@ -706,24 +706,24 @@ function dogruOran(m, key){
   if(key === "Deplasman Alt/Üst 2.5_Üst") return sd > 2.5;
 
   // İlk Yarı Alt/Üst - Genel
-  if(key === "İlk Yarı Alt/Üst 0.5_Alt") return iyGol < 0.5;
-  if(key === "İlk Yarı Alt/Üst 0.5_Üst") return iyGol > 0.5;
-  if(key === "İlk Yarı Alt/Üst 1.5_Alt") return iyGol < 1.5;
-  if(key === "İlk Yarı Alt/Üst 1.5_Üst") return iyGol > 1.5;
-  if(key === "İlk Yarı Alt/Üst 2.5_Alt") return iyGol < 2.5;
-  if(key === "İlk Yarı Alt/Üst 2.5_Üst") return iyGol > 2.5;
+  if(key === "İlk Yarı Altı/Üstü 0.5_Alt") return iyGol < 0.5;
+  if(key === "İlk Yarı Altı/Üstü 0.5_Üst") return iyGol > 0.5;
+  if(key === "İlk Yarı Altı/Üstü 1.5_Alt") return iyGol < 1.5;
+  if(key === "İlk Yarı Altı/Üstü 1.5_Üst") return iyGol > 1.5;
+  if(key === "İlk Yarı Altı/Üstü 2.5_Alt") return iyGol < 2.5;
+  if(key === "İlk Yarı Altı/Üstü 2.5_Üst") return iyGol > 2.5;
 
   // ✅ EV SAHİBİ İLK YARI ALT/ÜST
-  if(key === "Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt") return iySe < 0.5;
-  if(key === "Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst") return iySe > 0.5;
-  if(key === "Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt") return iySe < 1.5;
-  if(key === "Ev Sahibi İlk Yarı Alt/Üst 1.5_Üst") return iySe > 1.5;
+  if(key === "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Alt") return iySe < 0.5;
+  if(key === "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Üst") return iySe > 0.5;
+  if(key === "Ev Sahibi İlk Yarı Altı/Üstü 1.5_Alt") return iySe < 1.5;
+  if(key === "Ev Sahibi İlk Yarı Altı/Üstü 1.5_Üst") return iySe > 1.5;
 
   // ✅ DEPLASMAN İLK YARI ALT/ÜST
-  if(key === "Deplasman İlk Yarı Alt/Üst 0.5_Alt") return iySd < 0.5;
-  if(key === "Deplasman İlk Yarı Alt/Üst 0.5_Üst") return iySd > 0.5;
-  if(key === "Deplasman İlk Yarı Alt/Üst 1.5_Alt") return iySd < 1.5;
-  if(key === "Deplasman İlk Yarı Alt/Üst 1.5_Üst") return iySd > 1.5;
+  if(key === "Deplasman İlk Yarı Altı/Üstü 0.5_Alt") return iySd < 0.5;
+  if(key === "Deplasman İlk Yarı Altı/Üstü 0.5_Üst") return iySd > 0.5;
+  if(key === "Deplasman İlk Yarı Altı/Üstü 1.5_Alt") return iySd < 1.5;
+  if(key === "Deplasman İlk Yarı Altı/Üstü 1.5_Üst") return iySd > 1.5;
 
   // KG
   if(key === "Karşılıklı Gol_Var") return kgVar;
@@ -874,25 +874,51 @@ function KA(t) {
     "Her İki Yarıda Karşılıklı Gol_HE": "İY+İY2 KG H/E",
     "Her İki Yarıda Karşılıklı Gol_HH": "İY+İY2 KG H/H",
     "İlk Yarı Sonucu_1": "İY1", "İlk Yarı Sonucu_0": "İYX", "İlk Yarı Sonucu_2": "İY2",
-    "İlk Yarı Alt/Üst 0.5_Alt": "İY0.5A", "İlk Yarı Alt/Üst 0.5_Üst": "İY0.5Ü",
-    "İlk Yarı Alt/Üst 1.5_Alt": "İY1.5A", "İlk Yarı Alt/Üst 1.5_Üst": "İY1.5Ü",
-    "İlk Yarı Alt/Üst 2.5_Alt": "İY2.5A", "İlk Yarı Alt/Üst 2.5_Üst": "İY2.5Ü",
-    "Ev Sahibi İlk Yarı Alt/Üst 0.5_Alt": "EVS İY0.5A", "Ev Sahibi İlk Yarı Alt/Üst 0.5_Üst": "EVS İY0.5Ü",
-    "Ev Sahibi İlk Yarı Alt/Üst 1.5_Alt": "EVS İY1.5A", "Ev Sahibi İlk Yarı Alt/Üst 1.5_Üst": "EVS İY1.5Ü",
-    "Deplasman İlk Yarı Alt/Üst 0.5_Alt": "DEP İY0.5A", "Deplasman İlk Yarı Alt/Üst 0.5_Üst": "DEP İY0.5Ü",
-    "Deplasman İlk Yarı Alt/Üst 1.5_Alt": "DEP İY1.5A", "Deplasman İlk Yarı Alt/Üst 1.5_Üst": "DEP İY1.5Ü",
-    "Çifte Şans_1X": "1X", "Çifte Şans_12": "12", "Çifte Şans_X2": "X2",
+    "İlk Yarı Altı/Üstü 0.5_Alt": "İY0.5A", "İlk Yarı Altı/Üstü 0.5_Üst": "İY0.5Ü",
+    "İlk Yarı Altı/Üstü 1.5_Alt": "İY1.5A", "İlk Yarı Altı/Üstü 1.5_Üst": "İY1.5Ü",
+    "İlk Yarı Altı/Üstü 2.5_Alt": "İY2.5A", "İlk Yarı Altı/Üstü 2.5_Üst": "İY2.5Ü",
+    "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Alt": "EVS İY0.5A", "Ev Sahibi İlk Yarı Altı/Üstü 0.5_Üst": "EVS İY0.5Ü",
+    "Ev Sahibi İlk Yarı Altı/Üstü 1.5_Alt": "EVS İY1.5A", "Ev Sahibi İlk Yarı Altı/Üstü 1.5_Üst": "EVS İY1.5Ü",
+    "Deplasman İlk Yarı Altı/Üstü 0.5_Alt": "DEP İY0.5A", "Deplasman İlk Yarı Altı/Üstü 0.5_Üst": "DEP İY0.5Ü",
+    "Deplasman İlk Yarı Altı/Üstü 1.5_Alt": "DEP İY1.5A", "Deplasman İlk Yarı Altı/Üstü 1.5_Üst": "DEP İY1.5Ü",
+    "Çifte Şans_1 ve 0": "1X", "Çifte Şans_1 ve 2": "12", "Çifte Şans_0 ve 2": "X2",
     "İlk Yarı / Maç Sonucu_1/1": "İY/MS 1/1", "İlk Yarı / Maç Sonucu_1/X": "İY/MS 1/X",
     "İlk Yarı / Maç Sonucu_1/2": "İY/MS 1/2", "İlk Yarı / Maç Sonucu_X/1": "İY/MS X/1",
     "İlk Yarı / Maç Sonucu_X/X": "İY/MS X/X", "İlk Yarı / Maç Sonucu_X/2": "İY/MS X/2",
     "İlk Yarı / Maç Sonucu_2/1": "İY/MS 2/1", "İlk Yarı / Maç Sonucu_2/X": "İY/MS 2/X",
     "İlk Yarı / Maç Sonucu_2/2": "İY/MS 2/2",
-    "Her İki Yarıda da Üst 1.5_Evet": "Her İki Yarı 1.5Ü",
+    "Her İki Yarıda da Alt 1.5_Evet": "HY 1.5A", "Her İki Yarıda da Alt 1.5_Hayır": "HY 1.5A Değil",
+    "Her İki Yarıda da Üst 1.5_Evet": "HY 1.5Ü",
     "Her İki Yarıda da Üst 2.5_Evet": "Her İki Yarı 2.5Ü",
     "Ev Sahibi Her İki Yarıyı Kazanır_Evet": "Ev İki Yarı Kazanır",
     "Deplasman Her İki Yarıyı Kazanır_Evet": "Dep İki Yarı Kazanır",
     "Toplam Gol_0-1": "Gol 0-1", "Toplam Gol_2-3": "Gol 2-3",
     "Toplam Gol_4-6": "Gol 4-6", "Toplam Gol_7+": "Gol 7+",
+    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var": "İY1+KGV", 
+    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1   ve Yok": "İY1+KGY",
+    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var": "İYX+KGV", 
+    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok": "İYX+KGY",
+    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var": "İY2+KGV", 
+    "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok": "İY2+KGY",
+    "İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Alt": "İY1+1.5A", 
+    "İlk Yarı Sonucu ve Altı/Üstü 1.5_1 ve Üst": "İY1+1.5Ü",
+    "İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Alt": "İYX+1.5A", 
+    "İlk Yarı Sonucu ve Altı/Üstü 1.5_0 ve Üst": "İYX+1.5Ü",
+    "İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Alt": "İY2+1.5A", 
+    "İlk Yarı Sonucu ve Altı/Üstü 1.5_2 ve Üst": "İY2+1.5Ü",
+    "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Var": "2.5A+KGV", 
+    "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Var": "2.5Ü+KGV",
+    "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Yok": "2.5A+KGY", 
+    "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Yok": "2.5Ü+KGY",
+    "Ev Sahibi Yarı Kazanır_Evet": "EVS Yarı Kazanır", "Deplasman Yarı Kazanır_Evet": "DEP Yarı Kazanır",
+    "Ev Sahibi Gol Yemeden Kazanır_Evet": "EVS Gol Yemeden", 
+    "Deplasman Gol Yemeden Kazanır_Evet": "DEP Gol Yemeden",
+    "Ev Sahibi Alt/Üst 0.5_Alt": "EVS 0.5A", "Ev Sahibi Alt/Üst 0.5_Üst": "EVS 0.5Ü",
+    "Ev Sahibi Alt/Üst 1.5_Alt": "EVS 1.5A", "Ev Sahibi Alt/Üst 1.5_Üst": "EVS 1.5Ü",
+    "Ev Sahibi Alt/Üst 2.5_Alt": "EVS 2.5A", "Ev Sahibi Alt/Üst 2.5_Üst": "EVS 2.5Ü",
+    "Deplasman Alt/Üst 0.5_Alt": "DEP 0.5A", "Deplasman Alt/Üst 0.5_Üst": "DEP 0.5Ü",
+    "Deplasman Alt/Üst 1.5_Alt": "DEP 1.5A", "Deplasman Alt/Üst 1.5_Üst": "DEP 1.5Ü",
+    "Deplasman Alt/Üst 2.5_Alt": "DEP 2.5A", "Deplasman Alt/Üst 2.5_Üst": "DEP 2.5Ü",
     "Maç Sonucu ve Karşılıklı Gol_1 ve Var": "MS1 + KGV",
     "Maç Sonucu ve Karşılıklı Gol_1 ve Yok": "MS1 + KGY",
     "Maç Sonucu ve Karşılıklı Gol_0 ve Var": "MSX + KGV",

@@ -20,8 +20,8 @@ from selenium.common.exceptions import *
 # =========================
 # ⚙️ AYARLAR
 # =========================
-BASLANGIC_TARIHI = "11.07.2026"   # GG.AA.YYYY
-BITIS_TARIHI = "13.07.2026"       # GG.AA.YYYY
+BASLANGIC_TARIHI = "13.07.2026"   # GG.AA.YYYY
+BITIS_TARIHI = "17.07.2026"       # GG.AA.YYYY
 
 BASE_DIR = Path(__file__).resolve().parent
 MAC_JSON_PATH = BASE_DIR / "public" / "data" / "mac.json"
@@ -29,7 +29,7 @@ BASE_LINK = "https://www.mackolik.com/futbol/canli-sonuclar"
 GIT_BRANCH_NAME = "main"
 
 # Eşleştirme frenleri
-TARIH_TOLERANSI_GUN = 15        # ±15 gün tolerans
+TARIH_TOLERANSI_GUN = 10        # ±10 gün tolerans
 GUCLU_TAKIM_ESIGI = 0.80       # En az bir takım bu kadar benzemeli
 MIN_TOPLAM_PUAN = 1.30         # İki takımın toplam benzerlik alt sınırı
 MIN_TEK_TARAF = 0.50           # Bir taraf bundan düşükse farklı maçtır

@@ -1,3 +1,0 @@
-git add .
-git commit -m "Elle düzeltme: UD Poblense maçı güncellendi/silindi"
-git push origin main

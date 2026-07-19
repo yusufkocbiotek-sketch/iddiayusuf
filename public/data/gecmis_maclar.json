@@ -387114,24 +387114,5 @@
         "135.00_4+ 4+": 14.85,
         "Program_Sonuçlar": 18.0
       }
-    },
-    {
-      "index": 15462,
-      "mac_kodu": "2402347",
-      "ev_sahibi": "Al-Riyadh",
-      "deplasman": "Al-Akhdoud",
-      "saat": "21:00",
-      "lig": "",
-      "tarih": "2026-05-21",
-      "cekme_zamani": "2026-05-21T23:10:14.368814",
-      "durum": "bitti",
-      "skor_ev": 1,
-      "skor_dep": 0,
-      "skor_1y_ev": 1,
-      "skor_1y_dep": 0,
-      "kaynak": "livescore.bz",
-      "sofascore_id": "2402347",
-      "oranlar": {}
-    }
   ]
 }

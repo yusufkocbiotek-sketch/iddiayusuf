@@ -317,7 +317,40 @@ def deep_harvest(driver):
 
 
 # =========================
-# ORAN ÇEKME - ESKİ HALİYLE
+# ❌ İSTENMEYEN ORAN KATEGORİLERİ
+# =========================
+FILTRELE_MARKET = [
+    "Oyuncu Gol Atar",
+    "Oyuncu İlk Golü Atar",
+    "Oyuncu Son Golü Atar",
+    "Oyuncu 2+ Gol Atar",
+    "Oyuncu 3+ Gol Atar",
+    "Oyuncu Asist Yapar",
+    "Oyuncu Ceza Sahası Dışından Gol Atar",
+    "Oyuncu Gol Atar Ve Takımı Kazanır",
+    "Oyuncu Gol Atar Ve Takımı Kazanır",
+    "Oyuncu Ofsayta Düşer",
+    "Oyuncu Kafa İle Gol Atar",
+    "Oyuncu Frikikten Gol Atar",
+    "Oyuncu Hat-trick Yapar",
+    "Oyuncu Her Iki Yarı Da Gol Atar",
+    "Oyuncu Gol Atar veya Asist Yapar",
+    "Oyuncu Kaleyi Bulan Şut Çeker",
+    "Oyuncu Kart Görür",
+    "Oyuncu Şut",
+    "Oyuncu İsabetli Şut",
+    "Karşılaşma Özel Bahisleri",
+    "Kaleci Kurtarışı",
+    "Takım Şut",
+    "Takım İsabetli Şut",
+    "Takım Faul",
+    "Takım Ofsayt",
+    "Takım Korner",
+    "Takım Kart",
+]
+
+# =========================
+# ORAN ÇEKME - FİLTRELİ
 # =========================
 def clear_and_type(el, text):
     el.click(); time.sleep(0.1)
@@ -368,6 +401,7 @@ def nokta_var_mi(t):
 
 def detay_parse(driver):
     oranlar = {}
+    atlanan = 0
     lines = [x.strip() for x in driver.find_element(By.TAG_NAME, "body").text.split("\n") if x.strip()]
     try: idx = lines.index("Tümü")
     except: return oranlar
@@ -375,12 +409,18 @@ def detay_parse(driver):
     market=""
     while i < len(lines)-1:
         if nokta_var_mi(lines[i+1]):
-            oranlar[f"{market}_{lines[i]}" if market else lines[i]] = float(lines[i+1])
+            full_key = f"{market}_{lines[i]}" if market else lines[i]
+            yasak = any(full_key.lower().startswith(f.lower()) for f in FILTRELE_MARKET)
+            if yasak:
+                atlanan += 1
+            else:
+                oranlar[full_key] = float(lines[i+1])
             i+=2
         else:
             market=lines[i]; i+=1
+    if atlanan > 0:
+        print(f"   🚫 {atlanan} gereksiz oran filtrelendi")
     return oranlar
-
 
 # =========================
 # KAYDET - TARİH SIRALI

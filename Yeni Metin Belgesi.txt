@@ -1,0 +1,240 @@
+import json
+import shutil
+import os
+import datetime
+
+TARIH_SINIR = "2026-07-01"  # Bu tarihten ÖNCEKileri taşı
+
+mac_dosya = r"C:\Users\YUSUF\Desktop\iddiayusuf-main\public\data\mac.json"
+gecmis_dosya = r"C:\Users\YUSUF\Desktop\iddiayusuf-main\public\data\gecmis_maclar.json"
+
+# ============================
+# KEY DÖNÜŞTÜRME HARİTASI
+# ============================
+KEY_MAP = {
+    "İY Alt/Üst 0.5_Alt": "İlk Yarı Altı/Üstü 0.5_Alt",
+    "İY Alt/Üst 0.5_Üst": "İlk Yarı Altı/Üstü 0.5_Üst",
+    "İY Alt/Üst 1.5_Alt": "İlk Yarı Altı/Üstü 1.5_Alt",
+    "İY Alt/Üst 1.5_Üst": "İlk Yarı Altı/Üstü 1.5_Üst",
+    "İY Alt/Üst 2.5_Alt": "İlk Yarı Altı/Üstü 2.5_Alt",
+    "İY Alt/Üst 2.5_Üst": "İlk Yarı Altı/Üstü 2.5_Üst",
+    "İY KG Var": "İlk Yarı Karşılıklı Gol_Var",
+    "İY KG Yok": "İlk Yarı Karşılıklı Gol_Yok",
+    "İY2 KG Var": "İkinci Yarı Karşılıklı Gol_Var",
+    "İY2 KG Yok": "İkinci Yarı Karşılıklı Gol_Yok",
+    "Çifte Şans_1 ve 0": "Çifte Şans_1X",
+    "Çifte Şans_1 ve 2": "Çifte Şans_12",
+    "Çifte Şans_0 ve 2": "Çifte Şans_X2",
+    "Her İki Yarı KG_EE": "Her İki Yarıda Karşılıklı Gol_EE",
+    "Her İki Yarı KG_EH": "Her İki Yarıda Karşılıklı Gol_EH",
+    "Her İki Yarı KG_HE": "Her İki Yarıda Karşılıklı Gol_HE",
+    "Her İki Yarı KG_HH": "Her İki Yarıda Karşılıklı Gol_HH",
+    "İY/MS_1/1": "İlk Yarı / Maç Sonucu_1/1",
+    "İY/MS_1/X": "İlk Yarı / Maç Sonucu_1/X",
+    "İY/MS_1/2": "İlk Yarı / Maç Sonucu_1/2",
+    "İY/MS_X/1": "İlk Yarı / Maç Sonucu_X/1",
+    "İY/MS_X/X": "İlk Yarı / Maç Sonucu_X/X",
+    "İY/MS_X/2": "İlk Yarı / Maç Sonucu_X/2",
+    "İY/MS_2/1": "İlk Yarı / Maç Sonucu_2/1",
+    "İY/MS_2/X": "İlk Yarı / Maç Sonucu_2/X",
+    "İY/MS_2/2": "İlk Yarı / Maç Sonucu_2/2",
+}
+
+# Silinecek başlangıçlar
+SILINECEK = ("oyuncu", "100.00", "takım")
+
+
+def key_donustur(oranlar):
+    """Tüm key'leri dönüştür + istenmeyenleri sil"""
+    yeni = {}
+    silinen = 0
+    donusturulen = 0
+
+    for key, value inoranlar.items():
+        k = key.strip().lower()
+
+        # İstenmeyenleri sil
+        if k.startswith(SILINECEK):
+            silinen += 1
+            continue
+
+        # Key dönüştür
+        yeni_key = KEY_MAP.get(key, key)
+        if yeni_key != key:
+            donusturulen += 1
+
+        yeni[yeni_key] = value
+
+    return yeni, silinen, donusturulen
+
+
+def sirala_indexle(matches):
+    """Tarihe göre sırala ve index yaz"""
+    sirali = sorted(matches, key=lambda x: (x.get("tarih", ""), x.get("saat", "00:00")))
+    for i, mac in enumerate(sirali, 1):
+        mac["index"] = i
+    return sirali
+
+
+# ============================
+# YEDİKLER
+# ============================
+shutil.copy(mac_dosya, mac_dosya + ".yedek")
+shutil.copy(gecmis_dosya, gecmis_dosya + ".yedek")
+print("✅ Yedekler alındı")
+
+# ============================
+# DOSYALARI OKU
+# ============================
+print("\n📂 Dosyalar okunuyor...")
+
+with open(mac_dosya, "r", encoding="utf-8") as f:
+    mac_data = json.load(f)
+mac_matches = mac_data.get("matches", [])
+print(f"   mac.json: {len(mac_matches)} maç")
+
+if os.path.exists(gecmis_dosya):
+    try:
+        with open(gecmis_dosya, "r", encoding="utf-8") as f:
+            gecmis_data = json.load(f)
+    except:
+        gecmis_data = {"version": 2, "updated": "", "matches": []}
+else:
+    gecmis_data = {"version": 2, "updated": "", "matches": []}
+
+gecmis_matches = gecmis_data.get("matches", [])
+print(f"   gecmis_maclar.json: {len(gecmis_matches)} maç")
+
+# ============================
+# GECMIS MAÇ KEY'LERİNİ DÖNÜŞTÜR (mevcut olanları da düzelt)
+# ============================
+print("\n🔄 Mevcut gecmis key'leri düzeltiliyor...")
+eski_donusum = 0
+eski_silinen = 0
+for mac in gecmis_matches:
+    yeni, sil, don = key_donustur(mac.get("oranlar", {}))
+    mac["oranlar"] = yeni
+    eski_donusum += don
+    eski_silinen += sil
+
+print(f"   Dönüştürülen: {eski_donusum}")
+print(f"   Silinen (oyuncu/takım/100): {eski_silinen}")
+
+# ============================
+# TARİHE GÖRE AYIKLA
+# ============================
+print(f"\n📅 {TARIH_SINIR} tarihinden öncekiler taşınıyor...")
+
+tasinanlar = []
+kalanlar = []
+
+for mac in mac_matches:
+    tarih = mac.get("tarih", "")
+    if tarih < TARIH_SINIR:
+        tasinanlar.append(mac)
+    else:
+        kalanlar.append(mac)
+
+print(f"   Taşınacak: {len(tasinanlar)} maç")
+print(f"   Kalacak: {len(kalanlar)} maç")
+
+# ============================
+# TAŞINANLARI DÖNÜŞTÜR + SİL
+# ============================
+print("\n🔄 Taşınan maçlar dönüştürülüyor...")
+toplam_donusturulen = 0
+toplam_silinen = 0
+
+for mac in tasinanlar:
+    yeni, sil, don = key_donustur(mac.get("oranlar", {}))
+    mac["oranlar"] = yeni
+    toplam_donusturulen += don
+    toplam_silinen += sil
+
+print(f"   Dönüştürülen key: {toplam_donusturulen}")
+print(f"   Silinen (oyuncu/takım/100): {toplam_silinen}")
+
+# ============================
+# GECMİSE EKLE (çift kontrol)
+# ============================
+print("\n📦 Gecmise ekleniyor...")
+eski_keys = set()
+for m in gecmis_matches:
+    k = (m.get("tarih", ""), m.get("saat", ""),
+         m.get("ev_sahibi", ""), m.get("deplasman", ""))
+    eski_keys.add(k)
+
+eklenen = 0
+atlanan = 0
+for mac in tasinanlar:
+    k = (mac.get("tarih", ""), mac.get("saat", ""),
+         mac.get("ev_sahibi", ""), mac.get("deplasman", ""))
+    if k in eski_keys:
+        atlanan += 1
+    else:
+        gecmis_matches.append(mac)
+        eski_keys.add(k)
+        eklenen += 1
+
+print(f"   Eklenen: {eklenen}")
+print(f"   Zaten vardı: {atlanan}")
+
+# ============================
+# İNDEX SIRALA
+# ============================
+print("\n🔢 Indexler sıralanıyor...")
+kalanlar = sirala_indexle(kalanlar)
+gecmis_matches = sirala_indexle(gecmis_matches)
+
+# ============================
+# KAYDET
+# ============================
+print("\n💾 Kaydediliyor...")
+
+mac_data["matches"] = kalanlar
+mac_data["updated"] = datetime.datetime.now().isoformat()
+
+with open(mac_dosya, "w", encoding="utf-8") as f:
+    json.dump(mac_data, f, ensure_ascii=False, indent=2)
+print(f"   ✅ mac.json: {len(kalanlar)} maç")
+
+gecmis_data["matches"] = gecmis_matches
+gecmis_data["updated"] = datetime.datetime.now().isoformat()
+
+with open(gecmis_dosya, "w", encoding="utf-8") as f:
+    json.dump(gecmis_data, f, ensure_ascii=False, indent=2)
+print(f"   ✅ gecmis_maclar.json: {len(gecmis_matches)} maç")
+
+# ============================
+# DOĞRULAMA
+# ============================
+print("\n🔍 Doğrulama...")
+try:
+    with open(mac_dosya, "r", encoding="utf-8") as f:
+        json.load(f)
+    print("   ✅ mac.json: geçerli")
+except:
+    print("   ❌ mac.json: BOZUK!")
+
+try:
+    with open(gecmis_dosya, "r", encoding="utf-8") as f:
+        json.load(f)
+    print("   ✅ gecmis_maclar.json: geçerli")
+except:
+    print("   ❌ gecmis_maclar.json: BOZUK!")
+
+# ============================
+# ÖZET
+# ============================
+print("\n" + "=" * 50)
+print("📊 ÖZET")
+print("=" * 50)
+print(f"   mac.json:           {len(kalanlar)} maç")
+print(f"   gecmis_maclar.json: {len(gecmis_matches)} maç")
+print(f"   Toplam:             {len(kalanlar) + len(gecmis_matches)} maç")
+print(f"   Dönüştürülen key:   {toplam_donusturulen + eski_donusum}")
+print(f"   Silinen oran:       {toplam_silinen + eski_silinen}")
+print(f"   Çift kayıt atlanan: {atlanan}")
+print("=" * 50)
+
+input("\nBitti. Kapatmak için ENTER...")

@@ -78,10 +78,12 @@ def _run_cmd(cmd, cwd=None):
     except Exception as e:
         return {"ok": False, "hata": str(e)}
 
-def git_force_main_branch():
+def git_force_push():
+    """Her durumda main branch'e push eder. Detached HEAD, vs. hepsini halleder."""
     if not ENABLE_GIT_AUTOPUSH or not (REPO_ROOT / ".git").exists():
         print("❌ Git klasörü bulunamadı!")
         return
+
     git_exe = _find_git_exe()
     if not git_exe:
         print("❌ Git programı bulunamadı!")
@@ -89,55 +91,54 @@ def git_force_main_branch():
 
     print("\n🔄 GİT İŞLEMLERİ BAŞLADI...")
 
-    # ❌ SİLİNDİ: reset --hard origin/main -> BU KOMUT VERİYİ SİLİYORDU!
-    # ❌ SİLİNDİ: checkout -f main -> BU DAL'DAN KOPARTIYORDU!
+    # 1. Detay HEAD kontrolü ve düzeltme
+    r = _run_cmd([git_exe, "status"], cwd=str(REPO_ROOT))
+    if "detached HEAD" in r.get("stdout", "") or "ayrışmış HEAD" in r.get("stdout", ""):
+        print("   ⚠️ Detached HEAD tespit edildi, düzeltiliyor...")
+        _run_cmd([git_exe, "checkout", "-B", "main"], cwd=str(REPO_ROOT))
 
-    # ✅ 1. DOSYAYA KESİN DEĞİŞİKLİK YAP - GİT GÖRSÜN
-    try:
-        with open(CIKTI_DOSYA, "r+", encoding="utf-8") as f:
-            try:
-                veri = json.load(f)
-            except:
-                veri = {"version": 2, "matches": []}
-            
-            simdi = datetime.datetime.now()
-            # Her seferinde farklı ve büyük değişiklikler yapıyorum
-            veri["updated"] = simdi.isoformat()
-            veri["last_check"] = simdi.strftime("%Y-%m-%d %H:%M:%S.%f")
-            veri["build_no"] = random.randint(10000000, 99999999)
-            veri["timestamp"] = int(time.time() * 1000)
-            veri["commit_note"] = "KESIN_GONDERIM_" + simdi.strftime("%Y%m%d%H%M%S%f")
+    # 2. Branch main'de mi kontrol et
+    r_branch = _run_cmd([git_exe, "branch", "--show-current"], cwd=str(REPO_ROOT))
+    mevcut_branch = r_branch.get("stdout", "").strip()
+    print(f"   📌 Mevcut branch: {mevcut_branch or '(detached)'}")
 
-            f.seek(0)
-            json.dump(veri, f, ensure_ascii=False, indent=2)
-            f.truncate()
-        print("   ✅ Dosya DEĞİŞTİRİLDİ (Git tarafından algılanacak)")
-    except Exception as e:
-        print(f"   ❌ Dosya Hatası: {e}")
-        return
+    if mevcut_branch != "main":
+        print(f"   🔄 main branch'e geçiliyor...")
+        _run_cmd([git_exe, "checkout", "-B", "main"], cwd=str(REPO_ROOT))
 
-    # ✅ 2. Değişiklikleri Ekle
+    # 3. Dosyaları ekle
     _run_cmd([git_exe, "add", "."], cwd=str(REPO_ROOT))
-    print("   ✅ Değişiklikler izlemeye alındı")
+    print("   ✅ Dosyalar eklendi")
 
-    # ✅ 3. Commit Et
-    mesaj = f"Otomatik deepall {datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S,%f')[:-4]}"
-    print(f"   📝 Commit: {mesaj}")
-    r_commit = _run_cmd([git_exe, "commit", "-m", mesaj], cwd=str(REPO_ROOT))
-    
-    if not r_commit["ok"]:
-        print("   ⚠️ Commit yok, --allow-empty ile zorla gönderiliyor...")
-        r_commit = _run_cmd([git_exe, "commit", "-m", mesaj, "--allow-empty"], cwd=str(REPO_ROOT))
+    # 4. Commit et (yeni değişiklik varsa)
+    zaman = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+    mesaj = f"Otomatik guncelleme | {zaman}"
+    r_commit = _run_cmd([git_exe, "commit", "-m", mesaj, "--allow-empty"], cwd=str(REPO_ROOT))
 
-    # ✅ 4. ZORLA GÖNDER - Ana dala
-    print("   🚀 GÖNDERİLİYOR (main)...")
-    r_push = _run_cmd([git_exe, "push", "-f", "origin", "HEAD:main"], cwd=str(REPO_ROOT))
-    
-    if r_push["ok"]:
-        print("✅ TAMAMLANDI: GitHub'a YANSIDI! (EN SON KOMUT - KESİN)")
+    if r_commit["ok"]:
+        print(f"   ✅ Commit yapıldı: {mesaj}")
     else:
-        print("❌ HATA ÇIKTI:", r_push.get("stderr", ""))
+        print(f"   ⚠️ Commit hatası: {r_commit.get('stderr', '')}")
 
+    # 5. Remote'e force push
+    print("   🚀 Push ediliyor...")
+    r_push = _run_cmd([git_exe, "push", "-f", "origin", "main"], cwd=str(REPO_ROOT))
+
+    if r_push["ok"]:
+        print("✅ GİT BAŞARILI - GitHub'a gönderildi!")
+    else:
+        # Bir daha dene (remote ayarı olmayabilir)
+        print("   ⚠️ İlk push başarısız, remote kontrol ediliyor...")
+        _run_cmd([git_exe, "remote", "add", "origin", 
+                  "https://github.com/yusufkocbiotek-sketch/iddiayusuf.git"], 
+                 cwd=str(REPO_ROOT))
+        _run_cmd([git_exe, "branch", "-M", "main"], cwd=str(REPO_ROOT))
+        r_push2 = _run_cmd([git_exe, "push", "-f", "-u", "origin", "main"], cwd=str(REPO_ROOT))
+
+        if r_push2["ok"]:
+            print("✅ GİT BAŞARILI - Remote ayarlandı ve gönderildi!")
+        else:
+            print(f"❌ GİT HATASI: {r_push2.get('stderr', '')}")
 
 # =========================
 # DRIVER - ESKİ HALİYLE

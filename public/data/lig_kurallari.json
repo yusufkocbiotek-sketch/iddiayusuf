@@ -1,0 +1,588 @@
+[
+    {
+        "kural_kodu": "İN1-12",
+        "lig": "İN 1",
+        "ms1_min": 1.3,
+        "ms1_max": 1.5,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": null,
+        "hedef": "MS 1",
+        "basari_orani": 93.33,
+        "toplam_mac": 15,
+        "alt_patternler": {
+            "En Çok Gelen Skor": "1-0 (%40.0)"
+        }
+    },
+    {
+        "kural_kodu": "KIRLP-27",
+        "lig": "KIRL P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": null,
+        "hedef": "MS 1",
+        "basari_orani": 93.33,
+        "toplam_mac": 15,
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 1 (%66.7)"
+        }
+    },
+    {
+        "kural_kodu": "ŞMP-32",
+        "lig": "ŞMP",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "var",
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 93.33,
+        "toplam_mac": 15
+    },
+    {
+        "kural_kodu": "KIRLP-31",
+        "lig": "KIRL P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": null,
+        "hedef": "MS 1",
+        "basari_orani": 100.0,
+        "toplam_mac": 12,
+        "alt_patternler": {
+            "En Çok Gelen Skor": "2-1 (%41.7)",
+            "KG Karakteri": "KG Var (%75.0)",
+            "İlk Yarı Sonucu": "IY 1 (%66.7)"
+        }
+    },
+    {
+        "kural_kodu": "RUSP-06",
+        "lig": "RUS P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": null,
+        "hedef": "MS 1",
+        "basari_orani": 92.86,
+        "toplam_mac": 14,
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 1 (%71.4)"
+        }
+    },
+    {
+        "kural_kodu": "AL1-25",
+        "lig": "AL1",
+        "ms1_min": null,
+        "ms1_max": null,
+        "ms2_min": 1.3,
+        "ms2_max": 1.6,
+        "kg_fav": "var",
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 92.86,
+        "toplam_mac": 14,
+        "alt_patternler": {
+            "KG Karakteri": "KG Var (%85.7)"
+        }
+    },
+    {
+        "kural_kodu": "KIRLP-26",
+        "lig": "KIRL P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "ust",
+        "hedef": "MS 1",
+        "basari_orani": 92.86,
+        "toplam_mac": 14,
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 1 (%71.4)"
+        }
+    },
+    {
+        "kural_kodu": "AVL-33",
+        "lig": "AVL",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "ust",
+        "hedef": "MS 1",
+        "basari_orani": 92.86,
+        "toplam_mac": 14
+    },
+    {
+        "kural_kodu": "İN1-14",
+        "lig": "İN 1",
+        "ms1_min": 1.3,
+        "ms1_max": 1.5,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "alt",
+        "hedef": "MS 1",
+        "basari_orani": 100.0,
+        "toplam_mac": 11,
+        "alt_patternler": {
+            "En Çok Gelen Skor": "1-0 (%54.5)",
+            "KG Karakteri": "KG Yok (%90.9)",
+            "İlk Yarı Sonucu": "IY 1 (%63.6)"
+        }
+    },
+    {
+        "kural_kodu": "SLVN-23",
+        "lig": "SLVN",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 100.0,
+        "toplam_mac": 11,
+        "alt_patternler": {
+            "KG Karakteri": "KG Var (%81.8)",
+            "İlk Yarı Sonucu": "IY 1 (%63.6)"
+        }
+    },
+    {
+        "kural_kodu": "KIRLP-29",
+        "lig": "KIRL P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": "ust",
+        "hedef": "MS 1",
+        "basari_orani": 100.0,
+        "toplam_mac": 11,
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 1 (%72.7)"
+        }
+    },
+    {
+        "kural_kodu": "İN1-16",
+        "lig": "İN 1",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": null,
+        "hedef": "MS 1",
+        "basari_orani": 92.31,
+        "toplam_mac": 13
+    },
+    {
+        "kural_kodu": "BEL1-20",
+        "lig": "BEL1",
+        "ms1_min": null,
+        "ms1_max": null,
+        "ms2_min": 1.6,
+        "ms2_max": 2.0,
+        "kg_fav": "var",
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 92.31,
+        "toplam_mac": 13,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.99,
+                "max": 3.62
+            }
+        },
+        "alt_patternler": {
+            "KG Karakteri": "KG Var (%84.6)"
+        }
+    },
+    {
+        "kural_kodu": "TUNP-17",
+        "lig": "TUN P",
+        "ms1_min": 2.0,
+        "ms1_max": 2.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": "alt",
+        "hedef": "2.5 Alt",
+        "basari_orani": 100.0,
+        "toplam_mac": 10,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.2,
+                "max": 2.52
+            }
+        },
+        "alt_patternler": {
+            "KG Karakteri": "KG Yok (%80.0)"
+        }
+    },
+    {
+        "kural_kodu": "DANS-19",
+        "lig": "DANS",
+        "ms1_min": null,
+        "ms1_max": null,
+        "ms2_min": 1.3,
+        "ms2_max": 1.6,
+        "kg_fav": "var",
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 100.0,
+        "toplam_mac": 10,
+        "alt_patternler": {
+            "KG Karakteri": "KG Var (%90.0)"
+        }
+    },
+    {
+        "kural_kodu": "RUSP-05",
+        "lig": "RUS P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "ust",
+        "hedef": "MS 1",
+        "basari_orani": 91.67,
+        "toplam_mac": 12,
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 1 (%75.0)"
+        }
+    },
+    {
+        "kural_kodu": "BUL1-09",
+        "lig": "BUL1",
+        "ms1_min": 1.7,
+        "ms1_max": 2.0,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": null,
+        "hedef": "2.5 Alt",
+        "basari_orani": 91.67,
+        "toplam_mac": 12,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.52,
+                "max": 3.01
+            }
+        },
+        "alt_patternler": {
+            "KG Karakteri": "KG Yok (%75.0)",
+            "İlk Yarı Sonucu": "IY 0 (%75.0)"
+        }
+    },
+    {
+        "kural_kodu": "LİTV-10",
+        "lig": "LİTV",
+        "ms1_min": 1.7,
+        "ms1_max": 2.0,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "alt",
+        "hedef": "2.5 Alt",
+        "basari_orani": 91.67,
+        "toplam_mac": 12,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.7,
+                "max": 3.03
+            }
+        },
+        "alt_patternler": {
+            "KG Karakteri": "KG Yok (%75.0)",
+            "İlk Yarı Sonucu": "IY 0 (%83.3)"
+        }
+    },
+    {
+        "kural_kodu": "İN1-15",
+        "lig": "İN 1",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": "ust",
+        "hedef": "MS 1",
+        "basari_orani": 91.67,
+        "toplam_mac": 12
+    },
+    {
+        "kural_kodu": "KIRLP-30",
+        "lig": "KIRL P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": null,
+        "hedef": "2.5 Üst",
+        "basari_orani": 91.67,
+        "toplam_mac": 12,
+        "alt_patternler": {
+            "En Çok Gelen Skor": "2-1 (%41.7)",
+            "KG Karakteri": "KG Var (%75.0)",
+            "İlk Yarı Sonucu": "IY 1 (%66.7)"
+        }
+    },
+    {
+        "kural_kodu": "İN1-13",
+        "lig": "İN 1",
+        "ms1_min": 1.3,
+        "ms1_max": 1.5,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "alt",
+        "hedef": "KG Yok",
+        "basari_orani": 90.91,
+        "toplam_mac": 11,
+        "alt_patternler": {
+            "En Çok Gelen Skor": "1-0 (%54.5)",
+            "KG Karakteri": "KG Yok (%90.9)",
+            "İlk Yarı Sonucu": "IY 1 (%63.6)"
+        }
+    },
+    {
+        "kural_kodu": "SIRB1-18",
+        "lig": "SIRB 1",
+        "ms1_min": 1.7,
+        "ms1_max": 2.0,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": null,
+        "hedef": "2.5 Alt",
+        "basari_orani": 90.91,
+        "toplam_mac": 11,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.59,
+                "max": 2.93
+            }
+        },
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 0 (%72.7)"
+        }
+    },
+    {
+        "kural_kodu": "NOR1-22",
+        "lig": "NOR 1",
+        "ms1_min": 2.0,
+        "ms1_max": 2.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "var",
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 90.91,
+        "toplam_mac": 11,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.85,
+                "max": 3.4
+            }
+        },
+        "alt_patternler": {
+            "KG Karakteri": "KG Var (%81.8)"
+        }
+    },
+    {
+        "kural_kodu": "KIRLP-28",
+        "lig": "KIRL P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 90.91,
+        "toplam_mac": 11,
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 1 (%72.7)"
+        }
+    },
+    {
+        "kural_kodu": "MEKP-01",
+        "lig": "MEK P",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "var",
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 1 (%60.0)"
+        }
+    },
+    {
+        "kural_kodu": "SUDAK-02",
+        "lig": "SUDAK",
+        "ms1_min": 1.7,
+        "ms1_max": 2.0,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": null,
+        "hedef": "2.5 Alt",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "alt_patternler": {
+            "KG Karakteri": "KG Yok (%80.0)",
+            "İlk Yarı Sonucu": "IY 0 (%80.0)"
+        }
+    },
+    {
+        "kural_kodu": "RUS1-03",
+        "lig": "RUS 1",
+        "ms1_min": 2.0,
+        "ms1_max": 2.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": "yok",
+        "au_fav": "ust",
+        "hedef": "2.5 Alt",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.46,
+                "max": 2.69
+            }
+        },
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 0 (%60.0)"
+        }
+    },
+    {
+        "kural_kodu": "BLRV-04",
+        "lig": "BLRV",
+        "ms1_min": 1.7,
+        "ms1_max": 2.0,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "alt",
+        "hedef": "MS 1",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.64,
+                "max": 3.13
+            }
+        }
+    },
+    {
+        "kural_kodu": "RUSP-07",
+        "lig": "RUS P",
+        "ms1_min": 1.7,
+        "ms1_max": 2.0,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "alt",
+        "hedef": "2.5 Alt",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.67,
+                "max": 3.26
+            }
+        }
+    },
+    {
+        "kural_kodu": "BUL1-08",
+        "lig": "BUL1",
+        "ms1_min": 1.7,
+        "ms1_max": 2.0,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "alt",
+        "hedef": "2.5 Alt",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 2.53,
+                "max": 3.01
+            }
+        },
+        "alt_patternler": {
+            "İlk Yarı Sonucu": "IY 0 (%80.0)"
+        }
+    },
+    {
+        "kural_kodu": "İTAB-11",
+        "lig": "İTA B",
+        "ms1_min": 1.1,
+        "ms1_max": 1.3,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "ust",
+        "hedef": "MS 1",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "alt_patternler": {
+            "En Çok Gelen Skor": "2-0 (%40.0)",
+            "İlk Yarı Sonucu": "IY 1 (%70.0)"
+        }
+    },
+    {
+        "kural_kodu": "İSP-21",
+        "lig": "İSP",
+        "ms1_min": 1.3,
+        "ms1_max": 1.5,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "ust",
+        "hedef": "MS 1",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "alt_patternler": {
+            "KG Karakteri": "KG Var (%80.0)"
+        }
+    },
+    {
+        "kural_kodu": "SAP-24",
+        "lig": "SA P",
+        "ms1_min": 1.3,
+        "ms1_max": 1.5,
+        "ms2_min": null,
+        "ms2_max": null,
+        "kg_fav": null,
+        "au_fav": "ust",
+        "hedef": "2.5 Üst",
+        "basari_orani": 90.0,
+        "toplam_mac": 10,
+        "ikincil_kilitler": {
+            "Maç Sonucu_0": {
+                "min": 3.45,
+                "max": 4.1
+            }
+        }
+    }
+]

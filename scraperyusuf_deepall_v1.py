@@ -682,9 +682,7 @@ def main():
             except Exception:
                 pass
 
-        input("\n🔚 Scraping bitti. ENTER'a bas, git push başlayacak...")
         git_force_push()
-        input("\n🔚 İşlem tamamlandı. Kapatmak için ENTER...")
 
 
 if __name__ == "__main__":

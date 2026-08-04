@@ -51,7 +51,6 @@ AYLAR = {
     "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
 }
 
-# İstenmeyen oran kategorileri
 SILINECEK_BASLANGICLAR = (
     "oyuncu", "100.00", "takım",
     "karşılaşma özel bahisleri", "kaleci kurtarışı"
@@ -252,6 +251,10 @@ def bugunun_tarihi():
     return datetime.datetime.now().strftime("%Y-%m-%d")
 
 
+def yarinin_tarihi():
+    return (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+
+
 def get_current_date_text(driver):
     try:
         date_el = driver.find_element(
@@ -279,132 +282,36 @@ def parse_date_text(text):
 
 
 # =========================
-# MAÇ KART OKUMA
-# =========================
-def parse_card(card, current_date):
-    txt = (card.text or "").strip()
-    if not txt:
-        return None
-
-    lines = [
-        x.strip() for x in txt.split("\n")
-        if x.strip() and x.strip() != "-"
-    ]
-
-    saat = ""
-    for x in lines:
-        if TIME_RE.match(x):
-            saat = x
-            break
-
-    filtered = []
-    for x in lines:
-        if TIME_RE.match(x):
-            continue
-        if ODD_RE.match(x.replace(",", ".")):
-            continue
-        if re.fullmatch(r"[A-Z]{2,6}", x):
-            continue
-        filtered.append(x)
-
-    if len(filtered) < 2:
-        return None
-
-    ev, dep = filtered[0], filtered[1]
-    if not ev or not dep or ev == dep:
-        return None
-
-    return {
-        "tarih": current_date,
-        "saat": saat,
-        "ev_sahibi": ev,
-        "deplasman": dep,
-        "durum": "baslamadi",
-        "skor_ev": 0, "skor_dep": 0,
-        "skor_1y_ev": 0, "skor_1y_dep": 0,
-        "oranlar": {},
-        "kaynak": "iddaa.com"
-    }
-
-
-def extract_visible(driver, current_date):
-    out = []
-    seen = set()
-    cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
-    for c in cards:
-        m = parse_card(c, current_date)
-        if not m:
-            continue
-        k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
-        if k in seen:
-            continue
-        seen.add(k)
-        out.append(m)
-    return out
-
-
-# =========================
-# DEEP HARVEST (BUGÜNÜN MAÇLARI)
+# DEEP HARVEST (BUGÜN + YARIN)
 # =========================
 def deep_harvest(driver):
-    hedef_tarih = bugunun_tarihi()
-    print(f"   🎯 Hedef tarih: {hedef_tarih}")
+    bugun = datetime.datetime.now().date()
+    yarin = bugun + datetime.timedelta(days=1)
 
-    init_scroll_target(driver)
-    reset_scroll_top(driver)
+    bugun_str = bugun.strftime("%Y-%m-%d")
+    yarin_str = yarin.strftime("%Y-%m-%d")
 
-    harvest = []
-    hset = set()
-    stable = 0
-    last_total = 0
-    farkli_tarih_sayisi = 0
+    print(f"   🎯 Bugün: {bugun_str} | Yarın: {yarin_str}")
 
-    for step in range(1, MAX_SCROLL_STEPS + 1):
-        date_text = get_current_date_text(driver)
-        aktif_tarih = parse_date_text(date_text)
+    all_matches = []
 
-        # Aktif sekme tarihi değiştiyse dur
-        if aktif_tarih != hedef_tarih:
-            farkli_tarih_sayisi += 1
-            if farkli_tarih_sayisi >= 2:
-                print(f"   ⛔ Tarih değişti ({hedef_tarih} -> {aktif_tarih}), scroll durduruldu")
-                break
-            print(f"   ⚠️ Farklı tarih algılandı: {aktif_tarih} (1 hak kaldı)")
-        else:
-            farkli_tarih_sayisi = 0
+    # Bugün
+    bugun_maclar = deep_harvest_for_date(driver, "Bugün", bugun_str)
+    all_matches.extend(bugun_maclar)
 
-        vis = extract_visible(driver, aktif_tarih)
-        for m in vis:
-            # Tarih filtresi
-            if m["tarih"] != hedef_tarih:
-                continue
+    # Yarın
+    yarin_maclar = deep_harvest_for_date(driver, "Yarın", yarin_str)
+    all_matches.extend(yarin_maclar)
 
-            k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
-            if k not in hset:
-                hset.add(k)
-                harvest.append(m)
+    # Tekilleştir
+    uniq = {}
+    for m in all_matches:
+        k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
+        uniq[k] = m
 
-        if len(harvest) > last_total:
-            print(
-                f"   📈 Step {step}: unique {last_total} -> "
-                f"{len(harvest)} | Tarih: {aktif_tarih}"
-            )
-            last_total = len(harvest)
-            stable = 0
-        else:
-            stable += 1
-
-        if len(harvest) >= TARGET_UNIQUE:
-            break
-        if stable >= STABLE_LIMIT:
-            break
-
-        scroll_step(driver, SCROLL_PX)
-        time.sleep(random.uniform(*SCROLL_SLEEP_RANGE))
-
-    print(f"   🎯 {hedef_tarih} tarihinde {len(harvest)} maç bulundu")
-    return harvest
-
+    sonuc = list(uniq.values())
+    print(f"   🎯 Toplam: {len(sonuc)} maç (Bugün: {len(bugun_maclar)}, Yarın: {len(yarin_maclar)})")
+    return sonuc
 
 # =========================
 # ORAN ÇEKME
@@ -590,7 +497,6 @@ def main():
                 f"{m['ev_sahibi']} - {m['deplasman']}"
             )
 
-            # Her 50 maçta bir Chrome yenile
             if idx > 1 and idx % HARVEST_MAC_SAYISI == 1:
                 print(f"\n{'=' * 50}")
                 print(f"🔄 {HARVEST_MAC_SAYISI} maç tamamlandı, Chrome yenileniyor...")
@@ -625,7 +531,6 @@ def main():
                 print("   ✅ Devam ediliyor...")
                 print(f"{'=' * 50}\n")
 
-            # Sayfa yükle
             try:
                 driver.set_page_load_timeout(45)
                 driver.get(URL)
@@ -646,7 +551,6 @@ def main():
                     fail += 1
                     continue
 
-            # Maç bul
             try:
                 if not click_match(driver, m["ev_sahibi"], m["deplasman"]):
                     print("   ❌ Bulunamadı")
@@ -657,7 +561,6 @@ def main():
                 fail += 1
                 continue
 
-            # Oran çek
             time.sleep(2)
             try:
                 driver.execute_script("window.scrollTo(0,800)")

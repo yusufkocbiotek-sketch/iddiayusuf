@@ -25,7 +25,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 URL = "https://www.iddaa.com/program/futbol"
 CIKTI_DOSYA = "public/data/mac.json"
 
-TARGET_UNIQUE = 9999
 MAX_SCROLL_STEPS = 120
 STABLE_LIMIT = 10
 SCROLL_PX = 1300
@@ -55,6 +54,43 @@ SILINECEK_BASLANGICLAR = (
     "oyuncu", "100.00", "takım",
     "karşılaşma özel bahisleri", "kaleci kurtarışı"
 )
+
+
+# =========================
+# TARİH
+# =========================
+def bugunun_tarihi():
+    return datetime.datetime.now().strftime("%Y-%m-%d")
+
+
+def yarinin_tarihi():
+    return (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+
+
+def get_current_date_text(driver):
+    try:
+        date_el = driver.find_element(
+            By.CSS_SELECTOR, DATE_ITEM_SEL + ".i_tnw__active"
+        )
+        return date_el.text.strip()
+    except Exception:
+        bugun = datetime.datetime.now()
+        return f"{bugun.day} {list(AYLAR.keys())[bugun.month - 1]} {bugun.year}"
+
+
+def parse_date_text(text):
+    if not text:
+        return datetime.datetime.now().strftime("%Y-%m-%d")
+
+    parts = text.split()
+    if len(parts) < 2:
+        return datetime.datetime.now().strftime("%Y-%m-%d")
+
+    gun = parts[0].zfill(2)
+    ay_isim = parts[1]
+    ay = AYLAR.get(ay_isim, datetime.datetime.now().strftime("%m"))
+    yil = datetime.datetime.now().year
+    return f"{yil}-{ay}-{gun}"
 
 
 # =========================
@@ -245,197 +281,113 @@ def scroll_step(driver, px=SCROLL_PX):
 
 
 # =========================
-# TARİH
+# MAÇ KART OKUMA
 # =========================
-def bugunun_tarihi():
-    return datetime.datetime.now().strftime("%Y-%m-%d")
+def parse_card(card, current_date):
+    txt = (card.text or "").strip()
+    if not txt:
+        return None
+
+    lines = [
+        x.strip() for x in txt.split("\n")
+        if x.strip() and x.strip() != "-"
+    ]
+
+    saat = ""
+    for x in lines:
+        if TIME_RE.match(x):
+            saat = x
+            break
+
+    filtered = []
+    for x in lines:
+        if TIME_RE.match(x):
+            continue
+        if ODD_RE.match(x.replace(",", ".")):
+            continue
+        if re.fullmatch(r"[A-Z]{2,6}", x):
+            continue
+        filtered.append(x)
+
+    if len(filtered) < 2:
+        return None
+
+    ev, dep = filtered[0], filtered[1]
+    if not ev or not dep or ev == dep:
+        return None
+
+    return {
+        "tarih": current_date,
+        "saat": saat,
+        "ev_sahibi": ev,
+        "deplasman": dep,
+        "durum": "baslamadi",
+        "skor_ev": 0, "skor_dep": 0,
+        "skor_1y_ev": 0, "skor_1y_dep": 0,
+        "oranlar": {},
+        "kaynak": "iddaa.com"
+    }
 
 
-def yarinin_tarihi():
-    return (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
-
-
-def get_current_date_text(driver):
-    try:
-        date_el = driver.find_element(
-            By.CSS_SELECTOR, DATE_ITEM_SEL + ".i_tnw__active"
-        )
-        return date_el.text.strip()
-    except Exception:
-        bugun = datetime.datetime.now()
-        return f"{bugun.day} {list(AYLAR.keys())[bugun.month - 1]} {bugun.year}"
-
-
-def parse_date_text(text):
-    if not text:
-        return datetime.datetime.now().strftime("%Y-%m-%d")
-
-    parts = text.split()
-    if len(parts) < 2:
-        return datetime.datetime.now().strftime("%Y-%m-%d")
-
-    gun = parts[0].zfill(2)
-    ay_isim = parts[1]
-    ay = AYLAR.get(ay_isim, datetime.datetime.now().strftime("%m"))
-    yil = datetime.datetime.now().year
-    return f"{yil}-{ay}-{gun}"
+def extract_visible(driver, current_date):
+    out = []
+    seen = set()
+    cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
+    for c in cards:
+        m = parse_card(c, current_date)
+        if not m:
+            continue
+        k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
+        if k in seen:
+            continue
+        seen.add(k)
+        out.append(m)
+    return out
 
 
 # =========================
-# DEEP HARVEST (BUGÜN + YARIN)
+# DEEP HARVEST (BUGÜN + YARIN BUTONLARI)
 # =========================
-def deep_harvest(driver):
-    bugun = bugunun_tarihi()
-    yarin = yarinin_tarihi()
-    print(f"   🎯 Bugün: {bugun} | Yarın: {yarin}")
+def gun_sec(driver, gun_adi):
+    """Bugün veya Yarın butonuna tıkla"""
+    tiklandi = driver.execute_script("""
+        var labels = document.querySelectorAll('label, i, em, span');
+        for (var i = 0; i < labels.length; i++) {
+            var t = labels[i].textContent.trim();
+            if (t === arguments[0]) {
+                labels[i].click();
+                return true;
+            }
+        }
+        return false;
+    """, gun_adi)
+    return tiklandi
 
+
+def sayfayi_scroll_et(driver, hedef_tarih, max_step=MAX_SCROLL_STEPS):
+    """Tek sayfanın tüm maçlarını scroll ile çek"""
     init_scroll_target(driver)
     reset_scroll_top(driver)
     time.sleep(2)
 
-    # 1. Scroll BAŞLAMADAN önce bölüm pozisyonlarını kaydet
-    section_info = driver.execute_script("""
-        var ems = document.querySelectorAll('em');
-        var AYLAR = {
-            'Ocak':'01','Şubat':'02','Mart':'03','Nisan':'04',
-            'Mayıs':'05','Haziran':'06','Temmuz':'07','Ağustos':'08',
-            'Eylül':'09','Ekim':'10','Kasım':'11','Aralık':'12'
-        };
-        var sections = [];
-        for (var i = 0; i < ems.length; i++) {
-            var t = ems[i].textContent.trim();
-            if (t === 'Bugün' || t === 'Yarın') {
-                sections.push({
-                    text: t,
-                    top: ems[i].getBoundingClientRect().top + window.scrollY
-                });
-                continue;
-            }
-            var p = t.split(' ');
-            for (var j = 0; j < p.length; j++) {
-                if (AYLAR[p[j]]) {
-                    sections.push({
-                        text: t,
-                        top: ems[i].getBoundingClientRect().top + window.scrollY
-                    });
-                    break;
-                }
-            }
-        }
-        return sections;
-    """)
-
-    # 2. Pozisyonları kaydet (sabit kalır, scroll'dan etkilenmez)
-    bugun_top = -99999
-    yarin_top = 99999
-    ucuncu_top = 99999
-    found_bugun = False
-    found_yarin = False
-
-    for s in section_info:
-        t, top = s["text"], s["top"]
-        if t == "Bugün" and not found_bugun:
-            bugun_top = top
-            found_bugun = True
-        elif t == "Yarın" and found_bugun and not found_yarin:
-            yarin_top = top
-            found_yarin = True
-        elif found_yarin:
-            ucuncu_top = top
-            break
-
-    print(f"   📍 bugunTop:{int(bugun_top)} yarinTop:{int(yarin_top)} ucuncuTop:{int(ucuncu_top)}")
-
-    # 3. Sabit pozisyonları kullanarak kartları tara
-    CARDS_JS = """
-        var bugunTarih = arguments[0];
-        var yarinTarih = arguments[1];
-        var bugunTop = arguments[2];
-        var yarinTop = arguments[3];
-        var ucuncuTop = arguments[4];
-
-        var cards = document.querySelectorAll('.i_tnw__t8AmC');
-        var maclar = [];
-
-        for (var j = 0; j < cards.length; j++) {
-            var card = cards[j];
-            var cardTop = card.getBoundingClientRect().top + window.scrollY;
-
-            if (cardTop >= ucuncuTop) continue;
-
-            var tarih = '';
-            if (cardTop >= yarinTop) tarih = yarinTarih;
-            else if (cardTop >= bugunTop) tarih = bugunTarih;
-            else continue;
-
-            var text = card.innerText || '';
-            var lines = text.split('\\n').map(function(x) {
-                return x.trim();
-            }).filter(function(x) {
-                return x && x !== '-';
-            });
-
-            var saat = '';
-            for (var k = 0; k < lines.length; k++) {
-                if (/^\\d{1,2}:\\d{2}$/.test(lines[k])) {
-                    saat = lines[k];
-                    break;
-                }
-            }
-
-            var filtered = [];
-            for (var k = 0; k < lines.length; k++) {
-                if (/^\\d{1,2}:\\d{2}$/.test(lines[k])) continue;
-                if (/^\\d{1,2}([.,]\\d{2})$/.test(lines[k].replace(',', '.'))) continue;
-                if (/^[A-Z]{2,6}$/.test(lines[k])) continue;
-                filtered.push(lines[k]);
-            }
-
-            if (filtered.length < 2) continue;
-            var ev = filtered[0];
-            var dep = filtered[1];
-            if (!ev || !dep || ev === dep) continue;
-
-            maclar.push({
-                tarih: tarih,
-                saat: saat,
-                ev_sahibi: ev,
-                deplasman: dep
-            });
-        }
-        return maclar;
-    """
-
-    harvest = []
-    hset = set()
+    maclar = []
+    seen = set()
     stable = 0
     last_total = 0
 
-    for step in range(1, MAX_SCROLL_STEPS + 1):
-        sonuc = driver.execute_script(
-            CARDS_JS, bugun, yarin,
-            bugun_top, yarin_top, ucuncu_top
-        )
-
-        for m in sonuc:
+    for step in range(1, max_step + 1):
+        vis = extract_visible(driver, hedef_tarih)
+        for m in vis:
+            if m["tarih"] != hedef_tarih:
+                continue
             k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
-            if k not in hset:
-                hset.add(k)
-                harvest.append({
-                    "tarih": m["tarih"],
-                    "saat": m["saat"],
-                    "ev_sahibi": m["ev_sahibi"],
-                    "deplasman": m["deplasman"],
-                    "durum": "baslamadi",
-                    "skor_ev": 0, "skor_dep": 0,
-                    "skor_1y_ev": 0, "skor_1y_dep": 0,
-                    "oranlar": {},
-                    "kaynak": "iddaa.com"
-                })
+            if k not in seen:
+                seen.add(k)
+                maclar.append(m)
 
-        if len(harvest) > last_total:
-            print(f"   📈 Step {step}: {last_total} -> {len(harvest)}")
-            last_total = len(harvest)
+        if len(maclar) > last_total:
+            print(f"      📈 Step {step}: {len(maclar)} maç")
+            last_total = len(maclar)
             stable = 0
         else:
             stable += 1
@@ -446,10 +398,45 @@ def deep_harvest(driver):
         scroll_step(driver, SCROLL_PX)
         time.sleep(random.uniform(*SCROLL_SLEEP_RANGE))
 
+    return maclar
+
+
+def deep_harvest(driver):
+    bugun = bugunun_tarihi()
+    yarin = yarinin_tarihi()
+    print(f"   🎯 Bugün: {bugun} | Yarın: {yarin}")
+
+    harvest = []
+    hset = set()
+
+    for gun_tarih, gun_adi in [(bugun, "Bugün"), (yarin, "Yarın")]:
+        print(f"\n   📅 {gun_adi} ({gun_tarih}) seçiliyor...")
+
+        tiklandi = gun_sec(driver, gun_adi)
+        if not tiklandi:
+            print(f"      ❌ '{gun_adi}' butonu bulunamadı")
+            continue
+
+        time.sleep(3)
+        print(f"      ✅ '{gun_adi}' seçildi")
+
+        maclar = sayfayi_scroll_et(driver, gun_tarih)
+
+        for m in maclar:
+            k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
+            if k not in hset:
+                hset.add(k)
+                harvest.append(m)
+
+        bugun_adet = sum(1 for h in harvest if h["tarih"] == bugun)
+        yarin_adet = sum(1 for h in harvest if h["tarih"] == yarin)
+        print(f"      📊 {len(maclar)} maç çekildi | Toplam: {len(harvest)} (Bugün:{bugun_adet} Yarın:{yarin_adet})")
+
     bugun_adet = sum(1 for m in harvest if m["tarih"] == bugun)
     yarin_adet = sum(1 for m in harvest if m["tarih"] == yarin)
-    print(f"   🎯 Toplam: {len(harvest)} maç (Bugün: {bugun_adet}, Yarın: {yarin_adet})")
+    print(f"\n   🎯 Toplam: {len(harvest)} maç (Bugün: {bugun_adet}, Yarın: {yarin_adet})")
     return harvest
+
 
 # =========================
 # ORAN ÇEKME

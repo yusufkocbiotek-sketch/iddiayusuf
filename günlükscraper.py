@@ -728,6 +728,7 @@ def main():
 
         git_force_push()
 
+        input("Çıkmak için Enter tuşuna basın...")
 
 if __name__ == "__main__":
     main()

@@ -23,8 +23,8 @@ OUT_DIR = Path(r"C:\Users\YUSUF\OneDrive\Desktop\iddaa_scraper_output")
 OUT_DIR.mkdir(exist_ok=True)
 
 # ✅ DİNAMİK TARİH ARALIĞI
-BASLANGIC_TARIHI = "12/08/2026"
-BITIS_TARIHI     = "14/08/2026"
+BASLANGIC_TARIHI = "14/08/2026"
+BITIS_TARIHI     = "23/08/2026"
 
 # ✅ FUZZY EŞLEŞTİRME AYARLARI
 ESLESME_TOLERANSI_GUN = 15

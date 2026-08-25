@@ -25,14 +25,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 URL = "https://www.iddaa.com/program/futbol"
 CIKTI_DOSYA = "public/data/mac.json"
 
-MAX_SCROLL_STEPS = 120
+MAX_SCROLL_STEPS = 150
 STABLE_LIMIT = 10
 SCROLL_PX = 1300
 SCROLL_SLEEP_RANGE = (1.5, 2.5)
 
 MAX_SCRAPE = 9999
 SLEEP_BETWEEN_MATCHES = (1.1, 2.4)
-HARVEST_MAC_SAYISI = 50
+HARVEST_MAC_SAYISI = 250
 
 MATCH_CARD_SEL = ".i_tnw__t8AmC"
 DATE_ITEM_SEL = ".i_tnw__dateItem"

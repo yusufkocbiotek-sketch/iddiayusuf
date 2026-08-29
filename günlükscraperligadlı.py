@@ -25,16 +25,16 @@ from webdriver_manager.chrome import ChromeDriverManager
 URL = "https://www.iddaa.com/program/futbol"
 CIKTI_DOSYA = "public/data/mac.json"
 
-MAX_SCROLL_STEPS = 150
-STABLE_LIMIT = 10
-SCROLL_PX = 1300
-SCROLL_SLEEP_RANGE = (1.5, 2.5)
+MAX_SCROLL_STEPS = 300
+STABLE_LIMIT = 18
+SCROLL_PX = 600
+SCROLL_SLEEP_RANGE = (1.1, 2.0)
 
 MAX_SCRAPE = 9999
 SLEEP_BETWEEN_MATCHES = (1.1, 2.4)
-HARVEST_MAC_SAYISI = 250
+HARVEST_MAC_SAYISI = 999
 
-MATCH_CARD_SEL = ".i_tnw__t8AmC"
+MATCH_CARD_SEL = "li.i_tnw__t8AmC"
 DATE_ITEM_SEL = ".i_tnw__dateItem"
 SEARCH_INPUT_SEL = "#eventSearch"
 
@@ -92,6 +92,44 @@ def parse_date_text(text):
     yil = datetime.datetime.now().year
     return f"{yil}-{ay}-{gun}"
 
+def parse_league_text(text):
+    if not text:
+        return ""
+
+    lines = [
+        x.strip()
+        for x in str(text).split("\n")
+        if x.strip()
+    ]
+
+    temiz = []
+
+    for x in lines:
+        x = x.replace("Bugün", "").replace("Yarın", "")
+        x = x.replace("Today", "").replace("Tomorrow", "")
+        x = x.strip()
+
+        if not x:
+            continue
+
+        if TIME_RE.match(x):
+            continue
+
+        if ODD_RE.match(x.replace(",", ".")):
+            continue
+
+        if re.fullmatch(r"\d+", x):
+            continue
+
+        if x in ("1", "0", "2", "X", "H", "Alt", "Üst", "Var", "Yok"):
+            continue
+
+        temiz.append(x)
+
+    if temiz:
+        return temiz[0]
+
+    return ""
 
 # =========================
 # GİT
@@ -230,9 +268,10 @@ def guvenli_yukle(driver, url, max_deneme=3):
             # Sayfayı biraz oynat, lazy-load tetiklensin
             try:
                 driver.execute_script("window.scrollTo(0, 400);")
-                time.sleep(1)
+                time.sleep(2)
                 driver.execute_script("window.scrollTo(0, 0);")
-                time.sleep(1)
+                reset_scroll_top(driver)
+                time.sleep(2)
             except Exception:
                 pass
 
@@ -242,7 +281,11 @@ def guvenli_yukle(driver, url, max_deneme=3):
             except Exception:
                 pass
 
-            kart_sayisi = len(find_match_cards(driver))
+            kart_sayisi = 0
+            try:
+                kart_sayisi = len(find_match_cards(driver))
+            except Exception:
+                kart_sayisi = 0
 
             saat_sayisi = 0
             try:
@@ -252,9 +295,12 @@ def guvenli_yukle(driver, url, max_deneme=3):
                     return m ? m.length : 0;
                 """)
             except Exception:
-                pass
+                saat_sayisi = 0
 
-            print(f"      🔎 Body uzunluk: {len(body_text)} | Saat: {saat_sayisi} | Kart: {kart_sayisi}")
+            print(
+                f"      🔎 Body uzunluk: {len(body_text)} | "
+                f"Saat: {saat_sayisi} | Kart: {kart_sayisi}"
+            )
 
             if len(body_text) < 50:
                 raise Exception("Sayfa boş/beyaz")
@@ -263,16 +309,32 @@ def guvenli_yukle(driver, url, max_deneme=3):
                 print("      ✅ Sayfa yüklendi")
                 return driver, True
 
-            print("      ⚠️ Kart bulunamadı, sayfa debug bilgisi alınıyor...")
-            debug_sayfa(driver)
-            selector_debug(driver)
+            # Kart ilk ekranda yoksa biraz aşağı inip tekrar bak
+            try:
+                driver.execute_script("window.scrollTo(0, 1200);")
+                time.sleep(2)
+                kart_sayisi = len(find_match_cards(driver))
+                print(f"      🔎 Aşağı kaydırma sonrası Kart: {kart_sayisi}")
+            except Exception:
+                kart_sayisi = 0
 
-            # Sayfada saat bile yoksa maç listesi hiç yüklenmemiştir
-            if saat_sayisi == 0:
-                raise Exception("Sayfada maç saati yok. Liste yüklenmemiş.")
+            if kart_sayisi > 0:
+                print("      ✅ Sayfa yüklendi")
+                return driver, True
 
-            # Saat var ama kart yoksa yine devam etmeyi deneyebiliriz
-            print("      ⚠️ Saat var ama kart bulunamadı. Selector hâlâ uyumsuz olabilir.")
+            print("      ⚠️ Kart bulunamadı ama sayfa açık. Devam deneniyor...")
+
+            try:
+                debug_sayfa(driver)
+            except Exception:
+                pass
+
+            try:
+                selector_debug(driver)
+            except Exception:
+                pass
+
+            # Sayfa açılmışsa deep_harvest kendi scroll'unda bulmayı denesin
             return driver, True
 
         except Exception as e:
@@ -286,8 +348,13 @@ def guvenli_yukle(driver, url, max_deneme=3):
 
                 time.sleep(3)
                 print("      🔄 Chrome yeniden açılıyor...")
-                driver = build_driver()
-                time.sleep(2)
+
+                try:
+                    driver = build_driver()
+                    time.sleep(2)
+                except Exception as ee:
+                    print(f"      ❌ Chrome yeniden açılamadı: {ee}")
+                    time.sleep(5)
             else:
                 return driver, False
 
@@ -314,83 +381,70 @@ def cookie_kabul_et(driver):
 
 def find_match_cards(driver):
     """
-    Maç kartlarını class'a bağlı kalmadan bulur.
-    Önce eski selector dener, sonra saat içeren alanların üst container'larını arar.
+    Gerçek maç kartını class'a bağlı kalmadan bulur.
+    Takım isimleri span[title] içinden aranır.
+    li class değişse bile çalışır.
     """
-    # 1) Eski selector
-    try:
-        cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
-        cards = [c for c in cards if (c.text or "").strip()]
-        if cards:
-            return cards
-    except Exception:
-        pass
-
-    # 2) Saat içeren elementlerden kart bul
     try:
         cards = driver.execute_script("""
-            const timeRe = /^\\d{1,2}:\\d{2}$/;
-            const oddRe = /^\\d{1,2}([\\.,]\\d{2})$/;
-
-            function isVisible(el) {
+            function visible(el) {
                 if (!el) return false;
                 const r = el.getBoundingClientRect();
-                const s = window.getComputedStyle(el);
-                return r.width > 20 &&
-                       r.height > 5 &&
+                const s = getComputedStyle(el);
+                return r.width > 80 &&
+                       r.height > 10 &&
+                       r.height < 260 &&
                        s.display !== 'none' &&
                        s.visibility !== 'hidden' &&
                        Number(s.opacity || 1) > 0;
             }
 
-            function linesOf(el) {
-                return (el.innerText || '')
-                    .split('\\n')
-                    .map(x => x.trim())
-                    .filter(Boolean);
+            function validName(t) {
+                t = (t || '').trim();
+                if (!t) return false;
+                if (/^\\d+$/.test(t)) return false;
+                if (t.length < 2 || t.length > 70) return false;
+
+                const bad = ['1', '0', '2', 'x', 'h', 'alt', 'üst', 'ust', 'var', 'yok'];
+                if (bad.includes(t.toLowerCase())) return false;
+
+                return /[A-Za-zÇĞİÖŞÜçğıöşü]/.test(t);
             }
 
-            function looksLikeMatch(el) {
-                if (!isVisible(el)) return false;
-
-                const lines = linesOf(el);
-                if (lines.length < 3 || lines.length > 40) return false;
-
-                const hasTime = lines.some(x => timeRe.test(x));
-                if (!hasTime) return false;
-
-                let names = 0;
-                for (const x of lines) {
-                    if (timeRe.test(x)) continue;
-                    if (oddRe.test(x.replace(',', '.'))) continue;
-                    if (/^[A-Z]{2,8}$/.test(x)) continue;
-                    if (x.length >= 2 && x.length <= 70) names++;
-                }
-
-                return names >= 2;
+            function teamTitles(el) {
+                return Array.from(el.querySelectorAll('span[title], [title]'))
+                    .map(s => (s.getAttribute('title') || s.innerText || '').trim())
+                    .filter(validName);
             }
 
-            const all = Array.from(document.querySelectorAll('div, a, li, button, section, article'));
+            const titleEls = Array.from(document.querySelectorAll('span[title], [title]'))
+                .filter(el => validName(el.getAttribute('title') || el.innerText || ''));
 
-            // İçinde saat olan en küçük uygun kartları bul
             let candidates = [];
 
-            for (const el of all) {
-                const txt = (el.innerText || '').trim();
-                if (!/\\b\\d{1,2}:\\d{2}\\b/.test(txt)) continue;
+            for (const sp of titleEls) {
+                let n = sp;
 
-                let n = el;
                 for (let i = 0; i < 8 && n; i++) {
-                    if (looksLikeMatch(n)) {
+                    const names = teamTitles(n);
+                    const txt = (n.innerText || '').trim();
+
+                    if (
+                        names.length >= 2 &&
+                        visible(n) &&
+                        txt.length < 1200
+                    ) {
                         candidates.push(n);
                         break;
                     }
+
                     n = n.parentElement;
                 }
             }
 
-            // Büyük kapsayıcıları ele
             candidates = [...new Set(candidates)];
+
+            // Büyük kapsayıcıları at, en küçük gerçek kart kalsın
             candidates = candidates.filter(el => {
                 return !candidates.some(other => other !== el && el.contains(other));
             });
@@ -504,10 +558,15 @@ def reset_scroll_top(driver):
 def scroll_step(driver, px=SCROLL_PX):
     driver.execute_script("""
       const px = arguments[0];
+
       if (window.__scrollEl){
         window.__scrollEl.scrollTop = window.__scrollEl.scrollTop + px;
       } else {
-        window.scrollBy(0, px);
+        window.scrollBy({
+          top: px,
+          left: 0,
+          behavior: 'smooth'
+        });
       }
     """, px)
 
@@ -515,8 +574,18 @@ def scroll_step(driver, px=SCROLL_PX):
 # =========================
 # MAÇ KART OKUMA & LİG ÇEKME
 # =========================
-def parse_card(card_text, current_date, league_name=""):
-    txt = (card_text or "").strip()
+def parse_card(card_or_text, current_date):
+    """
+    Hem Selenium WebElement hem düz text kabul eder.
+    """
+    try:
+        if hasattr(card_or_text, "text"):
+            txt = (card_or_text.text or "").strip()
+        else:
+            txt = (str(card_or_text) if card_or_text is not None else "").strip()
+    except Exception:
+        return None
+
     if not txt:
         return None
 
@@ -535,85 +604,275 @@ def parse_card(card_text, current_date, league_name=""):
     for x in lines:
         if TIME_RE.match(x):
             continue
+
+        # oran satırlarını atla
         if ODD_RE.match(x.replace(",", ".")):
             continue
-        if re.fullmatch(r"[A-Z]{2,6}", x):
+
+        # kısa kodları atla
+        if re.fullmatch(r"[A-Z]{2,8}", x):
             continue
+
+        # gereksiz menü yazılarını atla
+        low = x.lower()
+        if low in (
+            "bülten", "canlı sonuçlar", "yazar yorumları",
+            "popüler bahisler", "kolay kuponlar", "lig analiz",
+            "giriş", "üye ol", "beni hatırla", "şifremi göster",
+            "unuttum", "bugün", "yarın"
+        ):
+            continue
+
         filtered.append(x)
 
     if len(filtered) < 2:
         return None
 
     ev, dep = filtered[0], filtered[1]
+
     if not ev or not dep or ev == dep:
         return None
 
     return {
         "tarih": current_date,
         "saat": saat,
-        "lig": league_name if league_name else "Bilinmeyen Lig",
+        "lig": "",
         "ev_sahibi": ev,
         "deplasman": dep,
         "durum": "baslamadi",
-        "skor_ev": 0, "skor_dep": 0,
-        "skor_1y_ev": 0, "skor_1y_dep": 0,
+        "skor_ev": 0,
+        "skor_dep": 0,
+        "skor_1y_ev": 0,
+        "skor_1y_dep": 0,
         "oranlar": {},
         "kaynak": "iddaa.com"
     }
-
 
 def extract_visible(driver, current_date):
     out = []
     seen = set()
 
+    expected_day = ""
+    if current_date == bugunun_tarihi():
+        expected_day = "Bugün"
+    elif current_date == yarinin_tarihi():
+        expected_day = "Yarın"
+
     cards = find_match_cards(driver)
 
     for c in cards:
-        m = parse_card(c, current_date)
-        if not m:
-            continue
-
-        # Lig bulmaya çalış
         try:
-            lig = driver.execute_script("""
+            info = driver.execute_script("""
                 const card = arguments[0];
 
-                function clean(t) {
-                    return (t || '')
-                      .replace('Bugün', '')
-                      .replace('Yarın', '')
-                      .replace('Today', '')
-                      .replace('Tomorrow', '')
-                      .trim();
+                function validName(t) {
+                    t = (t || '').trim();
+                    if (!t) return false;
+                    if (/^\\d+$/.test(t)) return false;
+                    if (t.length < 2 || t.length > 70) return false;
+
+                    const bad = ['1', '0', '2', 'x', 'h', 'alt', 'üst', 'ust', 'var', 'yok'];
+                    if (bad.includes(t.toLowerCase())) return false;
+
+                    return /[A-Za-zÇĞİÖŞÜçğıöşü]/.test(t);
                 }
 
-                let n = card;
-                while (n) {
-                    let p = n.previousElementSibling;
-                    while (p) {
-                        if (p.hasAttribute && p.hasAttribute('data-lh')) {
-                            return clean(p.innerText);
+                function getTeams(card) {
+                    const names = Array.from(card.querySelectorAll('span[title], [title]'))
+                        .map(s => (s.getAttribute('title') || s.innerText || '').trim())
+                        .filter(validName);
+
+                    const uniq = [];
+                    for (const n of names) {
+                        if (!uniq.includes(n)) uniq.push(n);
+                    }
+
+                    if (uniq.length >= 2) {
+                        return [uniq[0], uniq[1]];
+                    }
+
+                    return ['', ''];
+                }
+
+                function cleanLeague(t) {
+                    return (t || '')
+                        .replace('Bugün', '')
+                        .replace('Yarın', '')
+                        .replace('Today', '')
+                        .replace('Tomorrow', '')
+                        .trim();
+                }
+
+                function findHeader(card) {
+                    let n = card;
+
+                    while (n) {
+                        let p = n.previousElementSibling;
+
+                        while (p) {
+                            const txt = p.innerText || '';
+
+                            if (p.hasAttribute && p.hasAttribute('data-lh')) {
+                                const em = p.querySelector('em');
+                                return {
+                                    lig: cleanLeague(txt),
+                                    gun: em ? (em.innerText || '').trim() : ''
+                                };
+                            }
+
+                            if (p.querySelector && p.querySelector('img.flag')) {
+                                const em = p.querySelector('em');
+                                return {
+                                    lig: cleanLeague(txt),
+                                    gun: em ? (em.innerText || '').trim() : ''
+                                };
+                            }
+
+                            // Canlı başlığını yakala
+                            if ((txt || '').includes('CANLI MAÇLAR')) {
+                                return {
+                                    lig: '',
+                                    gun: 'CANLI'
+                                };
+                            }
+
+                            p = p.previousElementSibling;
                         }
-                        if (p.querySelector && p.querySelector('img.flag')) {
-                            return clean(p.innerText);
+
+                        n = n.parentElement;
+                    }
+
+                    return {lig: '', gun: ''};
+                }
+
+                function findTime(card, ev, dep) {
+                    const timeRe = /\\b\\d{1,2}:\\d{2}\\b/;
+
+                    // Çok büyük parenta çıkma, yoksa sayfa saati 13:02 yakalanır
+                    let n = card;
+
+                    for (let i = 0; i < 7 && n; i++) {
+                        const txt = n.innerText || '';
+
+                        if (
+                            txt.includes(ev) &&
+                            txt.includes(dep) &&
+                            txt.length < 1500
+                        ) {
+                            const m = txt.match(timeRe);
+                            if (m) return m[0];
                         }
+
+                        n = n.parentElement;
+                    }
+
+                    let p = card.previousElementSibling;
+
+                    for (let i = 0; i < 10 && p; i++) {
+                        const txt = p.innerText || '';
+
+                        if ((txt || '').includes('CANLI MAÇLAR')) {
+                            return '';
+                        }
+
+                        const m = txt.match(timeRe);
+                        if (m) return m[0];
+
                         p = p.previousElementSibling;
                     }
-                    n = n.parentElement;
+
+                    return '';
                 }
-                return '';
+
+                function isLiveCard(card) {
+                    const txt = card.innerText || '';
+
+                    // 90+, 94', devre, canlı skor gibi şeyler varsa canlı olabilir
+                    if (/\\b\\d{1,3}\\+?('|’)?\\b/.test(txt) && !/\\b\\d{1,2}:\\d{2}\\b/.test(txt)) {
+                        return true;
+                    }
+
+                    let n = card;
+                    for (let i = 0; i < 6 && n; i++) {
+                        let p = n.previousElementSibling;
+                        for (let j = 0; j < 8 && p; j++) {
+                            const pt = p.innerText || '';
+                            if (pt.includes('CANLI MAÇLAR')) return true;
+                            if (p.hasAttribute && p.hasAttribute('data-lh')) return false;
+                            if (p.querySelector && p.querySelector('img.flag')) return false;
+                            p = p.previousElementSibling;
+                        }
+                        n = n.parentElement;
+                    }
+
+                    return false;
+                }
+
+                const teams = getTeams(card);
+                const ev = teams[0];
+                const dep = teams[1];
+                const header = findHeader(card);
+                const saat = findTime(card, ev, dep);
+
+                return {
+                    ev: ev,
+                    dep: dep,
+                    saat: saat,
+                    lig: header.lig || '',
+                    gun: header.gun || '',
+                    live: isLiveCard(card)
+                };
             """, c)
 
-            m["lig"] = lig or ""
+            ev = (info.get("ev") or "").strip()
+            dep = (info.get("dep") or "").strip()
+            saat = (info.get("saat") or "").strip()
+            lig = parse_league_text(info.get("lig") or "")
+            gun = (info.get("gun") or "").strip()
+            live = bool(info.get("live"))
+
+            if not ev or not dep or ev == dep:
+                continue
+
+            if re.fullmatch(r"\d+", ev) or re.fullmatch(r"\d+", dep):
+                continue
+
+            # Canlı maçları alma
+            if live or gun == "CANLI":
+                continue
+
+            # Saat yoksa alma. Canlı maçlarda zaten saat olmaz.
+            # Sayfa saati 13:02 gibi yanlış saatleri de böyle azaltıyoruz.
+            if not TIME_RE.match(saat):
+                continue
+
+            # Tarih, tıklanan sekmeden geliyor.
+            # Header içindeki Bugün/Yarın bilgisine göre filtreleme yapma.
+            m = {
+                "tarih": current_date,
+                "saat": saat,
+                "lig": lig,
+                "ev_sahibi": ev,
+                "deplasman": dep,
+                "durum": "baslamadi",
+                "skor_ev": 0,
+                "skor_dep": 0,
+                "skor_1y_ev": 0,
+                "skor_1y_dep": 0,
+                "oranlar": {},
+                "kaynak": "iddaa.com"
+            }
+
+            k = (m["tarih"], m["ev_sahibi"], m["deplasman"])
+
+            if k in seen:
+                continue
+
+            seen.add(k)
+            out.append(m)
+
         except Exception:
-            m["lig"] = ""
-
-        k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
-        if k in seen:
-            continue
-
-        seen.add(k)
-        out.append(m)
+            pass
 
     return out
 
@@ -621,19 +880,249 @@ def extract_visible(driver, current_date):
 # DEEP HARVEST (BUGÜN + YARIN BUTONLARI)
 # =========================
 def gun_sec(driver, gun_adi):
-    tiklandi = driver.execute_script("""
-        var labels = document.querySelectorAll('label, i, em, span');
-        for (var i = 0; i < labels.length; i++) {
-            var t = labels[i].textContent.trim();
-            if (t === arguments[0]) {
-                labels[i].click();
-                return true;
-            }
-        }
-        return false;
-    """, gun_adi)
-    return tiklandi
+    """
+    Tarih filtresinde yalnızca istenen günü seçili bırakır.
 
+    Bugün seçilecekse:
+        - Yarın seçiliyse kapatır
+        - Bugün seçili değilse açar
+
+    Yarın seçilecekse:
+        - Bugün seçiliyse kapatır
+        - Yarın seçili değilse açar
+    """
+    try:
+        print(f"      🔎 Yalnızca '{gun_adi}' seçilecek...")
+
+        # Tarih menüsünü aç
+        try:
+            tarih_acildi = driver.execute_script("""
+                const spans = Array.from(
+                    document.querySelectorAll('span[data-selected="colorChange"], span')
+                );
+
+                const tarih = spans.find(el => {
+                    const text = (el.textContent || '').trim();
+                    return text === 'Tarih';
+                });
+
+                if (!tarih) return false;
+
+                tarih.click();
+                return true;
+            """)
+
+            if tarih_acildi:
+                time.sleep(1)
+        except Exception:
+            pass
+
+        diger_gun = "Yarın" if gun_adi == "Bugün" else "Bugün"
+
+        def durum_oku(gun):
+            return driver.execute_script("""
+                const hedef = arguments[0];
+
+                function text(el) {
+                    return (el.textContent || '')
+                        .replace(/\\s+/g, ' ')
+                        .trim();
+                }
+
+                function labelBul() {
+                    const labels = Array.from(document.querySelectorAll('label'));
+
+                    return labels.find(label => {
+                        if (label.closest('[data-lh]')) return false;
+
+                        const items = Array.from(
+                            label.querySelectorAll('i, span, em')
+                        );
+
+                        return (
+                            text(label) === hedef ||
+                            items.some(el => text(el) === hedef)
+                        );
+                    });
+                }
+
+                function seciliMi(label) {
+                    if (!label) return false;
+
+                    const input = label.querySelector(
+                        'input[type="checkbox"], input[type="radio"]'
+                    );
+
+                    if (input && input.checked) {
+                        return true;
+                    }
+
+                    const elements = [
+                        label,
+                        ...Array.from(label.querySelectorAll('*'))
+                    ];
+
+                    for (const el of elements) {
+                        const ariaChecked = el.getAttribute('aria-checked');
+                        const ariaSelected = el.getAttribute('aria-selected');
+                        const dataState = el.getAttribute('data-state');
+                        const dataChecked = el.getAttribute('data-checked');
+                        const dataSelected = el.getAttribute('data-selected');
+
+                        if (ariaChecked === 'true') return true;
+                        if (ariaSelected === 'true') return true;
+                        if (dataState === 'checked') return true;
+                        if (dataChecked === 'true') return true;
+
+                        if (
+                            dataSelected &&
+                            dataSelected !== 'false' &&
+                            dataSelected !== 'colorChange'
+                        ) {
+                            return true;
+                        }
+
+                        const cls = String(el.className || '').toLowerCase();
+
+                        if (
+                            cls.includes('checked') ||
+                            cls.includes('selected') ||
+                            cls.includes('active')
+                        ) {
+                            return true;
+                        }
+                    }
+
+                    /*
+                    Özel checkbox yapılarında tik genellikle label içindeki
+                    SVG veya check ikonuyla gösterilir.
+                    */
+                    const tik = label.querySelector(
+                        'svg[data-checked="true"], ' +
+                        '[data-state="checked"], ' +
+                        '[aria-checked="true"], ' +
+                        'svg[class*="check"], ' +
+                        '[class*="checkmark"]'
+                    );
+
+                    return Boolean(tik);
+                }
+
+                const label = labelBul();
+
+                return {
+                    bulundu: Boolean(label),
+                    secili: seciliMi(label),
+                    text: label ? text(label) : '',
+                    html: label ? label.outerHTML.slice(0, 1000) : ''
+                };
+            """, gun)
+
+        def tikla(gun):
+            return driver.execute_script("""
+                const hedef = arguments[0];
+
+                function text(el) {
+                    return (el.textContent || '')
+                        .replace(/\\s+/g, ' ')
+                        .trim();
+                }
+
+                const labels = Array.from(document.querySelectorAll('label'));
+
+                const label = labels.find(el => {
+                    if (el.closest('[data-lh]')) return false;
+
+                    const items = Array.from(
+                        el.querySelectorAll('i, span, em')
+                    );
+
+                    return (
+                        text(el) === hedef ||
+                        items.some(item => text(item) === hedef)
+                    );
+                });
+
+                if (!label) {
+                    return false;
+                }
+
+                label.scrollIntoView({
+                    block: 'center',
+                    inline: 'center'
+                });
+
+                label.click();
+                return true;
+            """, gun)
+
+        # Önce diğer günü kapat
+        diger_durum = durum_oku(diger_gun)
+
+        print(
+            f"      🔎 {diger_gun}: "
+            f"bulundu={diger_durum.get('bulundu')} "
+            f"seçili={diger_durum.get('secili')}"
+        )
+
+        if diger_durum.get("bulundu") and diger_durum.get("secili"):
+            print(f"      🔄 '{diger_gun}' seçimi kaldırılıyor...")
+
+            if tikla(diger_gun):
+                time.sleep(2)
+            else:
+                print(f"      ⚠️ '{diger_gun}' kapatılamadı")
+
+        # Hedef günün güncel durumunu oku
+        hedef_durum = durum_oku(gun_adi)
+
+        print(
+            f"      🔎 {gun_adi}: "
+            f"bulundu={hedef_durum.get('bulundu')} "
+            f"seçili={hedef_durum.get('secili')}"
+        )
+
+        if not hedef_durum.get("bulundu"):
+            print(f"      ❌ '{gun_adi}' label bulunamadı")
+            return False
+
+        # Hedef seçili değilse aç
+        if not hedef_durum.get("secili"):
+            print(f"      🔄 '{gun_adi}' seçiliyor...")
+
+            if not tikla(gun_adi):
+                print(f"      ❌ '{gun_adi}' tıklanamadı")
+                return False
+
+            time.sleep(3)
+        else:
+            print(f"      ℹ️ '{gun_adi}' zaten seçili")
+
+        # Son durumları kontrol et
+        hedef_son = durum_oku(gun_adi)
+        diger_son = durum_oku(diger_gun)
+
+        print(
+            f"      ✅ Son durum | "
+            f"{gun_adi}: {hedef_son.get('secili')} | "
+            f"{diger_gun}: {diger_son.get('secili')}"
+        )
+
+        # Bazı özel tasarımlarda seçili durumu okunamayabilir.
+        # Tıklama başarılıysa devam et.
+        if diger_son.get("secili"):
+            print(
+                f"      ⚠️ '{diger_gun}' hâlâ seçili görünüyor. "
+                f"Bir kez daha kapatılıyor..."
+            )
+            tikla(diger_gun)
+            time.sleep(2)
+
+        return True
+
+    except Exception as e:
+        print(f"      ⚠️ gun_sec hata: {str(e)[:200]}")
+        return False
 
 def sayfayi_scroll_et(driver, hedef_tarih, max_step=MAX_SCROLL_STEPS):
     init_scroll_target(driver)
@@ -650,13 +1139,13 @@ def sayfayi_scroll_et(driver, hedef_tarih, max_step=MAX_SCROLL_STEPS):
         for m in vis:
             if m["tarih"] != hedef_tarih:
                 continue
-            k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
+            k = (m["tarih"], m["ev_sahibi"], m["deplasman"])
             if k not in seen:
                 seen.add(k)
                 maclar.append(m)
 
         if len(maclar) > last_total:
-            print(f"      📈 Step {step}: {len(maclar)} maç")
+            print(f"      📈 Step {step}: +{len(maclar) - last_total} maç | Toplam {len(maclar)}")
             last_total = len(maclar)
             stable = 0
         else:
@@ -682,31 +1171,87 @@ def deep_harvest(driver):
     for gun_tarih, gun_adi in [(bugun, "Bugün"), (yarin, "Yarın")]:
         print(f"\n   📅 {gun_adi} ({gun_tarih}) seçiliyor...")
 
+        if gun_adi == "Yarın":
+            print("      🔄 Bugün filtresi kapatılıp Yarın seçilecek...")
+
+            try:
+                driver.execute_script("""
+                    function text(el) {
+                        return (el.textContent || '')
+                            .replace(/\\s+/g, ' ')
+                            .trim();
+                    }
+
+                    const label = Array.from(
+                        document.querySelectorAll('label')
+                    ).find(el => {
+                        if (el.closest('[data-lh]')) return false;
+
+                        return Array.from(
+                            el.querySelectorAll('i, span, em')
+                        ).some(item => text(item) === 'Bugün');
+                    });
+
+                    if (label) {
+                        label.click();
+                        return true;
+                    }
+
+                    return false;
+                """)
+                time.sleep(2)
+            except Exception:
+                pass
+
         tiklandi = gun_sec(driver, gun_adi)
+
         if not tiklandi:
             print(f"      ❌ '{gun_adi}' butonu bulunamadı")
             continue
 
-        time.sleep(3)
+        time.sleep(8)
+
+        try:
+            reset_scroll_top(driver)
+            time.sleep(1)
+        except Exception:
+            pass
+
         print(f"      ✅ '{gun_adi}' seçildi")
+
+        try:
+            ilk_kart = len(find_match_cards(driver))
+            print(f"      🔎 Seçim sonrası görünen kart: {ilk_kart}")
+        except Exception:
+            pass
 
         maclar = sayfayi_scroll_et(driver, gun_tarih)
 
         for m in maclar:
-            k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
+            k = (m["tarih"], m["ev_sahibi"], m["deplasman"])
+
             if k not in hset:
                 hset.add(k)
                 harvest.append(m)
 
         bugun_adet = sum(1 for h in harvest if h["tarih"] == bugun)
         yarin_adet = sum(1 for h in harvest if h["tarih"] == yarin)
-        print(f"      📊 {len(maclar)} maç çekildi | Toplam: {len(harvest)} (Bugün:{bugun_adet} Yarın:{yarin_adet})")
+
+        print(
+            f"      📊 {len(maclar)} maç çekildi | "
+            f"Toplam: {len(harvest)} "
+            f"(Bugün:{bugun_adet} Yarın:{yarin_adet})"
+        )
 
     bugun_adet = sum(1 for m in harvest if m["tarih"] == bugun)
     yarin_adet = sum(1 for m in harvest if m["tarih"] == yarin)
-    print(f"\n   🎯 Toplam: {len(harvest)} maç (Bugün: {bugun_adet}, Yarın: {yarin_adet})")
-    return harvest
 
+    print(
+        f"\n   🎯 Toplam: {len(harvest)} maç "
+        f"(Bugün: {bugun_adet}, Yarın: {yarin_adet})"
+    )
+
+    return harvest
 
 # =========================
 # ORAN ÇEKME

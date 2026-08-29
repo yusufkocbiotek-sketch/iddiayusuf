@@ -194,47 +194,279 @@ def build_driver():
 def wait_initial(driver, timeout=40):
     try:
         WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, MATCH_CARD_SEL))
+            lambda d: len(find_match_cards(d)) > 0
         )
         return True
     except Exception:
-        return False
+        print("      ⚠️ wait_initial: maç kartı bulunamadı")
 
+        try:
+            saat_sayisi = driver.execute_script("""
+                const txt = document.body.innerText || '';
+                const m = txt.match(/\\b\\d{1,2}:\\d{2}\\b/g);
+                return m ? m.length : 0;
+            """)
+            print(f"      ⏱ Body içindeki saat sayısı: {saat_sayisi}")
+        except Exception:
+            pass
+
+        debug_sayfa(driver)
+        selector_debug(driver)
+        return False
 
 def guvenli_yukle(driver, url, max_deneme=3):
     for deneme in range(max_deneme):
         try:
-            driver.set_page_load_timeout(45)
+            print(f"      🌐 Sayfa yükleniyor... deneme {deneme + 1}/{max_deneme}")
+
+            driver.set_page_load_timeout(60)
             driver.get(url)
-            WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, MATCH_CARD_SEL))
-            )
-            body_text = driver.find_element(By.TAG_NAME, "body").text.strip()
+
+            # React içerik için bekle
+            time.sleep(8)
+
+            cookie_kabul_et(driver)
+
+            # Sayfayı biraz oynat, lazy-load tetiklensin
+            try:
+                driver.execute_script("window.scrollTo(0, 400);")
+                time.sleep(1)
+                driver.execute_script("window.scrollTo(0, 0);")
+                time.sleep(1)
+            except Exception:
+                pass
+
+            body_text = ""
+            try:
+                body_text = driver.find_element(By.TAG_NAME, "body").text.strip()
+            except Exception:
+                pass
+
+            kart_sayisi = len(find_match_cards(driver))
+
+            saat_sayisi = 0
+            try:
+                saat_sayisi = driver.execute_script("""
+                    const txt = document.body.innerText || '';
+                    const m = txt.match(/\\b\\d{1,2}:\\d{2}\\b/g);
+                    return m ? m.length : 0;
+                """)
+            except Exception:
+                pass
+
+            print(f"      🔎 Body uzunluk: {len(body_text)} | Saat: {saat_sayisi} | Kart: {kart_sayisi}")
+
             if len(body_text) < 50:
-                print(f"      ⚠️ Sayfa beyaz (deneme {deneme + 1})")
-                time.sleep(3)
-                continue
-            time.sleep(1)
-            return True
+                raise Exception("Sayfa boş/beyaz")
+
+            if kart_sayisi > 0:
+                print("      ✅ Sayfa yüklendi")
+                return driver, True
+
+            print("      ⚠️ Kart bulunamadı, sayfa debug bilgisi alınıyor...")
+            debug_sayfa(driver)
+            selector_debug(driver)
+
+            # Sayfada saat bile yoksa maç listesi hiç yüklenmemiştir
+            if saat_sayisi == 0:
+                raise Exception("Sayfada maç saati yok. Liste yüklenmemiş.")
+
+            # Saat var ama kart yoksa yine devam etmeyi deneyebiliriz
+            print("      ⚠️ Saat var ama kart bulunamadı. Selector hâlâ uyumsuz olabilir.")
+            return driver, True
+
         except Exception as e:
-            print(f"      ⚠️ Yükleme hatası (deneme {deneme + 1}): {str(e)[:60]}")
+            print(f"      ⚠️ Yükleme hatası ({deneme + 1}): {str(e)[:150]}")
+
             if deneme < max_deneme - 1:
-                time.sleep(3)
                 try:
                     driver.quit()
                 except Exception:
                     pass
-                time.sleep(2)
-                try:
-                    driver = build_driver()
-                    driver.get(url)
-                    time.sleep(5)
-                except Exception:
-                    pass
-            else:
-                time.sleep(5)
-    return False
 
+                time.sleep(3)
+                print("      🔄 Chrome yeniden açılıyor...")
+                driver = build_driver()
+                time.sleep(2)
+            else:
+                return driver, False
+
+    return driver, False
+
+def cookie_kabul_et(driver):
+    try:
+        driver.execute_script("""
+            const texts = ['Kabul Et', 'Tümünü Kabul Et', 'Tamam', 'Accept', 'Accept All'];
+            const els = Array.from(document.querySelectorAll('button, div, span, a'));
+            for (const el of els) {
+                const t = (el.innerText || el.textContent || '').trim();
+                if (texts.includes(t)) {
+                    el.click();
+                    return true;
+                }
+            }
+            return false;
+        """)
+        time.sleep(1)
+    except Exception:
+        pass
+
+
+def find_match_cards(driver):
+    """
+    Maç kartlarını class'a bağlı kalmadan bulur.
+    Önce eski selector dener, sonra saat içeren alanların üst container'larını arar.
+    """
+    # 1) Eski selector
+    try:
+        cards = driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL)
+        cards = [c for c in cards if (c.text or "").strip()]
+        if cards:
+            return cards
+    except Exception:
+        pass
+
+    # 2) Saat içeren elementlerden kart bul
+    try:
+        cards = driver.execute_script("""
+            const timeRe = /^\\d{1,2}:\\d{2}$/;
+            const oddRe = /^\\d{1,2}([\\.,]\\d{2})$/;
+
+            function isVisible(el) {
+                if (!el) return false;
+                const r = el.getBoundingClientRect();
+                const s = window.getComputedStyle(el);
+                return r.width > 20 &&
+                       r.height > 5 &&
+                       s.display !== 'none' &&
+                       s.visibility !== 'hidden' &&
+                       Number(s.opacity || 1) > 0;
+            }
+
+            function linesOf(el) {
+                return (el.innerText || '')
+                    .split('\\n')
+                    .map(x => x.trim())
+                    .filter(Boolean);
+            }
+
+            function looksLikeMatch(el) {
+                if (!isVisible(el)) return false;
+
+                const lines = linesOf(el);
+                if (lines.length < 3 || lines.length > 40) return false;
+
+                const hasTime = lines.some(x => timeRe.test(x));
+                if (!hasTime) return false;
+
+                let names = 0;
+                for (const x of lines) {
+                    if (timeRe.test(x)) continue;
+                    if (oddRe.test(x.replace(',', '.'))) continue;
+                    if (/^[A-Z]{2,8}$/.test(x)) continue;
+                    if (x.length >= 2 && x.length <= 70) names++;
+                }
+
+                return names >= 2;
+            }
+
+            const all = Array.from(document.querySelectorAll('div, a, li, button, section, article'));
+
+            // İçinde saat olan en küçük uygun kartları bul
+            let candidates = [];
+
+            for (const el of all) {
+                const txt = (el.innerText || '').trim();
+                if (!/\\b\\d{1,2}:\\d{2}\\b/.test(txt)) continue;
+
+                let n = el;
+                for (let i = 0; i < 8 && n; i++) {
+                    if (looksLikeMatch(n)) {
+                        candidates.push(n);
+                        break;
+                    }
+                    n = n.parentElement;
+                }
+            }
+
+            // Büyük kapsayıcıları ele
+            candidates = [...new Set(candidates)];
+            candidates = candidates.filter(el => {
+                return !candidates.some(other => other !== el && el.contains(other));
+            });
+
+            return candidates.slice(0, 1000);
+        """)
+
+        return cards or []
+
+    except Exception:
+        return []
+
+def debug_sayfa(driver):
+    try:
+        print("      🌍 URL:", driver.current_url)
+    except Exception:
+        pass
+
+    try:
+        print("      🧾 TITLE:", driver.title)
+    except Exception:
+        pass
+
+    try:
+        body = driver.find_element(By.TAG_NAME, "body").text
+        print("      📄 Body ilk 700 karakter:")
+        print(body[:700])
+    except Exception:
+        pass
+
+    try:
+        driver.save_screenshot("debug_iddaa.png")
+        print("      📸 Screenshot kaydedildi: debug_iddaa.png")
+    except Exception:
+        pass
+
+    try:
+        with open("debug_iddaa.html", "w", encoding="utf-8") as f:
+            f.write(driver.page_source)
+        print("      🧩 HTML kaydedildi: debug_iddaa.html")
+    except Exception:
+        pass
+
+def selector_debug(driver):
+    try:
+        info = driver.execute_script("""
+            const txt = document.body.innerText || '';
+            const times = txt.match(/\\b\\d{1,2}:\\d{2}\\b/g) || [];
+
+            const els = Array.from(document.querySelectorAll('div, a, li, button, span, section, article'));
+            const timeEls = els
+                .filter(el => /\\b\\d{1,2}:\\d{2}\\b/.test(el.innerText || ''))
+                .slice(0, 50)
+                .map(el => ({
+                    tag: el.tagName,
+                    cls: el.className ? String(el.className) : '',
+                    txt: (el.innerText || '').trim().slice(0, 350)
+                }));
+
+            return {
+                timeCount: times.length,
+                times: times.slice(0, 30),
+                elems: timeEls
+            };
+        """)
+
+        print(f"      ⏱ Sayfadaki saat sayısı: {info.get('timeCount')}")
+        print(f"      ⏱ İlk saatler: {info.get('times')}")
+
+        print("      🔍 Saat içeren elementler:")
+        for i, r in enumerate(info.get("elems") or [], 1):
+            print(f"      #{i} <{r.get('tag')}> class='{r.get('cls')}'")
+            print("        " + r.get("txt", "").replace("\n", " | "))
+
+    except Exception as e:
+        print("      ⚠️ selector_debug hata:", e)
 
 # =========================
 # SCROLL
@@ -333,65 +565,57 @@ def parse_card(card_text, current_date, league_name=""):
 def extract_visible(driver, current_date):
     out = []
     seen = set()
-    
-    try:
-        data = driver.execute_script("""
-            const results = [];
-            const cards = document.querySelectorAll('.i_tnw__t8AmC');
-            cards.forEach(card => {
-                let leagueName = "";
-                let el = card;
-                
-                while (el && el !== document.body) {
-                    let prev = el.previousElementSibling;
-                    while (prev) {
-                        let lh = prev.matches('[data-lh]') ? prev : prev.querySelector('[data-lh]');
-                        if (lh) {
-                            let clone = lh.cloneNode(true);
-                            clone.querySelectorAll('em, img').forEach(e => e.remove());
-                            leagueName = clone.textContent.trim();
-                            break;
-                        }
-                        prev = prev.previousElementSibling;
-                    }
-                    if (leagueName) break;
-                    
-                    let parent = el.parentElement;
-                    if (parent) {
-                        let lh = parent.querySelector('[data-lh]');
-                        if (lh) {
-                            let clone = lh.cloneNode(true);
-                            clone.querySelectorAll('em, img').forEach(e => e.remove());
-                            leagueName = clone.textContent.trim();
-                            break;
-                        }
-                    }
-                    el = parent;
-                }
-                
-                results.push({
-                    "text": card.innerText,
-                    "league": leagueName || "Bilinmeyen Lig"
-                });
-            });
-            return results;
-        """)
-    except Exception as e:
-        print(f"   ⚠️ Lig ve Kart okuma JS hatası: {e}")
-        return []
 
-    for item in data:
-        m = parse_card(item["text"], current_date, item["league"])
+    cards = find_match_cards(driver)
+
+    for c in cards:
+        m = parse_card(c, current_date)
         if not m:
             continue
+
+        # Lig bulmaya çalış
+        try:
+            lig = driver.execute_script("""
+                const card = arguments[0];
+
+                function clean(t) {
+                    return (t || '')
+                      .replace('Bugün', '')
+                      .replace('Yarın', '')
+                      .replace('Today', '')
+                      .replace('Tomorrow', '')
+                      .trim();
+                }
+
+                let n = card;
+                while (n) {
+                    let p = n.previousElementSibling;
+                    while (p) {
+                        if (p.hasAttribute && p.hasAttribute('data-lh')) {
+                            return clean(p.innerText);
+                        }
+                        if (p.querySelector && p.querySelector('img.flag')) {
+                            return clean(p.innerText);
+                        }
+                        p = p.previousElementSibling;
+                    }
+                    n = n.parentElement;
+                }
+                return '';
+            """, c)
+
+            m["lig"] = lig or ""
+        except Exception:
+            m["lig"] = ""
+
         k = (m["tarih"], m["saat"], m["ev_sahibi"], m["deplasman"])
         if k in seen:
             continue
+
         seen.add(k)
         out.append(m)
-        
-    return out
 
+    return out
 
 # =========================
 # DEEP HARVEST (BUGÜN + YARIN BUTONLARI)
@@ -501,7 +725,7 @@ def click_match(driver, ev, dep):
 
         clear_and_type(inp, ev[:22])
         time.sleep(0.8)
-        for c in driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL):
+        for c in find_match_cards(driver):
             t = c.text
             if ev in t and dep in t:
                 driver.execute_script(
@@ -512,7 +736,7 @@ def click_match(driver, ev, dep):
 
         clear_and_type(inp, dep[:22])
         time.sleep(0.8)
-        for c in driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL):
+        for c in find_match_cards(driver):
             t = c.text
             if ev in t and dep in t:
                 driver.execute_script(
@@ -526,7 +750,7 @@ def click_match(driver, ev, dep):
 
     reset_scroll_top(driver)
     for _ in range(20):
-        for c in driver.find_elements(By.CSS_SELECTOR, MATCH_CARD_SEL):
+        for c in find_match_cards(driver):
             try:
                 t = c.text
                 if ev in t and dep in t:
@@ -667,7 +891,9 @@ def main():
         print("\n🟢 Chrome açılıyor...")
         driver = build_driver()
 
-        if not guvenli_yukle(driver, URL):
+        driver, ok = guvenli_yukle(driver, URL)
+
+        if not ok:
             print("❌ İlk yükleme başarısız")
             return
 
@@ -712,11 +938,16 @@ def main():
                     driver = build_driver()
                     print("   🟢 Yeni Chrome açıldı (2. deneme)")
 
-                if not guvenli_yukle(driver, URL):
+                driver, ok = guvenli_yukle(driver, URL)
+
+                if not ok:
                     print("   ❌ Sayfa yüklenemedi")
                     time.sleep(5)
-                    driver.get(URL)
-                    time.sleep(10)
+                    try:
+                        driver.get(URL)
+                        time.sleep(10)
+                    except Exception:
+                        pass
 
                 print("   ✅ Devam ediliyor...")
                 print(f"{'=' * 50}\n")

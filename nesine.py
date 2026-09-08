@@ -1091,6 +1091,77 @@ def satir_bul(driver, ev, dep):
 
     return None
 
+def arama_adaylari(isim):
+    """
+    "New York Red B. II" için adaylar üretir:
+    ["New York Red B. II", "New York Red II", "New York Red", "New York"]
+    """
+    adaylar = []
+    isim = (isim or "").strip()
+
+    if isim:
+        adaylar.append(isim)
+
+    # Nokta ile biten kısaltma tokenlarını at ("B.", "Ath", "Spr." gibi)
+    tokens = isim.split()
+    temiz = [
+        t for t in tokens
+        if not (t.endswith(".") and len(t) <= 5)
+    ]
+    temiz_isim = " ".join(temiz).strip()
+    if temiz_isim and temiz_isim != isim:
+        adaylar.append(temiz_isim)
+
+    kelimeler = temiz_isim.split()
+    if len(kelimeler) > 3:
+        adaylar.append(" ".join(kelimeler[:3]))
+    if len(kelimeler) >= 2:
+        adaylar.append(" ".join(kelimeler[:2]))
+
+    out = []
+    for a in adaylar:
+        a = a.strip()
+        if a and a not in out:
+            out.append(a)
+
+    return out
+
+
+def satir_bul_gevsek(driver, ev, dep):
+    """
+    Önce tam eşleşme, sonra kısa önek, en son sadece ev sahibi öneki.
+    """
+    listeler = [
+        (ev[:20], dep[:20]),
+        (ev[:12], dep[:12]),
+        (ev[:12], None),
+    ]
+
+    for ev_k, dep_k in listeler:
+        for r in find_match_cards(driver):
+            try:
+                t = r.text or ""
+                if ev_k in t and (dep_k is None or dep_k in t):
+                    return r
+            except Exception:
+                pass
+
+    return None
+
+
+def satir_bekle(driver, ev, dep, max_sure=6):
+    """
+    Filtrelenen satırlar render olana kadar bekler.
+    """
+    t0 = time.time()
+
+    while time.time() - t0 < max_sure:
+        r = satir_bul_gevsek(driver, ev, dep)
+        if r is not None:
+            return r
+        time.sleep(1.0)
+
+    return None
 
 def nokta_var_mi(t):
     try:
@@ -1210,72 +1281,155 @@ def tr_key(s):
     s = s.lower()
     return re.sub(r"\s+", " ", s).strip()
 
+def label_temizle(l):
+    """
+    Nesine label'larındaki market öneklerini temizler:
+    'MS 1' -> '1', 'HMS x' -> 'x', 'CS 1-2' -> '1-2', '2.Y 1' -> '1'
+    """
+    l = str(l).strip()
+    low = tr_key(l)
+
+    low = re.sub(r"^(ms|hms|cs|iy|2y|1y|au|kg|2\.y|1\.y)\s+", "", low)
+
+    return low.strip()
 
 def market_duzelt(m):
     """
-    tr_key ile normalize edilmiş market adını dashboard formatına çevirir.
+    tr_key ile normalize edilmiş market adını KA haritasındaki
+    TAM isimlere çevirir (dashboard sözleşmesi).
     """
     m = re.sub(r"\s+", " ", m).strip(" _-")
     m = re.sub(r"(\d),(\d)", r"\1.\2", m)
 
-    yari1 = ("ilk yari" in m) or ("1. yari" in m) or (m == "iy") or m.startswith("iy ")
-    yari2 = "2. yari" in m
-    yari_on = "1. Yarı " if yari1 else ("2. Yarı " if yari2 else "")
+    def num_of():
+        nm = re.search(r"(\d+(?:\.\d+)?)", m)
+        return nm.group(1) if nm else ""
 
-    if re.fullmatch(r"(mac sonucu|ms|1x2)", m):
-        return "Maç Sonucu"
+    ilk = ("ilk yari" in m) or ("1. yari" in m)
+    ikinci = ("ikinci yari" in m) or ("2. yari" in m)
 
+    kg = ("karsilikli gol" in m) or (m == "kg")
+    au = bool(re.search(r"\balt(i)?\b|\bust(u)?\b", m))
+    ms = ("mac sonucu" in m) or re.fullmatch(r"ms|1x2", m)
+
+    # --- Kombine marketler (önce yakalanmalı) ---
+    if kg and au:
+        return f"Altı/Üstü {num_of()} ve Karşılıklı Gol"
+    if kg and ms:
+        return "Maç Sonucu ve Karşılıklı Gol"
+    if kg and ilk and "sonuc" in m:
+        return "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol"
+    if ilk and "sonuc" in m and au:
+        return f"İlk Yarı Sonucu ve Altı/Üstü {num_of()}"
+    if ms and au:
+        return f"Maç Sonucu ve Alt/Üst {num_of()}"
+
+    # --- Handikap ---
     hm = re.search(r"handikap\w*\s*(?:mac sonucu\s*)?(\d+:\d+)", m)
     if hm:
         return f"Handikaplı Maç Sonucu {hm.group(1)}"
     if "handikap" in m:
         return "Handikaplı Maç Sonucu"
 
-    if yari1 and ("mac sonucu" in m or m.endswith("/ms") or "iy/ms" in m):
-        return "1. Yarı / Maç Sonucu"
+    # --- İY/MS ---
+    if ilk and ms:
+        return "İlk Yarı / Maç Sonucu"
 
-    if yari1 and "sonuc" in m:
-        return "1. Yarı Sonucu"
-    if yari2 and "sonuc" in m:
-        return "2. Yarı Sonucu"
+    # --- Maç Sonucu ---
+    if ms:
+        return "Maç Sonucu"
 
+    # --- Karşılıklı Gol ailesi ---
+    if kg:
+        if "her iki yari" in m:
+            return "Her İki Yarıda Karşılıklı Gol"
+        if ilk:
+            return "İlk Yarı Karşılıklı Gol"
+        if ikinci:
+            return "İkinci Yarı Karşılıklı Gol"
+        return "Karşılıklı Gol"
+
+    # --- Her İki Yarıda da Alt/Üst ---
+    if "her iki yari" in m:
+        n = num_of()
+        if re.search(r"\balt\b", m):
+            return f"Her İki Yarıda da Alt {n}".strip()
+        if re.search(r"\bust\b", m):
+            return f"Her İki Yarıda da Üst {n}".strip()
+
+    # --- İki yarıyı kazanır ---
+    if "her iki yariyi kazanir" in m or "her iki yari kazandirir" in m:
+        if "ev" in m:
+            return "Ev Sahibi Her İki Yarıyı Kazanır"
+        return "Deplasman Her İki Yarıyı Kazanır"
+
+    # --- Yarı sonuçları ---
+    if ilk and "sonuc" in m:
+        return "İlk Yarı Sonucu"
+    if ikinci and "sonuc" in m:
+        return "İkinci Yarı Sonucu"
+
+    # --- Çifte Şans ---
     if "cifte sans" in m:
-        return f"{yari_on}Çifte Şans"
+        if "1.y" in m or "ilk yari" in m or "1. yari" in m:
+            return "İlk Yarı Çifte Şans"
+        return "Çifte Şans"
 
-    if "karsilikli gol" in m or m == "kg":
-        return f"{yari_on}Karşılıklı Gol"
+    # --- Toplam Gol / Maç Skoru ---
+    if "toplam gol" in m:
+        return "Toplam Gol"
+    if "mac skoru" in m:
+        return "Maç Skoru"
 
-    if re.search(r"alt/?ust|alt ust", m):
-        num = ""
-        nm = re.search(r"(\d+(?:\.\d+)?)", m)
-        if nm:
-            num = nm.group(1)
+    # --- Alt/Üst ailesi ---
+    if au:
+        n = num_of()
         who = ""
         if "ev sahibi" in m:
             who = "Ev Sahibi "
         elif "deplasman" in m:
             who = "Deplasman "
-        return f"{yari_on}{who}Alt/Üst {num}".strip()
+        if ilk:
+            return f"{who}İlk Yarı Altı/Üstü {n}".strip()
+        return f"{who}Alt/Üst {n}".strip()
 
-    if "toplam gol" in m:
-        return "Toplam Gol"
-
-    if "mac skoru" in m:
-        return "Maç Skoru"
-
-    if "tek/cift" in m or "tek cift" in m:
-        korner = "Korner " if "korner" in m else ""
-        return f"{yari_on}{korner}Tek / Çift".strip()
+    # --- Tek/Çift ---
+    if re.search(r"tek\s*/?\s*cift", m):
+        yari_on = "İlk Yarı " if ilk else ("İkinci Yarı " if ikinci else "")
+        return f"{yari_on}Tek / Çift".strip()
 
     return m
-
 
 def label_duzelt(l, market):
     l = str(l).strip()
     low = tr_key(l)
 
+    # Çifte Şans: "1-2", "1-x", "x-2" -> "1 ve 2" vb.
+    if market in ("Çifte Şans", "İlk Yarı Çifte Şans"):
+        cs = low.replace(" ", "")
+        m2 = re.fullmatch(r"([12x0])[-–]([12x0])", cs)
+        if m2:
+            don = {"1": "1", "x": "0", "0": "0", "2": "2"}
+            a = don.get(m2.group(1), m2.group(1))
+            b = don.get(m2.group(2), m2.group(2))
+            if a != b:
+                return f"{a} ve {b}"
+
+    # 1/0/2 marketlerinde X -> 0
+    if market in ("Maç Sonucu", "İlk Yarı Sonucu", "İkinci Yarı Sonucu"):
+        if low in ("x", "0", "beraberlik"):
+            return "0"
+        return l
+
+    # İY/MS: dashboard X bekliyor
+    if market == "İlk Yarı / Maç Sonucu":
+        parts = [p.strip() for p in l.split("/")]
+        return "/".join(
+            "X" if p.lower() in ("x", "0") else p
+            for p in parts
+        )
+
     genel = {
-        "x": "0", "beraberlik": "0",
         "alt": "Alt", "ust": "Üst",
         "var": "Var", "yok": "Yok",
         "evet": "Evet", "hayir": "Hayır",
@@ -1283,35 +1437,15 @@ def label_duzelt(l, market):
         "tek": "Tek", "cift": "Çift",
         "gol olmaz": "Gol Olmaz", "gol yok": "Gol Olmaz",
         "olmaz": "Olmaz",
+        "x": "0",
     }
     if low in genel:
         return genel[low]
 
-    if "Çifte Şans" in market:
-        cs = low.replace(" ", "")
-        csmap = {
-            "1x": "1 ve 0", "10": "1 ve 0",
-            "12": "1 ve 2",
-            "x2": "0 ve 2", "02": "0 ve 2",
-        }
-        if cs in csmap:
-            return csmap[cs]
-
-    if market == "1. Yarı / Maç Sonucu":
-        parts = l.split("/")
-        return "/".join(
-            "0" if p.strip().lower() in ("x",) else p.strip()
-            for p in parts
-        )
-
-    if "daha fazla gol" in market.lower() or "daha cok" in market.lower():
-        if low in ("1", "1."):
-            return "1."
-        if low in ("2", "2."):
-            return "2."
+    if market == "Toplam Gol":
+        return re.sub(r"\s*gol\s*$", "", l, flags=re.I).strip()
 
     return l
-
 
 def oranlari_standartlastir(oranlar):
     if not isinstance(oranlar, dict):
@@ -1337,8 +1471,9 @@ def oranlari_standartlastir(oranlar):
 
         market = market_duzelt(market_raw) if market_raw else ""
 
-        lab = label_raw
-        if not market and lab in ("1", "0", "2", "x"):
+        lab = label_temizle(label_raw) if label_raw else ""
+
+        if not market and lab in ("1", "0", "x", "2"):
             market = "Maç Sonucu"
 
         lab = label_duzelt(lab, market) if lab else ""
@@ -1348,7 +1483,6 @@ def oranlari_standartlastir(oranlar):
             out[yeni] = v
 
     return out
-
 
 # =========================
 # PANEL / GENİŞLETME
@@ -1505,11 +1639,33 @@ def mac_oranlari_cek(driver, m):
 
     row = None
 
-    if arama_yap(driver, ev[:24]):
-        row = satir_bul(driver, ev, dep)
+    # 1) Ev sahibi adaylarıyla ara
+    for aday in arama_adaylari(ev):
+        if arama_yap(driver, aday[:24]):
+            row = satir_bekle(driver, ev, dep, 6)
+            if row is not None:
+                break
 
-    if row is None and arama_yap(driver, dep[:24]):
-        row = satir_bul(driver, ev, dep)
+    # 2) Deplasman adaylarıyla ara
+    if row is None:
+        for aday in arama_adaylari(dep):
+            if arama_yap(driver, aday[:24]):
+                row = satir_bekle(driver, ev, dep, 6)
+                if row is not None:
+                    break
+
+    # 3) Yedek: aramayı temizle, scroll ile listede ara
+    if row is None:
+        arama_kutusunu_temizle(driver)
+        init_scroll_target(driver)
+        reset_scroll_top(driver)
+
+        for _ in range(25):
+            row = satir_bul_gevsek(driver, ev, dep)
+            if row is not None:
+                break
+            scroll_step(driver, 900)
+            time.sleep(0.8)
 
     if row is None:
         arama_kutusunu_temizle(driver)
@@ -1532,7 +1688,6 @@ def mac_oranlari_cek(driver, m):
 
     arama_kutusunu_temizle(driver)
     return oranlari_standartlastir(oranlar)
-
 
 # =========================
 # JSON KAYDET (DASHBOARD UYUMLU + AKILLI BİRLEŞTİRME)

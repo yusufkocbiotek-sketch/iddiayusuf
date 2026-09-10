@@ -31,7 +31,7 @@ STABLE_LIMIT = 18
 SCROLL_PX = 600
 SCROLL_SLEEP_RANGE = (1.1, 2.0)
 
-MAX_SCRAPE = 9999
+MAX_SCRAPE = 3
 SLEEP_BETWEEN_MATCHES = (1.1, 2.4)
 HARVEST_MAC_SAYISI = 50
 
@@ -1404,6 +1404,14 @@ def label_duzelt(l, market):
     l = str(l).strip()
     low = tr_key(l)
 
+    # "1 & alt" / "x & var" -> "1 ve Alt" / "0 ve Var"
+    if "&" in low:
+        parts = [p.strip() for p in low.split("&")]
+        don = {"x": "0", "alt": "Alt", "ust": "Üst",
+               "var": "Var", "yok": "Yok"}
+        yeni = [don.get(p, p) for p in parts]
+        return " ve ".join(yeni)
+
     # Çifte Şans: "1-2", "1-x", "x-2" -> "1 ve 2" vb.
     if market in ("Çifte Şans", "İlk Yarı Çifte Şans"):
         cs = low.replace(" ", "")
@@ -1476,6 +1484,16 @@ def oranlari_standartlastir(oranlar):
         if not market and lab in ("1", "0", "x", "2"):
             market = "Maç Sonucu"
 
+        # "1 & alt" kalıbı + market "Alt/Üst N" ise
+        # gerçek market: "Maç Sonucu ve Alt/Üst N"
+        if lab and " & " in lab:
+            ilk_p = lab.split("&")[0].strip()
+            if ilk_p in ("1", "x", "0", "2"):
+                if market.startswith("Alt/Üst"):
+                    nm = re.search(r"(\d+(?:\.\d+)?)", market)
+                    num = nm.group(1) if nm else ""
+                    market = f"Maç Sonucu ve Alt/Üst {num}".strip()
+
         lab = label_duzelt(lab, market) if lab else ""
 
         yeni = f"{market}_{lab}" if market else lab
@@ -1513,6 +1531,70 @@ def panel_elementi_bul(driver, row):
     except Exception:
         return None
 
+def panel_metinleri(driver, row):
+    """
+    Satır + sonraki kardeşlerin metinlerini toplar.
+    Bir sonraki maç satırına (time span içeren) gelince durur.
+    """
+    try:
+        return driver.execute_script("""
+            const row = arguments[0];
+            const out = [];
+
+            let s = row;
+            for (let i = 0; i < 12 && s; i++) {
+                if (i > 0 && s.querySelector &&
+                    s.querySelector('span[data-testid^="time-"]') &&
+                    !row.contains(s)) {
+                    break;
+                }
+                out.push(s.innerText || '');
+                s = s.nextElementSibling;
+            }
+
+            return out;
+        """, row)
+    except Exception:
+        return []
+
+
+def panel_oranlari_cek(driver, ev, dep, max_sure=12):
+    """
+    Satırı her turda taze bulur, tüm kardeş metinlerini parse eder,
+    oranları birleştirir. 3 tur yeni anahtar gelmezse durur.
+    """
+    toplam = {}
+    sabit = 0
+    t0 = time.time()
+
+    while time.time() - t0 < max_sure:
+        row = satir_bul(driver, ev, dep)
+        if row is None:
+            time.sleep(1)
+            sabit += 1
+            if sabit >= 3:
+                break
+            continue
+
+        onceki = len(toplam)
+
+        for t in panel_metinleri(driver, row):
+            try:
+                o = nesine_oran_parse(t)
+                toplam.update(o)
+            except Exception:
+                pass
+
+        if len(toplam) == onceki:
+            sabit += 1
+            if sabit >= 3:
+                break
+        else:
+            sabit = 0
+
+        time.sleep(1.0)
+
+    return toplam
 
 def genislet_dogrula(driver, ev, dep, deneme=3):
     """
@@ -1637,58 +1719,55 @@ def mac_oranlari_cek(driver, m):
     ev = m["ev_sahibi"]
     dep = m["deplasman"]
 
-    row = None
-
-    # 1) Ev sahibi adaylarıyla ara
-    for aday in arama_adaylari(ev):
-        if arama_yap(driver, aday[:24]):
-            row = satir_bekle(driver, ev, dep, 6)
-            if row is not None:
-                break
-
-    # 2) Deplasman adaylarıyla ara
-    if row is None:
-        for aday in arama_adaylari(dep):
-            if arama_yap(driver, aday[:24]):
-                row = satir_bekle(driver, ev, dep, 6)
-                if row is not None:
-                    break
-
-    # 3) Yedek: aramayı temizle, scroll ile listede ara
-    if row is None:
-        arama_kutusunu_temizle(driver)
-        init_scroll_target(driver)
-        reset_scroll_top(driver)
-
-        for _ in range(25):
-            row = satir_bul_gevsek(driver, ev, dep)
-            if row is not None:
-                break
-            scroll_step(driver, 900)
-            time.sleep(0.8)
-
-    if row is None:
-        arama_kutusunu_temizle(driver)
-        return None
-
-    oranlar = {}
-
     try:
+        row = None
+
+        if arama_yap(driver, ev[:24]):
+            row = satir_bul(driver, ev, dep)
+
+        if row is None and arama_yap(driver, dep[:24]):
+            row = satir_bul(driver, ev, dep)
+
+        if row is None:
+            arama_kutusunu_temizle(driver)
+            return None
+
+        oranlar = {}
+
         row, panel = genislet_dogrula(driver, ev, dep)
 
         if panel is not None:
-            oranlar = panel_oranlari_cek(driver, panel)
+            oranlar = panel_oranlari_cek(driver, ev, dep)
         else:
             print("   ⚠️ Panel açılamadı")
 
         kapat_dogrula(driver, ev, dep)
 
+        arama_kutusunu_temizle(driver)
+
+        sonuc = oranlari_standartlastir(oranlar)
+
+        # Standartlaştırma sonrası güvenlik kontrolü
+        temiz = {}
+        for k, v in sonuc.items():
+            try:
+                fv = float(v)
+                temiz[str(k)] = fv
+            except Exception:
+                print(f"   ⚠️ Bozuk oran atlandı: {k!r} = {v!r}")
+
+        return temiz
+
     except Exception as e:
-        print(f"   ⚠️ Oran hatası: {str(e)[:60]}")
+        print(f"   ⚠️ Oran hatası: {str(e)[:100]}")
+        traceback.print_exc()
 
-    arama_kutusunu_temizle(driver)
-    return oranlari_standartlastir(oranlar)
+        try:
+            arama_kutusunu_temizle(driver)
+        except Exception:
+            pass
 
+        return {}
 # =========================
 # JSON KAYDET (DASHBOARD UYUMLU + AKILLI BİRLEŞTİRME)
 # =========================

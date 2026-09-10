@@ -24,14 +24,16 @@ from webdriver_manager.chrome import ChromeDriverManager
 # AYARLAR
 # =========================
 URL_BASE = "https://www.nesine.com/iddaa"
-CIKTI_DOSYA = "public/data/mac.json"
+
+REPO_ROOT = Path(__file__).resolve().parent
+CIKTI_DOSYA = str(REPO_ROOT / "public" / "data" / "mac.json")
 
 MAX_SCROLL_STEPS = 300
 STABLE_LIMIT = 18
 SCROLL_PX = 600
 SCROLL_SLEEP_RANGE = (1.1, 2.0)
 
-MAX_SCRAPE = 3
+MAX_SCRAPE = 9999
 SLEEP_BETWEEN_MATCHES = (1.1, 2.4)
 HARVEST_MAC_SAYISI = 50
 
@@ -72,7 +74,6 @@ def yarinin_tarihi():
 def nesine_dt_url(tarih_iso):
     """
     2026-09-08 -> https://www.nesine.com/iddaa?et=1&le=2&dt=08.09.2026
-    et=1: futbol | le=2: site standart filtre parametreleri
     """
     try:
         t = datetime.datetime.strptime(tarih_iso, "%Y-%m-%d")
@@ -83,12 +84,23 @@ def nesine_dt_url(tarih_iso):
 
 def url_tarih_uyuyor_mu(url, tarih_iso):
     """
-    URL içinde dt=GG.AA.YYYY bizim tarihimiz mi kontrol eder.
+    URL'deki dt= parametresi tam olarak bizim günümüz mü?
+    Bilinçli olarak KATI kontrol: 'dt=10.09|11.09' gibi çift gün
+    seçimlerini kabul ETMİYORUZ (yanlış güne maç yazmamak için).
     """
     try:
         t = datetime.datetime.strptime(tarih_iso, "%Y-%m-%d")
         hedef = t.strftime("%d.%m.%Y")
-        return f"dt={hedef}" in (url or "")
+
+        m = re.search(r"dt=([^&]+)", url or "")
+        if not m:
+            return False
+
+        gunler = m.group(1).split("%7C")
+        gunler = [g.replace("%7C", "").strip() for g in gunler]
+
+        return gunler == [hedef]
+
     except Exception:
         return False
 
@@ -97,7 +109,6 @@ def url_tarih_uyuyor_mu(url, tarih_iso):
 # GİT
 # =========================
 ENABLE_GIT_AUTOPUSH = True
-REPO_ROOT = Path(__file__).resolve().parent
 
 
 def _find_git_exe():
@@ -146,7 +157,7 @@ def git_force_push():
     _run_cmd([git_exe, "checkout", "-B", "main"], cwd=str(REPO_ROOT))
     print("   📌 main branch'e geçildi")
 
-    _run_cmd([git_exe, "add", "."], cwd=str(REPO_ROOT))
+    _run_cmd([git_exe, "add", "-A"], cwd=str(REPO_ROOT))
     print("   ✅ Dosyalar eklendi")
 
     zaman = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
@@ -158,7 +169,11 @@ def git_force_push():
     r_push = _run_cmd([git_exe, "push", "-f", "origin", "main"], cwd=str(REPO_ROOT))
 
     if r_push["ok"]:
-        print("✅ GİT BAŞARILI!")
+        time.sleep(2)
+        r_ls = _run_cmd([git_exe, "ls-remote", "origin", "main"], cwd=str(REPO_ROOT))
+        out = (r_ls.get("stdout") or "").split()
+        remote_hash = out[0][:7] if out else "?"
+        print(f"✅ GİT BAŞARILI! Remote main: {remote_hash}")
     else:
         print(f"❌ HATA: {r_push.get('stderr', '')}")
 
@@ -214,9 +229,6 @@ def cookie_kabul_et(driver):
 
 
 def reklam_kapat(driver):
-    """
-    Açılış reklamı / tam sayfa popup kapatıcı.
-    """
     try:
         ActionChains(driver).send_keys(Keys.ESCAPE).perform()
         time.sleep(0.5)
@@ -319,10 +331,6 @@ def reklam_kapat(driver):
 
 
 def find_match_cards(driver):
-    """
-    Nesine maç satırlarını bulur.
-    Her satırda span[data-testid^="time-"] (maç saati) vardır.
-    """
     try:
         rows = driver.execute_script("""
             function visible(el) {
@@ -438,9 +446,6 @@ def arama_var_mi(driver):
 
 
 def satir_sayisi_bekle(driver, max_sure=20):
-    """
-    Maç satırları yüklenene kadar polling yapar.
-    """
     t0 = time.time()
     satir = 0
 
@@ -626,204 +631,210 @@ def extract_visible(driver, current_date):
     out = []
     seen = set()
 
-    rows = find_match_cards(driver)
+    try:
+        data = driver.execute_script("""
+            function visible(el) {
+                if (!el) return false;
+                const r = el.getBoundingClientRect();
+                const s = getComputedStyle(el);
+                return r.width > 100 &&
+                       r.height > 10 &&
+                       r.height < 400 &&
+                       s.display !== 'none' &&
+                       s.visibility !== 'hidden' &&
+                       Number(s.opacity || 1) > 0;
+            }
 
-    for r in rows:
-        try:
-            info = driver.execute_script("""
-                const row = arguments[0];
+            const timeEls = Array.from(
+                document.querySelectorAll('span[data-testid^="time-"]')
+            );
 
-                function isJunkLine(t) {
-                    if (!t) return true;
-                    if (/^\\d+([.,]\\d+)?$/.test(t)) return true;
-                    if (/^\\d{1,2}:\\d{2}$/.test(t)) return true;
-                    if (/^\\d{3,5}$/.test(t)) return true;
+            let rowCands = [];
 
-                    const junk = [
-                        'ms', '1x2', 'alt', 'üst', 'ust', 'var', 'yok',
-                        'iy', 'mbs', 'kod', 'canlı', 'canli',
-                        'maç sonucu', 'mac sonucu', 'alt/üst',
-                        'ilk yarı', 'karşılıklı gol', 'karsilikli gol',
-                        'bugün', 'bugun', 'yarın', 'yarin'
-                    ];
+            for (const t of timeEls) {
+                let n = t;
 
-                    const n = t.toLowerCase();
-                    if (junk.includes(n)) return true;
-                    if (n.length > 60) return true;
+                for (let i = 0; i < 10 && n; i++) {
+                    const txt = (n.innerText || '').trim();
 
-                    return false;
+                    if (visible(n) && txt.length > 30 && txt.length < 2000 && txt.includes('-')) {
+                        rowCands.push(n);
+                        break;
+                    }
+
+                    n = n.parentElement;
+                }
+            }
+
+            rowCands = [...new Set(rowCands)];
+            rowCands = rowCands.filter(el =>
+                !rowCands.some(other => other !== el && el.contains(other))
+            );
+
+            function posSort(arr) {
+                return arr.sort((a, b) => {
+                    const pos = a.compareDocumentPosition(b);
+                    return (pos & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1;
+                });
+            }
+
+            const rows = posSort(rowCands).slice(0, 1200);
+
+            const headers = posSort(Array.from(document.querySelectorAll('strong')).filter(el => {
+                const t = (el.innerText || '').trim();
+
+                if (!t || t.length < 3 || t.length > 60) return false;
+                if (t.includes(' - ')) return false;
+                if (/\\d{1,3}[.,]\\d{2}/.test(t)) return false;
+                if (/^\\d+$/.test(t)) return false;
+
+                for (const r of rows) {
+                    if (r.contains(el)) return false;
                 }
 
-                function getTeams(row) {
-                    const lines = (row.innerText || '')
-                        .split('\\n')
-                        .map(x => x.trim())
-                        .filter(Boolean);
+                return true;
+            }));
 
-                    for (const l of lines) {
-                        if (l.includes(' - ') && l.length < 90) {
-                            const parts = l.split(' - ');
-                            if (parts.length >= 2) {
-                                const a = parts[0].trim();
-                                const b = parts.slice(1).join(' - ').trim();
-                                if (a && b && !isJunkLine(a) && !isJunkLine(b)) {
-                                    return [a, b];
-                                }
+            let hi = 0;
+            let curLig = '';
+            const out = [];
+
+            function isJunkLine(t) {
+                if (!t) return true;
+                if (/^\\d+([.,]\\d+)?$/.test(t)) return true;
+                if (/^\\d{1,2}:\\d{2}$/.test(t)) return true;
+                if (/^\\d{3,5}$/.test(t)) return true;
+
+                const junk = [
+                    'ms', '1x2', 'alt', 'üst', 'ust', 'var', 'yok',
+                    'iy', 'mbs', 'kod', 'canlı', 'canli',
+                    'maç sonucu', 'mac sonucu', 'alt/üst',
+                    'ilk yarı', 'karşılıklı gol', 'karsilikli gol',
+                    'bugün', 'bugun', 'yarın', 'yarin'
+                ];
+
+                const n = t.toLowerCase();
+                if (junk.includes(n)) return true;
+                if (n.length > 60) return true;
+
+                return false;
+            }
+
+            function getTeams(row) {
+                const lines = (row.innerText || '')
+                    .split('\\n')
+                    .map(x => x.trim())
+                    .filter(Boolean);
+
+                for (const l of lines) {
+                    if (l.includes(' - ') && l.length < 90) {
+                        const parts = l.split(' - ');
+                        if (parts.length >= 2) {
+                            const a = parts[0].trim();
+                            const b = parts.slice(1).join(' - ').trim();
+                            if (a && b && !isJunkLine(a) && !isJunkLine(b)) {
+                                return [a, b];
                             }
                         }
                     }
-
-                    const cand = [];
-
-                    for (const l of lines) {
-                        if (isJunkLine(l)) continue;
-                        if (!/[A-Za-zÇĞİÖŞÜçğıöşü]{3,}/.test(l)) continue;
-                        if (!cand.includes(l)) cand.push(l);
-                        if (cand.length >= 2) break;
-                    }
-
-                    if (cand.length >= 2) {
-                        return [cand[0], cand[1]];
-                    }
-
-                    return ['', ''];
                 }
 
-                function getTime(row) {
-                    const t = row.querySelector('span[data-testid^="time-"]');
-                    if (!t) return '';
+                const cand = [];
 
-                    const dtid = t.getAttribute('data-testid') || '';
-
-                    if (dtid.startsWith('time-')) {
-                        return dtid.replace('time-', '').trim();
-                    }
-
-                    return (t.innerText || '').trim();
+                for (const l of lines) {
+                    if (isJunkLine(l)) continue;
+                    if (!/[A-Za-zÇĞİÖŞÜçğıöşü]{3,}/.test(l)) continue;
+                    if (!cand.includes(l)) cand.push(l);
+                    if (cand.length >= 2) break;
                 }
 
-                function cleanLeague(t) {
-                    return (t || '')
-                        .replace('Bugün', '')
-                        .replace('Yarın', '')
-                        .replace('Today', '')
-                        .replace('Tomorrow', '')
-                        .trim();
+                if (cand.length >= 2) return [cand[0], cand[1]];
+                return ['', ''];
+            }
+
+            function getTime(row) {
+                const t = row.querySelector('span[data-testid^="time-"]');
+                if (!t) return '';
+
+                const dtid = t.getAttribute('data-testid') || '';
+
+                if (dtid.startsWith('time-')) {
+                    return dtid.replace('time-', '').trim();
                 }
 
-                function findLeague(row) {
-                    function oddCount(t){
-                        return ((t || '').match(/\\d{1,3}[.,]\\d{2}/g) || []).length;
-                    }
+                return (t.innerText || '').trim();
+            }
 
-                    function visible(el){
-                        const r = el.getBoundingClientRect();
-                        const s = getComputedStyle(el);
-                        return r.width > 0 && r.height > 0 &&
-                               s.display !== 'none' && s.visibility !== 'hidden';
-                    }
-
-                    let n = row;
-
-                    for (let i = 0; i < 10 && n; i++) {
-                        let p = n.previousElementSibling;
-                        let adim = 0;
-
-                        while (p && adim < 15) {
-                            adim++;
-
-                            if (visible(p)) {
-                                const txt = p.innerText || '';
-
-                                if (txt.includes('CANLI')) {
-                                    return 'CANLI';
-                                }
-
-                                // Genişlemiş oran panelini LİG SANMA
-                                if (oddCount(txt) >= 3) {
-                                    p = p.previousElementSibling;
-                                    continue;
-                                }
-
-                                let strong = null;
-                                if (p.tagName === 'STRONG') strong = p;
-                                else if (p.querySelector) strong = p.querySelector('strong');
-
-                                if (strong) {
-                                    const lt = cleanLeague(strong.innerText || '');
-
-                                    // "Takım A - Takım B" kalıbını lig sanma
-                                    if (lt && lt.length <= 60 &&
-                                        !lt.includes(' - ') && oddCount(lt) === 0) {
-                                        return lt;
-                                    }
-                                }
-                            }
-
-                            p = p.previousElementSibling;
-                        }
-
-                        n = n.parentElement;
-                    }
-
-                    return '';
+            for (const row of rows) {
+                while (
+                    hi < headers.length &&
+                    (headers[hi].compareDocumentPosition(row) & Node.DOCUMENT_POSITION_FOLLOWING)
+                ) {
+                    curLig = (headers[hi].innerText || '').trim();
+                    hi++;
                 }
 
                 const teams = getTeams(row);
 
-                return {
+                out.push({
                     ev: teams[0],
                     dep: teams[1],
                     saat: getTime(row),
-                    lig: findLeague(row)
-                };
-            """, r)
-
-            ev = (info.get("ev") or "").strip()
-            dep = (info.get("dep") or "").strip()
-            saat = (info.get("saat") or "").strip()
-            lig = (info.get("lig") or "").strip()
-
-            if not ev or not dep or ev == dep:
-                continue
-
-            if re.fullmatch(r"\d+", ev) or re.fullmatch(r"\d+", dep):
-                continue
-
-            if lig == "CANLI":
-                continue
-
-            if not TIME_RE.match(saat):
-                continue
-
-            if len(ev) > 70 or len(dep) > 70:
-                continue
-
-            m = {
-                "tarih": current_date,
-                "saat": saat,
-                "lig": lig,
-                "ev_sahibi": ev,
-                "deplasman": dep,
-                "durum": "baslamadi",
-                "skor_ev": 0,
-                "skor_dep": 0,
-                "skor_1y_ev": 0,
-                "skor_1y_dep": 0,
-                "oranlar": {},
-                "kaynak": "nesine.com"
+                    lig: curLig || ''
+                });
             }
 
-            k = (m["tarih"], m["ev_sahibi"], m["deplasman"])
+            return out;
+        """)
+    except Exception:
+        return []
 
-            if k in seen:
-                continue
+    for info in data or []:
+        ev = (info.get("ev") or "").strip()
+        dep = (info.get("dep") or "").strip()
+        saat = (info.get("saat") or "").strip()
+        lig = (info.get("lig") or "").strip()
 
-            seen.add(k)
-            out.append(m)
+        if not ev or not dep or ev == dep:
+            continue
 
-        except Exception:
-            pass
+        if re.fullmatch(r"\d+", ev) or re.fullmatch(r"\d+", dep):
+            continue
+
+        if lig == "CANLI":
+            continue
+
+        if " - " in lig or re.fullmatch(r"\d+", lig) or len(lig) > 60:
+            lig = ""
+
+        if not TIME_RE.match(saat):
+            continue
+
+        if len(ev) > 70 or len(dep) > 70:
+            continue
+
+        m = {
+            "tarih": current_date,
+            "saat": saat,
+            "lig": lig,
+            "ev_sahibi": ev,
+            "deplasman": dep,
+            "durum": "baslamadi",
+            "skor_ev": 0,
+            "skor_dep": 0,
+            "skor_1y_ev": 0,
+            "skor_1y_dep": 0,
+            "oranlar": {},
+            "kaynak": "nesine.com"
+        }
+
+        k = (m["tarih"], m["ev_sahibi"], m["deplasman"])
+
+        if k in seen:
+            continue
+
+        seen.add(k)
+        out.append(m)
 
     return out
 
@@ -832,12 +843,6 @@ def extract_visible(driver, current_date):
 # TARİH SEÇİMİ (BUGÜN / YARIN)
 # =========================
 def gun_sec(driver, gun_adi, tarih_iso):
-    """
-    1) 'Tarih ve Lig Seçimi' paneline GERÇEK tıklama ile açar
-    2) Bugün/Yarın seçeneğine GERÇEK tıklama yapar
-    3) 'Filtrele' butonuna basar
-    4) URL'de dt= parametresi oluşmadıysa direkt URL'ine gider
-    """
     print(f"      🔎 '{gun_adi}' seçiliyor...")
 
     # ---------- A) PANEL YÖNTEMİ ----------
@@ -915,7 +920,7 @@ def gun_sec(driver, gun_adi, tarih_iso):
             if satir > 0:
                 return True
         else:
-            print(f"      ⚠️ URL değişmedi: {driver.current_url}")
+            print(f"      ⚠️ URL tek güne ayarlanamadı: {driver.current_url}")
 
     except Exception as e:
         print(f"      ⚠️ Panel yöntemi hata: {str(e)[:120]}")
@@ -1050,7 +1055,7 @@ def deep_harvest(driver):
 
 
 # =========================
-# ORAN ÇEKME
+# ORAN ÇEKME - ARAMA
 # =========================
 def arama_kutusunu_temizle(driver):
     try:
@@ -1091,10 +1096,11 @@ def satir_bul(driver, ev, dep):
 
     return None
 
+
 def arama_adaylari(isim):
     """
-    "New York Red B. II" için adaylar üretir:
-    ["New York Red B. II", "New York Red II", "New York Red", "New York"]
+    'New York Red B. II' için adaylar:
+    ['New York Red B. II', 'New York Red II', 'New York Red', 'New York']
     """
     adaylar = []
     isim = (isim or "").strip()
@@ -1102,7 +1108,6 @@ def arama_adaylari(isim):
     if isim:
         adaylar.append(isim)
 
-    # Nokta ile biten kısaltma tokenlarını at ("B.", "Ath", "Spr." gibi)
     tokens = isim.split()
     temiz = [
         t for t in tokens
@@ -1128,9 +1133,6 @@ def arama_adaylari(isim):
 
 
 def satir_bul_gevsek(driver, ev, dep):
-    """
-    Önce tam eşleşme, sonra kısa önek, en son sadece ev sahibi öneki.
-    """
     listeler = [
         (ev[:20], dep[:20]),
         (ev[:12], dep[:12]),
@@ -1150,9 +1152,6 @@ def satir_bul_gevsek(driver, ev, dep):
 
 
 def satir_bekle(driver, ev, dep, max_sure=6):
-    """
-    Filtrelenen satırlar render olana kadar bekler.
-    """
     t0 = time.time()
 
     while time.time() - t0 < max_sure:
@@ -1163,14 +1162,10 @@ def satir_bekle(driver, ev, dep, max_sure=6):
 
     return None
 
-def nokta_var_mi(t):
-    try:
-        v = float(str(t).replace(",", "."))
-        return 1.01 <= v <= 999.99
-    except Exception:
-        return False
 
-
+# =========================
+# ORAN PARSE
+# =========================
 def oran_satiri_mi(t):
     return bool(ODD_RE.match(t.strip()))
 
@@ -1201,10 +1196,10 @@ def nesine_oran_parse(text):
     Satır bazlı oran parse:
     - Oran satırının bir üstü etiket
     - Etiketi olmayan başlıklar market olur
-    - "1 2.10" gibi aynı satırda label+oran desteği
+    - '1 2.10' tek satır desteği
+    - '1 X 2' + altında 3'lü grid desteği
     """
     oranlar = {}
-    atlanan = 0
 
     lines = [
         x.strip() for x in str(text).split("\n")
@@ -1218,21 +1213,84 @@ def nesine_oran_parse(text):
         line = lines[i]
         nxt = lines[i + 1] if i + 1 < len(lines) else ""
 
-        # "1 2.10" gibi aynı satırda label+oran kalıbı
+        # --- A) 3'lü grid başlığı: '1 X 2' / '1 0 2' / 'MS 1 X 2' ---
+        if re.fullmatch(r"(?:ms\s+)?1\s+[xX0]\s+2", line):
+            j = i + 1
+            deger_satiri = None
+
+            while j < len(lines) and (j - i) <= 3:
+                if re.search(r"\d{1,3}[.,]\d{2}", lines[j]):
+                    deger_satiri = lines[j]
+                    break
+                j += 1
+
+            if deger_satiri:
+                vals = re.findall(r"\d{1,3}[.,]\d{2}", deger_satiri)
+
+                if 2 <= len(vals) <= 3:
+                    for lab, vv in zip(["1", "X", "2"], vals):
+                        full_key = f"{market}_{lab}" if market else lab
+                        kk = full_key.strip().lower()
+
+                        if not kk.startswith(SILINECEK_BASLANGICLAR):
+                            try:
+                                oranlar[full_key] = float(vv.replace(",", "."))
+                            except Exception:
+                                pass
+
+                    i = j + 1
+                    continue
+
+            i += 1
+            continue
+
+        # --- B) Tek satırda çoklu çift: '1 2.10 X 3.30 2 2.45' ---
+        tok = line.split()
+        sayilar = [t for t in tok if re.fullmatch(r"\d{1,3}[.,]\d{2}", t)]
+
+        if (
+            len(sayilar) >= 2
+            and len(tok) == len(sayilar) * 2
+            and tok[0].lower() in ("1", "x", "2", "0")
+        ):
+            lab = None
+
+            for t in tok:
+                if re.fullmatch(r"\d{1,3}[.,]\d{2}", t):
+                    if lab is not None:
+                        full_key = f"{market}_{lab}" if market else lab
+                        kk = full_key.strip().lower()
+
+                        if not kk.startswith(SILINECEK_BASLANGICLAR):
+                            try:
+                                oranlar[full_key] = float(t.replace(",", "."))
+                            except Exception:
+                                pass
+                        lab = None
+                else:
+                    lab = t
+
+            i += 1
+            continue
+
+        # --- C) '1 2.10' tek çift aynı satırda ---
         tek = re.match(r"^(\D{1,30}?)\s+(\d{1,3}[.,]\d{2})$", line)
         if tek:
             lab = tek.group(1).strip()
-            val = float(tek.group(2).replace(",", "."))
+            try:
+                val = float(tek.group(2).replace(",", "."))
+            except Exception:
+                val = 0
+
             if lab and 1.01 <= val <= 999:
                 full_key = f"{market}_{lab}" if market else lab
                 kk = full_key.strip().lower()
-                if kk.startswith(SILINECEK_BASLANGICLAR):
-                    atlanan += 1
-                else:
+                if not kk.startswith(SILINECEK_BASLANGICLAR):
                     oranlar[full_key] = val
             i += 1
             continue
 
+        # --- D) Klasik akış ---
         if oran_satiri_mi(line):
             i += 1
             continue
@@ -1244,9 +1302,7 @@ def nesine_oran_parse(text):
                 full_key = f"{market}_{label}" if market else label
                 k = full_key.strip().lower()
 
-                if k.startswith(SILINECEK_BASLANGICLAR):
-                    atlanan += 1
-                else:
+                if not k.startswith(SILINECEK_BASLANGICLAR):
                     try:
                         oranlar[full_key] = float(nxt.replace(",", "."))
                     except Exception:
@@ -1261,14 +1317,11 @@ def nesine_oran_parse(text):
 
             i += 1
 
-    if atlanan > 0:
-        print(f"   🚫 {atlanan} gereksiz oran filtrelendi")
-
     return oranlar
 
 
 # =========================
-# ORAN ANAHTARI STANDARTLASTIRMA
+# ANAHTAR STANDARTLASTIRMA
 # =========================
 def tr_key(s):
     s = str(s or "")
@@ -1281,9 +1334,9 @@ def tr_key(s):
     s = s.lower()
     return re.sub(r"\s+", " ", s).strip()
 
+
 def label_temizle(l):
     """
-    Nesine label'larındaki market öneklerini temizler:
     'MS 1' -> '1', 'HMS x' -> 'x', 'CS 1-2' -> '1-2', '2.Y 1' -> '1'
     """
     l = str(l).strip()
@@ -1293,10 +1346,10 @@ def label_temizle(l):
 
     return low.strip()
 
+
 def market_duzelt(m):
     """
-    tr_key ile normalize edilmiş market adını KA haritasındaki
-    TAM isimlere çevirir (dashboard sözleşmesi).
+    Normalize market adını dashboard (KA haritası) isimlerine çevirir.
     """
     m = re.sub(r"\s+", " ", m).strip(" _-")
     m = re.sub(r"(\d),(\d)", r"\1.\2", m)
@@ -1400,11 +1453,12 @@ def market_duzelt(m):
 
     return m
 
+
 def label_duzelt(l, market):
     l = str(l).strip()
     low = tr_key(l)
 
-    # "1 & alt" / "x & var" -> "1 ve Alt" / "0 ve Var"
+    # '1 & alt' / 'x & var' -> '1 ve Alt' / '0 ve Var'
     if "&" in low:
         parts = [p.strip() for p in low.split("&")]
         don = {"x": "0", "alt": "Alt", "ust": "Üst",
@@ -1412,7 +1466,7 @@ def label_duzelt(l, market):
         yeni = [don.get(p, p) for p in parts]
         return " ve ".join(yeni)
 
-    # Çifte Şans: "1-2", "1-x", "x-2" -> "1 ve 2" vb.
+    # Çifte Şans: '1-2', '1-x', 'x-2' -> '1 ve 2' vb.
     if market in ("Çifte Şans", "İlk Yarı Çifte Şans"):
         cs = low.replace(" ", "")
         m2 = re.fullmatch(r"([12x0])[-–]([12x0])", cs)
@@ -1455,6 +1509,7 @@ def label_duzelt(l, market):
 
     return l
 
+
 def oranlari_standartlastir(oranlar):
     if not isinstance(oranlar, dict):
         return oranlar
@@ -1484,8 +1539,8 @@ def oranlari_standartlastir(oranlar):
         if not market and lab in ("1", "0", "x", "2"):
             market = "Maç Sonucu"
 
-        # "1 & alt" kalıbı + market "Alt/Üst N" ise
-        # gerçek market: "Maç Sonucu ve Alt/Üst N"
+        # '1 & alt' kalıbı + market 'Alt/Üst N' ise
+        # gerçek market: 'Maç Sonucu ve Alt/Üst N'
         if lab and " & " in lab:
             ilk_p = lab.split("&")[0].strip()
             if ilk_p in ("1", "x", "0", "2"):
@@ -1502,13 +1557,11 @@ def oranlari_standartlastir(oranlar):
 
     return out
 
+
 # =========================
 # PANEL / GENİŞLETME
 # =========================
 def panel_elementi_bul(driver, row):
-    """
-    Satırın kardeşleri arasında genişlemiş oran panelini bulur.
-    """
     try:
         return driver.execute_script("""
             const row = arguments[0];
@@ -1531,25 +1584,55 @@ def panel_elementi_bul(driver, row):
     except Exception:
         return None
 
+
 def panel_metinleri(driver, row):
     """
-    Satır + sonraki kardeşlerin metinlerini toplar.
-    Bir sonraki maç satırına (time span içeren) gelince durur.
+    Oran metinlerini 3 kaynaktan toplar:
+      1) Satırın kendisi
+      2) Sonraki 25 kardeş (yeni maç satırına gelince durur)
+      3) İçinde BAŞKA maç bulunmayan en dış ebeveynin tam metni
+    Birleştirilerek parse edilir -> en geniş market kapsamı.
     """
     try:
         return driver.execute_script("""
             const row = arguments[0];
             const out = [];
 
-            let s = row;
-            for (let i = 0; i < 12 && s; i++) {
-                if (i > 0 && s.querySelector &&
-                    s.querySelector('span[data-testid^="time-"]') &&
-                    !row.contains(s)) {
+            out.push(row.innerText || '');
+
+            let s = row.nextElementSibling;
+            for (let i = 0; i < 25 && s; i++) {
+                if (s.querySelector && s.querySelector('span[data-testid^="time-"]')) {
                     break;
                 }
                 out.push(s.innerText || '');
                 s = s.nextElementSibling;
+            }
+
+            let p = row.parentElement;
+            let bestParent = null;
+
+            for (let i = 0; i < 6 && p; i++) {
+                const myTime = row.querySelector('span[data-testid^="time-"]');
+
+                const others = Array.from(
+                    p.querySelectorAll('span[data-testid^="time-"]')
+                ).filter(t => t !== myTime && !row.contains(t));
+
+                if (others.length === 0) {
+                    bestParent = p;
+                } else {
+                    break;
+                }
+
+                p = p.parentElement;
+            }
+
+            if (bestParent) {
+                const pt = bestParent.innerText || '';
+                if (pt.length < 30000) {
+                    out.push(pt);
+                }
             }
 
             return out;
@@ -1558,10 +1641,10 @@ def panel_metinleri(driver, row):
         return []
 
 
-def panel_oranlari_cek(driver, ev, dep, max_sure=12):
+def panel_oranlari_cek(driver, ev, dep, max_sure=15):
     """
-    Satırı her turda taze bulur, tüm kardeş metinlerini parse eder,
-    oranları birleştirir. 3 tur yeni anahtar gelmezse durur.
+    Satırı her turda taze bulur, tüm metin kaynaklarını parse eder,
+    oranları BİRLEŞTİRİR. 3 tur yeni anahtar gelmezse durur.
     """
     toplam = {}
     sabit = 0
@@ -1596,11 +1679,8 @@ def panel_oranlari_cek(driver, ev, dep, max_sure=12):
 
     return toplam
 
+
 def genislet_dogrula(driver, ev, dep, deneme=3):
-    """
-    Satırı her denemede taze bulur, genişletir, panel açıldığını doğrular.
-    Döndürür: (row, panel) veya (None, None)
-    """
     for _ in range(deneme):
         row = satir_bul(driver, ev, dep)
         if row is None:
@@ -1660,9 +1740,6 @@ def genislet_dogrula(driver, ev, dep, deneme=3):
 
 
 def kapat_dogrula(driver, ev, dep, deneme=3):
-    """
-    Açık paneli kapatır ve kapandığını doğrular.
-    """
     for _ in range(deneme):
         row = satir_bul(driver, ev, dep)
         if row is None:
@@ -1684,37 +1761,6 @@ def kapat_dogrula(driver, ev, dep, deneme=3):
         time.sleep(0.8)
 
 
-def panel_oranlari_cek(driver, panel, max_sure=10):
-    """
-    Sadece panel elementinin metnini parse eder.
-    Oran sayısı 2 ölçüm sabit kalınca durur.
-    """
-    son = {}
-    ayni = 0
-    t0 = time.time()
-
-    while time.time() - t0 < max_sure:
-        time.sleep(1.0)
-
-        try:
-            txt = panel.text or ""
-        except Exception:
-            break
-
-        o = nesine_oran_parse(txt)
-
-        if len(o) == len(son):
-            ayni += 1
-            if ayni >= 2:
-                break
-        else:
-            ayni = 0
-            if len(o) > len(son):
-                son = o
-
-    return son
-
-
 def mac_oranlari_cek(driver, m):
     ev = m["ev_sahibi"]
     dep = m["deplasman"]
@@ -1722,11 +1768,33 @@ def mac_oranlari_cek(driver, m):
     try:
         row = None
 
-        if arama_yap(driver, ev[:24]):
-            row = satir_bul(driver, ev, dep)
+        # 1) Ev sahibi adaylarıyla ara
+        for aday in arama_adaylari(ev):
+            if arama_yap(driver, aday[:24]):
+                row = satir_bekle(driver, ev, dep, 5)
+                if row is not None:
+                    break
 
-        if row is None and arama_yap(driver, dep[:24]):
-            row = satir_bul(driver, ev, dep)
+        # 2) Deplasman adaylarıyla ara
+        if row is None:
+            for aday in arama_adaylari(dep):
+                if arama_yap(driver, aday[:24]):
+                    row = satir_bekle(driver, ev, dep, 5)
+                    if row is not None:
+                        break
+
+        # 3) Arama olmazsa scroll ile gevşek ara
+        if row is None:
+            arama_kutusunu_temizle(driver)
+            init_scroll_target(driver)
+            reset_scroll_top(driver)
+
+            for _ in range(25):
+                row = satir_bul_gevsek(driver, ev, dep)
+                if row is not None:
+                    break
+                scroll_step(driver, 900)
+                time.sleep(0.7)
 
         if row is None:
             arama_kutusunu_temizle(driver)
@@ -1747,14 +1815,13 @@ def mac_oranlari_cek(driver, m):
 
         sonuc = oranlari_standartlastir(oranlar)
 
-        # Standartlaştırma sonrası güvenlik kontrolü
         temiz = {}
         for k, v in sonuc.items():
             try:
                 fv = float(v)
                 temiz[str(k)] = fv
             except Exception:
-                print(f"   ⚠️ Bozuk oran atlandı: {k!r} = {v!r}")
+                pass
 
         return temiz
 
@@ -1768,8 +1835,10 @@ def mac_oranlari_cek(driver, m):
             pass
 
         return {}
+
+
 # =========================
-# JSON KAYDET (DASHBOARD UYUMLU + AKILLI BİRLEŞTİRME)
+# JSON KAYDET
 # =========================
 def mac_json_kaydet(yeni_maclar):
     data = {"matches": [], "son_guncelleme": ""}
@@ -1815,25 +1884,11 @@ def mac_json_kaydet(yeni_maclar):
     )
 
     for idx, mac in enumerate(sirali, 1):
-        try:
-            skor_ev = int(mac.get("skor_ev", 0) or 0)
-        except Exception:
-            skor_ev = 0
-
-        try:
-            skor_dep = int(mac.get("skor_dep", 0) or 0)
-        except Exception:
-            skor_dep = 0
-
-        try:
-            skor_1y_ev = int(mac.get("skor_1y_ev", 0) or 0)
-        except Exception:
-            skor_1y_ev = 0
-
-        try:
-            skor_1y_dep = int(mac.get("skor_1y_dep", 0) or 0)
-        except Exception:
-            skor_1y_dep = 0
+        def to_int(v):
+            try:
+                return int(v or 0)
+            except Exception:
+                return 0
 
         temiz.append({
             "index": idx,
@@ -1845,10 +1900,10 @@ def mac_json_kaydet(yeni_maclar):
             "tarih": str(mac.get("tarih", "")),
             "cekme_zamani": str(mac.get("cekme_zamani", simdi)),
             "durum": str(mac.get("durum", "baslamadi")),
-            "skor_ev": skor_ev,
-            "skor_dep": skor_dep,
-            "skor_1y_ev": skor_1y_ev,
-            "skor_1y_dep": skor_1y_dep,
+            "skor_ev": to_int(mac.get("skor_ev")),
+            "skor_dep": to_int(mac.get("skor_dep")),
+            "skor_1y_ev": to_int(mac.get("skor_1y_ev")),
+            "skor_1y_dep": to_int(mac.get("skor_1y_dep")),
             "kaynak": str(mac.get("kaynak", "nesine.com")),
             "oranlar": mac.get("oranlar", {})
         })

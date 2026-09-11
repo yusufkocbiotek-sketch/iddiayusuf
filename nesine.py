@@ -44,9 +44,14 @@ EXPAND_SEL = "span.f17af500409a2f819a68"
 TIME_RE = re.compile(r"^\d{1,2}:\d{2}$")
 ODD_RE = re.compile(r"^\d{1,3}([.,]\d{1,2})$")
 
+# İstenmeyen oran kategorileri (bu öneklerle başlayan oranlar kaydedilmez)
 SILINECEK_BASLANGICLAR = (
     "oyuncu", "100.00", "takım",
-    "karşılaşma özel bahisleri", "kaleci kurtarışı"
+    "karşılaşma özel bahisleri", "kaleci kurtarışı",
+    "korner",                        # tüm korner ailesi
+    "toplam korner",                 # Toplam Korner Alt/Üst / Aralığı
+    "1. yari korner", "1. yari toplam korner",
+    "ev sahibi toplam korner", "deplasman toplam korner",
 )
 
 MENU_KELIMELER = {
@@ -84,9 +89,8 @@ def nesine_dt_url(tarih_iso):
 
 def url_tarih_uyuyor_mu(url, tarih_iso):
     """
-    URL'deki dt= parametresi tam olarak bizim günümüz mü?
-    Bilinçli olarak KATI kontrol: 'dt=10.09|11.09' gibi çift gün
-    seçimlerini kabul ETMİYORUZ (yanlış güne maç yazmamak için).
+    URL'deki dt= parametresi TAM olarak tek bizim günümüz mü?
+    'dt=10.09.2026%7C11.09.2026' gibi çift gün seçimini kabul etmez.
     """
     try:
         t = datetime.datetime.strptime(tarih_iso, "%Y-%m-%d")
@@ -165,6 +169,10 @@ def git_force_push():
     _run_cmd([git_exe, "commit", "-m", mesaj, "--allow-empty"], cwd=str(REPO_ROOT))
     print(f"   ✅ Commit: {mesaj}")
 
+    r_hash = _run_cmd([git_exe, "rev-parse", "HEAD"], cwd=str(REPO_ROOT))
+    local_hash = (r_hash.get("stdout") or "")[:7]
+    print(f"   🧷 Yerel commit: {local_hash}")
+
     print("   🚀 Push ediliyor...")
     r_push = _run_cmd([git_exe, "push", "-f", "origin", "main"], cwd=str(REPO_ROOT))
 
@@ -173,7 +181,11 @@ def git_force_push():
         r_ls = _run_cmd([git_exe, "ls-remote", "origin", "main"], cwd=str(REPO_ROOT))
         out = (r_ls.get("stdout") or "").split()
         remote_hash = out[0][:7] if out else "?"
-        print(f"✅ GİT BAŞARILI! Remote main: {remote_hash}")
+
+        if remote_hash == local_hash:
+            print(f"✅ GİT BAŞARILI! Remote main = {remote_hash}")
+        else:
+            print(f"⚠️ Push tamam ama remote ({remote_hash}) != yerel ({local_hash})")
     else:
         print(f"❌ HATA: {r_push.get('stderr', '')}")
 
@@ -579,6 +591,51 @@ def chrome_yeniden_baslat(driver, url=URL_BASE):
     raise RuntimeError(f"Chrome yeniden başlatılamadı: {son_hata}")
 
 
+def gun_sayfasini_yukle(driver, url_gun, max_deneme=3):
+    """
+    Gün sayfasını açar ve maç satırlarının GERÇEKTEN yüklendiğini doğrular.
+    Satır gelmezse: refresh -> olmazsa Chrome'u yeniler.
+    Döndürür: (driver, ok)
+    """
+    for deneme in range(1, max_deneme + 1):
+        try:
+            driver.get(url_gun)
+        except Exception:
+            pass
+
+        time.sleep(4)
+        cookie_kabul_et(driver)
+        reklam_kapat(driver)
+
+        satir = satir_sayisi_bekle(driver, 15)
+        print(f"   🔎 Gün sayfası satır: {satir} (deneme {deneme})")
+
+        if satir > 0:
+            return driver, True
+
+        try:
+            print("   ⚠️ Satır yok, sayfa yenileniyor...")
+            driver.refresh()
+            time.sleep(5)
+            cookie_kabul_et(driver)
+            reklam_kapat(driver)
+
+            satir = satir_sayisi_bekle(driver, 10)
+            if satir > 0:
+                return driver, True
+        except Exception:
+            pass
+
+        try:
+            print("   ⚠️ Satır hâlâ yok, Chrome yenileniyor...")
+            driver = chrome_yeniden_baslat(driver, url_gun)
+        except Exception as e:
+            print(f"   ⚠️ Chrome yenileme hatası: {e}")
+            time.sleep(5)
+
+    return driver, False
+
+
 # =========================
 # SCROLL
 # =========================
@@ -625,7 +682,7 @@ def scroll_step(driver, px=SCROLL_PX):
 
 
 # =========================
-# SATIR OKUMA (TAKIM / LİG / SAAT)
+# SATIR OKUMA (TAKIM / LİG / SAAT) - TEK GEÇİŞ
 # =========================
 def extract_visible(driver, current_date):
     out = []
@@ -1198,6 +1255,8 @@ def nesine_oran_parse(text):
     - Etiketi olmayan başlıklar market olur
     - '1 2.10' tek satır desteği
     - '1 X 2' + altında 3'lü grid desteği
+    - Skor formatı satırlar (0:0, 1:2) market başlığı SANILMAZ:
+      altında oran varsa label'dır, market KORUNUR (Maç Skoru bloğu)
     """
     oranlar = {}
 
@@ -1213,7 +1272,7 @@ def nesine_oran_parse(text):
         line = lines[i]
         nxt = lines[i + 1] if i + 1 < len(lines) else ""
 
-        # --- A) 3'lü grid başlığı: '1 X 2' / '1 0 2' / 'MS 1 X 2' ---
+        # --- A) 3'lü grid: '1 X 2' + altında değerler ---
         if re.fullmatch(r"(?:ms\s+)?1\s+[xX0]\s+2", line):
             j = i + 1
             deger_satiri = None
@@ -1310,6 +1369,14 @@ def nesine_oran_parse(text):
 
             i += 2
         else:
+            # Skor formatı satır (0:0, 1:2, 4+) market başlığı DEĞİLDİR.
+            # Altında oran varsa label'dır -> market'i KORU.
+            skor_benzeri = bool(re.fullmatch(r"\d{1,2}[:\-]\d{1,2}\+?", line))
+
+            if skor_benzeri and nxt and oran_satiri_mi(nxt):
+                i += 1
+                continue
+
             if market_gecerli_mi(line):
                 market = line
             else:
@@ -1321,7 +1388,7 @@ def nesine_oran_parse(text):
 
 
 # =========================
-# ANAHTAR STANDARTLASTIRMA
+# ANAHTAR STANDARTLASTIRMA (KA UYUMLU)
 # =========================
 def tr_key(s):
     s = str(s or "")
@@ -1539,6 +1606,11 @@ def oranlari_standartlastir(oranlar):
         if not market and lab in ("1", "0", "x", "2"):
             market = "Maç Sonucu"
 
+        # Boş market + skor formatı label -> Maç Skoru
+        # ('0:0_' gibi eski bozuk anahtarları da onarır)
+        if not market and lab and re.fullmatch(r"\d{1,2}:\d{1,2}", lab):
+            market = "Maç Skoru"
+
         # '1 & alt' kalıbı + market 'Alt/Üst N' ise
         # gerçek market: 'Maç Sonucu ve Alt/Üst N'
         if lab and " & " in lab:
@@ -1556,6 +1628,20 @@ def oranlari_standartlastir(oranlar):
             out[yeni] = v
 
     return out
+
+
+def istenmeyen_anahtar_mi(k):
+    """
+    Final filtre: anahtar (tr_key ile) SILINECEK_BASLANGICLAR'dan
+    herhangi biriyle başlıyorsa True döner.
+    """
+    nk = tr_key(k)
+
+    for s in SILINECEK_BASLANGICLAR:
+        if nk.startswith(s):
+            return True
+
+    return False
 
 
 # =========================
@@ -1591,7 +1677,6 @@ def panel_metinleri(driver, row):
       1) Satırın kendisi
       2) Sonraki 25 kardeş (yeni maç satırına gelince durur)
       3) İçinde BAŞKA maç bulunmayan en dış ebeveynin tam metni
-    Birleştirilerek parse edilir -> en geniş market kapsamı.
     """
     try:
         return driver.execute_script("""
@@ -1818,6 +1903,10 @@ def mac_oranlari_cek(driver, m):
         temiz = {}
         for k, v in sonuc.items():
             try:
+                # Final filtre: korner vb. istenmeyenler
+                if istenmeyen_anahtar_mi(k):
+                    continue
+
                 fv = float(v)
                 temiz[str(k)] = fv
             except Exception:
@@ -1859,7 +1948,19 @@ def mac_json_kaydet(yeni_maclar):
     var = {key(m): m for m in data.get("matches", [])}
 
     for m in yeni_maclar:
-        m["oranlar"] = oranlari_standartlastir(m.get("oranlar"))
+        # Standartlaştır + istenmeyenleri final filtrele
+        st = oranlari_standartlastir(m.get("oranlar"))
+
+        temiz_oranlar = {}
+        for k, v in st.items():
+            try:
+                if istenmeyen_anahtar_mi(k):
+                    continue
+                temiz_oranlar[k] = float(v)
+            except Exception:
+                pass
+
+        m["oranlar"] = temiz_oranlar
 
         k = key(m)
         if k in var:
@@ -1934,6 +2035,7 @@ def main():
     results = []
     success = fail = 0
     islenen = 0
+    art_arda_basarisiz = 0
 
     try:
         print("\n🟢 Chrome açılıyor...")
@@ -1964,14 +2066,13 @@ def main():
             gun_maclar = gunlere_gore[tarih_iso]
             url_gun = nesine_dt_url(tarih_iso)
 
-            try:
-                driver.get(url_gun)
-                time.sleep(5)
-                cookie_kabul_et(driver)
-                reklam_kapat(driver)
-                satir_sayisi_bekle(driver, 15)
-            except Exception as e:
-                print(f"   ⚠️ Gün sayfası açılamadı ({tarih_iso}): {str(e)[:80]}")
+            # Gün sayfasını satırlar yüklenmiş şekilde aç
+            driver, gun_ok = gun_sayfasini_yukle(driver, url_gun)
+
+            if not gun_ok:
+                print(f"   ❌ Gün sayfası hiç yüklenemedi ({tarih_iso}), gün atlanıyor")
+                fail += len(gun_maclar)
+                continue
 
             for m in gun_maclar:
                 islenen += 1
@@ -1995,20 +2096,25 @@ def main():
                         print(f"   ❌ Chrome yeniden başlatılamadı: {e}")
                         break
 
+                # --- Satır var mı? (bülten render kontrolü) ---
+                try:
+                    if len(find_match_cards(driver)) == 0:
+                        print("   ⚠️ Listede hiç satır yok, gün sayfası tazeleniyor...")
+                        driver, gun_ok = gun_sayfasini_yukle(driver, url_gun)
+                        if not gun_ok:
+                            print("   ❌ Sayfa kurtarılamadı, maç atlanıyor")
+                            fail += 1
+                            continue
+                except Exception:
+                    pass
+
                 # --- Sayfa sağlıklı mı? ---
                 if not sayfa_saglikli_mi(driver) or not arama_var_mi(driver):
-                    print("   ⚠️ Sayfa sağlıklı değil, gün sayfası yeniden açılıyor...")
+                    print("   ⚠️ Sayfa sağlıklı değil, gün sayfası tazeleniyor...")
 
-                    try:
-                        driver.get(url_gun)
-                        time.sleep(5)
-                        cookie_kabul_et(driver)
-                        reklam_kapat(driver)
-                        satir_sayisi_bekle(driver, 15)
-                    except Exception:
-                        pass
+                    driver, gun_ok = gun_sayfasini_yukle(driver, url_gun)
 
-                    if not sayfa_saglikli_mi(driver) or not arama_var_mi(driver):
+                    if not gun_ok:
                         try:
                             driver = chrome_yeniden_baslat(driver, url_gun)
                         except Exception as e:
@@ -2023,10 +2129,20 @@ def main():
                     if oran is None:
                         print("   ❌ Bulunamadı")
                         fail += 1
+                        art_arda_basarisiz += 1
+
+                        # 3 maç üst üste bulunamadıysa sayfa satırları
+                        # kaybetmiş olabilir -> gün sayfasını tazele
+                        if art_arda_basarisiz >= 3:
+                            print("   🔄 3 maç üst üste bulunamadı, gün sayfası tazeleniyor...")
+                            driver, gun_ok = gun_sayfasini_yukle(driver, url_gun)
+                            art_arda_basarisiz = 0
+
                         continue
 
                     m["oranlar"] = oran
                     print(f"   ✅ {len(oran)} oran")
+                    art_arda_basarisiz = 0
 
                 except Exception as e:
                     print(f"   ⚠️ Oran hatası: {str(e)[:60]}")

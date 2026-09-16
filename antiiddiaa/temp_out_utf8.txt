@@ -1,0 +1,243 @@
+==================================================
+📌 İndex: -218 | Tampereen - Seinöjoen
+GERÇEK SKOR: 0 - 0 (İY: 0 - 0)
+# 📊 MAÇ ANALİZ ŞABLONU – TAMPEREEN – SEINÖJOEN
+**Maç:** Tampereen – Seinöjoen | **Lig:**  | **Başlama Saati:** 
+
+### 🎲 Detaylı Oran Tablosu
+- **Taraf:** Ev **2.09** | Beraberlik **3.35** | Konuk **2.6**
+- **Çifte Şans:** 1X **1.29** | 12 **1.17** | X2 **1.46**
+- **İlk Yarı MS:** Ev **2.59** | Beraberlik **2.22** | Konuk **3.07**
+- **Gol (2.5):** Alt **2.17** | Üst **1.43**
+- **Karşılıklı Gol:** KG Var **1.37** | KG Yok **2.33**
+- **Tek/Çift:** Tek **1.78** | Çift **1.67**
+---
+**Kural Sırası:** **G1 → G3 → G7 → T8 → T68 → 1482**
+**Genel Profil:** 🚨 **AĞIR TUZAK TESPİT EDİLDİ - KLASİK PROFİL GEÇERSİZ**
+
+---
+
+## 🔹 ADIM 0 – LİG & ÖZEL DURUM
+** Dinamikleri:**
+- Oranlar favoriyi işaret etse de risk barındırıyor.
+
+---
+
+## 🔹 KURAL BASAMAK BASAMAK DEĞERLENDİRMESİ
+| Kural | Adı | Kategori | Çıkarım / Hikaye |
+|---|---|---|---|
+| **G1** | Kesin 2 Gol Sinyali | GOL | ✅ **AKTİF** - Maçta en az 2 gol kesin çıkar. |
+| **G3** | Karşılıklı Gol Kesin | GOL | ✅ **AKTİF** - Her iki takım da kesin gol atar. |
+| **G7** | Yüksek Gollü Mücadele | GOL | ✅ **AKTİF** - Alt oranları yanıltıcıdır; 4+ gol çıkma olasılığı çok yüksektir. |
+| **T8** | Dengeli Ters Favori İç Saha | YÖN | ✅ **AKTİF** - Dengeli maçta beraberlik dışlanmış, ev sahibi kazanır. |
+| **T68** | Hafif Yön Tuzağı | YÖN | ✅ **AKTİF** - Taraflar birbirine yakın gibi gösterilerek beraberlik tuzağı kurulmuştur. |
+| **1482** | Sahte Düello Tuzağı (Düşük MS0 Çelişkisi) | GOL | ✅ **AKTİF** - SAHTE DÜELLO TUZAĞI: Bürolar KG Var ve 2.5 Üst oranlarını çok düşük tutarak herkesi gollü bir maça inandırmış. Ancak beraberlik (MS0) oranı 3.35 veya altında. Eğer gerçekten gollü bir maç bekleniyorsa MS0 (2-2 vs. ihtimali için) daha yüksek olmalıydı. Düşük bir MS0, aslında maçın 0-0 veya 1-0 gibi kısır bir skora kilitleneceğinin matematiksel itirafıdır. Bu devasa bir Alt ve KG Yok tuzağıdır. |
+
+---
+
+## 🧠 PİYASA PSİKOLOJİSİ & YÖN TAHMİNİ
+### 🎯 En Olası Skorlar (Hiyerarşik)
+**En Yüksek Olasılık:** **2-1 > 1-2 > 2-2 > 3-1**
+**Kaçınılması Gereken:** 0-0 / 1-0 / 0-1 gibi kısır skorlar
+
+### 📌 Yön Değerlendirmesi
+- **Yön Tuzağı:** Beraberlik tuzağı kurulmuş, biri kesin kazanır.
+- **⚠️ YÖN UYARISI:** Klasik MS bahisleri yanıltıcıdır! Makine gizli bir tuzak veya paradoks tespit etti.
+- **Alternatif Yön:** Sistemin Ana Tahmin kısmındaki önerisine sadık kalın.
+
+---
+
+## ✅ SON ÖZET
+Bu maçta **sistemin süzdüğü en kesin sinyaller:**
+1. ✅ **Yüksek Gol Beklentisi:** Kurallar maçın açılacağını ve en az 3 gol çıkacağını gösteriyor.
+2. ✅ **Karşılıklı Gol Var:** İki takımın da skora katkı yapması güçlü bir ihtimal.
+
+### ⏱️ ZAMANLAMA VE YARI ANALİZİ
+- 🚨 **TUZAK ZAMANLAMASI:** Normal yarı bahisleri (İlk Yarı KG, Üst vb.) bu maçta tamamen tuzaktır. Ana tahminin dışına çıkılmamalıdır.
+
+### 💎 KOMBİNE & TAHMİN ÖNERİLERİ
+- **Ana Tahmin:** Maç Sonucu 1 veya 1X Çifte Şans (Sahte Düello)
+- **Kombine Öneri:** 1X Çifte Şans + 2.5 Gol Altı (veya KG Yok)
+==================================================
+📌 İndex: -219 | Dalian Kuncheng City - Shenzhen Juniors FC
+GERÇEK SKOR: 5 - 4 (İY: 3 - 3)
+# 📊 MAÇ ANALİZ ŞABLONU – DALIAN KUNCHENG CITY – SHENZHEN JUNIORS FC
+**Maç:** Dalian Kuncheng City – Shenzhen Juniors FC | **Lig:**  | **Başlama Saati:** 
+
+### 🎲 Detaylı Oran Tablosu
+- **Taraf:** Ev **2.07** | Beraberlik **2.93** | Konuk **2.71**
+- **Çifte Şans:** 1X **1.22** | 12 **1.18** | X2 **1.39**
+- **İlk Yarı MS:** Ev **2.66** | Beraberlik **1.93** | Konuk **3.32**
+- **Gol (2.5):** Alt **1.6** | Üst **1.76**
+- **Karşılıklı Gol:** KG Var **1.58** | KG Yok **1.78**
+- **Tek/Çift:** Tek **1.74** | Çift **1.62**
+---
+**Kural Sırası:** **T8 → T35 → T68 → Y1 → Y3 → 1469**
+**Genel Profil:** 🚨 **AĞIR TUZAK TESPİT EDİLDİ - KLASİK PROFİL GEÇERSİZ**
+
+---
+
+## 🔹 ADIM 0 – LİG & ÖZEL DURUM
+** Dinamikleri:**
+- Oranlar favoriyi işaret etse de risk barındırıyor.
+
+---
+
+## 🔹 KURAL BASAMAK BASAMAK DEĞERLENDİRMESİ
+| Kural | Adı | Kategori | Çıkarım / Hikaye |
+|---|---|---|---|
+| **T8** | Dengeli Ters Favori İç Saha | YÖN | ✅ **AKTİF** - Dengeli maçta beraberlik dışlanmış, ev sahibi kazanır. |
+| **T35** | Çifte Şans 12 Tuzağı (Beraberlik İllüzyonu) | YÖN | ✅ **AKTİF** - Dengeli maçta 'Çifte Şans 12' oranının aşırı düşük açılması (Beraberlik olmaz algısı), herkesi taraf bahsine (1 veya 2'ye) yönlendirmek için kurulan bir illüzyondur. Ayrıca KG Var'ın yüksek (1.45+) olması maçın gollü geçmeyeceğini gösterir. Bu maçlar genellikle 0-0 veya beraberlikle kilitlenir. |
+| **T68** | Hafif Yön Tuzağı | YÖN | ✅ **AKTİF** - Taraflar birbirine yakın gibi gösterilerek beraberlik tuzağı kurulmuştur. |
+| **Y1** | İlk Yarı Sıfır Gol | YARI | ✅ **AKTİF** - İlk yarı kesin 0-0 biter. |
+| **Y3** | İlk Yarıda Kilit Açılır | YARI | ✅ **AKTİF** - İlk yarı eşitlik bozulur ve ikinci yarıda da tek taraflı akış devam eder. |
+| **1469** | Aşırı Düşük Beraberlik Tuzağı (Kısır Favori) | SKOR | ✅ **AKTİF** - GİZLİ BERABERLİK KİLİDİ: Ev sahibi favori gösterilse de (Örn: 1.90), beraberlik oranı anormal derecede düşüktür (3.05 ve altı). Üstelik favorinin 2 gol atması beklenmemektedir (Ev 1.5 Alt <= 1.55). Bu maçta favorinin galibiyet gücü yoktur, maç 0-0 veya 1-1 kilitlenir. MS 0 denenmelidir. |
+
+---
+
+## 🧠 PİYASA PSİKOLOJİSİ & YÖN TAHMİNİ
+### 🎯 En Olası Skorlar (Hiyerarşik)
+**En Yüksek Olasılık:** **1-1 > 2-1 > 1-2 > 2-0**
+**Kaçınılması Gereken:** Çok farklı skorlar (Örn: 4-0)
+
+### 📌 Yön Değerlendirmesi
+- **Yön Tuzağı:** Beraberlik tuzağı kurulmuş, biri kesin kazanır.
+- **⚠️ YÖN UYARISI:** Klasik MS bahisleri yanıltıcıdır! Makine gizli bir tuzak veya paradoks tespit etti.
+- **Alternatif Yön:** Sistemin Ana Tahmin kısmındaki önerisine sadık kalın.
+
+---
+
+## ✅ SON ÖZET
+Bu maçta **sistemin süzdüğü en kesin sinyaller:**
+
+### ⏱️ ZAMANLAMA VE YARI ANALİZİ
+- 🚨 **TUZAK ZAMANLAMASI:** Normal yarı bahisleri (İlk Yarı KG, Üst vb.) bu maçta tamamen tuzaktır. Ana tahminin dışına çıkılmamalıdır.
+
+### 💎 KOMBİNE & TAHMİN ÖNERİLERİ
+- **Ana Tahmin:** Maç Sonucu 0 (Beraberlik İllüzyonu Tuzağı)
+- **Kombine Öneri:** MS 0 + 2.5 Gol Altı (Sürpriz: 1-1 / 0-0)
+==================================================
+📌 İndex: -220 | Rapid Wien - Floridsdorfer
+GERÇEK SKOR: 4 - 1 (İY: 0 - 0)
+# 📊 MAÇ ANALİZ ŞABLONU – RAPID WIEN – FLORIDSDORFER
+**Maç:** Rapid Wien – Floridsdorfer | **Lig:**  | **Başlama Saati:** 
+
+### 🎲 Detaylı Oran Tablosu
+- **Taraf:** Ev **1.34** | Beraberlik **4.11** | Konuk **4.92**
+- **Çifte Şans:** 1X **99.0** | 12 **99.0** | X2 **99.0**
+- **İlk Yarı MS:** Ev **1.73** | Beraberlik **2.42** | Konuk **4.89**
+- **Gol (2.5):** Alt **99.0** | Üst **99.0**
+- **Karşılıklı Gol:** KG Var **1.42** | KG Yok **2.04**
+- **Tek/Çift:** Tek **1.7** | Çift **1.65**
+---
+**Kural Sırası:** **G3**
+**Genel Profil:** ✅ **AĞIR EV FAVORİSİ – KARŞILIKLI GOL VAR – KISIR GEÇMEYE ADAY**
+
+---
+
+## 🔹 ADIM 0 – LİG & ÖZEL DURUM
+** Dinamikleri:**
+- Favori takımın oranı çok düşük. Maçın gidişatını favorinin erken gol bulup bulamayacağı belirleyecek.
+
+---
+
+## 🔹 KURAL BASAMAK BASAMAK DEĞERLENDİRMESİ
+| Kural | Adı | Kategori | Çıkarım / Hikaye |
+|---|---|---|---|
+| **G3** | Karşılıklı Gol Kesin | GOL | ✅ **AKTİF** - Her iki takım da kesin gol atar. |
+
+---
+
+## 🧠 PİYASA PSİKOLOJİSİ & YÖN TAHMİNİ
+### 🎯 En Olası Skorlar (Hiyerarşik)
+**En Yüksek Olasılık:** **1-1 > 2-1 > 1-2 > 2-0**
+**Kaçınılması Gereken:** Çok farklı skorlar (Örn: 4-0)
+
+### 📌 Yön Değerlendirmesi
+- **Ev Galibiyeti:** Maçın en mantıklı senaryosu (Tuzak yoksa).
+- **Beraberlik:** (4.11) Dikkat edilmesi gereken bir sigorta.
+
+---
+
+## ✅ SON ÖZET
+Bu maçta **sistemin süzdüğü en kesin sinyaller:**
+
+### ⏱️ ZAMANLAMA VE YARI ANALİZİ
+- ⚔️ **İlk Yarı Düellosu (KG):** İlk yarıdan her iki takımın da gol bulma olasılığı normalden çok daha yüksek fiyatlanmış. Erken karşılıklı goller gelebilir.
+- 🔥 **İkinci Yarı Şovu (KG):** İkinci yarıda her iki takımın da gol atma (2. Yarı KG Var) ihtimali çok güçlü. Son dakikalar kaos vadediyor.
+
+### 💎 KOMBİNE & TAHMİN ÖNERİLERİ
+- **Ana Tahmin:** Taraf bahsi çok riskli, gol düellosu (KG Var/Üst) tercih edilmeli.
+- **Kombine Öneri:** Karşılıklı Gol Var + 2.5 Gol Üst (Sürpriz: 3.5 Üst)
+==================================================
+📌 İndex: -221 | Rakow Czestochowa - Piast Gliwice
+GERÇEK SKOR: 2 - 0 (İY: 0 - 0)
+# 📊 MAÇ ANALİZ ŞABLONU – RAKOW CZESTOCHOWA – PIAST GLIWICE
+**Maç:** Rakow Czestochowa – Piast Gliwice | **Lig:**  | **Başlama Saati:** 
+
+### 🎲 Detaylı Oran Tablosu
+- **Taraf:** Ev **1.65** | Beraberlik **3.42** | Konuk **3.4**
+- **Çifte Şans:** 1X **1.12** | 12 **1.12** | X2 **1.65**
+- **İlk Yarı MS:** Ev **2.17** | Beraberlik **2.09** | Konuk **3.91**
+- **Gol (2.5):** Alt **1.85** | Üst **1.54**
+- **Karşılıklı Gol:** KG Var **1.5** | KG Yok **1.9**
+- **Tek/Çift:** Tek **1.7** | Çift **1.65**
+---
+**Kural Sırası:** **G6 → Y3**
+**Genel Profil:** ✅ **EV HAFİF FAVORİSİ – KARŞILIKLI GOL VAR – GOLLÜ GEÇMEYE ADAY**
+
+---
+
+## 🔹 ADIM 0 – LİG & ÖZEL DURUM
+** Dinamikleri:**
+- Oranlar favoriyi işaret etse de risk barındırıyor.
+
+---
+
+## 🔹 KURAL BASAMAK BASAMAK DEĞERLENDİRMESİ
+| Kural | Adı | Kategori | Çıkarım / Hikaye |
+|---|---|---|---|
+| **G6** | Tek Taraflı Yüksek Fark | GOL | ✅ **AKTİF** - Deplasman atacak gibi görünse de tuzaktır, ev sahibi farka (3+ gol) koşar. |
+| **Y3** | İlk Yarıda Kilit Açılır | YARI | ✅ **AKTİF** - İlk yarı eşitlik bozulur ve ikinci yarıda da tek taraflı akış devam eder. |
+
+---
+
+## 🧠 PİYASA PSİKOLOJİSİ & YÖN TAHMİNİ
+### 🎯 En Olası Skorlar (Hiyerarşik)
+**En Yüksek Olasılık:** **2-1 > 1-2 > 2-2 > 3-1**
+**Kaçınılması Gereken:** 0-0 / 1-0 / 0-1 gibi kısır skorlar
+
+### 📌 Yön Değerlendirmesi
+- **Ev Galibiyeti:** Maçın en mantıklı senaryosu (Tuzak yoksa).
+- **Beraberlik:** (3.42) Dikkat edilmesi gereken bir sigorta.
+
+---
+
+## ✅ SON ÖZET
+Bu maçta **sistemin süzdüğü en kesin sinyaller:**
+1. ✅ **Yüksek Gol Beklentisi:** Kurallar maçın açılacağını ve en az 3 gol çıkacağını gösteriyor.
+2. ✅ **Karşılıklı Gol Var:** İki takımın da skora katkı yapması güçlü bir ihtimal.
+
+### ⏱️ ZAMANLAMA VE YARI ANALİZİ
+- ⚔️ **İlk Yarı Düellosu (KG):** İlk yarıdan her iki takımın da gol bulma olasılığı normalden çok daha yüksek fiyatlanmış. Erken karşılıklı goller gelebilir.
+- 🔥 **İkinci Yarı Şovu (KG):** İkinci yarıda her iki takımın da gol atma (2. Yarı KG Var) ihtimali çok güçlü. Son dakikalar kaos vadediyor.
+
+### 💎 KOMBİNE & TAHMİN ÖNERİLERİ
+- **Ana Tahmin:** Taraf bahsi çok riskli, gol düellosu (KG Var/Üst) tercih edilmeli.
+- **Kombine Öneri:** Karşılıklı Gol Var + 2.5 Gol Üst (Sürpriz: 3.5 Üst)
+==================================================
+📌 İndex: -222 | Traeff - FK Eik-Toensberg
+GERÇEK SKOR: 3 - 1 (İY: 2 - 1)
+# 📊 MAÇ ANALİZ ŞABLONU – TRAEFF – FK EIK-TOENSBERG
+**Maç:** Traeff – FK Eik-Toensberg | **Lig:**  | **Başlama Saati:** 
+
+### 🎲 Detaylı Oran Tablosu
+- **Taraf:** Ev **1.35** | Beraberlik **3.94** | Konuk **4.95**
+- **Çifte Şans:** 1X **99.0** | 12 **99.0** | X2 **99.0**
+- **İlk Yarı MS:** Ev **1.77** | Beraberlik **2.34** | Konuk **4.99**
+- **Gol (2.5):** Alt **2.13** | Üst **1.38**
+- **Karşılıklı Gol:** KG Var **1.48** | KG Yok **1.92**
+- **Tek/Çift:** Tek **1.7** | Çift **1.65**
+---
+
+**ÖZEL KURAL:** Maça uyan net bir kalıp bulunamadı. PAS GEÇİLMELİ.

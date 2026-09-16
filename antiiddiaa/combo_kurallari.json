@@ -1,0 +1,202 @@
+[
+    {
+        "kural_kodu": "COMBO-6",
+        "lig": "İN 1",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Ağır Fav (1.30-1.50) + ALT Favori",
+        "mac_sayisi": 11,
+        "basari_orani": 100.0
+    },
+    {
+        "kural_kodu": "COMBO-12",
+        "lig": "SLVN",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30)",
+        "mac_sayisi": 11,
+        "basari_orani": 100.0
+    },
+    {
+        "kural_kodu": "COMBO-5",
+        "lig": "İN 1",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Ağır Fav (1.30-1.50) + KG YOK Favori",
+        "mac_sayisi": 15,
+        "basari_orani": 93.3
+    },
+    {
+        "kural_kodu": "COMBO-19",
+        "lig": "KIRL P",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30)",
+        "mac_sayisi": 15,
+        "basari_orani": 93.3
+    },
+    {
+        "kural_kodu": "COMBO-23",
+        "lig": "ŞMP",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30) + KG VAR Favori",
+        "mac_sayisi": 15,
+        "basari_orani": 93.3
+    },
+    {
+        "kural_kodu": "COMBO-24",
+        "lig": "ŞMP",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30) + ÜST Favori + KG VAR Favori",
+        "mac_sayisi": 15,
+        "basari_orani": 93.3
+    },
+    {
+        "kural_kodu": "COMBO-1",
+        "lig": "RUS P",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30)",
+        "mac_sayisi": 14,
+        "basari_orani": 92.9
+    },
+    {
+        "kural_kodu": "COMBO-25",
+        "lig": "AVL",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30)",
+        "mac_sayisi": 14,
+        "basari_orani": 92.9
+    },
+    {
+        "kural_kodu": "COMBO-3",
+        "lig": "İN 1",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30) + KG YOK Favori",
+        "mac_sayisi": 13,
+        "basari_orani": 92.3
+    },
+    {
+        "kural_kodu": "COMBO-4",
+        "lig": "İN 1",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30) + ÜST Favori + KG YOK Favori",
+        "mac_sayisi": 12,
+        "basari_orani": 91.7
+    },
+    {
+        "kural_kodu": "COMBO-13",
+        "lig": "BEL2",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS1 Fav (1.50-1.80) + KG VAR Favori",
+        "mac_sayisi": 12,
+        "basari_orani": 91.7
+    },
+    {
+        "kural_kodu": "COMBO-14",
+        "lig": "BEL2",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS1 Fav (1.50-1.80) + ÜST Favori",
+        "mac_sayisi": 12,
+        "basari_orani": 91.7
+    },
+    {
+        "kural_kodu": "COMBO-15",
+        "lig": "BEL2",
+        "hedef": "KG VAR",
+        "filtre_kombinasyonu": "MS1 Fav (1.50-1.80) + KG VAR Favori",
+        "mac_sayisi": 12,
+        "basari_orani": 91.7
+    },
+    {
+        "kural_kodu": "COMBO-16",
+        "lig": "BEL2",
+        "hedef": "KG VAR",
+        "filtre_kombinasyonu": "MS1 Fav (1.50-1.80) + ÜST Favori",
+        "mac_sayisi": 12,
+        "basari_orani": 91.7
+    },
+    {
+        "kural_kodu": "COMBO-20",
+        "lig": "KIRL P",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30) + KG YOK Favori",
+        "mac_sayisi": 12,
+        "basari_orani": 91.7
+    },
+    {
+        "kural_kodu": "COMBO-7",
+        "lig": "BOSP",
+        "hedef": "ALT",
+        "filtre_kombinasyonu": "MS1 Fav (1.50-1.80)",
+        "mac_sayisi": 11,
+        "basari_orani": 90.9
+    },
+    {
+        "kural_kodu": "COMBO-17",
+        "lig": "BAE1",
+        "hedef": "MS 2",
+        "filtre_kombinasyonu": "MS2 Çok Ağır Fav (1.10-1.30)",
+        "mac_sayisi": 11,
+        "basari_orani": 90.9
+    },
+    {
+        "kural_kodu": "COMBO-18",
+        "lig": "AL1",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS2 Ağır Fav (1.30-1.50)",
+        "mac_sayisi": 11,
+        "basari_orani": 90.9
+    },
+    {
+        "kural_kodu": "COMBO-21",
+        "lig": "KIRL P",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30) + ÜST Favori + KG YOK Favori",
+        "mac_sayisi": 11,
+        "basari_orani": 90.9
+    },
+    {
+        "kural_kodu": "COMBO-2",
+        "lig": "İTA B",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Çok Ağır Fav (1.10-1.30)",
+        "mac_sayisi": 10,
+        "basari_orani": 90.0
+    },
+    {
+        "kural_kodu": "COMBO-8",
+        "lig": "İN 2",
+        "hedef": "MS 2",
+        "filtre_kombinasyonu": "MS2 Fav (1.50-1.80) + KG VAR Favori + ALT Favori",
+        "mac_sayisi": 10,
+        "basari_orani": 90.0
+    },
+    {
+        "kural_kodu": "COMBO-9",
+        "lig": "İN 2",
+        "hedef": "MS 2",
+        "filtre_kombinasyonu": "MS2 Fav (1.50-1.80) + ALT Favori + KG VAR Favori",
+        "mac_sayisi": 10,
+        "basari_orani": 90.0
+    },
+    {
+        "kural_kodu": "COMBO-10",
+        "lig": "FAK",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS2 Fav (1.50-1.80) + KG VAR Favori",
+        "mac_sayisi": 10,
+        "basari_orani": 90.0
+    },
+    {
+        "kural_kodu": "COMBO-11",
+        "lig": "İSP",
+        "hedef": "MS 1",
+        "filtre_kombinasyonu": "MS1 Ağır Fav (1.30-1.50) + ÜST Favori",
+        "mac_sayisi": 10,
+        "basari_orani": 90.0
+    },
+    {
+        "kural_kodu": "COMBO-22",
+        "lig": "KAT P",
+        "hedef": "UST",
+        "filtre_kombinasyonu": "MS2 Ağır Fav (1.30-1.50)",
+        "mac_sayisi": 10,
+        "basari_orani": 90.0
+    }
+]

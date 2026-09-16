@@ -1,0 +1,4 @@
+REPR30: '\n📌 İndex: -218 | Tampereen - Seinöjoen\nGERÇEK SKOR: 0 - 0 (İY: 0 - 0)\n# 📊 MAÇ AN'
+kural: ' '
+index: '-218'
+skor: ('0', '0')

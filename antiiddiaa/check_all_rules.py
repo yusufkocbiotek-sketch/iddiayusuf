@@ -1,0 +1,112 @@
+import json
+from rule_engine import anomaly_rules
+from story_analyzer import preprocess_odds
+
+match_data = {
+      "ev_sahibi": "Un. Craiova",
+      "deplasman": "Petrolul Ploiesti",
+      "oranlar": {
+        "Maç Sonucu_1": 1.35,
+        "Maç Sonucu_0": 3.53,
+        "Maç Sonucu_2": 5.87,
+        "Handikaplı Maç Sonucu 0:1_1": 2.18,
+        "Handikaplı Maç Sonucu 0:1_0": 3.01,
+        "Handikaplı Maç Sonucu 0:1_2": 2.17,
+        "Maç Sonucu ve Alt/Üst 2.5_1 ve Alt": 2.82,
+        "Maç Sonucu ve Alt/Üst 2.5_0 ve Alt": 4.04,
+        "Maç Sonucu ve Alt/Üst 2.5_2 ve Alt": 10.05,
+        "Maç Sonucu ve Alt/Üst 2.5_1 ve Üst": 2.35,
+        "Maç Sonucu ve Alt/Üst 2.5_0 ve Üst": 21.25,
+        "Maç Sonucu ve Alt/Üst 2.5_2 ve Üst": 13.15,
+        "-_1 ve 2": 1.4,
+        "-_0 ve 2": 1.49,
+        "1. Yarı Sonucu_1": 1.85,
+        "1. Yarı Sonucu_0": 2.02,
+        "1. Yarı Sonucu_2": 6.27,
+        "2. Yarı Sonucu_1": 1.73,
+        "2. Yarı Sonucu_0": 2.32,
+        "2. Yarı Sonucu_2": 5.43,
+        "1. Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Var": 17.35,
+        "1. Yarı Sonucu ve İlk Yarı Karşılıklı Gol_1 ve Yok": 1.98,
+        "1. Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Var": 9.1,
+        "1. Yarı Sonucu ve İlk Yarı Karşılıklı Gol_0 ve Yok": 2.43,
+        "1. Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Var": 35.5,
+        "1. Yarı Sonucu ve İlk Yarı Karşılıklı Gol_2 ve Yok": 6.68,
+        "1. Yarı Sonucu ve Altı/Üstü 1.5_1 ve Alt": 3.0,
+        "1. Yarı Sonucu ve Altı/Üstü 1.5_0 ve Alt": 2.45,
+        "1. Yarı Sonucu ve Altı/Üstü 1.5_2 ve Alt": 7.86,
+        "1. Yarı Sonucu ve Altı/Üstü 1.5_1 ve Üst": 4.24,
+        "1. Yarı Sonucu ve Altı/Üstü 1.5_0 ve Üst": 9.23,
+        "1. Yarı Sonucu ve Altı/Üstü 1.5_2 ve Üst": 25.5,
+        "1. Yarı Karşılıklı Gol_Var": 5.05,
+        "1. Yarı Tek/Çift_Tek": 1.86,
+        "1. Yarı Tek/Çift_Çift": 1.52,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Var": 7.47,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Var": 2.67,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Alt ve Yok": 1.83,
+        "Altı/Üstü 2.5 ve Karşılıklı Gol_Üst ve Yok": 5.81,
+        "Maç Sonucu ve Karşılıklı Gol_1 ve Var": 3.72,
+        "Maç Sonucu ve Karşılıklı Gol_1 ve Yok": 1.97,
+        "Maç Sonucu ve Karşılıklı Gol_0 ve Var": 5.53,
+        "Maç Sonucu ve Karşılıklı Gol_0 ve Yok": 8.62,
+        "Maç Sonucu ve Karşılıklı Gol_2 ve Var": 14.4,
+        "Maç Sonucu ve Karşılıklı Gol_2 ve Yok": 9.36,
+        "Alt/Üst 1.5_Alt": 2.68,
+        "Alt/Üst 1.5_Üst": 1.22,
+        "Alt/Üst 2.5_Alt": 1.51,
+        "Alt/Üst 2.5_Üst": 1.88,
+        "Alt/Üst 3.5_Alt": 1.11,
+        "Alt/Üst 3.5_Üst": 3.38,
+        "Ev Sahibi Alt/Üst 1.5_Alt": 1.76,
+        "Ev Sahibi Alt/Üst 1.5_Üst": 1.6,
+        "Deplasman Alt/Üst 0.5_Alt": 1.65,
+        "Deplasman Alt/Üst 0.5_Üst": 1.7,
+        "Her İki Yarıda da Alt 1.5_Evet": 1.93,
+        "Her İki Yarıda da Alt 1.5_Hayır": 1.48,
+        "Her İki Yarıda da Üst 1.5_Evet": 5.86,
+        "1. Yarı Alt/Üst 0.5_Alt": 2.46,
+        "1. Yarı Alt/Üst 0.5_Üst": 1.27,
+        "Ev Sahibi 1. Yarı Altı/Üstü 0.5_Alt": 1.86,
+        "Ev Sahibi 1. Yarı Altı/Üstü 0.5_Üst": 1.52,
+        "Deplasman 1. Yarı Altı/Üstü 0.5_Alt": 1.15,
+        "Deplasman 1. Yarı Altı/Üstü 0.5_Üst": 3.06,
+        "Karşılıklı Gol_Var": 2.01,
+        "Karşılıklı Gol_Yok": 1.43,
+        "Toplam Gol_0-1 gol": 2.7,
+        "Toplam Gol_2-3 gol": 1.77,
+        "Toplam Gol_4-5 gol": 4.14,
+        "Toplam Gol_6+ gol": 20.2,
+        "Hangi Yarıda Daha Fazla Gol Olur_1.": 2.75,
+        "Hangi Yarıda Daha Fazla Gol Olur_Eşit": 3.0,
+        "Hangi Yarıda Daha Fazla Gol Olur_2.": 2.01,
+        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_1.": 2.82,
+        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_Eşit": 2.52,
+        "Ev Sahibi Hangi Yarıda Daha Fazla Gol Atar_2.": 2.25,
+        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_1.": 4.34,
+        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_Eşit": 1.51,
+        "Deplasman Hangi Yarıda Daha Fazla Gol Atar_2.": 3.35,
+        "Tek / Çift_Tek": 1.7,
+        "Tek / Çift_Çift": 1.65,
+        "2. Yarı Karşılıklı Gol_Var": 4.09,
+        "2. Yarı Karşılıklı Gol_Yok": 1.06,
+        "Ev Sahibi Her İki Yarıda da Gol Atar_Evet": 2.41,
+        "Ev Sahibi Her İki Yarıda da Gol Atar_Hayır": 1.28,
+        "Deplasman Her İki Yarıda da Gol Atar_Evet": 7.72,
+        "1. Yarı ve 2. Yarıda Karşılıklı Gol Olur_Hayır / Hayır": 1.21,
+        "1. Yarı ve 2. Yarıda Karşılıklı Gol Olur_Evet / Hayır": 6.45,
+        "1. Yarı ve 2. Yarıda Karşılıklı Gol Olur_Evet / Evet": 28.5,
+        "1. Yarı ve 2. Yarıda Karşılıklı Gol Olur_Hayır / Evet": 4.78
+    }
+}
+
+odds = preprocess_odds(match_data["oranlar"])
+
+active_rules = []
+for rule in anomaly_rules:
+    result, desc = rule.evaluate(odds)
+    if result:
+        active_rules.append((rule.code, rule.name))
+
+print("Aktif Kurallar:")
+for code, name in active_rules:
+    print(f"- {code}: {name}")

@@ -1,0 +1,16 @@
+# 1. Önce tamamen o commit'e geç
+git checkout 49dae45
+
+# 2. main dalını bu sürüme ayarla
+git branch -f main 49dae45
+
+# 3. GitHub'a bu halini zorla gönder (diğer tüm commitleri siler)
+git push -f origin main
+
+
+cd C:\Users\YUSUF\Desktop\iddiayusuf-main
+git add public/data/mac.json
+git commit -m "Oyuncu 100.00 ve Takım oranlari temizlendi"
+git push origin main --force
+
+git reset --hard facf34cf1358d0a55f9257fa510a79941db314f1

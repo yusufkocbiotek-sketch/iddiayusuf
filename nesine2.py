@@ -47,12 +47,30 @@ SKOR_RE = re.compile(r"^\d{1,2}[:\-]\d{1,2}\+?$")
 
 # İstenmeyen oran kategorileri (bu öneklerle başlayan oranlar kaydedilmez)
 SILINECEK_BASLANGICLAR = (
-    "oyuncu", "100.00", "takım",
-    "karşılaşma özel bahisleri", "kaleci kurtarışı",
-    "korner",                        # tüm korner ailesi
+    "oyuncu",
+    "takim",
+    "takimlar",
+    "karsilasma ozel bahisleri",
+    "kaleci",
+    "kurtaris",
+    "kurtarisi",
+    "korner",
+    "corner",
     "toplam korner",
-    "1. yari korner", "1. yari toplam korner",
-    "ev sahibi toplam korner", "deplasman toplam korner",
+    "ilk yari korner",
+    "1 yari korner",
+    "1. yari korner",
+    "ilk yari toplam korner",
+    "1 yari toplam korner",
+    "1. yari toplam korner",
+    "ev sahibi toplam korner",
+    "deplasman toplam korner",
+    "ev sahibi korner",
+    "deplasman korner",
+    "kart",
+    "sari kart",
+    "kirmizi kart",
+    "toplam kart",
 )
 
 MENU_KELIMELER = {
@@ -1229,78 +1247,131 @@ def oran_satiri_mi(t):
 
 
 def market_gecerli_mi(t):
-    n = t.strip().lower()
+    """
+    Bir satırın market başlığı olup olmadığını kontrol eder.
 
-    if not n or len(n) > 60:
+    Korner, kaleci, kart, oyuncu vb. marketler burada daha
+    parse aşamasında engellenir.
+    """
+    raw = str(t or "").strip()
+    n = tr_key(raw)
+
+    if not n:
+        return False
+
+    if len(n) > 100:
         return False
 
     if n in MENU_KELIMELER:
         return False
 
-    if oran_satiri_mi(n):
+    if oran_satiri_mi(raw):
         return False
 
-    if TIME_RE.match(t.strip()):
+    if TIME_RE.match(raw):
         return False
 
-    if re.fullmatch(r"\d{3,5}", t.strip()):
+    if re.fullmatch(r"\d{3,5}", raw):
         return False
 
-    # "Takım A - Takım B" kalıbı market başlığı DEĞİLDİR
-    # (nesine bazı satır üstlerine maç adı yazar)
-    if " - " in t and len(t) < 90:
+    # Maç adı market değildir.
+    if " - " in raw and len(raw) < 100:
+        return False
+
+    # Skor satırı market değildir.
+    if SKOR_RE.match(raw):
+        return False
+
+    # Korner / kaleci / kart / oyuncu marketlerini baştan engelle.
+    if market_yasak_mi(raw):
         return False
 
     return True
 
-
 def nesine_oran_parse(text):
     """
-    Satır bazlı oran parse:
-    - Oran satırının bir üstü etiket
-    - Etiketi olmayan başlıklar market olur
-    - '1 2.10' tek satır desteği
-    - '1 X 2' + altında 3'lü grid desteği
-    - Skor formatı satırlar (0:0, 1:2) market başlığı SANILMAZ
+    Nesine oran metnini parse eder.
+
+    Önemli koruma:
+    - Market adı ham halde saklanır.
+    - Korner / kaleci / kart vb. marketler market_yasak_mi ile
+      daha standartlaştırılmadan tamamen atılır.
+    - Böylece 'Toplam Korner Alt/Üst 9.5' hiçbir zaman
+      'Alt/Üst 9.5' olarak kaydedilemez.
     """
     oranlar = {}
 
     lines = [
-        x.strip() for x in str(text).split("\n")
+        x.strip()
+        for x in str(text or "").split("\n")
         if x.strip()
     ]
 
-    market = ""
+    raw_market = ""
     i = 0
+
+    def oran_ekle(market, label, raw_value):
+        """
+        Tek bir oranı ekler.
+        Market yasaksa hiçbir şekilde eklemez.
+        """
+
+        market = str(market or "").strip()
+        label = str(label or "").strip()
+        raw_value = str(raw_value or "").strip()
+
+        if not label:
+            return
+
+        # Market ham halde yasaksa tamamen atla.
+        if market and market_yasak_mi(market):
+            return
+
+        try:
+            value = float(raw_value.replace(",", "."))
+        except Exception:
+            return
+
+        if value < 1.01 or value > 999:
+            return
+
+        full_key = f"{market}_{label}" if market else label
+
+        # Bir daha ham anahtardan kontrol.
+        if ham_anahtar_yasak_mi(full_key):
+            return
+
+        oranlar[full_key] = value
 
     while i < len(lines):
         line = lines[i]
         nxt = lines[i + 1] if i + 1 < len(lines) else ""
 
-        # --- A) 3'lü grid: '1 X 2' + altında değerler ---
+        # ----------------------------------------------------
+        # A) "1 X 2" + altındaki oranlar
+        # ----------------------------------------------------
         if re.fullmatch(r"(?:ms\s+)?1\s+[xX0]\s+2", line):
             j = i + 1
             deger_satiri = None
 
-            while j < len(lines) and (j - i) <= 3:
-                if re.search(r"\d{1,3}[.,]\d{2}", lines[j]):
+            while j < len(lines) and (j - i) <= 4:
+                if re.search(r"\d{1,3}[.,]\d{1,2}", lines[j]):
                     deger_satiri = lines[j]
                     break
                 j += 1
 
             if deger_satiri:
-                vals = re.findall(r"\d{1,3}[.,]\d{2}", deger_satiri)
+                values = re.findall(
+                    r"\d{1,3}[.,]\d{1,2}",
+                    deger_satiri
+                )
 
-                if 2 <= len(vals) <= 3:
-                    for lab, vv in zip(["1", "X", "2"], vals):
-                        full_key = f"{market}_{lab}" if market else lab
-                        kk = full_key.strip().lower()
-
-                        if not kk.startswith(SILINECEK_BASLANGICLAR):
-                            try:
-                                oranlar[full_key] = float(vv.replace(",", "."))
-                            except Exception:
-                                pass
+                if 2 <= len(values) <= 3:
+                    for label, value in zip(
+                        ["1", "X", "2"],
+                        values
+                    ):
+                        oran_ekle(raw_market, label, value)
 
                     i = j + 1
                     continue
@@ -1308,87 +1379,116 @@ def nesine_oran_parse(text):
             i += 1
             continue
 
-        # --- B) Tek satırda çoklu çift: '1 2.10 X 3.30 2 2.45' ---
-        tok = line.split()
-        sayilar = [t for t in tok if re.fullmatch(r"\d{1,3}[.,]\d{2}", t)]
+        # ----------------------------------------------------
+        # B) Tek satırda:
+        # "1 2.10 X 3.30 2 2.45"
+        # ----------------------------------------------------
+        tokens = line.split()
+
+        values = [
+            token
+            for token in tokens
+            if re.fullmatch(r"\d{1,3}[.,]\d{1,2}", token)
+        ]
 
         if (
-            len(sayilar) >= 2
-            and len(tok) == len(sayilar) * 2
-            and tok[0].lower() in ("1", "x", "2", "0")
+            len(values) >= 2
+            and len(tokens) == len(values) * 2
+            and tokens[0].lower() in ("1", "x", "0", "2")
         ):
-            lab = None
+            label = None
 
-            for t in tok:
-                if re.fullmatch(r"\d{1,3}[.,]\d{2}", t):
-                    if lab is not None:
-                        full_key = f"{market}_{lab}" if market else lab
-                        kk = full_key.strip().lower()
-
-                        if not kk.startswith(SILINECEK_BASLANGICLAR):
-                            try:
-                                oranlar[full_key] = float(t.replace(",", "."))
-                            except Exception:
-                                pass
-                        lab = None
+            for token in tokens:
+                if re.fullmatch(r"\d{1,3}[.,]\d{1,2}", token):
+                    if label:
+                        oran_ekle(raw_market, label, token)
+                        label = None
                 else:
-                    lab = t
+                    label = token
 
             i += 1
             continue
 
-        # --- C) '1 2.10' tek çift aynı satırda ---
-        tek = re.match(r"^(\D{1,30}?)\s+(\d{1,3}[.,]\d{2})$", line)
-        if tek:
-            lab = tek.group(1).strip()
-            try:
-                val = float(tek.group(2).replace(",", "."))
-            except Exception:
-                val = 0
+        # ----------------------------------------------------
+        # C) Tek satırda:
+        # "Alt 1.75"
+        # "Var 1.68"
+        # "1 2.10"
+        # ----------------------------------------------------
+        single = re.match(
+            r"^(.{1,80}?)\s+(\d{1,3}[.,]\d{1,2})$",
+            line
+        )
 
-            if lab and 1.01 <= val <= 999:
-                full_key = f"{market}_{lab}" if market else lab
-                kk = full_key.strip().lower()
-                if not kk.startswith(SILINECEK_BASLANGICLAR):
-                    oranlar[full_key] = val
+        if single:
+            label = single.group(1).strip()
+            value = single.group(2).strip()
+
+            # Satır market adı gibi görünüyorsa oran olarak alma.
+            # Örn: market başlığında 2.5 geçebilir.
+            if not market_gecerli_mi(label):
+                oran_ekle(raw_market, label, value)
+
+            else:
+                # Eğer bu aslında market başlığıysa marketi değiştir.
+                # Ancak yasak marketse boş tut.
+                if market_yasak_mi(label):
+                    raw_market = "__YASAK_MARKET__"
+                else:
+                    raw_market = label
+
             i += 1
             continue
 
-        # --- D) Klasik akış ---
-        if oran_satiri_mi(line):
-            i += 1
-            continue
-
+        # ----------------------------------------------------
+        # D) Klasik yapı:
+        #
+        # Alt
+        # 1.72
+        #
+        # Üst
+        # 2.10
+        # ----------------------------------------------------
         if nxt and oran_satiri_mi(nxt):
             label = line
 
-            if label and not oran_satiri_mi(label):
-                full_key = f"{market}_{label}" if market else label
-                k = full_key.strip().lower()
-
-                if not k.startswith(SILINECEK_BASLANGICLAR):
-                    try:
-                        oranlar[full_key] = float(nxt.replace(",", "."))
-                    except Exception:
-                        pass
+            # raw_market yasak işaretlendiyse oran ekleme.
+            if raw_market != "__YASAK_MARKET__":
+                oran_ekle(raw_market, label, nxt)
 
             i += 2
-        else:
-            # Skor formatı satır (0:0, 1:2) market başlığı DEĞİLDİR.
-            # Altında oran varsa label'dır -> market'i KORU.
-            if SKOR_RE.match(line) and nxt and oran_satiri_mi(nxt):
-                i += 1
-                continue
+            continue
 
-            if market_gecerli_mi(line):
-                market = line
-            else:
-                market = ""
-
+        # ----------------------------------------------------
+        # E) Skor formatı:
+        # 1:0
+        # 12.50
+        #
+        # Burada 1:0 etikettir, market değildir.
+        # ----------------------------------------------------
+        if SKOR_RE.match(line):
             i += 1
+            continue
+
+        # ----------------------------------------------------
+        # F) Yeni market başlığı
+        # ----------------------------------------------------
+        if market_yasak_mi(line):
+            # Yasak market başladıysa sonraki Alt/Üst oranlarının
+            # kaydedilmesini kesin olarak engelle.
+            raw_market = "__YASAK_MARKET__"
+
+        elif market_gecerli_mi(line):
+            raw_market = line
+
+        else:
+            # Bilinmeyen veya geçersiz satır marketi silmesin.
+            # Özellikle seçim başlıklarında mevcut market korunur.
+            pass
+
+        i += 1
 
     return oranlar
-
 
 # =========================
 # ANAHTAR STANDARTLASTIRMA (KA UYUMLU)
@@ -1581,76 +1681,268 @@ def label_duzelt(l, market):
 
 
 def oranlari_standartlastir(oranlar):
+    """
+    Ham Nesine oran anahtarlarını dashboard formatına dönüştürür.
+
+    Korner / kaleci / kart gibi marketler standardizasyon öncesinde
+    atılır. Bu nedenle korner marketi gol alt/üst gibi görünemez.
+    """
     if not isinstance(oranlar, dict):
-        return oranlar
+        return {}
 
     out = {}
 
-    for k, v in oranlar.items():
-        nk = tr_key(k)
+    for key, value in oranlar.items():
+        try:
+            raw_key = str(key or "").strip()
 
-        if "_" in nk:
-            market_raw, label_raw = nk.split("_", 1)
-        else:
-            bulundu = False
-            for src in ("mac sonucu", "cifte sans", "karsilikli gol"):
-                if nk.startswith(src + " "):
-                    market_raw = src
-                    label_raw = nk[len(src):].strip(" _-")
-                    bulundu = True
-                    break
-            if not bulundu:
-                market_raw, label_raw = nk, ""
+            if not raw_key:
+                continue
 
-        market = market_duzelt(market_raw) if market_raw else ""
+            # Ham key daha bozulmadan filtrele.
+            if ham_anahtar_yasak_mi(raw_key):
+                continue
 
-        lab = label_temizle(label_raw) if label_raw else ""
+            normalized_key = tr_key(raw_key)
 
-        if not market and lab in ("1", "0", "x", "2"):
-            market = "Maç Sonucu"
+            if "_" in normalized_key:
+                market_raw, label_raw = normalized_key.split("_", 1)
+            else:
+                market_raw = normalized_key
+                label_raw = ""
 
-        # Boş market + skor formatı label -> Maç Skoru
-        # ('0:0_' gibi eski bozuk anahtarları da onarır)
-        if not market and lab and re.fullmatch(r"\d{1,2}:\d{1,2}", lab):
-            market = "Maç Skoru"
+            # Market standardize edilmeden önce tekrar kontrol.
+            if market_yasak_mi(market_raw):
+                continue
 
-        # '1 & alt' kalıbı + market 'Alt/Üst N' ise
-        # gerçek market: 'Maç Sonucu ve Alt/Üst N'
-        if lab and " & " in lab:
-            ilk_p = lab.split("&")[0].strip()
-            if ilk_p in ("1", "x", "0", "2"):
-                if market.startswith("Alt/Üst"):
-                    nm = re.search(r"(\d+(?:\.\d+)?)", market)
-                    num = nm.group(1) if nm else ""
-                    market = f"Maç Sonucu ve Alt/Üst {num}".strip()
+            market = market_duzelt(market_raw) if market_raw else ""
+            label = label_temizle(label_raw) if label_raw else ""
 
-        lab = label_duzelt(lab, market) if lab else ""
+            # Yalnızca 1/0/2 geldiyse maç sonucu kabul et.
+            if not market and label in ("1", "0", "x", "2"):
+                market = "Maç Sonucu"
 
-        yeni = f"{market}_{lab}" if market else lab
-        if yeni:
-            out[yeni] = v
+            # 0:0, 1:2 benzeri oranlar Maç Skoru olur.
+            if (
+                not market
+                and label
+                and re.fullmatch(r"\d{1,2}:\d{1,2}", label)
+            ):
+                market = "Maç Skoru"
+
+            # Kombine market düzeltmesi:
+            # Alt/Üst 2.5 + "1 & Alt" -> Maç Sonucu ve Alt/Üst 2.5
+            if label and "&" in label:
+                first_part = label.split("&")[0].strip()
+
+                if first_part in ("1", "x", "0", "2"):
+                    if market.startswith("Alt/Üst"):
+                        number_match = re.search(
+                            r"(\d+(?:\.\d+)?)",
+                            market
+                        )
+
+                        number = (
+                            number_match.group(1)
+                            if number_match
+                            else ""
+                        )
+
+                        market = (
+                            f"Maç Sonucu ve Alt/Üst {number}"
+                        ).strip()
+
+            label = label_duzelt(label, market) if label else ""
+
+            new_key = (
+                f"{market}_{label}"
+                if market
+                else label
+            ).strip("_")
+
+            if not new_key:
+                continue
+
+            # Standardize edilmiş anahtarda da son filtre.
+            if istenmeyen_anahtar_mi(new_key):
+                continue
+
+            out[new_key] = float(value)
+
+        except Exception:
+            pass
 
     return out
 
-
-def istenmeyen_anahtar_mi(k):
+def istenmeyen_anahtar_mi(key):
     """
-    Final filtre:
-    - SILINECEK_BASLANGICLAR önekleri
-    - 'takim - takim' marketli anahtarlar (maç adı market sanılmış)
-    """
-    nk = tr_key(k)
+    Son savunma filtresi.
 
-    for s in SILINECEK_BASLANGICLAR:
-        if nk.startswith(s):
+    Buraya gelen bir oran anahtarı:
+    - Korner
+    - Kaleci
+    - Kart
+    - Oyuncu
+    - Takım özel bahsi
+    taşıyorsa kaydedilmez.
+    """
+
+    normalized_key = tr_key(key)
+
+    if not normalized_key:
+        return True
+
+    # Anahtarın market tarafı
+    market_part = normalized_key.split("_", 1)[0].strip()
+
+    if market_yasak_mi(market_part):
+        return True
+
+    # Tüm anahtar üzerinde de kontrol yap.
+    forbidden_words = [
+        "korner",
+        "corner",
+        "kaleci",
+        "kurtaris",
+        "kurtarisi",
+        "kart",
+        "sari kart",
+        "kirmizi kart",
+        "oyuncu",
+        "golcu",
+        "sut",
+        "ofsayt",
+        "tac",
+        "takim ozel",
+        "karsilasma ozel",
+    ]
+
+    for word in forbidden_words:
+        if word in normalized_key:
             return True
 
-    market_kismi = nk.split("_", 1)[0]
-    if " - " in market_kismi:
+    # Maç adı yanlışlıkla market olmuşsa:
+    # "galatasaray - kocaelispor_1"
+    if " - " in market_part:
+        return True
+
+    # Hatalı başlıksız korner olasılığı:
+    #
+    # Alt/Üst 7.5, 8.5, 9.5, 10.5, 11.5 gibi marketler
+    # Nesine'de çoğu zaman kornerden geliyorsa ve ham market
+    # kaybolmuşsa yine engellenir.
+    #
+    # Gol alt/üst marketleri normalde 0.5-5.5 arasıdır.
+    suspicious_corner_pattern = re.fullmatch(
+        r"alt/ust\s+(7\.5|8\.5|9\.5|10\.5|11\.5|12\.5|13\.5|14\.5)_(alt|ust)",
+        normalized_key
+    )
+
+    if suspicious_corner_pattern:
         return True
 
     return False
 
+def market_yasak_mi(market_adi):
+    """
+    Market adı ham haldeyken kontrol edilir.
+
+    Çok önemli:
+    Market normalleştirilmeden ÖNCE kontrol edilir.
+    Böylece 'Toplam Korner Alt/Üst 9.5' marketi,
+    'Alt/Üst 9.5' haline dönüşmeden tamamen atılır.
+    """
+    market = tr_key(market_adi)
+
+    if not market:
+        return False
+
+    # Direkt yasak önek kontrolü
+    for yasak in SILINECEK_BASLANGICLAR:
+        yasak_normal = tr_key(yasak)
+
+        if market.startswith(yasak_normal):
+            return True
+
+    # İçerik bazlı ek güvenlik kontrolleri
+    yasak_kelimeler = [
+        "korner",
+        "corner",
+        "kaleci",
+        "kurtaris",
+        "kurtarisi",
+        "kart",
+        "sari kart",
+        "kirmizi kart",
+        "oyuncu",
+        "golcu",
+        "gol atar",
+        "asist",
+        "sut",
+        "isabetli sut",
+        "ofsayt",
+        "tac",
+    ]
+
+    for kelime in yasak_kelimeler:
+        if kelime in market:
+            return True
+
+    return False
+
+
+def ham_anahtar_yasak_mi(anahtar):
+    """
+    Oran anahtarının market kısmını ayırıp yasak market mi kontrol eder.
+
+    Örnek:
+    'Toplam Korner Alt/Üst 9.5_Alt'
+    -> market = 'Toplam Korner Alt/Üst 9.5'
+    -> True
+    """
+    anahtar = str(anahtar or "").strip()
+
+    if not anahtar:
+        return True
+
+    market = anahtar.split("_", 1)[0].strip()
+
+    return market_yasak_mi(market)
+
+
+def oranlar_temizle(oranlar):
+    """
+    Eski veya yeni oran sözlüğünden yasak marketleri siler.
+
+    Bu fonksiyon hem yeni scrape edilen oranlara,
+    hem de mac.json içindeki eski oranlara uygulanır.
+    """
+    if not isinstance(oranlar, dict):
+        return {}
+
+    temiz = {}
+
+    for key, value in oranlar.items():
+        try:
+            key_str = str(key).strip()
+
+            if not key_str:
+                continue
+
+            # Ham key üzerinden kontrol
+            if ham_anahtar_yasak_mi(key_str):
+                continue
+
+            # Normalize edilmiş key üzerinden ikinci kontrol
+            if istenmeyen_anahtar_mi(key_str):
+                continue
+
+            temiz[key_str] = float(value)
+
+        except Exception:
+            pass
+
+    return temiz
 
 # =========================
 # PANEL / GENİŞLETME
@@ -1937,97 +2229,181 @@ def mac_oranlari_cek(driver, m):
 # JSON KAYDET
 # =========================
 def mac_json_kaydet(yeni_maclar):
-    data = {"matches": [], "son_guncelleme": ""}
+    data = {
+        "matches": [],
+        "son_guncelleme": ""
+    }
 
     if os.path.exists(CIKTI_DOSYA):
         try:
-            with open(CIKTI_DOSYA, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            with open(CIKTI_DOSYA, "r", encoding="utf-8") as file:
+                data = json.load(file)
         except Exception:
             pass
 
-    def key(m):
+    def key(match):
         return (
-            m.get("tarih", ""), m.get("saat", ""),
-            m.get("ev_sahibi", ""), m.get("deplasman", "")
+            match.get("tarih", ""),
+            match.get("saat", ""),
+            match.get("ev_sahibi", ""),
+            match.get("deplasman", "")
         )
 
-    var = {key(m): m for m in data.get("matches", [])}
+    # --------------------------------------------------------
+    # ESKİ JSON'DAKİ ORANLARI DA TEMİZLE
+    #
+    # Böylece önceki scriptin kaydettiği:
+    # "Alt/Üst 7.5_Alt"
+    # "kaleci en az kac kurtaris..."
+    # türü eski kayıtlar da temizlenir.
+    # --------------------------------------------------------
+    old_matches = data.get("matches", [])
 
-    for m in yeni_maclar:
-        # Standartlaştır + final filtre
-        st = oranlari_standartlastir(m.get("oranlar"))
+    for old_match in old_matches:
+        try:
+            old_raw_odds = old_match.get("oranlar", {})
 
-        temiz_oranlar = {}
-        for k, v in st.items():
-            try:
-                if istenmeyen_anahtar_mi(k):
-                    continue
-                temiz_oranlar[k] = float(v)
-            except Exception:
-                pass
+            old_standard = oranlari_standartlastir(old_raw_odds)
+            old_clean = oranlar_temizle(old_standard)
 
-        m["oranlar"] = temiz_oranlar
+            old_match["oranlar"] = old_clean
+        except Exception:
+            old_match["oranlar"] = {}
 
-        k = key(m)
-        if k in var:
-            eski = var[k]
+    existing = {
+        key(match): match
+        for match in old_matches
+    }
 
-            yeni_lig = m.get("lig", "").strip()
-            eski_lig = eski.get("lig", "").strip()
-            if (not yeni_lig or yeni_lig == "Bilinmeyen Lig") and eski_lig and eski_lig != "Bilinmeyen Lig":
-                m["lig"] = eski_lig
+    # --------------------------------------------------------
+    # YENİ MAÇLARI EKLE / GÜNCELLE
+    # --------------------------------------------------------
+    for match in yeni_maclar:
+        try:
+            raw_odds = match.get("oranlar", {})
 
-            if not m.get("oranlar") and eski.get("oranlar"):
-                m["oranlar"] = eski["oranlar"]
+            standardized = oranlari_standartlastir(raw_odds)
+            clean_odds = oranlar_temizle(standardized)
 
-        var[k] = m
+            match["oranlar"] = clean_odds
 
-    simdi = datetime.datetime.now().isoformat()
+        except Exception:
+            match["oranlar"] = {}
 
-    temiz = []
-    sirali = sorted(
-        var.values(),
-        key=lambda x: (x.get("tarih", ""), x.get("saat", "00:00"))
+        match_key = key(match)
+
+        if match_key in existing:
+            old_match = existing[match_key]
+
+            # Yeni lig boşsa eski lig bilgisini koru.
+            new_league = str(match.get("lig", "")).strip()
+            old_league = str(old_match.get("lig", "")).strip()
+
+            if (
+                not new_league
+                or new_league == "Bilinmeyen Lig"
+            ) and old_league:
+                match["lig"] = old_league
+
+            # Yeni oran çekilemediyse eski oranları kullan.
+            # FAKAT eski oranlar da temizlenerek alınır.
+            if not match.get("oranlar"):
+                old_odds = old_match.get("oranlar", {})
+
+                old_odds = oranlari_standartlastir(old_odds)
+                old_odds = oranlar_temizle(old_odds)
+
+                match["oranlar"] = old_odds
+
+        existing[match_key] = match
+
+    now = datetime.datetime.now().isoformat()
+
+    sorted_matches = sorted(
+        existing.values(),
+        key=lambda item: (
+            item.get("tarih", ""),
+            item.get("saat", "00:00"),
+            item.get("ev_sahibi", "")
+        )
     )
 
-    for idx, mac in enumerate(sirali, 1):
-        def to_int(v):
-            try:
-                return int(v or 0)
-            except Exception:
-                return 0
+    cleaned_matches = []
 
-        temiz.append({
-            "index": idx,
-            "mac_kodu": str(mac.get("mac_kodu", "")),
-            "ev_sahibi": str(mac.get("ev_sahibi", "")).strip(),
-            "deplasman": str(mac.get("deplasman", "")).strip(),
-            "saat": str(mac.get("saat", "")),
-            "lig": str(mac.get("lig", "")),
-            "tarih": str(mac.get("tarih", "")),
-            "cekme_zamani": str(mac.get("cekme_zamani", simdi)),
-            "durum": str(mac.get("durum", "baslamadi")),
-            "skor_ev": to_int(mac.get("skor_ev")),
-            "skor_dep": to_int(mac.get("skor_dep")),
-            "skor_1y_ev": to_int(mac.get("skor_1y_ev")),
-            "skor_1y_dep": to_int(mac.get("skor_1y_dep")),
-            "kaynak": str(mac.get("kaynak", "nesine.com")),
-            "oranlar": mac.get("oranlar", {})
+    def to_int(value):
+        try:
+            return int(value or 0)
+        except Exception:
+            return 0
+
+    for index, match in enumerate(sorted_matches, start=1):
+        # Bir son kez oranları temizle.
+        final_odds = oranlar_temizle(
+            oranlari_standartlastir(
+                match.get("oranlar", {})
+            )
+        )
+
+        cleaned_matches.append({
+            "index": index,
+            "mac_kodu": str(match.get("mac_kodu", "")),
+            "ev_sahibi": str(
+                match.get("ev_sahibi", "")
+            ).strip(),
+            "deplasman": str(
+                match.get("deplasman", "")
+            ).strip(),
+            "saat": str(match.get("saat", "")),
+            "lig": str(match.get("lig", "")),
+            "tarih": str(match.get("tarih", "")),
+            "cekme_zamani": str(
+                match.get("cekme_zamani", now)
+            ),
+            "durum": str(
+                match.get("durum", "baslamadi")
+            ),
+            "skor_ev": to_int(match.get("skor_ev")),
+            "skor_dep": to_int(match.get("skor_dep")),
+            "skor_1y_ev": to_int(match.get("skor_1y_ev")),
+            "skor_1y_dep": to_int(match.get("skor_1y_dep")),
+            "kaynak": str(
+                match.get("kaynak", "nesine.com")
+            ),
+            "oranlar": final_odds
         })
 
-    cikti = {"matches": temiz, "son_guncelleme": simdi}
+    output = {
+        "matches": cleaned_matches,
+        "son_guncelleme": now
+    }
 
-    os.makedirs(os.path.dirname(CIKTI_DOSYA), exist_ok=True)
+    os.makedirs(
+        os.path.dirname(CIKTI_DOSYA),
+        exist_ok=True
+    )
 
-    path = Path(CIKTI_DOSYA)
-    temp_path = path.with_suffix(".tmp")
-    with open(temp_path, "w", encoding="utf-8", newline="\n") as f:
-        json.dump(cikti, f, ensure_ascii=False, indent=2)
-    temp_path.replace(path)
+    output_path = Path(CIKTI_DOSYA)
+    temp_path = output_path.with_suffix(".tmp")
 
-    print(f"   💾 Kaydedildi: {len(temiz)} maç | {CIKTI_DOSYA}")
+    with open(
+        temp_path,
+        "w",
+        encoding="utf-8",
+        newline="\n"
+    ) as file:
+        json.dump(
+            output,
+            file,
+            ensure_ascii=False,
+            indent=2
+        )
 
+    temp_path.replace(output_path)
+
+    print(
+        f"   💾 Kaydedildi: "
+        f"{len(cleaned_matches)} maç | {CIKTI_DOSYA}"
+    )
 
 # =========================
 # MAIN
@@ -2165,8 +2541,10 @@ def main():
                     except Exception:
                         pass
 
-                if islenen % 10 == 0:
+                if islenen % 50 == 0:
+                    print("\n💾 ARA KAYIT BAŞLIYOR...")
                     mac_json_kaydet(results)
+                    print("✅ ARA KAYIT TAMAMLANDI.\n")
 
                 time.sleep(random.uniform(*SLEEP_BETWEEN_MATCHES))
 

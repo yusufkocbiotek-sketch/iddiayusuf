@@ -2471,8 +2471,6 @@ def main():
                     print(f"🔄 {islenen - 1} maç işlendi. Chrome yeniden başlatılıyor...")
                     print("=" * 60)
 
-                    mac_json_kaydet(results)
-
                     try:
                         driver = chrome_yeniden_baslat(driver, url_gun)
                     except Exception as e:
@@ -2540,12 +2538,7 @@ def main():
                         print("   🧪 Standart sonrası anahtarlar:", ornek)
                     except Exception:
                         pass
-
-                if islenen % 50 == 0:
-                    print("\n💾 ARA KAYIT BAŞLIYOR...")
-                    mac_json_kaydet(results)
-                    print("✅ ARA KAYIT TAMAMLANDI.\n")
-
+              
                 time.sleep(random.uniform(*SLEEP_BETWEEN_MATCHES))
 
         mac_json_kaydet(results)

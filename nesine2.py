@@ -15,8 +15,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -31,26 +29,28 @@ CIKTI_DOSYA = str(REPO_ROOT / "public" / "data" / "mac.json")
 
 MAX_SCROLL_STEPS = 300
 STABLE_LIMIT = 18
-SCROLL_PX = 600
-SCROLL_SLEEP_RANGE = (1.1, 2.0)
+SCROLL_PX = 650
+SCROLL_SLEEP_RANGE = (1.0, 1.8)
 
 MAX_SCRAPE = 9999
-SLEEP_BETWEEN_MATCHES = (1.1, 2.4)
+SLEEP_BETWEEN_MATCHES = (1.0, 2.0)
 
-# Her kaç maçta Chrome kapat/aç yapılacağı
-HARVEST_MAC_SAYISI = 50
+# 0 = Chrome yeniden başlatma kapalı.
+# Siyah reklam ekranı sorunu yaşamamak için şimdilik 0 bırak.
+# İstersen sonra 50 yapabilirsin.
+HARVEST_MAC_SAYISI = 0
 
 SEARCH_SEL = 'input[data-test-id="srch-box"]'
-PANEL_BTN_SEL = 'div[data-test-id="date-league-btn-title"]'
 EXPAND_SEL = "span.f17af500409a2f819a68"
 
 TIME_RE = re.compile(r"^\d{1,2}:\d{2}$")
 ODD_RE = re.compile(r"^\d{1,3}([.,]\d{1,2})$")
-SKOR_RE = re.compile(r"^\d{1,2}[:\-]\d{1,2}\+?$")
+
+ENABLE_GIT_AUTOPUSH = True
 
 
 # ============================================================
-# YASAK MARKETLER
+# FİLTRELENECEK MARKETLER
 # ============================================================
 
 SILINECEK_BASLANGICLAR = (
@@ -58,9 +58,13 @@ SILINECEK_BASLANGICLAR = (
     "takim",
     "takimlar",
     "karsilasma ozel bahisleri",
+
+    # Kaleci
     "kaleci",
     "kurtaris",
     "kurtarisi",
+
+    # Korner
     "korner",
     "corner",
     "toplam korner",
@@ -74,6 +78,8 @@ SILINECEK_BASLANGICLAR = (
     "deplasman toplam korner",
     "ev sahibi korner",
     "deplasman korner",
+
+    # Kart
     "kart",
     "sari kart",
     "kirmizi kart",
@@ -81,21 +87,62 @@ SILINECEK_BASLANGICLAR = (
 )
 
 MENU_KELIMELER = {
-    "bulten", "canli", "canli sonuclar",
-    "sonuclar", "kuponum", "kuponlarim",
-    "spor toto", "yardim", "giris",
-    "uye ol", "nesine", "futbol",
-    "basketbol", "tenis", "voleybol",
-    "hentbol", "buz hokeyi",
-    "amerikan futbolu", "e-futbol",
-    "mma", "tumu", "yukle",
-    "bugun", "yarin",
+    "bulten",
+    "canli",
+    "canli sonuclar",
+    "sonuclar",
+    "kuponum",
+    "kuponlarim",
+    "spor toto",
+    "yardim",
+    "giris",
+    "uye ol",
+    "nesine",
+    "futbol",
+    "basketbol",
+    "tenis",
+    "voleybol",
+    "hentbol",
+    "buz hokeyi",
+    "amerikan futbolu",
+    "e-futbol",
+    "mma",
+    "tumu",
+    "yukle",
+    "bugun",
+    "yarin",
 }
 
 
 # ============================================================
-# TARİH
+# GENEL YARDIMCILAR
 # ============================================================
+
+def tr_key(value):
+    text = str(value or "")
+
+    replacements = {
+        "İ": "i",
+        "I": "i",
+        "ı": "i",
+        "Ş": "s",
+        "ş": "s",
+        "Ğ": "g",
+        "ğ": "g",
+        "Ü": "u",
+        "ü": "u",
+        "Ö": "o",
+        "ö": "o",
+        "Ç": "c",
+        "ç": "c",
+    }
+
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+
+    text = text.lower()
+    return re.sub(r"\s+", " ", text).strip()
+
 
 def bugunun_tarihi():
     return datetime.datetime.now().strftime("%Y-%m-%d")
@@ -123,125 +170,449 @@ def nesine_dt_url(tarih_iso):
         return f"{URL_BASE}?et=1&le=2"
 
 
-def url_tarih_uyuyor_mu(url, tarih_iso):
-    try:
-        tarih = datetime.datetime.strptime(
-            tarih_iso,
-            "%Y-%m-%d"
-        )
+# ============================================================
+# MARKET / ORAN ANAHTAR KONTROLÜ
+# ============================================================
 
-        hedef = tarih.strftime("%d.%m.%Y")
+def market_yasak_mi(market):
+    normalized = tr_key(market)
 
-        found = re.search(r"dt=([^&]+)", url or "")
-
-        if not found:
-            return False
-
-        gunler = found.group(1).split("%7C")
-
-        return gunler == [hedef]
-
-    except Exception:
+    if not normalized:
         return False
 
+    for yasak in SILINECEK_BASLANGICLAR:
+        if normalized.startswith(tr_key(yasak)):
+            return True
+
+    yasak_kelimeler = (
+        "korner",
+        "corner",
+        "kaleci",
+        "kurtaris",
+        "kurtarisi",
+        "kart",
+        "sari kart",
+        "kirmizi kart",
+        "oyuncu",
+        "golcu",
+        "gol atar",
+        "asist",
+        "sut",
+        "isabetli sut",
+        "ofsayt",
+        "tac",
+    )
+
+    return any(kelime in normalized for kelime in yasak_kelimeler)
+
+
+def oran_anahtari_gecerli_mi(key):
+    """
+    Geçerli format:
+        Market_Seçenek
+
+    Geçerli örnekler:
+        0,5 Gol Alt/Üst_Alt
+        1,5 Gol Alt/Üst_Üst
+        Maç Sonucu_1
+        Çifte Şans_1-2
+
+    Geçersiz örnekler:
+        3
+        2.58
+        1-2
+        x-2
+        3_1
+        2.58_X
+    """
+
+    raw = str(key or "").strip()
+
+    if "_" not in raw:
+        return False
+
+    market, label = raw.split("_", 1)
+
+    market = market.strip()
+    label = label.strip()
+
+    if not market or not label:
+        return False
+
+    market_normal = tr_key(market)
+    label_normal = tr_key(label)
+
+    # Market sadece sayıysa geçersiz:
+    # 3_1
+    # 12_Alt
+    if re.fullmatch(r"\d+", market_normal):
+        return False
+
+    # Market sadece odds değeri gibiyse geçersiz:
+    # 2.58_X
+    # 1.75_Alt
+    #
+    # Ama "1,5 gol alt/ust" harf içerdiği için geçerli kalır.
+    if re.fullmatch(r"\d{1,3}(?:[.,]\d{1,2})?", market_normal):
+        return False
+
+    # Marketin en az bir harf içermesi zorunlu.
+    # Böylece 1,5 Gol Alt/Üst geçer;
+    # ama 3_1 geçmez.
+    if not re.search(r"[a-zçğıöşü]", market_normal):
+        return False
+
+    # Label doğrudan odds değeri olmamalı.
+    # Maç Sonucu_2.58 gibi bozuk kayıtları engeller.
+    if re.fullmatch(r"\d{1,3}[.,]\d{1,2}", label_normal):
+        return False
+
+    # Takım adı yanlışlıkla market olmuşsa.
+    if " - " in market:
+        return False
+
+    # Korner / kart / kaleci / oyuncu filtreleri.
+    if market_yasak_mi(market):
+        return False
+
+    return True
+
+def istenmeyen_anahtar_mi(key):
+    if not oran_anahtari_gecerli_mi(key):
+        return True
+
+    normalized = tr_key(key)
+    market = normalized.split("_", 1)[0]
+
+    if market_yasak_mi(market):
+        return True
+
+    # Başlığı düşmüş yüksek Alt/Üst marketleri genelde kornerdir.
+    if re.fullmatch(
+        r"alt/ust\s+"
+        r"(7\.5|8\.5|9\.5|10\.5|11\.5|12\.5|13\.5|14\.5)"
+        r"_(alt|ust)",
+        normalized
+    ):
+        return True
+
+    return False
+
+
+def label_temizle(label):
+    label = tr_key(label)
+
+    return re.sub(
+        r"^(ms|hms|cs|iy|2y|1y|au|kg|2\.y|1\.y)\s+",
+        "",
+        label
+    ).strip()
+
 
 # ============================================================
-# GİT
+# MARKET STANDARDİZASYONU
 # ============================================================
 
-ENABLE_GIT_AUTOPUSH = True
+def market_duzelt(market):
+    market = tr_key(market)
+    market = re.sub(r"(\d),(\d)", r"\1.\2", market)
+
+    def number():
+        found = re.search(r"(\d+(?:\.\d+)?)", market)
+        return found.group(1) if found else ""
+
+    first_half = (
+        "ilk yari" in market or
+        "1. yari" in market
+    )
+
+    second_half = (
+        "ikinci yari" in market or
+        "2. yari" in market
+    )
+
+    both_score = (
+        "karsilikli gol" in market or
+        market == "kg"
+    )
+
+    over_under = bool(
+        re.search(r"\balt(i)?\b|\bust(u)?\b", market)
+    )
+
+    match_result = (
+        "mac sonucu" in market or
+        market in ("ms", "1x2")
+    )
+
+    if both_score and over_under:
+        return f"Altı/Üstü {number()} ve Karşılıklı Gol"
+
+    if both_score and match_result:
+        return "Maç Sonucu ve Karşılıklı Gol"
+
+    if both_score and first_half and "sonuc" in market:
+        return "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol"
+
+    if first_half and "sonuc" in market and over_under:
+        return f"İlk Yarı Sonucu ve Altı/Üstü {number()}"
+
+    if match_result and over_under:
+        return f"Maç Sonucu ve Alt/Üst {number()}"
+
+    handicap = re.search(
+        r"handikap\w*\s*(?:mac sonucu\s*)?(\d+:\d+)",
+        market
+    )
+
+    if handicap:
+        return f"Handikaplı Maç Sonucu {handicap.group(1)}"
+
+    if "handikap" in market:
+        return "Handikaplı Maç Sonucu"
+
+    if first_half and match_result:
+        return "İlk Yarı / Maç Sonucu"
+
+    if match_result:
+        return "Maç Sonucu"
+
+    if "cifte sans" in market:
+        if first_half:
+            return "İlk Yarı Çifte Şans"
+        return "Çifte Şans"
+
+    if "toplam gol" in market:
+        return "Toplam Gol"
+
+    if "mac skoru" in market:
+        return "Maç Skoru"
+
+    if both_score:
+        if first_half:
+            return "İlk Yarı Karşılıklı Gol"
+
+        if second_half:
+            return "İkinci Yarı Karşılıklı Gol"
+
+        return "Karşılıklı Gol"
+
+    if first_half and "sonuc" in market:
+        return "İlk Yarı Sonucu"
+
+    if second_half and "sonuc" in market:
+        return "İkinci Yarı Sonucu"
+
+    if re.search(r"tek\s*/?\s*cift", market):
+        if first_half:
+            return "İlk Yarı Tek / Çift"
+
+        if second_half:
+            return "İkinci Yarı Tek / Çift"
+
+        return "Tek / Çift"
+
+    if over_under:
+        prefix = ""
+
+        if "ev sahibi" in market:
+            prefix = "Ev Sahibi "
+        elif "deplasman" in market:
+            prefix = "Deplasman "
+
+        if first_half:
+            return f"{prefix}İlk Yarı Altı/Üstü {number()}".strip()
+
+        return f"{prefix}Alt/Üst {number()}".strip()
+
+    # Tanınmayan marketleri silmez.
+    return market.strip()
 
 
-def find_git_exe():
-    git = shutil.which("git")
+def label_duzelt(label, market):
+    raw = str(label or "").strip()
+    normalized = tr_key(raw)
 
-    if git:
-        return git
+    if "&" in normalized:
+        mapping = {
+            "x": "0",
+            "alt": "Alt",
+            "ust": "Üst",
+            "var": "Var",
+            "yok": "Yok",
+        }
 
-    candidates = [
-        r"C:\Program Files\Git\cmd\git.exe",
-        r"C:\Program Files\Git\bin\git.exe",
-        r"C:\Program Files (x86)\Git\cmd\git.exe",
-        r"C:\Program Files (x86)\Git\bin\git.exe",
-    ]
-
-    for candidate in candidates:
-        if os.path.exists(candidate):
-            return candidate
-
-    return None
-
-
-def run_cmd(command, cwd=None):
-    try:
-        result = subprocess.run(
-            command,
-            cwd=cwd,
-            text=True,
-            capture_output=True,
-            encoding="utf-8",
-            errors="ignore",
+        return " ve ".join(
+            mapping.get(part.strip(), part.strip())
+            for part in normalized.split("&")
         )
 
-        return {
-            "ok": result.returncode == 0,
-            "stdout": result.stdout.strip(),
-            "stderr": result.stderr.strip(),
-            "code": result.returncode,
-        }
+    if market in ("Çifte Şans", "İlk Yarı Çifte Şans"):
+        found = re.fullmatch(
+            r"([120x])[-–]([120x])",
+            normalized.replace(" ", "")
+        )
 
-    except Exception as exc:
-        return {
-            "ok": False,
-            "stdout": "",
-            "stderr": str(exc),
-            "code": -1,
-        }
+        if found:
+            mapping = {
+                "1": "1",
+                "0": "0",
+                "x": "0",
+                "2": "2",
+            }
+
+            return (
+                f"{mapping[found.group(1)]} ve "
+                f"{mapping[found.group(2)]}"
+            )
+
+    if market in (
+        "Maç Sonucu",
+        "İlk Yarı Sonucu",
+        "İkinci Yarı Sonucu",
+    ):
+        if normalized in ("x", "0", "beraberlik"):
+            return "0"
+
+        return raw
+
+    mapping = {
+        "alt": "Alt",
+        "ust": "Üst",
+        "var": "Var",
+        "yok": "Yok",
+        "evet": "Evet",
+        "hayir": "Hayır",
+        "esit": "Eşit",
+        "tek": "Tek",
+        "cift": "Çift",
+        "x": "0",
+    }
+
+    return mapping.get(normalized, raw)
 
 
-def git_force_push():
-    if not ENABLE_GIT_AUTOPUSH:
-        return
+def oranlari_standartlastir(oranlar):
+    """
+    Aynı standart anahtar oluşursa oran silinmez.
+    Çakışmada alternatif anahtar üretilir.
+    """
 
-    if not (REPO_ROOT / ".git").exists():
-        print("❌ Git klasörü bulunamadı.")
-        return
+    if not isinstance(oranlar, dict):
+        return {}
 
-    git = find_git_exe()
+    output = {}
+    collision_count = 0
 
-    if not git:
-        print("❌ Git bulunamadı.")
-        return
+    for raw_key, raw_value in oranlar.items():
+        try:
+            raw_key = str(raw_key or "").strip()
 
-    print("\n🔄 GİT İŞLEMLERİ BAŞLADI...")
+            if "_" not in raw_key:
+                continue
 
-    run_cmd([git, "checkout", "-B", "main"], cwd=str(REPO_ROOT))
-    run_cmd([git, "add", "-A"], cwd=str(REPO_ROOT))
+            market_raw, label_raw = raw_key.split("_", 1)
 
-    zaman = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-    mesaj = f"Otomatik guncelleme | {zaman}"
+            market_raw = market_raw.strip()
+            label_raw = label_raw.strip()
 
-    run_cmd(
-        [git, "commit", "-m", mesaj, "--allow-empty"],
-        cwd=str(REPO_ROOT)
-    )
+            if not market_raw or not label_raw:
+                continue
 
-    print(f"   ✅ Commit: {mesaj}")
+            if market_yasak_mi(market_raw):
+                continue
 
-    push = run_cmd(
-        [git, "push", "-f", "origin", "main"],
-        cwd=str(REPO_ROOT)
-    )
+            if re.fullmatch(
+                r"\d{1,3}[.,]\d{1,2}",
+                label_raw
+            ):
+                continue
 
-    if push["ok"]:
-        print("✅ Git push başarılı.")
-    else:
-        print("❌ Git push başarısız:")
-        print(push["stderr"])
+            market = market_duzelt(market_raw)
+
+            if not market:
+                market = market_raw
+
+            label = label_duzelt(
+                label_temizle(label_raw),
+                market
+            )
+
+            if not label:
+                label = label_raw
+
+            new_key = f"{market}_{label}".strip()
+
+            if istenmeyen_anahtar_mi(new_key):
+                continue
+
+            value = float(raw_value)
+
+            if new_key not in output:
+                output[new_key] = value
+                continue
+
+            if output[new_key] == value:
+                continue
+
+            collision_count += 1
+
+            alternative_key = (
+                f"{market} [{market_raw}]_{label}"
+            )
+
+            if istenmeyen_anahtar_mi(alternative_key):
+                alternative_key = f"{market_raw}_{label_raw}"
+
+            if istenmeyen_anahtar_mi(alternative_key):
+                continue
+
+            if alternative_key in output:
+                suffix = 2
+                base = alternative_key
+
+                while f"{base} #{suffix}" in output:
+                    suffix += 1
+
+                alternative_key = f"{base} #{suffix}"
+
+            output[alternative_key] = value
+
+        except Exception:
+            pass
+
+    if collision_count > 0:
+        print(
+            f"   ℹ️ Anahtar çakışması: {collision_count} | "
+            f"Çakışan oranlar silinmedi."
+        )
+
+    return output
+
+
+def oranlar_temizle(oranlar):
+    if not isinstance(oranlar, dict):
+        return {}
+
+    output = {}
+
+    for key, value in oranlar.items():
+        try:
+            key = str(key).strip()
+
+            if istenmeyen_anahtar_mi(key):
+                continue
+
+            output[key] = float(value)
+
+        except Exception:
+            pass
+
+    return output
 
 
 # ============================================================
-# DRIVER
+# SELENIUM DRIVER
 # ============================================================
 
 def build_driver():
@@ -320,7 +691,7 @@ def cookie_kabul_et(driver):
             return false;
         """)
 
-        time.sleep(1)
+        time.sleep(0.4)
 
     except Exception:
         pass
@@ -329,7 +700,6 @@ def cookie_kabul_et(driver):
 def reklam_kapat(driver):
     try:
         ActionChains(driver).send_keys(Keys.ESCAPE).perform()
-        time.sleep(0.4)
     except Exception:
         pass
 
@@ -361,16 +731,13 @@ def reklam_kapat(driver):
             }
         """)
 
-        time.sleep(0.5)
+        time.sleep(0.4)
 
     except Exception:
         pass
-def siyah_ekran_ve_popup_temizle(driver):
-    """
-    Nesine açılışında gelen siyah fullscreen reklam / video / overlay
-    katmanlarını temizlemeye çalışır.
-    """
 
+
+def siyah_ekran_ve_popup_temizle(driver):
     try:
         ActionChains(driver).send_keys(Keys.ESCAPE).perform()
     except Exception:
@@ -381,53 +748,38 @@ def siyah_ekran_ve_popup_temizle(driver):
             function visible(el) {
                 if (!el) return false;
 
-                const r = el.getBoundingClientRect();
-                const s = window.getComputedStyle(el);
+                const rect = el.getBoundingClientRect();
+                const style = getComputedStyle(el);
 
                 return (
-                    r.width > 0 &&
-                    r.height > 0 &&
-                    s.display !== "none" &&
-                    s.visibility !== "hidden" &&
-                    parseFloat(s.opacity || "1") > 0
+                    rect.width > 0 &&
+                    rect.height > 0 &&
+                    style.display !== "none" &&
+                    style.visibility !== "hidden"
                 );
             }
 
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
 
-            const all = Array.from(
-                document.querySelectorAll(
-                    "iframe, video, canvas, div, section, aside, dialog"
-                )
-            );
-
-            for (const el of all) {
+            for (const el of document.querySelectorAll(
+                "iframe, video, canvas, div, section, aside, dialog"
+            )) {
                 try {
                     if (!visible(el)) continue;
 
-                    const r = el.getBoundingClientRect();
-                    const s = window.getComputedStyle(el);
+                    const rect = el.getBoundingClientRect();
+                    const style = getComputedStyle(el);
 
-                    const ekranKapliyor =
-                        r.width >= vw * 0.75 &&
-                        r.height >= vh * 0.65;
+                    const fullScreen =
+                        rect.width >= width * 0.75 &&
+                        rect.height >= height * 0.65;
 
-                    const ustte =
-                        s.position === "fixed" ||
-                        s.position === "absolute" ||
-                        s.position === "sticky";
+                    const layer =
+                        style.position === "fixed" ||
+                        style.position === "absolute";
 
-                    const z = parseInt(s.zIndex || "0", 10);
-
-                    const yuksekZ = (
-                        z >= 10 ||
-                        s.zIndex === "auto"
-                    );
-
-                    if (!ekranKapliyor || !ustte || !yuksekZ) {
-                        continue;
-                    }
+                    if (!fullScreen || !layer) continue;
 
                     const text = (
                         el.innerText ||
@@ -437,61 +789,48 @@ def siyah_ekran_ve_popup_temizle(driver):
 
                     const classText = (
                         String(el.className || "") + " " +
-                        String(el.id || "") + " " +
-                        String(el.getAttribute("data-testid") || "")
+                        String(el.id || "")
                     ).toLowerCase();
 
-                    const reklamMi =
+                    const isAd = (
                         el.tagName === "IFRAME" ||
                         el.tagName === "VIDEO" ||
                         el.tagName === "CANVAS" ||
                         text.includes("reklam") ||
-                        text.includes("advertisement") ||
                         text.includes("kampanya") ||
                         text.includes("bonus") ||
-                        text.includes("hoş geldin") ||
-                        text.includes("hos geldin") ||
                         text.includes("kapat") ||
-                        text.includes("close") ||
                         classText.includes("popup") ||
-                        classText.includes("modal") ||
                         classText.includes("overlay") ||
+                        classText.includes("modal") ||
                         classText.includes("advert") ||
-                        classText.includes("banner");
+                        classText.includes("banner")
+                    );
 
-                    if (reklamMi) {
-                        try {
-                            el.remove();
-                        } catch (e) {
-                            try {
-                                el.style.display = "none";
-                                el.style.visibility = "hidden";
-                                el.style.pointerEvents = "none";
-                            } catch (err) {}
-                        }
+                    if (isAd) {
+                        el.style.display = "none";
+                        el.style.pointerEvents = "none";
                     }
                 } catch (e) {}
             }
 
-            // body/html scroll kilidini kaldır
-            try {
-                document.body.style.overflow = "auto";
-                document.documentElement.style.overflow = "auto";
-            } catch (e) {}
+            document.body.style.overflow = "auto";
+            document.documentElement.style.overflow = "auto";
         """)
 
-        time.sleep(1)
+        time.sleep(0.5)
 
     except Exception:
         pass
 
+
 # ============================================================
-# MAÇ SATIRI BULMA
+# MAÇ SATIRLARI
 # ============================================================
 
 def find_match_cards(driver):
     try:
-        rows = driver.execute_script("""
+        return driver.execute_script("""
             function visible(el) {
                 if (!el) return false;
 
@@ -537,16 +876,12 @@ def find_match_cards(driver):
 
             const unique = [...new Set(candidates)];
 
-            return unique
-                .filter(el =>
-                    !unique.some(
-                        other => other !== el && el.contains(other)
-                    )
+            return unique.filter(el =>
+                !unique.some(
+                    other => other !== el && el.contains(other)
                 )
-                .slice(0, 1000);
-        """)
-
-        return rows or []
+            );
+        """) or []
 
     except Exception:
         return []
@@ -568,8 +903,10 @@ def satir_sayisi_bekle(driver, max_sure=20):
 
 def sayfa_saglikli_mi(driver):
     try:
-        text = driver.find_element(By.TAG_NAME, "body").text.strip()
-        lower = text.lower()
+        text = driver.find_element(By.TAG_NAME, "body").text.strip().lower()
+
+        if len(text) < 50:
+            return False
 
         errors = (
             "hay aksi",
@@ -579,155 +916,29 @@ def sayfa_saglikli_mi(driver):
             "status_access_violation",
         )
 
-        if len(text) < 50:
-            return False
-
-        return not any(error in lower for error in errors)
+        return not any(item in text for item in errors)
 
     except Exception:
         return False
 
 
-def guvenli_yukle(driver, url, max_deneme=3):
-    for deneme in range(1, max_deneme + 1):
-        try:
-            print(f"      🌐 Sayfa yükleniyor... {deneme}/{max_deneme}")
-
-            driver.get(url)
-            time.sleep(5)
-
-            cookie_kabul_et(driver)
-            reklam_kapat(driver)
-
-            satir = satir_sayisi_bekle(driver, 15)
-
-            print(f"      🔎 Bulunan satır: {satir}")
-
-            if satir > 0:
-                return driver, True
-
-        except Exception as exc:
-            print(f"      ⚠️ Yükleme hatası: {str(exc)[:100]}")
-
-        time.sleep(2)
-
-    return driver, False
-
-
-def chrome_hizli_yeniden_baslat(driver, url_gun):
-    """
-    Her 50 maçta Chrome'u kapatıp yeniden açar.
-    Siyah reklam / popup ekranlarını birkaç kez temizler.
-    """
-
-    try:
-        driver.quit()
-    except Exception:
-        pass
-
-    print("   🔴 Chrome kapatıldı.")
-    time.sleep(2)
-
-    print("   🟢 Chrome açılıyor...")
-
-    new_driver = build_driver()
-
-    try:
-        new_driver.get(url_gun)
-    except Exception as exc:
-        print(f"   ⚠️ Gün URL açılırken hata: {str(exc)[:100]}")
-
-    time.sleep(5)
-
-    # Reklam bazı durumlarda sayfa yüklendikten birkaç saniye sonra gelir.
-    # Bu yüzden birkaç tur temizleme uygulanır.
-    for tur in range(1, 5):
-        try:
-            cookie_kabul_et(new_driver)
-        except Exception:
-            pass
-
-        try:
-            reklam_kapat(new_driver)
-        except Exception:
-            pass
-
-        try:
-            siyah_ekran_ve_popup_temizle(new_driver)
-        except Exception:
-            pass
-
-        time.sleep(1)
-
-    # Arama kutusunun gerçekten görünmesini bekle.
-    search_ready = False
-
-    try:
-        WebDriverWait(new_driver, 15).until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, SEARCH_SEL)
-            )
-        )
-
-        search = new_driver.find_element(By.CSS_SELECTOR, SEARCH_SEL)
-
-        new_driver.execute_script("""
-            arguments[0].scrollIntoView({
-                block: "center",
-                inline: "center"
-            });
-        """, search)
-
-        search_ready = search.is_displayed() and search.is_enabled()
-
-    except Exception:
-        search_ready = False
-
-    satir = satir_sayisi_bekle(new_driver, 12)
-
-    # Arama alanı gelmediyse veya siyah ekran yüzünden sorun varsa refresh.
-    if not search_ready or satir == 0:
-        print(
-            "   ⚠️ Yeni Chrome sonrası arama/listede sorun var. "
-            "Sayfa yenileniyor..."
-        )
-
-        try:
-            new_driver.refresh()
-            time.sleep(6)
-
-            for _ in range(3):
-                cookie_kabul_et(new_driver)
-                reklam_kapat(new_driver)
-                siyah_ekran_ve_popup_temizle(new_driver)
-                time.sleep(1)
-
-            satir = satir_sayisi_bekle(new_driver, 12)
-
-        except Exception as exc:
-            print(f"   ⚠️ Refresh hatası: {str(exc)[:100]}")
-
-    print(
-        f"   ✅ Yeni Chrome hazır | "
-        f"Satır: {satir} | "
-        f"Arama hazır: {search_ready}"
-    )
-
-    return new_driver
 def gun_sayfasini_yukle(driver, url_gun, max_deneme=2):
-    for deneme in range(1, max_deneme + 1):
+    for _ in range(max_deneme):
         try:
             driver.get(url_gun)
-            time.sleep(4)
+            time.sleep(5)
 
-            cookie_kabul_et(driver)
-            reklam_kapat(driver)
+            for _ in range(3):
+                cookie_kabul_et(driver)
+                reklam_kapat(driver)
+                siyah_ekran_ve_popup_temizle(driver)
+                time.sleep(0.6)
 
-            satir = satir_sayisi_bekle(driver, 15)
+            count = satir_sayisi_bekle(driver, 15)
 
-            print(f"   🔎 Gün satır sayısı: {satir}")
+            print(f"   🔎 Gün satır sayısı: {count}")
 
-            if satir > 0:
+            if count > 0:
                 return driver, True
 
         except Exception:
@@ -741,18 +952,48 @@ def gun_sayfasini_yukle(driver, url_gun, max_deneme=2):
 
     return driver, False
 
+
+def chrome_hizli_yeniden_baslat(driver, url_gun):
+    try:
+        driver.quit()
+    except Exception:
+        pass
+
+    print("   🔴 Chrome kapatıldı.")
+    time.sleep(2)
+
+    print("   🟢 Chrome açılıyor...")
+    new_driver = build_driver()
+
+    try:
+        new_driver.get(url_gun)
+        time.sleep(5)
+    except Exception:
+        pass
+
+    for _ in range(5):
+        cookie_kabul_et(new_driver)
+        reklam_kapat(new_driver)
+        siyah_ekran_ve_popup_temizle(new_driver)
+        time.sleep(0.8)
+
+    count = satir_sayisi_bekle(new_driver, 15)
+
+    print(f"   ✅ Yeni Chrome hazır | Satır: {count}")
+
+    return new_driver
+
+
 # ============================================================
-# SCROLL
+# BÜLTEN SCROLL / MAÇ HASADI
 # ============================================================
 
 def init_scroll_target(driver):
     try:
         driver.execute_script("""
-            const elements = Array.from(
-                document.querySelectorAll("*")
-            );
+            const all = Array.from(document.querySelectorAll("*"));
 
-            const candidates = elements.filter(el => {
+            const candidates = all.filter(el => {
                 const style = getComputedStyle(el);
 
                 return (
@@ -795,6 +1036,7 @@ def scroll_step(driver, px=SCROLL_PX):
 
             if (window.__scrollEl) {
                 window.__scrollEl.scrollTop += px;
+
                 window.__scrollEl.dispatchEvent(
                     new Event("scroll", { bubbles: true })
                 );
@@ -806,29 +1048,16 @@ def scroll_step(driver, px=SCROLL_PX):
         pass
 
 
-# ============================================================
-# MAÇLARI LİSTEDEN ÇEK
-# ============================================================
-
 def extract_visible(driver, current_date):
     output = []
     seen = set()
 
     try:
         data = driver.execute_script("""
-            function visible(el) {
-                if (!el) return false;
-
-                const rect = el.getBoundingClientRect();
-                const style = getComputedStyle(el);
-
-                return (
-                    rect.width > 100 &&
-                    rect.height > 10 &&
-                    rect.height < 400 &&
-                    style.display !== "none" &&
-                    style.visibility !== "hidden"
-                );
+            function clean(text) {
+                return (text || "")
+                    .trim()
+                    .replace(/\\s+/g, " ");
             }
 
             const times = Array.from(
@@ -843,13 +1072,12 @@ def extract_visible(driver, current_date):
                 let node = time;
 
                 for (let i = 0; i < 10 && node; i++) {
-                    const text = (node.innerText || "").trim();
+                    const text = node.innerText || "";
 
                     if (
-                        visible(node) &&
+                        text.includes("-") &&
                         text.length > 30 &&
-                        text.length < 2000 &&
-                        text.includes("-")
+                        text.length < 2000
                     ) {
                         rows.push(node);
                         break;
@@ -859,18 +1087,11 @@ def extract_visible(driver, current_date):
                 }
             }
 
-            const uniqueRows = [...new Set(rows)]
-                .filter(row =>
-                    !rows.some(
-                        other => other !== row && row.contains(other)
-                    )
-                );
-
-            function clean(text) {
-                return (text || "")
-                    .trim()
-                    .replace(/\\s+/g, " ");
-            }
+            const uniqueRows = [...new Set(rows)].filter(row =>
+                !rows.some(
+                    other => other !== row && row.contains(other)
+                )
+            );
 
             function getTime(row) {
                 const time = row.querySelector(
@@ -898,17 +1119,10 @@ def extract_visible(driver, current_date):
                     const parts = line.split(" - ");
 
                     if (parts.length >= 2) {
-                        const home = parts[0].trim();
-                        const away = parts.slice(1).join(" - ").trim();
-
-                        if (
-                            home.length > 1 &&
-                            away.length > 1 &&
-                            home.length < 80 &&
-                            away.length < 80
-                        ) {
-                            return [home, away];
-                        }
+                        return [
+                            parts[0].trim(),
+                            parts.slice(1).join(" - ").trim()
+                        ];
                     }
                 }
 
@@ -919,10 +1133,9 @@ def extract_visible(driver, current_date):
                 const teams = getTeams(row);
 
                 return {
-                    ev: teams[0],
-                    dep: teams[1],
-                    saat: getTime(row),
-                    lig: ""
+                    home: teams[0],
+                    away: teams[1],
+                    time: getTime(row)
                 };
             });
         """)
@@ -931,25 +1144,22 @@ def extract_visible(driver, current_date):
         data = []
 
     for item in data or []:
-        ev = str(item.get("ev") or "").strip()
-        dep = str(item.get("dep") or "").strip()
-        saat = str(item.get("saat") or "").strip()
+        home = str(item.get("home") or "").strip()
+        away = str(item.get("away") or "").strip()
+        saat = str(item.get("time") or "").strip()
 
-        if not ev or not dep or ev == dep:
+        if not home or not away or home == away:
             continue
 
         if not TIME_RE.match(saat):
-            continue
-
-        if len(ev) > 80 or len(dep) > 80:
             continue
 
         match = {
             "tarih": current_date,
             "saat": saat,
             "lig": "",
-            "ev_sahibi": ev,
-            "deplasman": dep,
+            "ev_sahibi": home,
+            "deplasman": away,
             "durum": "baslamadi",
             "skor_ev": 0,
             "skor_dep": 0,
@@ -982,12 +1192,12 @@ def sayfayi_scroll_et(driver, hedef_tarih):
     seen = set()
 
     stable = 0
-    previous_total = 0
+    old_total = 0
 
     for step in range(1, MAX_SCROLL_STEPS + 1):
-        visible = extract_visible(driver, hedef_tarih)
+        current = extract_visible(driver, hedef_tarih)
 
-        for match in visible:
+        for match in current:
             key = (
                 match["tarih"],
                 match["ev_sahibi"],
@@ -998,14 +1208,14 @@ def sayfayi_scroll_et(driver, hedef_tarih):
                 seen.add(key)
                 matches.append(match)
 
-        if len(matches) > previous_total:
+        if len(matches) > old_total:
             print(
                 f"      📈 Step {step}: "
-                f"+{len(matches) - previous_total} maç | "
+                f"+{len(matches) - old_total} | "
                 f"Toplam {len(matches)}"
             )
 
-            previous_total = len(matches)
+            old_total = len(matches)
             stable = 0
         else:
             stable += 1
@@ -1020,27 +1230,24 @@ def sayfayi_scroll_et(driver, hedef_tarih):
 
 
 def deep_harvest(driver):
-    today = bugunun_tarihi()
-    tomorrow = yarinin_tarihi()
+    dates = [
+        (bugunun_tarihi(), "Bugün"),
+        (yarinin_tarihi(), "Yarın"),
+    ]
 
     output = []
     seen = set()
 
-    for tarih, gun_adi in [
-        (today, "Bugün"),
-        (tomorrow, "Yarın"),
-    ]:
-        print(f"\n   📅 {gun_adi}: {tarih}")
+    for tarih, title in dates:
+        print(f"\n   📅 {title}: {tarih}")
 
-        url = nesine_dt_url(tarih)
-        driver.get(url)
+        driver, ok = gun_sayfasini_yukle(
+            driver,
+            nesine_dt_url(tarih)
+        )
 
-        time.sleep(5)
-        cookie_kabul_et(driver)
-        reklam_kapat(driver)
-
-        if satir_sayisi_bekle(driver, 15) == 0:
-            print("      ⚠️ Maç satırı bulunamadı.")
+        if not ok:
+            print("      ⚠️ Gün sayfası yüklenemedi.")
             continue
 
         matches = sayfayi_scroll_et(driver, tarih)
@@ -1062,632 +1269,7 @@ def deep_harvest(driver):
 
 
 # ============================================================
-# ORAN ANAHTAR / MARKET KONTROLLERİ
-# ============================================================
-
-def tr_key(value):
-    text = str(value or "")
-
-    text = (
-        text.replace("İ", "i")
-        .replace("I", "i")
-        .replace("ı", "i")
-        .replace("Ş", "s")
-        .replace("ş", "s")
-        .replace("Ğ", "g")
-        .replace("ğ", "g")
-        .replace("Ü", "u")
-        .replace("ü", "u")
-        .replace("Ö", "o")
-        .replace("ö", "o")
-        .replace("Ç", "c")
-        .replace("ç", "c")
-    )
-
-    text = text.lower()
-
-    return re.sub(r"\s+", " ", text).strip()
-
-
-def market_yasak_mi(market):
-    normalized = tr_key(market)
-
-    if not normalized:
-        return False
-
-    for yasak in SILINECEK_BASLANGICLAR:
-        if normalized.startswith(tr_key(yasak)):
-            return True
-
-    forbidden_words = [
-        "korner",
-        "corner",
-        "kaleci",
-        "kurtaris",
-        "kurtarisi",
-        "kart",
-        "sari kart",
-        "kirmizi kart",
-        "oyuncu",
-        "golcu",
-        "gol atar",
-        "asist",
-        "sut",
-        "isabetli sut",
-        "ofsayt",
-        "tac",
-    ]
-
-    return any(word in normalized for word in forbidden_words)
-
-
-def ham_anahtar_yasak_mi(key):
-    key = str(key or "").strip()
-
-    if not key:
-        return True
-
-    market = key.split("_", 1)[0].strip()
-
-    return market_yasak_mi(market)
-
-
-def oran_anahtari_gecerli_mi(key):
-    """
-    Anahtar zorunlu olarak:
-      Market_Seçenek
-    yapısında olmalıdır.
-    """
-
-    raw = str(key or "").strip()
-
-    if "_" not in raw:
-        return False
-
-    market, label = raw.split("_", 1)
-
-    market = market.strip()
-    label = label.strip()
-
-    if not market or not label:
-        return False
-
-    market_normal = tr_key(market)
-    label_normal = tr_key(label)
-
-    # Market yalnızca sayı / oran / skor olamaz.
-    if re.match(r"^[0-9]", market_normal):
-        return False
-
-    if re.fullmatch(r"\d{1,3}([.,]\d{1,2})?", market_normal):
-        return False
-
-    # Label doğrudan oran sayısı olamaz.
-    if re.fullmatch(r"\d{1,3}[.,]\d{1,2}", label_normal):
-        return False
-
-    if " - " in market:
-        return False
-
-    if market_yasak_mi(market):
-        return False
-
-    return True
-
-
-def istenmeyen_anahtar_mi(key):
-    normalized = tr_key(key)
-
-    if not normalized:
-        return True
-
-    if not oran_anahtari_gecerli_mi(key):
-        return True
-
-    market = normalized.split("_", 1)[0]
-
-    if market_yasak_mi(market):
-        return True
-
-    # Başlıksız korner marketleri kaçarsa son kez engelle.
-    if re.fullmatch(
-        r"alt/ust\s+(7\.5|8\.5|9\.5|10\.5|11\.5|12\.5|13\.5|14\.5)_(alt|ust)",
-        normalized
-    ):
-        return True
-
-    return False
-
-
-# ============================================================
-# ORAN STANDARDİZASYONU
-# ============================================================
-
-def label_temizle(label):
-    label = tr_key(label)
-
-    label = re.sub(
-        r"^(ms|hms|cs|iy|2y|1y|au|kg|2\.y|1\.y)\s+",
-        "",
-        label
-    )
-
-    return label.strip()
-
-
-def market_duzelt(market):
-    market = tr_key(market)
-    market = re.sub(r"(\d),(\d)", r"\1.\2", market)
-
-    def number():
-        found = re.search(r"(\d+(?:\.\d+)?)", market)
-        return found.group(1) if found else ""
-
-    first_half = (
-        "ilk yari" in market or
-        "1. yari" in market
-    )
-
-    second_half = (
-        "ikinci yari" in market or
-        "2. yari" in market
-    )
-
-    has_goal_both = (
-        "karsilikli gol" in market or
-        market == "kg"
-    )
-
-    has_over_under = bool(
-        re.search(r"\balt(i)?\b|\bust(u)?\b", market)
-    )
-
-    has_result = (
-        "mac sonucu" in market or
-        market in ("ms", "1x2")
-    )
-
-    if has_goal_both and has_over_under:
-        return f"Altı/Üstü {number()} ve Karşılıklı Gol"
-
-    if has_goal_both and has_result:
-        return "Maç Sonucu ve Karşılıklı Gol"
-
-    if has_goal_both and first_half and "sonuc" in market:
-        return "İlk Yarı Sonucu ve İlk Yarı Karşılıklı Gol"
-
-    if first_half and "sonuc" in market and has_over_under:
-        return f"İlk Yarı Sonucu ve Altı/Üstü {number()}"
-
-    if has_result and has_over_under:
-        return f"Maç Sonucu ve Alt/Üst {number()}"
-
-    handicap = re.search(
-        r"handikap\w*\s*(?:mac sonucu\s*)?(\d+:\d+)",
-        market
-    )
-
-    if handicap:
-        return f"Handikaplı Maç Sonucu {handicap.group(1)}"
-
-    if "handikap" in market:
-        return "Handikaplı Maç Sonucu"
-
-    if first_half and has_result:
-        return "İlk Yarı / Maç Sonucu"
-
-    if has_result:
-        return "Maç Sonucu"
-
-    if "cifte sans" in market:
-        if first_half:
-            return "İlk Yarı Çifte Şans"
-        return "Çifte Şans"
-
-    if "toplam gol" in market:
-        return "Toplam Gol"
-
-    if "mac skoru" in market:
-        return "Maç Skoru"
-
-    if has_goal_both:
-        if first_half:
-            return "İlk Yarı Karşılıklı Gol"
-        if second_half:
-            return "İkinci Yarı Karşılıklı Gol"
-        return "Karşılıklı Gol"
-
-    if first_half and "sonuc" in market:
-        return "İlk Yarı Sonucu"
-
-    if second_half and "sonuc" in market:
-        return "İkinci Yarı Sonucu"
-
-    if re.search(r"tek\s*/?\s*cift", market):
-        if first_half:
-            return "İlk Yarı Tek / Çift"
-        if second_half:
-            return "İkinci Yarı Tek / Çift"
-        return "Tek / Çift"
-
-    if has_over_under:
-        prefix = ""
-
-        if "ev sahibi" in market:
-            prefix = "Ev Sahibi "
-        elif "deplasman" in market:
-            prefix = "Deplasman "
-
-        if first_half:
-            return f"{prefix}İlk Yarı Altı/Üstü {number()}".strip()
-
-        return f"{prefix}Alt/Üst {number()}".strip()
-
-    return market
-
-
-def label_duzelt(label, market):
-    raw = str(label or "").strip()
-    normalized = tr_key(raw)
-
-    if "&" in normalized:
-        parts = [part.strip() for part in normalized.split("&")]
-
-        replace_map = {
-            "x": "0",
-            "alt": "Alt",
-            "ust": "Üst",
-            "var": "Var",
-            "yok": "Yok",
-        }
-
-        return " ve ".join(
-            replace_map.get(part, part)
-            for part in parts
-        )
-
-    if market in ("Çifte Şans", "İlk Yarı Çifte Şans"):
-        result = re.fullmatch(
-            r"([120x])[-–]([120x])",
-            normalized.replace(" ", "")
-        )
-
-        if result:
-            convert = {
-                "x": "0",
-                "0": "0",
-                "1": "1",
-                "2": "2",
-            }
-
-            return (
-                f"{convert[result.group(1)]} ve "
-                f"{convert[result.group(2)]}"
-            )
-
-    if market in (
-        "Maç Sonucu",
-        "İlk Yarı Sonucu",
-        "İkinci Yarı Sonucu",
-    ):
-        if normalized in ("x", "0", "beraberlik"):
-            return "0"
-
-        return raw
-
-    general = {
-        "alt": "Alt",
-        "ust": "Üst",
-        "var": "Var",
-        "yok": "Yok",
-        "evet": "Evet",
-        "hayir": "Hayır",
-        "esit": "Eşit",
-        "tek": "Tek",
-        "cift": "Çift",
-        "x": "0",
-    }
-
-    return general.get(normalized, raw)
-
-
-def oranlari_standartlastir(oranlar):
-    if not isinstance(oranlar, dict):
-        return {}
-
-    output = {}
-
-    for key, value in oranlar.items():
-        try:
-            raw_key = str(key or "").strip()
-
-            # Başlıksız / saçma key daha en başta silinir.
-            if not oran_anahtari_gecerli_mi(raw_key):
-                continue
-
-            if ham_anahtar_yasak_mi(raw_key):
-                continue
-
-            market_raw, label_raw = raw_key.split("_", 1)
-
-            if market_yasak_mi(market_raw):
-                continue
-
-            market = market_duzelt(market_raw)
-            label = label_duzelt(
-                label_temizle(label_raw),
-                market
-            )
-
-            new_key = f"{market}_{label}".strip("_")
-
-            if not oran_anahtari_gecerli_mi(new_key):
-                continue
-
-            if istenmeyen_anahtar_mi(new_key):
-                continue
-
-            output[new_key] = float(value)
-
-        except Exception:
-            pass
-
-    return output
-
-
-def oranlar_temizle(oranlar):
-    if not isinstance(oranlar, dict):
-        return {}
-
-    output = {}
-
-    for key, value in oranlar.items():
-        try:
-            key = str(key).strip()
-
-            if not oran_anahtari_gecerli_mi(key):
-                continue
-
-            if ham_anahtar_yasak_mi(key):
-                continue
-
-            if istenmeyen_anahtar_mi(key):
-                continue
-
-            output[key] = float(value)
-
-        except Exception:
-            pass
-
-    return output
-
-
-# ============================================================
-# ORAN PARSE
-# ============================================================
-
-def oran_satiri_mi(text):
-    return bool(ODD_RE.match(str(text or "").strip()))
-
-
-def market_gecerli_mi(text):
-    raw = str(text or "").strip()
-    normalized = tr_key(raw)
-
-    if not normalized:
-        return False
-
-    if len(normalized) > 100:
-        return False
-
-    if normalized in MENU_KELIMELER:
-        return False
-
-    if oran_satiri_mi(raw):
-        return False
-
-    if TIME_RE.match(raw):
-        return False
-
-    if SKOR_RE.match(raw):
-        return False
-
-    if re.fullmatch(r"\d{3,5}", raw):
-        return False
-
-    if " - " in raw:
-        return False
-
-    if market_yasak_mi(raw):
-        return False
-
-    return True
-
-
-def nesine_oran_parse(text):
-    """
-    Nesine oran panelindeki metni ayrıştırır.
-
-    Mantık:
-    - Market başlığı bulunmadan hiçbir oran kaydedilmez.
-    - Market başlığı varsa, mümkün olduğunca tüm seçenek/oran çiftleri alınır.
-    - Bu yüzden "3": 1.86 gibi başlıksız saçma oranlar oluşmaz.
-    """
-
-    odds = {}
-
-    lines = [
-        line.strip()
-        for line in str(text or "").split("\n")
-        if line.strip()
-    ]
-
-    current_market = ""
-    index = 0
-
-    def add_odd(market, label, raw_value):
-        market = str(market or "").strip()
-        label = str(label or "").strip()
-        raw_value = str(raw_value or "").strip()
-
-        # Market başlığı olmadan asla kayıt yapma.
-        if not market or market == "__YASAK__":
-            return
-
-        if not label:
-            return
-
-        # İstemediğin marketler: korner, kaleci, kart, oyuncu vb.
-        if market_yasak_mi(market):
-            return
-
-        try:
-            value = float(raw_value.replace(",", "."))
-        except Exception:
-            return
-
-        if value < 1.01 or value > 999:
-            return
-
-        raw_key = f"{market}_{label}"
-
-        # Market/label yapısı doğru değilse yazma.
-        if not oran_anahtari_gecerli_mi(raw_key):
-            return
-
-        if ham_anahtar_yasak_mi(raw_key):
-            return
-
-        odds[raw_key] = value
-
-    while index < len(lines):
-        line = lines[index]
-        next_line = lines[index + 1] if index + 1 < len(lines) else ""
-
-        # Yasak market başlığı geldiyse sonraki markete kadar oran alma.
-        if market_yasak_mi(line):
-            current_market = "__YASAK__"
-            index += 1
-            continue
-
-        # ----------------------------------------------------
-        # 1 X 2
-        # 1.86 2.58 3.33
-        # ----------------------------------------------------
-        if re.fullmatch(r"(?:ms\s+)?1\s+[xX0]\s+2", line):
-            values = []
-
-            for jump in range(1, 5):
-                if index + jump >= len(lines):
-                    break
-
-                found = re.findall(
-                    r"\d{1,3}[.,]\d{1,2}",
-                    lines[index + jump]
-                )
-
-                if found:
-                    values = found
-                    index += jump
-                    break
-
-            if 2 <= len(values) <= 3:
-                for label, value in zip(["1", "X", "2"], values):
-                    add_odd(current_market, label, value)
-
-            index += 1
-            continue
-
-        # ----------------------------------------------------
-        # Tek satır çoklu yapı:
-        # 1 1.86 X 2.58 2 3.33
-        # ----------------------------------------------------
-        tokens = line.split()
-
-        if (
-            len(tokens) >= 4
-            and len(tokens) % 2 == 0
-            and tokens[0].lower() in ("1", "x", "0", "2")
-        ):
-            pair_ok = True
-
-            for pos in range(1, len(tokens), 2):
-                if not oran_satiri_mi(tokens[pos]):
-                    pair_ok = False
-                    break
-
-            if pair_ok:
-                for pos in range(0, len(tokens), 2):
-                    add_odd(
-                        current_market,
-                        tokens[pos],
-                        tokens[pos + 1]
-                    )
-
-                index += 1
-                continue
-
-        # ----------------------------------------------------
-        # Aynı satır:
-        # Alt 1.75
-        # Var 1.68
-        # 1 2.10
-        # 1-2 1.59
-        # Ev Sahibi 2.25
-        # ----------------------------------------------------
-        inline = re.match(
-            r"^(.{1,120}?)\s+(\d{1,3}[.,]\d{1,2})$",
-            line
-        )
-
-        if inline:
-            label = inline.group(1).strip()
-            value = inline.group(2).strip()
-
-            # Eğer aktif market varsa bu satırı seçenek/oran kabul et.
-            # Önceki kod sadece Alt/Üst/Var/Yok gibi sınırlı etiketleri
-            # kabul ettiği için çok sayıda oran kayboluyordu.
-            if current_market not in ("", "__YASAK__"):
-                add_odd(current_market, label, value)
-
-            index += 1
-            continue
-
-        # ----------------------------------------------------
-        # İki satır yapı:
-        # Alt
-        # 1.75
-        #
-        # 1-2
-        # 1.59
-        # ----------------------------------------------------
-        if next_line and oran_satiri_mi(next_line):
-            label = line
-
-            if current_market not in ("", "__YASAK__"):
-                add_odd(current_market, label, next_line)
-
-            index += 2
-            continue
-
-        # Skor etiketi market değildir:
-        # 0:0
-        # 1:0
-        # Ama aktif market varsa sonraki turda oran olarak alınabilir.
-        if SKOR_RE.match(line):
-            index += 1
-            continue
-
-        # Yeni market başlığı
-        if market_gecerli_mi(line):
-            current_market = line
-
-        index += 1
-
-    return odds
-
-# ============================================================
-# ARAMA / PANEL
+# ARAMA / ORAN PANELİ
 # ============================================================
 
 def arama_kutusunu_temizle(driver):
@@ -1717,6 +1299,25 @@ def arama_yap(driver, text):
         return False
 
 
+def arama_adaylari(name):
+    name = str(name or "").strip()
+
+    candidates = []
+
+    if name:
+        candidates.append(name)
+
+    tokens = name.split()
+
+    if len(tokens) >= 2:
+        candidates.append(" ".join(tokens[:2]))
+
+    if len(tokens) >= 3:
+        candidates.append(" ".join(tokens[:3]))
+
+    return list(dict.fromkeys(candidates))
+
+
 def satir_bul(driver, ev, dep):
     ev_short = ev[:20]
     dep_short = dep[:20]
@@ -1733,33 +1334,11 @@ def satir_bul(driver, ev, dep):
     return None
 
 
-def satir_bul_gevsek(driver, ev, dep):
-    candidates = [
-        (ev[:20], dep[:20]),
-        (ev[:12], dep[:12]),
-        (ev[:12], None),
-    ]
-
-    for home, away in candidates:
-        for row in find_match_cards(driver):
-            try:
-                text = row.text or ""
-
-                if home in text and (
-                    away is None or away in text
-                ):
-                    return row
-            except Exception:
-                pass
-
-    return None
-
-
 def satir_bekle(driver, ev, dep, max_sure=6):
     start = time.time()
 
     while time.time() - start < max_sure:
-        row = satir_bul_gevsek(driver, ev, dep)
+        row = satir_bul(driver, ev, dep)
 
         if row:
             return row
@@ -1767,31 +1346,6 @@ def satir_bekle(driver, ev, dep, max_sure=6):
         time.sleep(0.8)
 
     return None
-
-
-def arama_adaylari(isim):
-    isim = str(isim or "").strip()
-
-    output = []
-
-    if isim:
-        output.append(isim)
-
-    tokens = isim.split()
-
-    if len(tokens) >= 2:
-        output.append(" ".join(tokens[:2]))
-
-    if len(tokens) >= 3:
-        output.append(" ".join(tokens[:3]))
-
-    unique = []
-
-    for item in output:
-        if item and item not in unique:
-            unique.append(item)
-
-    return unique
 
 
 def panel_elementi_bul(driver, row):
@@ -1805,84 +1359,25 @@ def panel_elementi_bul(driver, row):
                 ).length;
             }
 
-            let sibling = row.nextElementSibling;
+            let node = row.nextElementSibling;
             let best = null;
             let bestCount = 0;
 
-            for (let i = 0; i < 5 && sibling; i++) {
-                const count = oddCount(sibling.innerText || "");
+            for (let i = 0; i < 6 && node; i++) {
+                const count = oddCount(node.innerText || "");
 
                 if (count > bestCount) {
+                    best = node;
                     bestCount = count;
-                    best = sibling;
                 }
 
-                sibling = sibling.nextElementSibling;
+                node = node.nextElementSibling;
             }
 
-            return bestCount >= 3 ? best : null;
+            return bestCount >= 2 ? best : null;
         """, row)
-
     except Exception:
         return None
-
-
-def panel_metinleri(driver, row):
-    try:
-        return driver.execute_script("""
-            const row = arguments[0];
-            const out = [];
-
-            out.push(row.innerText || "");
-
-            let sibling = row.nextElementSibling;
-
-            for (let i = 0; i < 25 && sibling; i++) {
-                if (
-                    sibling.querySelector &&
-                    sibling.querySelector(
-                        "span[data-testid^='time-']"
-                    )
-                ) {
-                    break;
-                }
-
-                out.push(sibling.innerText || "");
-                sibling = sibling.nextElementSibling;
-            }
-
-            let parent = row.parentElement;
-            let best = null;
-
-            for (let i = 0; i < 6 && parent; i++) {
-                const times = Array.from(
-                    parent.querySelectorAll(
-                        "span[data-testid^='time-']"
-                    )
-                );
-
-                if (times.length <= 1) {
-                    best = parent;
-                } else {
-                    break;
-                }
-
-                parent = parent.parentElement;
-            }
-
-            if (best) {
-                const text = best.innerText || "";
-
-                if (text.length < 30000) {
-                    out.push(text);
-                }
-            }
-
-            return out;
-        """, row)
-
-    except Exception:
-        return []
 
 
 def genislet_dogrula(driver, ev, dep):
@@ -1898,15 +1393,16 @@ def genislet_dogrula(driver, ev, dep):
                 "arguments[0].scrollIntoView({block:'center'});",
                 row
             )
+            time.sleep(0.4)
         except Exception:
             pass
 
         clicked = False
 
         try:
-            for target in row.find_elements(By.CSS_SELECTOR, EXPAND_SEL):
+            for button in row.find_elements(By.CSS_SELECTOR, EXPAND_SEL):
                 try:
-                    target.click()
+                    button.click()
                     clicked = True
                     break
                 except Exception:
@@ -1923,16 +1419,11 @@ def genislet_dogrula(driver, ev, dep):
                         row.querySelectorAll("span")
                     );
 
-                    const target = spans.find(span => {
-                        const text = (
-                            span.innerText ||
-                            ""
-                        ).trim();
-
+                    const target = spans.find(el => {
                         return (
-                            !text &&
-                            span.offsetWidth > 0 &&
-                            span.offsetWidth < 50
+                            !(el.innerText || "").trim() &&
+                            el.offsetWidth > 0 &&
+                            el.offsetWidth < 50
                         );
                     });
 
@@ -1949,7 +1440,7 @@ def genislet_dogrula(driver, ev, dep):
         if not clicked:
             continue
 
-        for _ in range(8):
+        for _ in range(10):
             time.sleep(0.5)
 
             fresh_row = satir_bul(driver, ev, dep)
@@ -1969,13 +1460,10 @@ def kapat_dogrula(driver, ev, dep):
     if not row:
         return
 
-    if panel_elementi_bul(driver, row) is None:
-        return
-
     try:
-        for target in row.find_elements(By.CSS_SELECTOR, EXPAND_SEL):
+        for button in row.find_elements(By.CSS_SELECTOR, EXPAND_SEL):
             try:
-                target.click()
+                button.click()
                 break
             except Exception:
                 pass
@@ -1985,39 +1473,322 @@ def kapat_dogrula(driver, ev, dep):
     time.sleep(0.5)
 
 
+# ============================================================
+# DOM'DAN TÜM ORANLARI ÇEK
+# ============================================================
+
+def panel_oranlarini_domdan_cek(driver, ev, dep):
+    """
+    Açılmış maç panelindeki bütün marketleri DOM'dan alır.
+
+    Aynı market/label tekrar oluşursa data-test-id üzerinden ayırır.
+    Böylece 387 DOM oranı Python dict içinde 169'a düşmez.
+    """
+
+    row = satir_bul(driver, ev, dep)
+
+    if not row:
+        return {}
+
+    js_code = r"""
+        const row = arguments[0];
+
+        function clean(value) {
+            return (value || "")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        function isNumberOnly(value) {
+            return /^\d+$/.test(value || "");
+        }
+
+        let parent = row.parentElement;
+        let bestParent = null;
+        let bestGroupCount = 0;
+
+        for (let i = 0; i < 10 && parent; i++) {
+            const groups = parent.querySelectorAll(
+                "div[data-test-id^='group-']"
+            );
+
+            const timeNodes = parent.querySelectorAll(
+                "span[data-testid^='time-']"
+            );
+
+            if (
+                groups.length > 0 &&
+                timeNodes.length <= 1 &&
+                groups.length >= bestGroupCount
+            ) {
+                bestParent = parent;
+                bestGroupCount = groups.length;
+            }
+
+            parent = parent.parentElement;
+        }
+
+        if (!bestParent) {
+            bestParent = row.parentElement;
+        }
+
+        const marketRows = Array.from(
+            bestParent.querySelectorAll("div[data-test-id]")
+        ).filter(node => {
+            const id = node.getAttribute("data-test-id") || "";
+
+            // Örnek:
+            // 3179769_11_83137543
+            return /^\d+_\d+_\d+$/.test(id);
+        });
+
+        const results = [];
+
+        for (const marketRow of marketRows) {
+            try {
+                const marketRowId = (
+                    marketRow.getAttribute("data-test-id") || ""
+                ).trim();
+
+                let marketTitle = "";
+
+                // Özel marketlerin başlığı
+                const infoButton = marketRow.querySelector(
+                    "button[data-test-info][data-test-title]"
+                );
+
+                if (infoButton) {
+                    marketTitle = clean(
+                        infoButton.getAttribute("data-test-title")
+                    );
+                }
+
+                // Standart market başlığı
+                if (!marketTitle) {
+                    const marketButton = marketRow.querySelector(
+                        "button[data-test-m-id]"
+                    );
+
+                    if (marketButton) {
+                        const header = marketButton.parentElement;
+
+                        if (header) {
+                            const spanTexts = Array.from(
+                                header.querySelectorAll("span")
+                            )
+                            .map(span => clean(
+                                span.innerText || span.textContent
+                            ))
+                            .filter(text => {
+                                if (!text) return false;
+                                if (text === "-") return false;
+                                if (text === "undefined") return false;
+                                if (isNumberOnly(text)) return false;
+                                return true;
+                            });
+
+                            if (spanTexts.length > 0) {
+                                marketTitle = spanTexts[
+                                    spanTexts.length - 1
+                                ];
+                            }
+                        }
+                    }
+                }
+
+                if (!marketTitle) {
+                    continue;
+                }
+
+                const options = Array.from(
+                    marketRow.querySelectorAll(
+                        "[data-test-title][data-test-value]"
+                    )
+                );
+
+                for (const option of options) {
+                    const label = clean(
+                        option.getAttribute("data-test-title")
+                    );
+
+                    const rawValue = clean(
+                        option.getAttribute("data-test-value")
+                    );
+
+                    if (!label || label === "-") {
+                        continue;
+                    }
+
+                    if (!rawValue || rawValue === "-") {
+                        continue;
+                    }
+
+                    if (!/^\d{1,3}[.,]\d{1,2}$/.test(rawValue)) {
+                        continue;
+                    }
+
+                    const value = parseFloat(
+                        rawValue.replace(",", ".")
+                    );
+
+                    if (
+                        Number.isNaN(value) ||
+                        value < 1.01 ||
+                        value > 999
+                    ) {
+                        continue;
+                    }
+
+                    results.push({
+                        market: marketTitle,
+                        label: label,
+                        value: value,
+                        market_id: marketRowId
+                    });
+                }
+
+            } catch (error) {}
+        }
+
+        return {
+            groupCount: bestGroupCount,
+            marketRowCount: marketRows.length,
+            optionNodeCount: bestParent.querySelectorAll(
+                "[data-test-title][data-test-value]"
+            ).length,
+            entries: results
+        };
+    """
+
+    try:
+        result = driver.execute_script(js_code, row)
+
+        if not isinstance(result, dict):
+            return {}
+
+        entries = result.get("entries", [])
+
+        print(
+            f"   🔍 Panel DOM | "
+            f"Grup: {result.get('groupCount', 0)} | "
+            f"Market satırı: {result.get('marketRowCount', 0)} | "
+            f"Oran düğümü: {result.get('optionNodeCount', 0)} | "
+            f"Okunan: {len(entries)}"
+        )
+
+        output = {}
+        duplicate_count = 0
+
+        for item in entries:
+            if not isinstance(item, dict):
+                continue
+
+            market = str(item.get("market", "")).strip()
+            label = str(item.get("label", "")).strip()
+            market_id = str(item.get("market_id", "")).strip()
+
+            try:
+                value = float(item.get("value"))
+            except Exception:
+                continue
+
+            if not market or not label:
+                continue
+
+            if market_yasak_mi(market):
+                continue
+
+            raw_key = f"{market}_{label}"
+
+            if not oran_anahtari_gecerli_mi(raw_key):
+                continue
+
+            # İlk kayıt normal anahtarla girer.
+            if raw_key not in output:
+                output[raw_key] = value
+                continue
+
+            # Aynı anahtar + aynı oran ise gerçek tekrar kabul edilir.
+            if output[raw_key] == value:
+                continue
+
+            # Aynı market/label fakat farklı market satırı:
+            # Önceki oranı ezme.
+            duplicate_count += 1
+
+            # Örnek:
+            # Maç Sonucu [3179769_11_83137543]_Alt
+            alternative_key = (
+                f"{market} [{market_id}]_{label}"
+            )
+
+            suffix = 2
+            base_key = alternative_key
+
+            while alternative_key in output:
+                alternative_key = f"{base_key} #{suffix}"
+                suffix += 1
+
+            output[alternative_key] = value
+
+        if duplicate_count > 0:
+            print(
+                f"   ℹ️ DOM aynı anahtar tekrarları: "
+                f"{duplicate_count} | "
+                f"Ezilmeden alternatif anahtarla korundu."
+            )
+
+        return output
+
+    except Exception as exc:
+        print(f"   ⚠️ DOM panel okuma hatası: {str(exc)[:120]}")
+        return {}
+
 def panel_oranlari_cek(driver, ev, dep, max_sure=12):
-    toplam = {}
-    stable = 0
-    start = time.time()
+    """
+    Panelde lazy-load varsa birkaç kez DOM'dan tekrar okur.
+    Accordion aç/kapa yapılmaz.
+    """
 
-    while time.time() - start < max_sure:
-        row = satir_bul(driver, ev, dep)
+    output = {}
+    stable_count = 0
+    start_time = time.time()
 
-        if not row:
-            stable += 1
+    while time.time() - start_time < max_sure:
+        old_count = len(output)
 
-            if stable >= 3:
-                break
+        dom_odds = panel_oranlarini_domdan_cek(
+            driver,
+            ev,
+            dep
+        )
 
-            time.sleep(0.8)
-            continue
+        if dom_odds:
+            output.update(dom_odds)
 
-        previous = len(toplam)
+        if len(output) > old_count:
+            added = len(output) - old_count
 
-        for text in panel_metinleri(driver, row):
-            toplam.update(nesine_oran_parse(text))
+            print(
+                f"      ➕ {added} yeni oran | "
+                f"Toplam: {len(output)}"
+            )
 
-        if len(toplam) == previous:
-            stable += 1
+            stable_count = 0
         else:
-            stable = 0
+            stable_count += 1
 
-        if stable >= 3:
+        if stable_count >= 4:
             break
 
         time.sleep(0.8)
 
-    return toplam
+    print(
+        f"   🔍 Panelden toplam DOM ham oran: "
+        f"{len(output)}"
+    )
+
+    return output
 
 
 def mac_oranlari_cek(driver, match):
@@ -2027,6 +1798,7 @@ def mac_oranlari_cek(driver, match):
     try:
         row = None
 
+        # Ev sahibiyle arama
         for candidate in arama_adaylari(ev):
             if arama_yap(driver, candidate[:24]):
                 row = satir_bekle(driver, ev, dep)
@@ -2034,6 +1806,7 @@ def mac_oranlari_cek(driver, match):
                 if row:
                     break
 
+        # Deplasmanla arama
         if not row:
             for candidate in arama_adaylari(dep):
                 if arama_yap(driver, candidate[:24]):
@@ -2042,16 +1815,14 @@ def mac_oranlari_cek(driver, match):
                     if row:
                         break
 
+        # Popup temizle ve son kez tekrar ara
         if not row:
-            # Özellikle Chrome restart sonrası çıkan siyah reklam/popup
-            # arama sonuçlarını engelliyor olabilir.
             reklam_kapat(driver)
             siyah_ekran_ve_popup_temizle(driver)
 
-            # Popup temizlendikten sonra ev sahibiyle son kez tekrar ara.
             for candidate in arama_adaylari(ev):
                 if arama_yap(driver, candidate[:24]):
-                    row = satir_bekle(driver, ev, dep, max_sure=5)
+                    row = satir_bekle(driver, ev, dep)
 
                     if row:
                         break
@@ -2060,35 +1831,38 @@ def mac_oranlari_cek(driver, match):
             arama_kutusunu_temizle(driver)
             return None
 
-
         _, panel = genislet_dogrula(driver, ev, dep)
 
         if panel:
             raw_odds = panel_oranlari_cek(driver, ev, dep)
         else:
+            print("   ⚠️ Oran paneli açılamadı.")
             raw_odds = {}
 
         kapat_dogrula(driver, ev, dep)
         arama_kutusunu_temizle(driver)
 
-        standardized_odds = oranlari_standartlastir(raw_odds)
-        cleaned_odds = oranlar_temizle(standardized_odds)
+        standardized = oranlari_standartlastir(raw_odds)
+        cleaned = oranlar_temizle(standardized)
 
-        if len(cleaned_odds) == 0:
-            print(
-                f"   ⚠️ Oran paneli bulundu ama oran ayrıştırılamadı | "
-                f"Ham: {len(raw_odds)} | "
-                f"Standart: {len(standardized_odds)}"
-            )
+        print(
+            f"   📊 Ham: {len(raw_odds)} | "
+            f"Standart: {len(standardized)} | "
+            f"Kaydedilecek: {len(cleaned)}"
+        )
 
-        return cleaned_odds
+        return cleaned
 
     except Exception as exc:
         print(f"   ⚠️ Oran hatası: {str(exc)[:100]}")
 
-        arama_kutusunu_temizle(driver)
+        try:
+            arama_kutusunu_temizle(driver)
+        except Exception:
+            pass
 
         return {}
+
 
 # ============================================================
 # JSON KAYDET
@@ -2117,15 +1891,11 @@ def mac_json_kaydet(yeni_maclar):
             match.get("deplasman", ""),
         )
 
-    # Eski maçlarda yalnızca bozuk oranları temizle.
-    # Tam standardizasyon yapmadığı için çok yavaşlamaz.
+    # Eski kayıtlardaki yalnızca bozuk/yasak anahtarları temizle.
     for old in old_matches:
-        odds = old.get("oranlar", {})
-
-        if isinstance(odds, dict):
-            old["oranlar"] = oranlar_temizle(odds)
-        else:
-            old["oranlar"] = {}
+        old["oranlar"] = oranlar_temizle(
+            old.get("oranlar", {})
+        )
 
     existing = {
         match_key(match): match
@@ -2134,9 +1904,7 @@ def mac_json_kaydet(yeni_maclar):
 
     for match in yeni_maclar:
         match["oranlar"] = oranlar_temizle(
-            oranlari_standartlastir(
-                match.get("oranlar", {})
-            )
+            match.get("oranlar", {})
         )
 
         key = match_key(match)
@@ -2144,27 +1912,24 @@ def mac_json_kaydet(yeni_maclar):
         if key in existing:
             old = existing[key]
 
-            # Lig boş geldiyse eski ligi koru.
+            # Yeni lig boşsa eski ligi koru.
             if not str(match.get("lig", "")).strip():
                 match["lig"] = old.get("lig", "")
 
-            # Oran çekilememişse eski oranları koru.
+            # Yeni oran yoksa eski oranları koru.
             if not match.get("oranlar"):
                 match["oranlar"] = oranlar_temizle(
                     old.get("oranlar", {})
                 )
 
-            # Biten maç skorunu bozma.
+            # Bitmiş skorları bozma.
             if str(old.get("durum", "")).lower() == "bitti":
                 match["durum"] = old.get("durum", "bitti")
                 match["skor_ev"] = old.get("skor_ev", 0)
                 match["skor_dep"] = old.get("skor_dep", 0)
                 match["skor_1y_ev"] = old.get("skor_1y_ev", 0)
                 match["skor_1y_dep"] = old.get("skor_1y_dep", 0)
-                match["kaynak"] = old.get(
-                    "kaynak",
-                    "iddaa.com"
-                )
+                match["kaynak"] = old.get("kaynak", "iddaa.com")
 
         existing[key] = match
 
@@ -2178,10 +1943,10 @@ def mac_json_kaydet(yeni_maclar):
 
     ordered = sorted(
         existing.values(),
-        key=lambda item: (
-            item.get("tarih", ""),
-            item.get("saat", ""),
-            item.get("ev_sahibi", ""),
+        key=lambda match: (
+            match.get("tarih", ""),
+            match.get("saat", ""),
+            match.get("ev_sahibi", ""),
         )
     )
 
@@ -2220,10 +1985,10 @@ def mac_json_kaydet(yeni_maclar):
         exist_ok=True
     )
 
-    path = Path(CIKTI_DOSYA)
-    temp = path.with_suffix(".tmp")
+    output_path = Path(CIKTI_DOSYA)
+    temp_path = output_path.with_suffix(".tmp")
 
-    with open(temp, "w", encoding="utf-8") as file:
+    with open(temp_path, "w", encoding="utf-8") as file:
         json.dump(
             output,
             file,
@@ -2231,13 +1996,93 @@ def mac_json_kaydet(yeni_maclar):
             indent=2
         )
 
-    temp.replace(path)
+    temp_path.replace(output_path)
 
     print(
-        f"   💾 Kaydedildi: "
-        f"{len(output_matches)} maç | "
+        f"   💾 Kaydedildi: {len(output_matches)} maç | "
         f"{CIKTI_DOSYA}"
     )
+
+
+# ============================================================
+# GIT
+# ============================================================
+
+def find_git_exe():
+    git = shutil.which("git")
+
+    if git:
+        return git
+
+    paths = [
+        r"C:\Program Files\Git\cmd\git.exe",
+        r"C:\Program Files\Git\bin\git.exe",
+        r"C:\Program Files (x86)\Git\cmd\git.exe",
+    ]
+
+    for path in paths:
+        if os.path.exists(path):
+            return path
+
+    return None
+
+
+def run_cmd(command, cwd=None):
+    try:
+        result = subprocess.run(
+            command,
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="ignore",
+        )
+
+        return result.returncode == 0, result.stdout, result.stderr
+
+    except Exception as exc:
+        return False, "", str(exc)
+
+
+def git_force_push():
+    if not ENABLE_GIT_AUTOPUSH:
+        return
+
+    if not (REPO_ROOT / ".git").exists():
+        print("❌ Git klasörü bulunamadı.")
+        return
+
+    git = find_git_exe()
+
+    if not git:
+        print("❌ Git bulunamadı.")
+        return
+
+    print("\n🔄 GİT İŞLEMLERİ BAŞLADI...")
+
+    run_cmd([git, "checkout", "-B", "main"], str(REPO_ROOT))
+    run_cmd([git, "add", "-A"], str(REPO_ROOT))
+
+    message = (
+        "Otomatik guncelleme | "
+        f"{datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')}"
+    )
+
+    run_cmd(
+        [git, "commit", "-m", message, "--allow-empty"],
+        str(REPO_ROOT)
+    )
+
+    ok, _, error = run_cmd(
+        [git, "push", "-f", "origin", "main"],
+        str(REPO_ROOT)
+    )
+
+    if ok:
+        print("✅ Git push başarılı.")
+    else:
+        print("❌ Git push başarısız:")
+        print(error)
 
 
 # ============================================================
@@ -2261,16 +2106,19 @@ def main():
         print("\n🟢 Chrome açılıyor...")
         driver = build_driver()
 
-        driver, ok = guvenli_yukle(driver, URL_BASE)
+        driver, ok = gun_sayfasini_yukle(
+            driver,
+            URL_BASE
+        )
 
         if not ok:
-            print("❌ İlk yükleme başarısız.")
+            print("❌ İlk sayfa yüklenemedi.")
             return
 
         print("\n⬇️ Maçlar çekiliyor...")
         harvested = deep_harvest(driver)
 
-        print(f"\n📋 Toplam {len(harvested)} maç bulundu.")
+        print(f"\n📋 Toplam maç: {len(harvested)}")
 
         if not harvested:
             return
@@ -2283,6 +2131,8 @@ def main():
                 []
             ).append(match)
 
+        print("\n🔽 Oranlar çekiliyor...")
+
         for tarih_iso in sorted(grouped.keys()):
             day_matches = grouped[tarih_iso]
             day_url = nesine_dt_url(tarih_iso)
@@ -2293,6 +2143,7 @@ def main():
             )
 
             if not ok:
+                print(f"❌ Gün yüklenemedi: {tarih_iso}")
                 fail += len(day_matches)
                 continue
 
@@ -2306,16 +2157,16 @@ def main():
                     f"{match['deplasman']}"
                 )
 
-                # Her 50 maçta sadece Chrome kapat/aç.
-                # JSON kaydı yapılmaz.
+                # İstenirse Chrome restart.
                 if (
-                    processed > 1 and
-                    (processed - 1) % HARVEST_MAC_SAYISI == 0
+                    HARVEST_MAC_SAYISI > 0
+                    and processed > 1
+                    and (processed - 1) % HARVEST_MAC_SAYISI == 0
                 ):
                     print("\n" + "=" * 60)
                     print(
                         f"🔄 {processed - 1} maç işlendi. "
-                        f"Chrome hızlı yenileniyor..."
+                        f"Chrome yeniden başlatılıyor..."
                     )
                     print("=" * 60)
 
@@ -2324,10 +2175,20 @@ def main():
                         day_url
                     )
 
-                # Sayfa bozulduysa gün URL'sini yenile.
+                    if len(find_match_cards(driver)) == 0:
+                        driver, ok = gun_sayfasini_yukle(
+                            driver,
+                            day_url
+                        )
+
+                        if not ok:
+                            print("❌ Chrome sonrası gün açılamadı.")
+                            fail += 1
+                            continue
+
                 if (
-                    not sayfa_saglikli_mi(driver) or
-                    len(find_match_cards(driver)) == 0
+                    not sayfa_saglikli_mi(driver)
+                    or len(find_match_cards(driver)) == 0
                 ):
                     print("   ⚠️ Sayfa yenileniyor...")
 
@@ -2358,7 +2219,6 @@ def main():
                     random.uniform(*SLEEP_BETWEEN_MATCHES)
                 )
 
-        # Tüm maçlar bittikten sonra yalnızca BİR kez kaydeder.
         print("\n💾 Final JSON kaydı yapılıyor...")
         mac_json_kaydet(results)
 
@@ -2369,10 +2229,9 @@ def main():
         )
 
     except KeyboardInterrupt:
-        print("\n⚠️ Kullanıcı işlemi durdurdu.")
+        print("\n⚠️ İşlem kullanıcı tarafından durduruldu.")
 
         if results:
-            print("💾 Mevcut veriler kaydediliyor...")
             mac_json_kaydet(results)
 
     except Exception as exc:
@@ -2380,7 +2239,7 @@ def main():
         traceback.print_exc()
 
         if results:
-            print("💾 Mevcut veriler kaydediliyor...")
+            print("💾 Şu ana kadarki veriler kaydediliyor...")
             mac_json_kaydet(results)
 
     finally:

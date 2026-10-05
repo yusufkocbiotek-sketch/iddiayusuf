@@ -365,7 +365,125 @@ def reklam_kapat(driver):
 
     except Exception:
         pass
+def siyah_ekran_ve_popup_temizle(driver):
+    """
+    Nesine açılışında gelen siyah fullscreen reklam / video / overlay
+    katmanlarını temizlemeye çalışır.
+    """
 
+    try:
+        ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+    except Exception:
+        pass
+
+    try:
+        driver.execute_script("""
+            function visible(el) {
+                if (!el) return false;
+
+                const r = el.getBoundingClientRect();
+                const s = window.getComputedStyle(el);
+
+                return (
+                    r.width > 0 &&
+                    r.height > 0 &&
+                    s.display !== "none" &&
+                    s.visibility !== "hidden" &&
+                    parseFloat(s.opacity || "1") > 0
+                );
+            }
+
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+
+            const all = Array.from(
+                document.querySelectorAll(
+                    "iframe, video, canvas, div, section, aside, dialog"
+                )
+            );
+
+            for (const el of all) {
+                try {
+                    if (!visible(el)) continue;
+
+                    const r = el.getBoundingClientRect();
+                    const s = window.getComputedStyle(el);
+
+                    const ekranKapliyor =
+                        r.width >= vw * 0.75 &&
+                        r.height >= vh * 0.65;
+
+                    const ustte =
+                        s.position === "fixed" ||
+                        s.position === "absolute" ||
+                        s.position === "sticky";
+
+                    const z = parseInt(s.zIndex || "0", 10);
+
+                    const yuksekZ = (
+                        z >= 10 ||
+                        s.zIndex === "auto"
+                    );
+
+                    if (!ekranKapliyor || !ustte || !yuksekZ) {
+                        continue;
+                    }
+
+                    const text = (
+                        el.innerText ||
+                        el.textContent ||
+                        ""
+                    ).toLowerCase();
+
+                    const classText = (
+                        String(el.className || "") + " " +
+                        String(el.id || "") + " " +
+                        String(el.getAttribute("data-testid") || "")
+                    ).toLowerCase();
+
+                    const reklamMi =
+                        el.tagName === "IFRAME" ||
+                        el.tagName === "VIDEO" ||
+                        el.tagName === "CANVAS" ||
+                        text.includes("reklam") ||
+                        text.includes("advertisement") ||
+                        text.includes("kampanya") ||
+                        text.includes("bonus") ||
+                        text.includes("hoş geldin") ||
+                        text.includes("hos geldin") ||
+                        text.includes("kapat") ||
+                        text.includes("close") ||
+                        classText.includes("popup") ||
+                        classText.includes("modal") ||
+                        classText.includes("overlay") ||
+                        classText.includes("advert") ||
+                        classText.includes("banner");
+
+                    if (reklamMi) {
+                        try {
+                            el.remove();
+                        } catch (e) {
+                            try {
+                                el.style.display = "none";
+                                el.style.visibility = "hidden";
+                                el.style.pointerEvents = "none";
+                            } catch (err) {}
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // body/html scroll kilidini kaldır
+            try {
+                document.body.style.overflow = "auto";
+                document.documentElement.style.overflow = "auto";
+            } catch (e) {}
+        """)
+
+        time.sleep(1)
+
+    except Exception:
+        pass
 
 # ============================================================
 # MAÇ SATIRI BULMA
@@ -498,8 +616,8 @@ def guvenli_yukle(driver, url, max_deneme=3):
 
 def chrome_hizli_yeniden_baslat(driver, url_gun):
     """
-    50 maçta bir basit kapat/aç.
-    JSON kaydı yapmaz.
+    Her 50 maçta Chrome'u kapatıp yeniden açar.
+    Siyah reklam / popup ekranlarını birkaç kez temizler.
     """
 
     try:
@@ -517,20 +635,85 @@ def chrome_hizli_yeniden_baslat(driver, url_gun):
     try:
         new_driver.get(url_gun)
     except Exception as exc:
-        print(f"   ⚠️ URL açma hatası: {str(exc)[:100]}")
+        print(f"   ⚠️ Gün URL açılırken hata: {str(exc)[:100]}")
 
-    time.sleep(4)
+    time.sleep(5)
 
-    cookie_kabul_et(new_driver)
-    reklam_kapat(new_driver)
+    # Reklam bazı durumlarda sayfa yüklendikten birkaç saniye sonra gelir.
+    # Bu yüzden birkaç tur temizleme uygulanır.
+    for tur in range(1, 5):
+        try:
+            cookie_kabul_et(new_driver)
+        except Exception:
+            pass
+
+        try:
+            reklam_kapat(new_driver)
+        except Exception:
+            pass
+
+        try:
+            siyah_ekran_ve_popup_temizle(new_driver)
+        except Exception:
+            pass
+
+        time.sleep(1)
+
+    # Arama kutusunun gerçekten görünmesini bekle.
+    search_ready = False
+
+    try:
+        WebDriverWait(new_driver, 15).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, SEARCH_SEL)
+            )
+        )
+
+        search = new_driver.find_element(By.CSS_SELECTOR, SEARCH_SEL)
+
+        new_driver.execute_script("""
+            arguments[0].scrollIntoView({
+                block: "center",
+                inline: "center"
+            });
+        """, search)
+
+        search_ready = search.is_displayed() and search.is_enabled()
+
+    except Exception:
+        search_ready = False
 
     satir = satir_sayisi_bekle(new_driver, 12)
 
-    print(f"   ✅ Yeni Chrome hazır | Satır: {satir}")
+    # Arama alanı gelmediyse veya siyah ekran yüzünden sorun varsa refresh.
+    if not search_ready or satir == 0:
+        print(
+            "   ⚠️ Yeni Chrome sonrası arama/listede sorun var. "
+            "Sayfa yenileniyor..."
+        )
+
+        try:
+            new_driver.refresh()
+            time.sleep(6)
+
+            for _ in range(3):
+                cookie_kabul_et(new_driver)
+                reklam_kapat(new_driver)
+                siyah_ekran_ve_popup_temizle(new_driver)
+                time.sleep(1)
+
+            satir = satir_sayisi_bekle(new_driver, 12)
+
+        except Exception as exc:
+            print(f"   ⚠️ Refresh hatası: {str(exc)[:100]}")
+
+    print(
+        f"   ✅ Yeni Chrome hazır | "
+        f"Satır: {satir} | "
+        f"Arama hazır: {search_ready}"
+    )
 
     return new_driver
-
-
 def gun_sayfasini_yukle(driver, url_gun, max_deneme=2):
     for deneme in range(1, max_deneme + 1):
         try:
@@ -557,7 +740,6 @@ def gun_sayfasini_yukle(driver, url_gun, max_deneme=2):
             pass
 
     return driver, False
-
 
 # ============================================================
 # SCROLL
@@ -1850,8 +2032,23 @@ def mac_oranlari_cek(driver, match):
                         break
 
         if not row:
+            # Özellikle Chrome restart sonrası çıkan siyah reklam/popup
+            # arama sonuçlarını engelliyor olabilir.
+            reklam_kapat(driver)
+            siyah_ekran_ve_popup_temizle(driver)
+
+            # Popup temizlendikten sonra ev sahibiyle son kez tekrar ara.
+            for candidate in arama_adaylari(ev):
+                if arama_yap(driver, candidate[:24]):
+                    row = satir_bekle(driver, ev, dep, max_sure=5)
+
+                    if row:
+                        break
+
+        if not row:
             arama_kutusunu_temizle(driver)
             return None
+
 
         _, panel = genislet_dogrula(driver, ev, dep)
 

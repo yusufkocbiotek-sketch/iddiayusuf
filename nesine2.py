@@ -1506,12 +1506,12 @@ def market_gecerli_mi(text):
 
 def nesine_oran_parse(text):
     """
-    Market adı olmadan hiçbir oran kaydedilmez.
-    Bu nedenle:
-      "3": 1.86
-      "1-2": 1.59
-      "x-2": 1.19
-    gibi bozuk anahtarlar oluşmaz.
+    Nesine oran panelindeki metni ayrıştırır.
+
+    Mantık:
+    - Market başlığı bulunmadan hiçbir oran kaydedilmez.
+    - Market başlığı varsa, mümkün olduğunca tüm seçenek/oran çiftleri alınır.
+    - Bu yüzden "3": 1.86 gibi başlıksız saçma oranlar oluşmaz.
     """
 
     odds = {}
@@ -1528,24 +1528,21 @@ def nesine_oran_parse(text):
     def add_odd(market, label, raw_value):
         market = str(market or "").strip()
         label = str(label or "").strip()
+        raw_value = str(raw_value or "").strip()
 
-        # Market yoksa oranı kesinlikle alma.
-        if not market:
-            return
-
-        if market == "__YASAK__":
-            return
-
-        if market_yasak_mi(market):
+        # Market başlığı olmadan asla kayıt yapma.
+        if not market or market == "__YASAK__":
             return
 
         if not label:
             return
 
+        # İstemediğin marketler: korner, kaleci, kart, oyuncu vb.
+        if market_yasak_mi(market):
+            return
+
         try:
-            value = float(
-                str(raw_value).replace(",", ".")
-            )
+            value = float(raw_value.replace(",", "."))
         except Exception:
             return
 
@@ -1554,6 +1551,7 @@ def nesine_oran_parse(text):
 
         raw_key = f"{market}_{label}"
 
+        # Market/label yapısı doğru değilse yazma.
         if not oran_anahtari_gecerli_mi(raw_key):
             return
 
@@ -1566,13 +1564,16 @@ def nesine_oran_parse(text):
         line = lines[index]
         next_line = lines[index + 1] if index + 1 < len(lines) else ""
 
-        # Yasak market başlığı bulunduysa sonraki markete kadar kapat.
+        # Yasak market başlığı geldiyse sonraki markete kadar oran alma.
         if market_yasak_mi(line):
             current_market = "__YASAK__"
             index += 1
             continue
 
-        # "1 X 2" ve altında üçlü oran satırı
+        # ----------------------------------------------------
+        # 1 X 2
+        # 1.86 2.58 3.33
+        # ----------------------------------------------------
         if re.fullmatch(r"(?:ms\s+)?1\s+[xX0]\s+2", line):
             values = []
 
@@ -1597,22 +1598,26 @@ def nesine_oran_parse(text):
             index += 1
             continue
 
-        # "1 2.10 X 3.00 2 2.50"
+        # ----------------------------------------------------
+        # Tek satır çoklu yapı:
+        # 1 1.86 X 2.58 2 3.33
+        # ----------------------------------------------------
         tokens = line.split()
 
         if (
-            len(tokens) >= 4 and
-            tokens[0].lower() in ("1", "x", "0", "2")
+            len(tokens) >= 4
+            and len(tokens) % 2 == 0
+            and tokens[0].lower() in ("1", "x", "0", "2")
         ):
             pair_ok = True
 
             for pos in range(1, len(tokens), 2):
-                if pos >= len(tokens) or not oran_satiri_mi(tokens[pos]):
+                if not oran_satiri_mi(tokens[pos]):
                     pair_ok = False
                     break
 
             if pair_ok:
-                for pos in range(0, len(tokens) - 1, 2):
+                for pos in range(0, len(tokens), 2):
                     add_odd(
                         current_market,
                         tokens[pos],
@@ -1622,36 +1627,40 @@ def nesine_oran_parse(text):
                 index += 1
                 continue
 
-        # "Alt 1.75", "Var 1.85", "1 2.10"
+        # ----------------------------------------------------
+        # Aynı satır:
+        # Alt 1.75
+        # Var 1.68
+        # 1 2.10
+        # 1-2 1.59
+        # Ev Sahibi 2.25
+        # ----------------------------------------------------
         inline = re.match(
-            r"^(.{1,80}?)\s+(\d{1,3}[.,]\d{1,2})$",
+            r"^(.{1,120}?)\s+(\d{1,3}[.,]\d{1,2})$",
             line
         )
 
         if inline:
             label = inline.group(1).strip()
-            odd = inline.group(2).strip()
+            value = inline.group(2).strip()
 
-            # Seçenek olabilecek kısa etiketler
-            if (
-                label.lower() in (
-                    "1", "x", "0", "2",
-                    "alt", "üst", "ust",
-                    "var", "yok",
-                    "evet", "hayır", "hayir",
-                    "tek", "çift", "cift",
-                )
-                or SKOR_RE.match(label)
-                or "&" in label
-            ):
-                add_odd(current_market, label, odd)
+            # Eğer aktif market varsa bu satırı seçenek/oran kabul et.
+            # Önceki kod sadece Alt/Üst/Var/Yok gibi sınırlı etiketleri
+            # kabul ettiği için çok sayıda oran kayboluyordu.
+            if current_market not in ("", "__YASAK__"):
+                add_odd(current_market, label, value)
 
             index += 1
             continue
 
-        # Klasik iki satır:
+        # ----------------------------------------------------
+        # İki satır yapı:
         # Alt
-        # 1.65
+        # 1.75
+        #
+        # 1-2
+        # 1.59
+        # ----------------------------------------------------
         if next_line and oran_satiri_mi(next_line):
             label = line
 
@@ -1661,7 +1670,10 @@ def nesine_oran_parse(text):
             index += 2
             continue
 
-        # Skor etiketi: 0:1 / 1:0 vb.
+        # Skor etiketi market değildir:
+        # 0:0
+        # 1:0
+        # Ama aktif market varsa sonraki turda oran olarak alınabilir.
         if SKOR_RE.match(line):
             index += 1
             continue
@@ -1673,7 +1685,6 @@ def nesine_oran_parse(text):
         index += 1
 
     return odds
-
 
 # ============================================================
 # ARAMA / PANEL
@@ -2060,9 +2071,17 @@ def mac_oranlari_cek(driver, match):
         kapat_dogrula(driver, ev, dep)
         arama_kutusunu_temizle(driver)
 
-        return oranlar_temizle(
-            oranlari_standartlastir(raw_odds)
-        )
+        standardized_odds = oranlari_standartlastir(raw_odds)
+        cleaned_odds = oranlar_temizle(standardized_odds)
+
+        if len(cleaned_odds) == 0:
+            print(
+                f"   ⚠️ Oran paneli bulundu ama oran ayrıştırılamadı | "
+                f"Ham: {len(raw_odds)} | "
+                f"Standart: {len(standardized_odds)}"
+            )
+
+        return cleaned_odds
 
     except Exception as exc:
         print(f"   ⚠️ Oran hatası: {str(exc)[:100]}")
@@ -2070,7 +2089,6 @@ def mac_oranlari_cek(driver, match):
         arama_kutusunu_temizle(driver)
 
         return {}
-
 
 # ============================================================
 # JSON KAYDET
@@ -2331,7 +2349,7 @@ def main():
 
                 match["oranlar"] = odds
 
-                print(f"   ✅ {len(odds)} düzgün oran")
+                print(f"   ✅ {len(odds)} oran kaydedildi")
 
                 results.append(match)
                 success += 1

@@ -1869,71 +1869,85 @@ def mac_oranlari_cek(driver, match):
 # ============================================================
 
 def mac_json_kaydet(yeni_maclar):
+    """
+    Aynı maçın oranları değişirse eski kaydı silmez;
+    yeni bir snapshot olarak mac.json'a EKLER.
+
+    Aynı maç + aynı oranlar tekrar çekilirse yeni kayıt oluşturmaz.
+
+    Aynı maç tanımı:
+      tarih + saat + ev sahibi + deplasman
+
+    Snapshot farkı:
+      oran sözlüğünde en az bir anahtar/değer değişmesi
+    """
+
     data = {
         "matches": [],
-        "son_guncelleme": "",
+        "son_guncelleme": ""
     }
 
+    # --------------------------------------------------------
+    # ESKİ JSON'U OKU
+    # --------------------------------------------------------
     if os.path.exists(CIKTI_DOSYA):
         try:
             with open(CIKTI_DOSYA, "r", encoding="utf-8") as file:
                 data = json.load(file)
-        except Exception:
-            pass
+        except Exception as exc:
+            print(f"   ⚠️ mac.json okunamadı: {exc}")
 
-    old_matches = data.get("matches", [])
+    if not isinstance(data, dict):
+        data = {
+            "matches": [],
+            "son_guncelleme": ""
+        }
 
-    def match_key(match):
+    if not isinstance(data.get("matches"), list):
+        data["matches"] = []
+
+    old_matches = data["matches"]
+
+    # --------------------------------------------------------
+    # YARDIMCI FONKSİYONLAR
+    # --------------------------------------------------------
+    def mac_key(match):
+        """
+        Aynı futbol karşılaşmasını belirler.
+        Oranlar ve çekilme zamanı buna dahil değildir.
+        """
         return (
-            match.get("tarih", ""),
-            match.get("saat", ""),
-            match.get("ev_sahibi", ""),
-            match.get("deplasman", ""),
+            str(match.get("tarih", "")).strip(),
+            str(match.get("saat", "")).strip(),
+            tr_key(match.get("ev_sahibi", "")),
+            tr_key(match.get("deplasman", ""))
         )
 
-    # Eski kayıtlardaki yalnızca bozuk/yasak anahtarları temizle.
-    for old in old_matches:
-        old["oranlar"] = oranlar_temizle(
-            old.get("oranlar", {})
-        )
+    def oranlari_normalize_et(oranlar):
+        """
+        Oranları karşılaştırmak için stabil hale getirir.
+        Sıra farkı önemsizdir.
+        """
+        temiz = oranlar_temizle(oranlar)
 
-    existing = {
-        match_key(match): match
-        for match in old_matches
-    }
+        normalized = {}
 
-    for match in yeni_maclar:
-        match["oranlar"] = oranlar_temizle(
-            match.get("oranlar", {})
-        )
+        for key, value in temiz.items():
+            try:
+                normalized[str(key).strip()] = round(float(value), 6)
+            except Exception:
+                pass
 
-        key = match_key(match)
+        return normalized
 
-        if key in existing:
-            old = existing[key]
+    def oranlar_degisti_mi(eski_oranlar, yeni_oranlar):
+        """
+        En az bir oran anahtarı veya değeri farklıysa True.
+        """
+        eski = oranlari_normalize_et(eski_oranlar)
+        yeni = oranlari_normalize_et(yeni_oranlar)
 
-            # Yeni lig boşsa eski ligi koru.
-            if not str(match.get("lig", "")).strip():
-                match["lig"] = old.get("lig", "")
-
-            # Yeni oran yoksa eski oranları koru.
-            if not match.get("oranlar"):
-                match["oranlar"] = oranlar_temizle(
-                    old.get("oranlar", {})
-                )
-
-            # Bitmiş skorları bozma.
-            if str(old.get("durum", "")).lower() == "bitti":
-                match["durum"] = old.get("durum", "bitti")
-                match["skor_ev"] = old.get("skor_ev", 0)
-                match["skor_dep"] = old.get("skor_dep", 0)
-                match["skor_1y_ev"] = old.get("skor_1y_ev", 0)
-                match["skor_1y_dep"] = old.get("skor_1y_dep", 0)
-                match["kaynak"] = old.get("kaynak", "iddaa.com")
-
-        existing[key] = match
-
-    now = datetime.datetime.now().isoformat()
+        return eski != yeni
 
     def to_int(value):
         try:
@@ -1941,12 +1955,151 @@ def mac_json_kaydet(yeni_maclar):
         except Exception:
             return 0
 
+    # --------------------------------------------------------
+    # ESKİ KAYITLARDAKİ BOZUK ORAN ANAHTARLARINI TEMİZLE
+    # Eski maçları silmez.
+    # --------------------------------------------------------
+    for old_match in old_matches:
+        try:
+            old_match["oranlar"] = oranlar_temizle(
+                old_match.get("oranlar", {})
+            )
+        except Exception:
+            old_match["oranlar"] = {}
+
+    # --------------------------------------------------------
+    # HER MAÇ İÇİN EN GÜNCEL SNAPSHOT'I BUL
+    # --------------------------------------------------------
+    latest_by_match = {}
+
+    for old_match in old_matches:
+        key = mac_key(old_match)
+
+        if key not in latest_by_match:
+            latest_by_match[key] = old_match
+            continue
+
+        old_time = str(old_match.get("cekme_zamani", ""))
+        current_time = str(
+            latest_by_match[key].get("cekme_zamani", "")
+        )
+
+        if old_time >= current_time:
+            latest_by_match[key] = old_match
+
+    now = datetime.datetime.now().isoformat()
+
+    added_new_match = 0
+    added_changed_snapshot = 0
+    unchanged_count = 0
+    empty_odds_count = 0
+
+    # --------------------------------------------------------
+    # YENİ ÇEKİLEN MAÇLARI İŞLE
+    # --------------------------------------------------------
+    for raw_match in yeni_maclar:
+        if not isinstance(raw_match, dict):
+            continue
+
+        # Eski liste nesnesini yanlışlıkla değiştirmemek için kopya al
+        match = dict(raw_match)
+
+        # Yeni oranları temizle ama ikinci kez standardize etme
+        match["oranlar"] = oranlar_temizle(
+            match.get("oranlar", {})
+        )
+
+        key = mac_key(match)
+        previous = latest_by_match.get(key)
+
+        # ----------------------------------------------------
+        # İLK DEFA GÖRÜLEN MAÇ
+        # ----------------------------------------------------
+        if previous is None:
+            match["cekme_zamani"] = now
+
+            old_matches.append(match)
+            latest_by_match[key] = match
+
+            added_new_match += 1
+
+            print(
+                f"   🆕 Yeni maç eklendi: "
+                f"{match.get('ev_sahibi', '?')} - "
+                f"{match.get('deplasman', '?')}"
+            )
+
+            continue
+
+        # ----------------------------------------------------
+        # LİG BOŞ GELDİYSE ESKİ LİGİ KORU
+        # ----------------------------------------------------
+        if not str(match.get("lig", "")).strip():
+            match["lig"] = previous.get("lig", "")
+
+        # ----------------------------------------------------
+        # BİTMİŞ MAÇ SKORUNU NESINE BOZMASIN
+        # ----------------------------------------------------
+        if str(previous.get("durum", "")).lower() == "bitti":
+            match["durum"] = previous.get("durum", "bitti")
+            match["skor_ev"] = previous.get("skor_ev", 0)
+            match["skor_dep"] = previous.get("skor_dep", 0)
+            match["skor_1y_ev"] = previous.get("skor_1y_ev", 0)
+            match["skor_1y_dep"] = previous.get("skor_1y_dep", 0)
+            match["kaynak"] = previous.get("kaynak", "iddaa.com")
+
+        # ----------------------------------------------------
+        # YENİ ORAN YOKSA SNAPSHOT OLUŞTURMA
+        # ----------------------------------------------------
+        if not match.get("oranlar"):
+            empty_odds_count += 1
+            continue
+
+        # ----------------------------------------------------
+        # ORANLAR AYNIYSA YENİ KAYIT EKLEME
+        # ----------------------------------------------------
+        if not oranlar_degisti_mi(
+            previous.get("oranlar", {}),
+            match.get("oranlar", {})
+        ):
+            unchanged_count += 1
+
+            print(
+                f"   ➖ Oran değişmedi: "
+                f"{match.get('ev_sahibi', '?')} - "
+                f"{match.get('deplasman', '?')}"
+            )
+
+            continue
+
+        # ----------------------------------------------------
+        # ORANLAR DEĞİŞTİ:
+        # ESKİ KAYDI SİLME, YENİ SNAPSHOT EKLE
+        # ----------------------------------------------------
+        match["cekme_zamani"] = now
+
+        old_matches.append(match)
+        latest_by_match[key] = match
+
+        added_changed_snapshot += 1
+
+        print(
+            f"   🔄 Oran değişti, yeni snapshot eklendi: "
+            f"{match.get('ev_sahibi', '?')} - "
+            f"{match.get('deplasman', '?')}"
+        )
+
+    # --------------------------------------------------------
+    # SNAPSHOT'LARI SIRALA VE INDEX YAZ
+    # --------------------------------------------------------
     ordered = sorted(
-        existing.values(),
+        old_matches,
         key=lambda match: (
-            match.get("tarih", ""),
-            match.get("saat", ""),
-            match.get("ev_sahibi", ""),
+            str(match.get("tarih", "")),
+            str(match.get("saat", "00:00")),
+            str(match.get("ev_sahibi", "")),
+            str(match.get("deplasman", "")),
+            str(match.get("cekme_zamani", ""))
         )
     )
 
@@ -1972,14 +2125,17 @@ def mac_json_kaydet(yeni_maclar):
             "kaynak": str(match.get("kaynak", "nesine.com")),
             "oranlar": oranlar_temizle(
                 match.get("oranlar", {})
-            ),
+            )
         })
 
     output = {
         "matches": output_matches,
-        "son_guncelleme": now,
+        "son_guncelleme": now
     }
 
+    # --------------------------------------------------------
+    # GÜVENLİ YAZMA
+    # --------------------------------------------------------
     os.makedirs(
         os.path.dirname(CIKTI_DOSYA),
         exist_ok=True
@@ -1998,11 +2154,15 @@ def mac_json_kaydet(yeni_maclar):
 
     temp_path.replace(output_path)
 
-    print(
-        f"   💾 Kaydedildi: {len(output_matches)} maç | "
-        f"{CIKTI_DOSYA}"
-    )
-
+    print("\n" + "=" * 60)
+    print("💾 MAC.JSON SNAPSHOT KAYDI TAMAMLANDI")
+    print("=" * 60)
+    print(f"   Toplam kayıt: {len(output_matches)}")
+    print(f"   Yeni maç: {added_new_match}")
+    print(f"   Oranı değişen yeni snapshot: {added_changed_snapshot}")
+    print(f"   Oranı değişmeyen: {unchanged_count}")
+    print(f"   Oranı boş gelen: {empty_odds_count}")
+    print(f"   Dosya: {CIKTI_DOSYA}")
 
 # ============================================================
 # GIT

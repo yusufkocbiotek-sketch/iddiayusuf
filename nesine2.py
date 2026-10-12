@@ -35,9 +35,8 @@ SCROLL_SLEEP_RANGE = (1.0, 1.8)
 MAX_SCRAPE = 9999
 SLEEP_BETWEEN_MATCHES = (1.0, 2.0)
 
-# 0 = Chrome yeniden başlatma kapalı.
-# Siyah reklam ekranı sorunu yaşamamak için şimdilik 0 bırak.
-# İstersen sonra 50 yapabilirsin.
+# Siyah reklam sorunları nedeniyle 0 önerilir.
+# 50 yaparsan her 50 maçta Chrome kapanır/açılır.
 HARVEST_MAC_SAYISI = 0
 
 SEARCH_SEL = 'input[data-test-id="srch-box"]'
@@ -55,31 +54,18 @@ ENABLE_GIT_AUTOPUSH = True
 
 SILINECEK_BASLANGICLAR = (
     "oyuncu",
-    "takim",
-    "takimlar",
-    "karsilasma ozel bahisleri",
-
-    # Kaleci
+    "golcu",
     "kaleci",
     "kurtaris",
     "kurtarisi",
-
-    # Korner
     "korner",
     "corner",
     "toplam korner",
     "ilk yari korner",
     "1 yari korner",
     "1. yari korner",
-    "ilk yari toplam korner",
-    "1 yari toplam korner",
-    "1. yari toplam korner",
-    "ev sahibi toplam korner",
-    "deplasman toplam korner",
     "ev sahibi korner",
     "deplasman korner",
-
-    # Kart
     "kart",
     "sari kart",
     "kirmizi kart",
@@ -171,7 +157,7 @@ def nesine_dt_url(tarih_iso):
 
 
 # ============================================================
-# MARKET / ORAN ANAHTAR KONTROLÜ
+# MARKET / ORAN ANAHTARI KONTROLÜ
 # ============================================================
 
 def market_yasak_mi(market):
@@ -195,35 +181,25 @@ def market_yasak_mi(market):
         "kirmizi kart",
         "oyuncu",
         "golcu",
-        "gol atar",
-        "asist",
-        "sut",
-        "isabetli sut",
-        "ofsayt",
-        "tac",
     )
 
-    return any(kelime in normalized for kelime in yasak_kelimeler)
+    return any(word in normalized for word in yasak_kelimeler)
 
 
 def oran_anahtari_gecerli_mi(key):
     """
-    Geçerli format:
-        Market_Seçenek
+    Market_Seçenek formatı zorunludur.
 
-    Geçerli örnekler:
-        0,5 Gol Alt/Üst_Alt
-        1,5 Gol Alt/Üst_Üst
-        Maç Sonucu_1
-        Çifte Şans_1-2
+    Geçerli:
+        Alt/Üst 2.5_Alt
+        1,5 Gol Alt/Üst_Alt
+        Handikaplı Maç Sonucu 0:2_1
 
-    Geçersiz örnekler:
+    Geçersiz:
         3
         2.58
-        1-2
         x-2
         3_1
-        2.58_X
     """
 
     raw = str(key or "").strip()
@@ -242,28 +218,19 @@ def oran_anahtari_gecerli_mi(key):
     market_normal = tr_key(market)
     label_normal = tr_key(label)
 
-    # Market sadece sayıysa geçersiz:
-    # 3_1
-    # 12_Alt
+    # Market yalnızca sayı olamaz.
     if re.fullmatch(r"\d+", market_normal):
         return False
 
-    # Market sadece odds değeri gibiyse geçersiz:
-    # 2.58_X
-    # 1.75_Alt
-    #
-    # Ama "1,5 gol alt/ust" harf içerdiği için geçerli kalır.
+    # Market yalnızca oran değeri olamaz.
     if re.fullmatch(r"\d{1,3}(?:[.,]\d{1,2})?", market_normal):
         return False
 
-    # Marketin en az bir harf içermesi zorunlu.
-    # Böylece 1,5 Gol Alt/Üst geçer;
-    # ama 3_1 geçmez.
+    # Market en az bir harf içermeli.
     if not re.search(r"[a-zçğıöşü]", market_normal):
         return False
 
-    # Label doğrudan odds değeri olmamalı.
-    # Maç Sonucu_2.58 gibi bozuk kayıtları engeller.
+    # Label doğrudan oran sayısı olamaz.
     if re.fullmatch(r"\d{1,3}[.,]\d{1,2}", label_normal):
         return False
 
@@ -271,11 +238,11 @@ def oran_anahtari_gecerli_mi(key):
     if " - " in market:
         return False
 
-    # Korner / kart / kaleci / oyuncu filtreleri.
     if market_yasak_mi(market):
         return False
 
     return True
+
 
 def istenmeyen_anahtar_mi(key):
     if not oran_anahtari_gecerli_mi(key):
@@ -287,7 +254,7 @@ def istenmeyen_anahtar_mi(key):
     if market_yasak_mi(market):
         return True
 
-    # Başlığı düşmüş yüksek Alt/Üst marketleri genelde kornerdir.
+    # Market başlığı düşmüş korner oranları.
     if re.fullmatch(
         r"alt/ust\s+"
         r"(7\.5|8\.5|9\.5|10\.5|11\.5|12\.5|13\.5|14\.5)"
@@ -315,8 +282,7 @@ def label_temizle(label):
 
 def market_duzelt(market):
     """
-    Nesine market başlıklarını sitenin/frontend'in kullandığı
-    standart oran anahtarlarına dönüştürür.
+    Nesine market başlıklarını frontend'in kullandığı anahtarlara çevirir.
     """
 
     raw_market = str(market or "").strip()
@@ -325,19 +291,28 @@ def market_duzelt(market):
     market = re.sub(r"(\d),(\d)", r"\1.\2", market)
     market = re.sub(r"\s+", " ", market).strip()
 
+    # 1.Y / 1. Y / 1. Yarı / 1 Y gibi yazımları normalize et.
+    market = re.sub(r"\b1\s*\.\s*y\b", "1. yari", market)
+    market = re.sub(r"\b1\s*y\b", "1. yari", market)
+    market = re.sub(r"\b1\s*\.\s*yar[ıi]\b", "1. yari", market)
+    market = re.sub(r"\b1\s*yar[ıi]\b", "1. yari", market)
+
+    market = re.sub(r"\b2\s*\.\s*y\b", "2. yari", market)
+    market = re.sub(r"\b2\s*y\b", "2. yari", market)
+    market = re.sub(r"\b2\s*\.\s*yar[ıi]\b", "2. yari", market)
+    market = re.sub(r"\b2\s*yar[ıi]\b", "2. yari", market)
+
+    # Handikaplı Maç Sonucu (0:2) -> 0:2
+    market = market.replace("(", " ").replace(")", " ")
+    market = re.sub(r"\s+", " ", market).strip()
+
     def goal_line_number():
         """
-        Market içindeki gerçek gol çizgisini bulur.
+        1. yari 1.5 gol alt/ust -> 1.5
 
-        Örnek:
-            "1. yari 1,5 gol alt/ust" -> 1.5
-            "2. yari 2,5 gol alt/ust" -> 2.5
-            "1,5 gol alt/ust" -> 1.5
-
-        İlk "1." veya "2." yarı numarasını yanlışlıkla limit almaz.
+        İlk yarıdaki "1" değerini yanlışlıkla limit olarak almaz.
         """
 
-        # Önce "1.5 gol alt/ust" gibi gol ifadesinden önceki çizgiyi ara.
         found = re.search(
             r"(\d+(?:\.\d+)?)\s*gol\s*(?:alti|alt|ustu|ust|alt/ust)",
             market
@@ -346,37 +321,23 @@ def market_duzelt(market):
         if found:
             return found.group(1)
 
-        # "alt/ust 2.5" formatı için
-        found = re.search(
-            r"(?:alt/ust|alti/ustu)\s*(\d+(?:\.\d+)?)",
-            market
-        )
-
-        if found:
-            return found.group(1)
-
-        # Market içindeki ondalıklı sayıların sonuncusunu al.
-        # Örn: "1. yari 1.5 gol alt/ust" -> 1.5
         decimals = re.findall(r"\d+\.\d+", market)
 
         if decimals:
             return decimals[-1]
 
-        # Son çare: sayı
         numbers = re.findall(r"\d+", market)
 
         return numbers[-1] if numbers else ""
 
     first_half = (
         "ilk yari" in market or
-        "1. yari" in market or
-        "1 yari" in market
+        "1. yari" in market
     )
 
     second_half = (
         "ikinci yari" in market or
-        "2. yari" in market or
-        "2 yari" in market
+        "2. yari" in market
     )
 
     both_score = (
@@ -395,46 +356,51 @@ def market_duzelt(market):
 
     line = goal_line_number()
 
-    # ========================================================
-    # İLK YARI / İKİNCİ YARI KARŞILIKLI GOL
+    # --------------------------------------------------------
+    # 1. YARI / 2. YARI KARŞILIKLI GOL
     #
-    # Nesine örnekleri:
-    # "İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur"
-    # "1. Yarı / 2. Yarı Karşılıklı Gol"
-    #
-    # Frontend standardı:
-    # Her İki Yarıda Karşılıklı Gol_EE/EH/HE/HH
-    # ========================================================
-    if (
-        first_half and
-        second_half and
-        (
-            "karsilikli gol" in market or
-            "gol olur" in market
-        )
-    ):
+    # 1. Yarı / 2. Yarı Karşılıklı Gol
+    # İlk Yarı ve İkinci Yarıda Karşılıklı Gol Olur
+    # --------------------------------------------------------
+    if both_score and first_half and second_half:
         return "Her İki Yarıda Karşılıklı Gol"
 
-    # ========================================================
-    # İKİ YARI DA ALT / ÜST
+    # --------------------------------------------------------
+    # İki Yarı da Alt / Üst
     #
-    # Örnek:
-    # "İki Yarı da 1,5 Alt"
-    # "Her İki Yarıda da 1,5 Üst"
-    # ========================================================
-    if (
-        "iki yari" in market or
-        "her iki yari" in market
-    ):
+    # İki Yarı da 1,5 Alt
+    # Her İki Yarıda da 1,5 Üst
+    # --------------------------------------------------------
+    if "iki yari" in market or "her iki yari" in market:
         if re.search(r"\balt\b", market):
             return f"Her İki Yarıda da Alt {line}".strip()
 
         if re.search(r"\bust\b", market):
             return f"Her İki Yarıda da Üst {line}".strip()
 
-    # ========================================================
+    # --------------------------------------------------------
+    # Handikaplı Maç Sonucu
+    # --------------------------------------------------------
+    handicap = re.search(
+        r"handikap\w*\s*(?:mac sonucu\s*)?(\d+\s*:\s*\d+)",
+        market
+    )
+
+    if handicap:
+        handicap_value = re.sub(
+            r"\s*",
+            "",
+            handicap.group(1)
+        )
+
+        return f"Handikaplı Maç Sonucu {handicap_value}"
+
+    if "handikap" in market:
+        return "Handikaplı Maç Sonucu"
+
+    # --------------------------------------------------------
     # Kombine marketler
-    # ========================================================
+    # --------------------------------------------------------
     if both_score and over_under:
         return f"Altı/Üstü {line} ve Karşılıklı Gol"
 
@@ -450,51 +416,36 @@ def market_duzelt(market):
     if match_result and over_under:
         return f"Maç Sonucu ve Alt/Üst {line}"
 
-    # ========================================================
-    # Handikap
-    # ========================================================
-    handicap = re.search(
-        r"handikap\w*\s*(?:mac sonucu\s*)?(\d+:\d+)",
-        market
-    )
-
-    if handicap:
-        return f"Handikaplı Maç Sonucu {handicap.group(1)}"
-
-    if "handikap" in market:
-        return "Handikaplı Maç Sonucu"
-
-    # ========================================================
-    # İlk yarı / maç sonucu
-    # ========================================================
+    # --------------------------------------------------------
+    # Maç sonucu / İlk yarı maç sonucu
+    # --------------------------------------------------------
     if first_half and match_result:
         return "İlk Yarı / Maç Sonucu"
 
     if match_result:
         return "Maç Sonucu"
 
-    # ========================================================
+    # --------------------------------------------------------
     # Çifte şans
-    # ========================================================
+    # --------------------------------------------------------
     if "cifte sans" in market:
-        return (
-            "İlk Yarı Çifte Şans"
-            if first_half
-            else "Çifte Şans"
-        )
+        if first_half:
+            return "İlk Yarı Çifte Şans"
 
-    # ========================================================
-    # Toplam gol / maç skoru
-    # ========================================================
+        return "Çifte Şans"
+
+    # --------------------------------------------------------
+    # Toplam gol / Maç skoru
+    # --------------------------------------------------------
     if "toplam gol" in market:
         return "Toplam Gol"
 
     if "mac skoru" in market:
         return "Maç Skoru"
 
-    # ========================================================
-    # Karşılıklı Gol
-    # ========================================================
+    # --------------------------------------------------------
+    # Karşılıklı gol
+    # --------------------------------------------------------
     if both_score:
         if first_half:
             return "İlk Yarı Karşılıklı Gol"
@@ -504,18 +455,18 @@ def market_duzelt(market):
 
         return "Karşılıklı Gol"
 
-    # ========================================================
+    # --------------------------------------------------------
     # Yarı sonucu
-    # ========================================================
+    # --------------------------------------------------------
     if first_half and "sonuc" in market:
         return "İlk Yarı Sonucu"
 
     if second_half and "sonuc" in market:
         return "İkinci Yarı Sonucu"
 
-    # ========================================================
+    # --------------------------------------------------------
     # Tek / Çift
-    # ========================================================
+    # --------------------------------------------------------
     if re.search(r"tek\s*/?\s*cift", market):
         if first_half:
             return "İlk Yarı Tek / Çift"
@@ -525,9 +476,9 @@ def market_duzelt(market):
 
         return "Tek / Çift"
 
-    # ========================================================
+    # --------------------------------------------------------
     # Alt / Üst
-    # ========================================================
+    # --------------------------------------------------------
     if over_under:
         prefix = ""
 
@@ -537,65 +488,52 @@ def market_duzelt(market):
             prefix = "Deplasman "
 
         if first_half:
-            return (
-                f"{prefix}İlk Yarı Altı/Üstü {line}"
-            ).strip()
+            return f"{prefix}İlk Yarı Altı/Üstü {line}".strip()
 
         if second_half:
-            return (
-                f"{prefix}İkinci Yarı Altı/Üstü {line}"
-            ).strip()
+            return f"{prefix}İkinci Yarı Altı/Üstü {line}".strip()
 
         return f"{prefix}Alt/Üst {line}".strip()
 
-    # Tanınmayan marketi silme.
+    # Tanınmayan marketler silinmesin.
     return market.strip()
+
 
 def label_duzelt(label, market):
     """
-    Seçenek isimlerini frontend anahtarlarıyla uyumlu hale getirir.
+    Market seçeneklerini frontend uyumlu hale getirir.
     """
 
     raw = str(label or "").strip()
     normalized = tr_key(raw)
 
-    # ========================================================
-    # İlk Yarı + İkinci Yarı Karşılıklı Gol
+    # --------------------------------------------------------
+    # 1. Yarı / 2. Yarı KG kombinasyonu
     #
-    # Nesine:
-    # "Hayır / Hayır"
-    # "Evet / Hayır"
-    # "Hayır / Evet"
-    # "Evet / Evet"
-    #
-    # Frontend:
-    # HH / EH / HE / EE
-    # ========================================================
+    # Evet / Evet  -> EE
+    # Evet / Hayır -> EH
+    # Hayır / Evet -> HE
+    # Hayır / Hayır -> HH
+    # --------------------------------------------------------
     if market == "Her İki Yarıda Karşılıklı Gol":
         compact = normalized.replace(" ", "")
 
         mapping = {
-            "hayir/hayir": "HH",
+            "evet/evet": "EE",
             "evet/hayir": "EH",
             "hayir/evet": "HE",
-            "evet/evet": "EE",
+            "hayir/hayir": "HH",
 
-            # Site bazen Var/Yok verebilir
-            "yok/yok": "HH",
+            "var/var": "EE",
             "var/yok": "EH",
             "yok/var": "HE",
-            "var/var": "EE",
+            "yok/yok": "HH",
         }
 
         if compact in mapping:
             return mapping[compact]
 
-    # ========================================================
-    # "&" içeren kombineler
-    #
     # Alt & Var -> Alt ve Var
-    # Üst & Yok -> Üst ve Yok
-    # ========================================================
     if "&" in normalized:
         mapping = {
             "x": "0",
@@ -612,9 +550,7 @@ def label_duzelt(label, market):
             for part in normalized.split("&")
         )
 
-    # ========================================================
-    # Çifte şans
-    # ========================================================
+    # Çifte Şans
     if market in ("Çifte Şans", "İlk Yarı Çifte Şans"):
         found = re.fullmatch(
             r"([120x])[-–]([120x])",
@@ -634,9 +570,7 @@ def label_duzelt(label, market):
                 f"{mapping[found.group(2)]}"
             )
 
-    # ========================================================
-    # Maç / yarı sonucu
-    # ========================================================
+    # Maç sonucu / yarı sonucu
     if market in (
         "Maç Sonucu",
         "İlk Yarı Sonucu",
@@ -647,9 +581,6 @@ def label_duzelt(label, market):
 
         return raw
 
-    # ========================================================
-    # Genel etiketler
-    # ========================================================
     mapping = {
         "alt": "Alt",
         "ust": "Üst",
@@ -665,10 +596,14 @@ def label_duzelt(label, market):
 
     return mapping.get(normalized, raw)
 
+
 def oranlari_standartlastir(oranlar):
     """
-    Aynı standart anahtar oluşursa oran silinmez.
-    Çakışmada alternatif anahtar üretilir.
+    Ham oranları frontend standartlarına dönüştürür.
+
+    Aynı anahtar tekrar gelirse:
+      Son gelen oran kullanılır.
+      Köşeli parantezli ek anahtar üretilmez.
     """
 
     if not isinstance(oranlar, dict):
@@ -676,6 +611,7 @@ def oranlari_standartlastir(oranlar):
 
     output = {}
     collision_count = 0
+    error_count = 0
 
     for raw_key, raw_value in oranlar.items():
         try:
@@ -695,6 +631,7 @@ def oranlari_standartlastir(oranlar):
             if market_yasak_mi(market_raw):
                 continue
 
+            # Label direkt bir oran sayısı olamaz.
             if re.fullmatch(
                 r"\d{1,3}[.,]\d{1,2}",
                 label_raw
@@ -721,49 +658,42 @@ def oranlari_standartlastir(oranlar):
 
             value = float(raw_value)
 
-            if new_key not in output:
-                output[new_key] = value
-                continue
+            if new_key in output and output[new_key] != value:
+                collision_count += 1
 
-            if output[new_key] == value:
-                continue
+            # Aynı key tekrar gelirse son oran geçerli sayılır.
+            output[new_key] = value
 
-            collision_count += 1
+        except Exception as exc:
+            error_count += 1
 
-            alternative_key = (
-                f"{market} [{market_raw}]_{label}"
-            )
-
-            if istenmeyen_anahtar_mi(alternative_key):
-                alternative_key = f"{market_raw}_{label_raw}"
-
-            if istenmeyen_anahtar_mi(alternative_key):
-                continue
-
-            if alternative_key in output:
-                suffix = 2
-                base = alternative_key
-
-                while f"{base} #{suffix}" in output:
-                    suffix += 1
-
-                alternative_key = f"{base} #{suffix}"
-
-            output[alternative_key] = value
-
-        except Exception:
-            pass
+            if error_count <= 5:
+                print(
+                    f"   ⚠️ Standardizasyon hatası | "
+                    f"Key: {raw_key!r} | "
+                    f"Hata: {type(exc).__name__}: {exc}"
+                )
 
     if collision_count > 0:
         print(
-            f"   ℹ️ Anahtar çakışması: {collision_count} | "
-            f"Çakışan oranlar silinmedi."
+            f"   ℹ️ Aynı anahtarda güncellenen oran: "
+            f"{collision_count}"
+        )
+
+    if error_count > 0:
+        print(
+            f"   ⚠️ Standardizasyon hata sayısı: "
+            f"{error_count}"
         )
 
     return output
 
 
 def oranlar_temizle(oranlar):
+    """
+    Son JSON filtresi.
+    """
+
     if not isinstance(oranlar, dict):
         return {}
 
@@ -771,7 +701,10 @@ def oranlar_temizle(oranlar):
 
     for key, value in oranlar.items():
         try:
-            key = str(key).strip()
+            key = str(key or "").strip()
+
+            if not key:
+                continue
 
             if istenmeyen_anahtar_mi(key):
                 continue
@@ -785,7 +718,7 @@ def oranlar_temizle(oranlar):
 
 
 # ============================================================
-# SELENIUM DRIVER
+# DRIVER
 # ============================================================
 
 def build_driver():
@@ -965,7 +898,7 @@ def siyah_ekran_ve_popup_temizle(driver):
                         String(el.id || "")
                     ).toLowerCase();
 
-                    const isAd = (
+                    const ad = (
                         el.tagName === "IFRAME" ||
                         el.tagName === "VIDEO" ||
                         el.tagName === "CANVAS" ||
@@ -980,10 +913,11 @@ def siyah_ekran_ve_popup_temizle(driver):
                         classText.includes("banner")
                     );
 
-                    if (isAd) {
+                    if (ad) {
                         el.style.display = "none";
                         el.style.pointerEvents = "none";
                     }
+
                 } catch (e) {}
             }
 
@@ -998,7 +932,7 @@ def siyah_ekran_ve_popup_temizle(driver):
 
 
 # ============================================================
-# MAÇ SATIRLARI
+# MAÇ SATIRI BULMA
 # ============================================================
 
 def find_match_cards(driver):
@@ -1126,39 +1060,8 @@ def gun_sayfasini_yukle(driver, url_gun, max_deneme=2):
     return driver, False
 
 
-def chrome_hizli_yeniden_baslat(driver, url_gun):
-    try:
-        driver.quit()
-    except Exception:
-        pass
-
-    print("   🔴 Chrome kapatıldı.")
-    time.sleep(2)
-
-    print("   🟢 Chrome açılıyor...")
-    new_driver = build_driver()
-
-    try:
-        new_driver.get(url_gun)
-        time.sleep(5)
-    except Exception:
-        pass
-
-    for _ in range(5):
-        cookie_kabul_et(new_driver)
-        reklam_kapat(new_driver)
-        siyah_ekran_ve_popup_temizle(new_driver)
-        time.sleep(0.8)
-
-    count = satir_sayisi_bekle(new_driver, 15)
-
-    print(f"   ✅ Yeni Chrome hazır | Satır: {count}")
-
-    return new_driver
-
-
 # ============================================================
-# BÜLTEN SCROLL / MAÇ HASADI
+# SCROLL / MAÇ TOPLAMA
 # ============================================================
 
 def init_scroll_target(driver):
@@ -1363,7 +1266,6 @@ def sayfayi_scroll_et(driver, hedef_tarih):
 
     matches = []
     seen = set()
-
     stable = 0
     old_total = 0
 
@@ -1442,7 +1344,7 @@ def deep_harvest(driver):
 
 
 # ============================================================
-# ARAMA / ORAN PANELİ
+# ARAMA / PANEL
 # ============================================================
 
 def arama_kutusunu_temizle(driver):
@@ -1647,17 +1549,10 @@ def kapat_dogrula(driver, ev, dep):
 
 
 # ============================================================
-# DOM'DAN TÜM ORANLARI ÇEK
+# DOM'DAN ORAN ÇEKME
 # ============================================================
 
 def panel_oranlarini_domdan_cek(driver, ev, dep):
-    """
-    Açılmış maç panelindeki bütün marketleri DOM'dan alır.
-
-    Aynı market/label tekrar oluşursa data-test-id üzerinden ayırır.
-    Böylece 387 DOM oranı Python dict içinde 169'a düşmez.
-    """
-
     row = satir_bul(driver, ev, dep)
 
     if not row:
@@ -1710,22 +1605,16 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
         ).filter(node => {
             const id = node.getAttribute("data-test-id") || "";
 
-            // Örnek:
-            // 3179769_11_83137543
             return /^\d+_\d+_\d+$/.test(id);
         });
 
         const results = [];
+        const seen = new Set();
 
         for (const marketRow of marketRows) {
             try {
-                const marketRowId = (
-                    marketRow.getAttribute("data-test-id") || ""
-                ).trim();
-
                 let marketTitle = "";
 
-                // Özel marketlerin başlığı
                 const infoButton = marketRow.querySelector(
                     "button[data-test-info][data-test-title]"
                 );
@@ -1736,7 +1625,6 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
                     );
                 }
 
-                // Standart market başlığı
                 if (!marketTitle) {
                     const marketButton = marketRow.querySelector(
                         "button[data-test-m-id]"
@@ -1746,7 +1634,7 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
                         const header = marketButton.parentElement;
 
                         if (header) {
-                            const spanTexts = Array.from(
+                            const spans = Array.from(
                                 header.querySelectorAll("span")
                             )
                             .map(span => clean(
@@ -1760,10 +1648,8 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
                                 return true;
                             });
 
-                            if (spanTexts.length > 0) {
-                                marketTitle = spanTexts[
-                                    spanTexts.length - 1
-                                ];
+                            if (spans.length > 0) {
+                                marketTitle = spans[spans.length - 1];
                             }
                         }
                     }
@@ -1788,13 +1674,8 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
                         option.getAttribute("data-test-value")
                     );
 
-                    if (!label || label === "-") {
-                        continue;
-                    }
-
-                    if (!rawValue || rawValue === "-") {
-                        continue;
-                    }
+                    if (!label || label === "-") continue;
+                    if (!rawValue || rawValue === "-") continue;
 
                     if (!/^\d{1,3}[.,]\d{1,2}$/.test(rawValue)) {
                         continue;
@@ -1812,11 +1693,18 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
                         continue;
                     }
 
+                    const key = marketTitle + "_" + label;
+
+                    if (seen.has(key)) {
+                        continue;
+                    }
+
+                    seen.add(key);
+
                     results.push({
                         market: marketTitle,
                         label: label,
-                        value: value,
-                        market_id: marketRowId
+                        value: value
                     });
                 }
 
@@ -1850,7 +1738,6 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
         )
 
         output = {}
-        duplicate_count = 0
 
         for item in entries:
             if not isinstance(item, dict):
@@ -1858,7 +1745,6 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
 
             market = str(item.get("market", "")).strip()
             label = str(item.get("label", "")).strip()
-            market_id = str(item.get("market_id", "")).strip()
 
             try:
                 value = float(item.get("value"))
@@ -1876,40 +1762,7 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
             if not oran_anahtari_gecerli_mi(raw_key):
                 continue
 
-            # İlk kayıt normal anahtarla girer.
-            if raw_key not in output:
-                output[raw_key] = value
-                continue
-
-            # Aynı anahtar + aynı oran ise gerçek tekrar kabul edilir.
-            if output[raw_key] == value:
-                continue
-
-            # Aynı market/label fakat farklı market satırı:
-            # Önceki oranı ezme.
-            duplicate_count += 1
-
-            # Örnek:
-            # Maç Sonucu [3179769_11_83137543]_Alt
-            alternative_key = (
-                f"{market} [{market_id}]_{label}"
-            )
-
-            suffix = 2
-            base_key = alternative_key
-
-            while alternative_key in output:
-                alternative_key = f"{base_key} #{suffix}"
-                suffix += 1
-
-            output[alternative_key] = value
-
-        if duplicate_count > 0:
-            print(
-                f"   ℹ️ DOM aynı anahtar tekrarları: "
-                f"{duplicate_count} | "
-                f"Ezilmeden alternatif anahtarla korundu."
-            )
+            output[raw_key] = value
 
         return output
 
@@ -1917,12 +1770,8 @@ def panel_oranlarini_domdan_cek(driver, ev, dep):
         print(f"   ⚠️ DOM panel okuma hatası: {str(exc)[:120]}")
         return {}
 
-def panel_oranlari_cek(driver, ev, dep, max_sure=12):
-    """
-    Panelde lazy-load varsa birkaç kez DOM'dan tekrar okur.
-    Accordion aç/kapa yapılmaz.
-    """
 
+def panel_oranlari_cek(driver, ev, dep, max_sure=10):
     output = {}
     stable_count = 0
     start_time = time.time()
@@ -1940,13 +1789,10 @@ def panel_oranlari_cek(driver, ev, dep, max_sure=12):
             output.update(dom_odds)
 
         if len(output) > old_count:
-            added = len(output) - old_count
-
             print(
-                f"      ➕ {added} yeni oran | "
+                f"      ➕ {len(output) - old_count} yeni oran | "
                 f"Toplam: {len(output)}"
             )
-
             stable_count = 0
         else:
             stable_count += 1
@@ -1954,12 +1800,9 @@ def panel_oranlari_cek(driver, ev, dep, max_sure=12):
         if stable_count >= 4:
             break
 
-        time.sleep(0.8)
+        time.sleep(0.7)
 
-    print(
-        f"   🔍 Panelden toplam DOM ham oran: "
-        f"{len(output)}"
-    )
+    print(f"   🔍 Panelden toplam DOM ham oran: {len(output)}")
 
     return output
 
@@ -1971,7 +1814,6 @@ def mac_oranlari_cek(driver, match):
     try:
         row = None
 
-        # Ev sahibiyle arama
         for candidate in arama_adaylari(ev):
             if arama_yap(driver, candidate[:24]):
                 row = satir_bekle(driver, ev, dep)
@@ -1979,7 +1821,6 @@ def mac_oranlari_cek(driver, match):
                 if row:
                     break
 
-        # Deplasmanla arama
         if not row:
             for candidate in arama_adaylari(dep):
                 if arama_yap(driver, candidate[:24]):
@@ -1988,7 +1829,6 @@ def mac_oranlari_cek(driver, match):
                     if row:
                         break
 
-        # Popup temizle ve son kez tekrar ara
         if not row:
             reklam_kapat(driver)
             siyah_ekran_ve_popup_temizle(driver)
@@ -2034,32 +1874,21 @@ def mac_oranlari_cek(driver, match):
         except Exception:
             pass
 
-        return {}
+        return None
 
 
 # ============================================================
-# JSON KAYDET
+# MAC.JSON KORUMALI KAYIT
 # ============================================================
 
 def mac_json_kaydet(yeni_maclar):
     """
-    mac.json içindeki eski kayıtları KORUR.
+    APPEND-ONLY kayıt.
 
-    Yeni maç:
-      - İlk kez görülüyorsa eklenir.
-
-    Aynı maç:
-      - Oran değişmişse eski kayıt silinmez,
-        yeni cekme_zamani ile yeni snapshot eklenir.
-      - Oran değişmemişse tekrar eklenmez.
-
-    Önemli:
-      Bu fonksiyon eski maçları filtreleyip/silip yeniden oluşturmaz.
+    Eski mac.json kayıtları silinmez.
+    Yeni maç veya değişmiş oran snapshot'ı listenin sonuna eklenir.
     """
 
-    # --------------------------------------------------------
-    # 1) MEVCUT JSON'U GÜVENLİ OKU
-    # --------------------------------------------------------
     if not os.path.exists(CIKTI_DOSYA):
         data = {
             "matches": [],
@@ -2070,276 +1899,158 @@ def mac_json_kaydet(yeni_maclar):
             with open(CIKTI_DOSYA, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as exc:
-            print("\n❌ KRİTİK: mac.json okunamadı!")
-            print("   Eski dosya korunuyor, üzerine yazılmayacak.")
+            print("\n❌ KRİTİK: mac.json okunamadı.")
+            print("❌ Mevcut dosyanın üstüne yazılmayacak.")
             print(f"   Hata: {exc}")
             return
 
     if not isinstance(data, dict):
-        print("\n❌ KRİTİK: mac.json kök yapısı bozuk.")
-        print("   Dosya korunuyor, üzerine yazılmayacak.")
+        print("❌ mac.json root yapısı bozuk. Yazma iptal.")
         return
 
     if not isinstance(data.get("matches"), list):
-        print("\n❌ KRİTİK: mac.json içindeki matches alanı liste değil.")
-        print("   Dosya korunuyor, üzerine yazılmayacak.")
+        print("❌ mac.json matches alanı liste değil. Yazma iptal.")
         return
 
-    # Eski kayıtların gerçek listesi.
-    # Bunu silmiyoruz, sıfırlamıyoruz.
-    eski_maclar = data["matches"]
+    existing_matches = data["matches"]
 
-    print(f"\n📂 Mevcut mac.json kayıt sayısı: {len(eski_maclar)}")
-    print(f"📥 Bu çalışmada gelen maç sayısı: {len(yeni_maclar)}")
+    print(f"\n📂 Korunan eski kayıt: {len(existing_matches)}")
+    print(f"📥 Yeni çekilen maç: {len(yeni_maclar)}")
 
-    # --------------------------------------------------------
-    # 2) YAZMADAN ÖNCE YEDEK AL
-    # --------------------------------------------------------
+    output_path = Path(CIKTI_DOSYA)
+
     try:
-        now_for_backup = datetime.datetime.now().strftime(
-            "%Y%m%d_%H%M%S"
-        )
-
-        output_path = Path(CIKTI_DOSYA)
+        stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
         backup_path = output_path.with_name(
-            f"{output_path.stem}_backup_"
-            f"{now_for_backup}"
-            f"{output_path.suffix}"
+            f"{output_path.stem}_backup_{stamp}{output_path.suffix}"
         )
 
         shutil.copy2(output_path, backup_path)
-
-        print(f"💾 Güvenlik yedeği: {backup_path}")
+        print(f"💾 Yedek: {backup_path}")
 
     except Exception as exc:
-        print(f"⚠️ Yedek alınamadı ama devam ediliyor: {exc}")
+        print(f"⚠️ Yedek alınamadı: {exc}")
 
-    # --------------------------------------------------------
-    # 3) YARDIMCI FONKSİYONLAR
-    # --------------------------------------------------------
-    def normalize_name(text):
-        """
-        Takım karşılaştırması için basit normalize.
-        tr_key fonksiyonun scraper içinde zaten var.
-        """
-        try:
-            return tr_key(text)
-        except Exception:
-            return str(text or "").strip().lower()
-
-    def mac_kimligi(mac):
-        """
-        Aynı futbol karşılaşmasını tanımlar.
-        Çekme zamanı ve oranlar dahil değildir.
-        """
+    def mac_identity(match):
         return (
-            str(mac.get("tarih", "")).strip(),
-            str(mac.get("saat", "")).strip(),
-            normalize_name(mac.get("ev_sahibi", "")),
-            normalize_name(mac.get("deplasman", ""))
+            str(match.get("tarih", "")).strip(),
+            str(match.get("saat", "")).strip(),
+            tr_key(match.get("ev_sahibi", "")),
+            tr_key(match.get("deplasman", "")),
         )
 
-    def oranlari_temiz_ve_normalize_al(oranlar):
-        """
-        Sadece karşılaştırma için kullanılır.
-        Eski maç verisini değiştirmez.
-        """
-        if not isinstance(oranlar, dict):
+    def normalize_odds(odds):
+        if not isinstance(odds, dict):
             return {}
 
         output = {}
 
-        for key, value in oranlar.items():
+        for key, value in odds.items():
             try:
-                key_str = str(key).strip()
-
-                if not key_str:
-                    continue
-
-                output[key_str] = round(float(value), 6)
-
+                output[str(key).strip()] = round(float(value), 6)
             except Exception:
-                pass
+                output[str(key).strip()] = str(value)
 
         return output
 
-    def oran_degisti_mi(eski_oranlar, yeni_oranlar):
-        """
-        Bir oran değeri, oran anahtarı veya oran sayısı değişmişse True.
-        """
-        eski = oranlari_temiz_ve_normalize_al(eski_oranlar)
-        yeni = oranlari_temiz_ve_normalize_al(yeni_oranlar)
+    def odds_changed(old_odds, new_odds):
+        return normalize_odds(old_odds) != normalize_odds(new_odds)
 
-        return eski != yeni
+    latest_by_match = {}
 
-    def to_int(value):
-        try:
-            return int(value or 0)
-        except Exception:
-            return 0
-
-    # --------------------------------------------------------
-    # 4) HER MAÇIN EN GÜNCEL SNAPSHOT'INI BUL
-    #
-    # Eski kayıtlar silinmez.
-    # Sadece aynı maçın son oran kaydı bulunur.
-    # --------------------------------------------------------
-    son_snapshotlar = {}
-
-    for old_match in eski_maclar:
+    for old_match in existing_matches:
         if not isinstance(old_match, dict):
             continue
 
-        key = mac_kimligi(old_match)
+        key = mac_identity(old_match)
 
-        if key not in son_snapshotlar:
-            son_snapshotlar[key] = old_match
+        if key not in latest_by_match:
+            latest_by_match[key] = old_match
             continue
 
         old_time = str(old_match.get("cekme_zamani", ""))
         current_time = str(
-            son_snapshotlar[key].get("cekme_zamani", "")
+            latest_by_match[key].get("cekme_zamani", "")
         )
 
         if old_time >= current_time:
-            son_snapshotlar[key] = old_match
+            latest_by_match[key] = old_match
 
-    # --------------------------------------------------------
-    # 5) YENİ MAÇLARI ESKİ LİSTEYE EKLE
-    # --------------------------------------------------------
     now_iso = datetime.datetime.now().isoformat()
 
-    yeni_mac_eklendi = 0
-    oran_degisti_eklendi = 0
-    ayni_oran_atlandi = 0
-    bos_oran_atlandi = 0
+    new_count = 0
+    changed_count = 0
+    same_count = 0
+    empty_count = 0
 
     for incoming in yeni_maclar:
         if not isinstance(incoming, dict):
             continue
 
-        # Yeni maç nesnesinin kopyasını al.
-        # Böylece sonuç listesini yan etkileyip bozmaz.
-        mac = dict(incoming)
+        match = dict(incoming)
 
-        # Yeni gelen oranları scraper zaten temizledi.
-        # Burada eski verileri silen/agresif dönüşüm yapmıyoruz.
-        if not isinstance(mac.get("oranlar"), dict):
-            mac["oranlar"] = {}
+        if isinstance(incoming.get("oranlar"), dict):
+            match["oranlar"] = dict(incoming["oranlar"])
+        else:
+            match["oranlar"] = {}
 
-        key = mac_kimligi(mac)
-        previous = son_snapshotlar.get(key)
+        key = mac_identity(match)
+        previous = latest_by_match.get(key)
 
-        # ----------------------------------------------------
-        # İLK KEZ GÖRÜLEN MAÇ
-        # ----------------------------------------------------
+        # Yeni maç.
         if previous is None:
-            mac["cekme_zamani"] = now_iso
+            match["cekme_zamani"] = now_iso
 
-            eski_maclar.append(mac)
-            son_snapshotlar[key] = mac
+            existing_matches.append(match)
+            latest_by_match[key] = match
 
-            yeni_mac_eklendi += 1
+            new_count += 1
             continue
 
-        # ----------------------------------------------------
-        # ESKİ MAÇTAN EKSİK BİLGİLERİ KORU
-        # ----------------------------------------------------
-        if not str(mac.get("lig", "")).strip():
-            mac["lig"] = previous.get("lig", "")
-
-        if not str(mac.get("mac_kodu", "")).strip():
-            mac["mac_kodu"] = previous.get("mac_kodu", "")
-
-        # Biten maçın skorlarını Nesine tekrar "başlamadı" yapmasın.
-        if str(previous.get("durum", "")).lower() == "bitti":
-            mac["durum"] = previous.get("durum", "bitti")
-            mac["skor_ev"] = previous.get("skor_ev", 0)
-            mac["skor_dep"] = previous.get("skor_dep", 0)
-            mac["skor_1y_ev"] = previous.get("skor_1y_ev", 0)
-            mac["skor_1y_dep"] = previous.get("skor_1y_dep", 0)
-            mac["kaynak"] = previous.get("kaynak", "iddaa.com")
-
-        # ----------------------------------------------------
-        # YENİ ORAN BOŞSA ESKİNE DOKUNMA, SNAPSHOT EKLEME
-        # ----------------------------------------------------
-        if not mac["oranlar"]:
-            bos_oran_atlandi += 1
+        # Yeni oran yoksa eski kaydı değiştirme.
+        if not match["oranlar"]:
+            empty_count += 1
             continue
 
-        # ----------------------------------------------------
-        # ORAN AYNIYSA YENİ SNAPSHOT EKLEME
-        # ----------------------------------------------------
-        if not oran_degisti_mi(
+        # Oran değişmemişse snapshot ekleme.
+        if not odds_changed(
             previous.get("oranlar", {}),
-            mac.get("oranlar", {})
+            match.get("oranlar", {})
         ):
-            ayni_oran_atlandi += 1
+            same_count += 1
             continue
 
-        # ----------------------------------------------------
-        # ORAN DEĞİŞTİYSE:
-        # ESKİ KAYIT KALIR, YENİ SNAPSHOT SONA EKLENİR
-        # ----------------------------------------------------
-        mac["cekme_zamani"] = now_iso
+        # Lig boş geldiyse eskiyi kullan.
+        if not str(match.get("lig", "")).strip():
+            match["lig"] = previous.get("lig", "")
 
-        eski_maclar.append(mac)
-        son_snapshotlar[key] = mac
+        # Bitmiş skorları bozma.
+        if str(previous.get("durum", "")).lower() == "bitti":
+            match["durum"] = previous.get("durum", "bitti")
+            match["skor_ev"] = previous.get("skor_ev", 0)
+            match["skor_dep"] = previous.get("skor_dep", 0)
+            match["skor_1y_ev"] = previous.get("skor_1y_ev", 0)
+            match["skor_1y_dep"] = previous.get("skor_1y_dep", 0)
+            match["kaynak"] = previous.get("kaynak", "iddaa.com")
 
-        oran_degisti_eklendi += 1
+        # Eski kayıt kalır, yenisi sona eklenir.
+        match["cekme_zamani"] = now_iso
 
-    # --------------------------------------------------------
-    # 6) ESKİ + YENİ TÜM MAÇLARI SIRALA
-    #
-    # Burada hiçbir maç silinmez.
-    # Sadece index değerleri yeniden verilir.
-    # --------------------------------------------------------
-    ordered = sorted(
-        eski_maclar,
-        key=lambda mac: (
-            str(mac.get("tarih", "")),
-            str(mac.get("saat", "00:00")),
-            str(mac.get("ev_sahibi", "")),
-            str(mac.get("deplasman", "")),
-            str(mac.get("cekme_zamani", ""))
-        )
-    )
+        existing_matches.append(match)
+        latest_by_match[key] = match
 
-    output_matches = []
+        changed_count += 1
 
-    for index, mac in enumerate(ordered, start=1):
-        if not isinstance(mac, dict):
-            continue
+    # Eski liste sırası korunur, sadece index yenilenir.
+    for index, match in enumerate(existing_matches, start=1):
+        if isinstance(match, dict):
+            match["index"] = index
 
-        output_matches.append({
-            "index": index,
-            "mac_kodu": str(mac.get("mac_kodu", "")),
-            "ev_sahibi": str(mac.get("ev_sahibi", "")).strip(),
-            "deplasman": str(mac.get("deplasman", "")).strip(),
-            "saat": str(mac.get("saat", "")),
-            "lig": str(mac.get("lig", "")),
-            "tarih": str(mac.get("tarih", "")),
-            "cekme_zamani": str(
-                mac.get("cekme_zamani", now_iso)
-            ),
-            "durum": str(mac.get("durum", "baslamadi")),
-            "skor_ev": to_int(mac.get("skor_ev")),
-            "skor_dep": to_int(mac.get("skor_dep")),
-            "skor_1y_ev": to_int(mac.get("skor_1y_ev")),
-            "skor_1y_dep": to_int(mac.get("skor_1y_dep")),
-            "kaynak": str(mac.get("kaynak", "nesine.com")),
-            "oranlar": mac.get("oranlar", {})
-        })
-
-    # --------------------------------------------------------
-    # 7) GÜVENLİ ŞEKİLDE YAZ
-    # --------------------------------------------------------
-    data["matches"] = output_matches
+    data["matches"] = existing_matches
     data["son_guncelleme"] = now_iso
     data["updated"] = now_iso
 
-    output_path = Path(CIKTI_DOSYA)
     temp_path = output_path.with_suffix(".tmp")
 
     try:
@@ -2354,30 +2065,19 @@ def mac_json_kaydet(yeni_maclar):
         temp_path.replace(output_path)
 
     except Exception as exc:
-        print(f"\n❌ mac.json yazılamadı: {exc}")
-
-        try:
-            if temp_path.exists():
-                temp_path.unlink()
-        except Exception:
-            pass
-
+        print(f"❌ mac.json yazılamadı: {exc}")
         return
 
-    # --------------------------------------------------------
-    # 8) RAPOR
-    # --------------------------------------------------------
-    print("\n" + "=" * 65)
-    print("💾 MAC.JSON KORUMALI KAYIT TAMAMLANDI")
-    print("=" * 65)
-    print(f"   Önceki kayıt sayısı: {len(eski_maclar) - yeni_mac_eklendi - oran_degisti_eklendi}")
-    print(f"   Yeni maç eklenen: {yeni_mac_eklendi}")
-    print(f"   Oranı değişen snapshot: {oran_degisti_eklendi}")
-    print(f"   Oranı aynı olduğu için atlanan: {ayni_oran_atlandi}")
-    print(f"   Oranı boş olduğu için atlanan: {bos_oran_atlandi}")
-    print(f"   Yeni toplam kayıt: {len(output_matches)}")
-    print(f"   Dosya: {CIKTI_DOSYA}")
-    print("=" * 65)
+    print("\n" + "=" * 62)
+    print("💾 APPEND-ONLY JSON KAYIT TAMAMLANDI")
+    print("=" * 62)
+    print(f"   Yeni maç: {new_count}")
+    print(f"   Oranı değişen snapshot: {changed_count}")
+    print(f"   Oranı aynı olan: {same_count}")
+    print(f"   Boş oranlı atlanan: {empty_count}")
+    print(f"   Toplam kayıt: {len(existing_matches)}")
+    print("=" * 62)
+
 
 # ============================================================
 # GIT
@@ -2532,41 +2232,35 @@ def main():
                     f"{match['deplasman']}"
                 )
 
-                # İstenirse Chrome restart.
                 if (
                     HARVEST_MAC_SAYISI > 0
                     and processed > 1
                     and (processed - 1) % HARVEST_MAC_SAYISI == 0
                 ):
-                    print("\n" + "=" * 60)
-                    print(
-                        f"🔄 {processed - 1} maç işlendi. "
-                        f"Chrome yeniden başlatılıyor..."
-                    )
-                    print("=" * 60)
+                    print("\n🔄 Chrome yeniden başlatılıyor...")
 
-                    driver = chrome_hizli_yeniden_baslat(
+                    try:
+                        driver.quit()
+                    except Exception:
+                        pass
+
+                    time.sleep(2)
+
+                    driver = build_driver()
+
+                    driver, ok = gun_sayfasini_yukle(
                         driver,
                         day_url
                     )
 
-                    if len(find_match_cards(driver)) == 0:
-                        driver, ok = gun_sayfasini_yukle(
-                            driver,
-                            day_url
-                        )
-
-                        if not ok:
-                            print("❌ Chrome sonrası gün açılamadı.")
-                            fail += 1
-                            continue
+                    if not ok:
+                        fail += 1
+                        continue
 
                 if (
                     not sayfa_saglikli_mi(driver)
                     or len(find_match_cards(driver)) == 0
                 ):
-                    print("   ⚠️ Sayfa yenileniyor...")
-
                     driver, ok = gun_sayfasini_yukle(
                         driver,
                         day_url
@@ -2579,7 +2273,7 @@ def main():
                 odds = mac_oranlari_cek(driver, match)
 
                 if odds is None:
-                    print("   ❌ Maç bulunamadı.")
+                    print("   ❌ Maç bulunamadı / oran çekilemedi.")
                     fail += 1
                     continue
 

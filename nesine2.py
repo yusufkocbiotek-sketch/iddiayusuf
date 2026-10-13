@@ -53,51 +53,68 @@ ENABLE_GIT_AUTOPUSH = True
 # ============================================================
 
 SILINECEK_BASLANGICLAR = (
+    # Oyuncu marketleri
     "oyuncu",
     "golcu",
+    "gol atar",
+    "asist",
+
+    # Karşılaşma özel bahisleri
+    "karsilasma ozel bahisleri",
+    "karsilasma ozel",
+    "ozel bahisler",
+
+    # Kaleci marketleri
     "kaleci",
     "kurtaris",
     "kurtarisi",
+
+    # Korner marketleri
     "korner",
     "corner",
     "toplam korner",
     "ilk yari korner",
     "1 yari korner",
     "1. yari korner",
+    "ilk yari toplam korner",
+    "1 yari toplam korner",
+    "1. yari toplam korner",
+    "ev sahibi toplam korner",
+    "deplasman toplam korner",
     "ev sahibi korner",
     "deplasman korner",
+
+    # Kart marketleri
     "kart",
     "sari kart",
     "kirmizi kart",
     "toplam kart",
-)
 
-MENU_KELIMELER = {
-    "bulten",
-    "canli",
-    "canli sonuclar",
-    "sonuclar",
-    "kuponum",
-    "kuponlarim",
-    "spor toto",
-    "yardim",
-    "giris",
-    "uye ol",
-    "nesine",
-    "futbol",
-    "basketbol",
-    "tenis",
-    "voleybol",
-    "hentbol",
-    "buz hokeyi",
-    "amerikan futbolu",
-    "e-futbol",
-    "mma",
-    "tumu",
-    "yukle",
-    "bugun",
-    "yarin",
-}
+    # Takım istatistik marketleri
+    "takim kale vurusu",
+    "takim kale vurusu toplam",
+    "takim faul",
+    "takim faul toplam",
+    "takim isabetli sut",
+    "takim isabetli sut toplam",
+    "takim sut",
+    "takim sut toplam",
+    "ev sahibi sut",
+    "deplasman sut",
+    "ev sahibi isabetli sut",
+    "deplasman isabetli sut",
+
+    # Genel şut / faul / ofsayt / taç istatistikleri
+    "sut",
+    "isabetli sut",
+    "toplam sut",
+    "faul",
+    "toplam faul",
+    "ofsayt",
+    "toplam ofsayt",
+    "tac",
+    "toplam tac",
+)
 
 
 # ============================================================
@@ -171,16 +188,46 @@ def market_yasak_mi(market):
             return True
 
     yasak_kelimeler = (
+        # Korner
         "korner",
         "corner",
+
+        # Kaleci
         "kaleci",
         "kurtaris",
         "kurtarisi",
+
+        # Kart
         "kart",
         "sari kart",
         "kirmizi kart",
+
+        # Oyuncu
         "oyuncu",
         "golcu",
+        "gol atar",
+        "asist",
+
+        # Karşılaşma özel
+        "karsilasma ozel",
+        "ozel bahis",
+
+        # Takım istatistikleri
+        "takim kale vurusu",
+        "takim faul",
+        "takim isabetli sut",
+        "takim sut",
+        "ev sahibi sut",
+        "deplasman sut",
+        "ev sahibi isabetli sut",
+        "deplasman isabetli sut",
+
+        # Genel istatistik marketleri
+        "isabetli sut",
+        "toplam sut",
+        "toplam faul",
+        "ofsayt",
+        "tac",
     )
 
     return any(word in normalized for word in yasak_kelimeler)

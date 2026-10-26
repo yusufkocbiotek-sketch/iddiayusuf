@@ -62,6 +62,8 @@ SILINECEK_BASLANGICLAR = (
     # Karşılaşma özel bahisleri
     "karsilasma ozel bahisleri",
     "karsilasma ozel",
+    "uzt. dahil",
+    "karsilasma kombo bahisleri",
     "ozel bahisler",
 
     # Kaleci marketleri

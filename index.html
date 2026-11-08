@@ -619,7 +619,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#e6e6e6;mi
 
 <script>
 const JSON_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/mac.json";
-const GECMIS_URL="https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/gecmis_maclar.json";
+const GECMIS_URLS=[
+  "https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/gecmis_maclar_kalan.json",
+  "https://raw.githubusercontent.com/yusufkocbiotek-sketch/iddiayusuf/main/public/data/gecmis_maclar_ekim.json"
+];
 let tumMaclar=[],gecmisMaclar=[],bultenFiltreler=[],analizFiltreler=[];
 
 // ARALIK GÖSTER/GİZLE
@@ -636,7 +639,22 @@ document.getElementById("analizKarsilastirma").addEventListener("change",functio
 
 async function yukle(){try{const r=await fetch(JSON_URL+"?t="+Date.now());const d=await r.json();tumMaclar=d.matches||[];document.getElementById("info").innerHTML="Son: "+new Date(d.updated).toLocaleString("tr-TR")+"<br>iddaa.com";tarihleriDoldur();ligleriDoldur();filtrele();gecmisYukle()}catch(e){document.getElementById("container").innerHTML='<div class="hata">'+e.message+'</div>'}}
 
-async function gecmisYukle(){try{const r=await fetch(GECMIS_URL+"?t="+Date.now());const d=await r.json();gecmisMaclar=d.matches||[];document.getElementById("info").innerHTML+="<br>Gecmis: "+gecmisMaclar.length+" maç"}catch(e){}}
+async function gecmisYukle(){
+  try{
+    const sonuclar=await Promise.allSettled(
+      GECMIS_URLS.map(url=>fetch(url+"?t="+Date.now()).then(r=>r.json()))
+    );
+    gecmisMaclar=[];
+    sonuclar.forEach((s,i)=>{
+      if(s.status==="fulfilled"){
+        gecmisMaclar=gecmisMaclar.concat(s.value.matches||[]);
+      }else{
+        console.warn("Gecmis dosya "+(i+1)+" yuklenemedi:",s.reason);
+      }
+    });
+    document.getElementById("info").innerHTML+="<br>Gecmis: "+gecmisMaclar.length+" maç";
+  }catch(e){}
+}
 
 function tarihleriDoldur(){const t=[...new Set(tumMaclar.map(m=>m.tarih))].sort();const s=document.getElementById("tarihSelect");t.forEach(tarih=>{const o=document.createElement("option");o.value=tarih;const d=new Date(tarih);o.textContent=d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"});s.appendChild(o)})}
 function ligleriDoldur(){const l=[...new Set(tumMaclar.map(m=>m.lig||"").filter(x=>x.trim()))].sort();const s=document.getElementById("ligSelect");l.forEach(lig=>{const o=document.createElement("option");o.value=lig;o.textContent=lig;s.appendChild(o)})}

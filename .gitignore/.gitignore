@@ -1,0 +1,5 @@
+*.yedek
+*_backup_*.json
+*.tmp
+silinen_maclar_yedek.json
+eksik_maclar.json

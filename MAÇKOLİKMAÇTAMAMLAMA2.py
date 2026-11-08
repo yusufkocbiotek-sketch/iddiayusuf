@@ -288,7 +288,6 @@ def save_json_safe(data, path):
             if ev_sahibi and deplasman:
                 temiz_mac = {
                     "index": idx,
-                    "mac_kodu": str(mac.get("mac_kodu", "")),
                     "ev_sahibi": ev_sahibi,
                     "deplasman": deplasman,
                     "saat": str(mac.get("saat", "")),
@@ -300,7 +299,6 @@ def save_json_safe(data, path):
                     "skor_dep": int(mac.get("skor_dep", 0)),
                     "skor_1y_ev": int(mac.get("skor_1y_ev", 0)),
                     "skor_1y_dep": int(mac.get("skor_1y_dep", 0)),
-                    "kaynak": str(mac.get("kaynak", "spordb.com")),
                     "oranlar": mac.get("oranlar", {})
                 }
                 temiz_mac_listesi.append(temiz_mac)
@@ -310,7 +308,7 @@ def save_json_safe(data, path):
 
         temp_path = path.with_suffix(".tmp")
         with open(temp_path, "w", encoding="utf-8", newline='\n') as f:
-            json.dump(cikti_verisi, f, ensure_ascii=False, indent=2)
+            json.dump(cikti_verisi, f, ensure_ascii=False, separators=(",", ":"))
 
         temp_path.replace(path)
         print(f"💾 KAYIT BAŞARILI: {path.name} | Toplam: {len(temiz_mac_listesi)} maç")
@@ -534,8 +532,7 @@ def get_skorlar_tek_gun(driver, hedef_tarih):
                         "skor_dep": s_dep,
                         "skor_1y_ev": iy_ev,
                         "skor_1y_dep": iy_dep,
-                        "durum": durum,
-                        "kaynak": "mackolik.com"
+                        "durum": durum
                     })
 
                     print(f"   ✅ [{len(skor_listesi)}] {ev_isim} - {dep_isim} | MS:{s_ev}-{s_dep} | İY:{iy_ev}-{iy_dep}")

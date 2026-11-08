@@ -1291,7 +1291,6 @@ def extract_visible(driver, current_date):
             "skor_1y_ev": 0,
             "skor_1y_dep": 0,
             "oranlar": {},
-            "kaynak": "nesine.com",
         }
 
         key = (
@@ -1972,7 +1971,7 @@ def mac_json_kaydet(yeni_maclar):
         stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
         backup_path = output_path.with_name(
-            f"{output_path.stem}_backup_{stamp}{output_path.suffix}"
+            f"{output_path.stem}.bak"
         )
 
         shutil.copy2(output_path, backup_path)
@@ -1980,6 +1979,13 @@ def mac_json_kaydet(yeni_maclar):
 
     except Exception as exc:
         print(f"⚠️ Yedek alınamadı: {exc}")
+
+    SILINECEK_ALANLAR = ("kaynak", "mac_kodu")
+
+    def alanlari_temizle(match):
+        for alan in SILINECEK_ALANLAR:
+            match.pop(alan, None)
+        return match
 
     def mac_identity(match):
         return (
@@ -2081,7 +2087,6 @@ def mac_json_kaydet(yeni_maclar):
             match["skor_dep"] = previous.get("skor_dep", 0)
             match["skor_1y_ev"] = previous.get("skor_1y_ev", 0)
             match["skor_1y_dep"] = previous.get("skor_1y_dep", 0)
-            match["kaynak"] = previous.get("kaynak", "iddaa.com")
 
         # Eski kayıt kalır, yenisi sona eklenir.
         match["cekme_zamani"] = now_iso
@@ -2094,6 +2099,7 @@ def mac_json_kaydet(yeni_maclar):
     # Eski liste sırası korunur, sadece index yenilenir.
     for index, match in enumerate(existing_matches, start=1):
         if isinstance(match, dict):
+            alanlari_temizle(match)
             match["index"] = index
 
     data["matches"] = existing_matches
@@ -2108,7 +2114,7 @@ def mac_json_kaydet(yeni_maclar):
                 data,
                 file,
                 ensure_ascii=False,
-                indent=2
+                separators=(",", ":")
             )
 
         temp_path.replace(output_path)
